@@ -1,0 +1,710 @@
+/* ========================================
+   RESET & BASE STYLES
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #ffffff;
+}
+
+/* ========================================
+   LAYOUT CONTAINERS
+   ======================================== */
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+}
+
+.section {
+    margin-bottom: 6rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #1e3a8a;
+}
+
+/* ========================================
+   NAVIGATION
+   ======================================== */
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.logo-image {
+    height: 50px;
+    width: auto;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.logo:hover .logo-image {
+    transform: scale(1.05);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #4b5563;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #1e3a8a;
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+
+.hero {
+    margin-top: 80px;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+.hero-content {
+    max-width: 900px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.95;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Flow Diagram */
+.flow-diagram {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+}
+
+.flow-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.flow-step {
+    flex: 1;
+    min-width: 150px;
+    padding: 1rem;
+}
+
+.flow-arrow {
+    font-size: 2rem;
+    opacity: 0.7;
+}
+
+.flow-step-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.flow-diagram-note {
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: white;
+    color: #1e3a8a;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: #1e3a8a;
+}
+
+/* ========================================
+   STATS SECTION
+   ======================================== */
+
+.stats {
+    background: #f8fafc;
+    padding: 4rem 2rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    text-align: center;
+}
+
+.stat-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    color: #4b5563;
+}
+
+/* ========================================
+   COMPARISON TABLE
+   ======================================== */
+
+.comparison {
+    background: white;
+}
+
+.comparison-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.comparison-column {
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.comparison-column.traditional {
+    background: #fef2f2;
+    border: 2px solid #ef4444;
+}
+
+.comparison-column.vbf {
+    background: #f0fdf4;
+    border: 2px solid #10b981;
+}
+
+.comparison-column h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.comparison-item {
+    display: flex;
+    align-items: start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+}
+
+/* ========================================
+   CARDS
+   ======================================== */
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    color: #1e3a8a;
+    margin-bottom: 1rem;
+}
+
+.card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.card li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.card li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: bold;
+}
+
+/* ========================================
+   PORTFOLIO GRID
+   ======================================== */
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.portfolio-item {
+    aspect-ratio: 2/1;
+    background: #f8fafc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #64748b;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s;
+}
+
+.portfolio-item:hover {
+    border-color: #1e3a8a;
+    color: #1e3a8a;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.1);
+}
+
+.portfolio-link-wrapper {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.portfolio-link {
+    color: #1e3a8a;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.portfolio-link:hover {
+    opacity: 0.8;
+}
+
+.portfolio-benefits-link {
+    color: #1e3a8a;
+    font-weight: 600;
+    display: block;
+    margin-top: 1rem;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.portfolio-benefits-link:hover {
+    opacity: 0.8;
+}
+
+/* ========================================
+   BENEFITS SECTION
+   ======================================== */
+
+.benefits {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+    padding: 5rem 2rem;
+}
+
+.benefits .section-title {
+    color: white;
+}
+
+.benefits .card {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* ========================================
+   TESTIMONIALS
+   ======================================== */
+
+.testimonial {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 3rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    border-left: 4px solid #1e3a8a;
+}
+
+.testimonial-text {
+    font-size: 1.3rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    color: #1e3a8a;
+}
+
+.testimonial-author {
+    font-weight: 600;
+    color: #4b5563;
+}
+
+/* ========================================
+   CTA SECTION
+   ======================================== */
+
+.final-cta {
+    background: #f8fafc;
+    padding: 5rem 2rem;
+}
+
+.cta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cta-box {
+    padding: 3rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.cta-box h3 {
+    font-size: 2rem;
+    color: #1e3a8a;
+    margin-bottom: 1rem;
+}
+
+.cta-box p {
+    font-size: 1.1rem;
+    color: #4b5563;
+    margin-bottom: 2rem;
+}
+
+.cta-box .btn {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* ========================================
+   TEAM SECTION
+   ======================================== */
+
+.team-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    margin-bottom: 5rem;
+}
+
+.team-member {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 3rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.team-image-wrapper {
+    width: 100%;
+    max-width: 250px;
+}
+
+.team-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+    aspect-ratio: 1;
+    background: #f8fafc;
+}
+
+.team-content {
+    flex: 1;
+}
+
+.team-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 0.5rem;
+}
+
+.team-role {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 0.25rem;
+}
+
+.team-company {
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.team-bio {
+    color: #4b5563;
+    line-height: 1.8;
+}
+
+.team-bio p {
+    margin-bottom: 1rem;
+}
+
+.team-bio p:last-child {
+    margin-bottom: 0;
+}
+
+.team-why {
+    background: #f8fafc;
+    padding: 4rem 3rem;
+    border-radius: 12px;
+    margin-top: 4rem;
+}
+
+.team-why-intro {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #4b5563;
+    margin-bottom: 3rem;
+    font-weight: 500;
+}
+
+.team-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.team-benefit {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.team-benefit-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.team-benefit h4 {
+    font-size: 1.3rem;
+    color: #1e3a8a;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.team-benefit p {
+    color: #4b5563;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.team-why-conclusion {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto;
+    font-weight: 500;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+footer {
+    background: #1e3a8a;
+    color: white;
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.footer-links a:hover {
+    opacity: 0.7;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    .comparison-table {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .cta-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .flow-steps {
+        flex-direction: column;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .team-member {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .team-image-wrapper {
+        max-width: 200px;
+        margin: 0 auto;
+    }
+
+    .team-benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-why {
+        padding: 2rem 1.5rem;
+    }
+}
+
