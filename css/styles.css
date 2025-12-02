@@ -90,15 +90,7 @@ nav {
     color: var(--color-primary);
     letter-spacing: 0;
     line-height: 1.3;
-    text-transform: uppercase;
-}
-
-.logo-line {
-    display: inline-block;
-}
-
-.logo-indent {
-    margin-left: 0.5rem;
+    text-transform: none;
 }
 
 .nav-links {
