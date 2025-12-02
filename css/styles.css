@@ -169,7 +169,7 @@ nav {
     padding: var(--spacing-2xl) var(--spacing-md);
     position: relative;
     overflow: hidden;
-    background-image: url('../images/hero-image.jpg');
+    background-image: url('../images/hero-bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
