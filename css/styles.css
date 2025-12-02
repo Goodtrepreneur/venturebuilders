@@ -396,16 +396,31 @@ nav {
     position: relative;
 }
 
-.comparison::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 100%;
-    background: var(--color-border);
-    opacity: 0.5;
+.infographic-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+    background: var(--color-bg-light);
+    border-radius: 16px;
+    border: 1px solid var(--color-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.infographic-container:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.infographic-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    max-width: 100%;
 }
 
 .comparison-table {
@@ -955,6 +970,11 @@ footer p {
 
     .section {
         margin-bottom: var(--spacing-xl);
+    }
+
+    .infographic-container {
+        padding: var(--spacing-sm);
+        border-radius: 12px;
     }
 }
 
