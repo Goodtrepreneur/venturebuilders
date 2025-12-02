@@ -86,11 +86,19 @@ nav {
 
 .logo {
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--color-primary);
-    letter-spacing: -0.01em;
-    line-height: 1.2;
+    letter-spacing: 0;
+    line-height: 1.3;
     text-transform: uppercase;
+}
+
+.logo-line {
+    display: inline-block;
+}
+
+.logo-indent {
+    margin-left: 0.5rem;
 }
 
 .nav-links {
