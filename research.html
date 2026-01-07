@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Venture Builders Fund Research Tool">
+    <title>VBF Research Tool - Venture Builders Fund</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-bg-light);
+            padding: var(--spacing-md);
+        }
+        .login-box {
+            background: white;
+            padding: var(--spacing-xl);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-box h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-xs);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: var(--spacing-xs);
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        .research-content {
+            display: none;
+        }
+        .research-content.active {
+            display: block;
+        }
+        .stats-grid-research {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        .stat-card-research {
+            background: white;
+            padding: var(--spacing-sm);
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+            text-align: center;
+        }
+        .stat-card-research p:first-child {
+            font-size: 0.875rem;
+            color: var(--color-text-light);
+            margin-bottom: 0.25rem;
+        }
+        .stat-card-research p:last-child {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        .research-controls {
+            background: white;
+            padding: var(--spacing-md);
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            margin-bottom: var(--spacing-md);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: var(--color-bg-light);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: var(--spacing-sm) 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--color-accent);
+            transition: width 0.3s;
+        }
+        .results-list {
+            max-height: 500px;
+            overflow-y: auto;
+            background: white;
+            padding: var(--spacing-md);
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+        }
+        .result-item {
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            font-size: 0.875rem;
+        }
+        .result-item:hover {
+            background: var(--color-bg-light);
+        }
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-xs);
+        }
+        .score-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .score-high { background: #d1fae5; color: #065f46; }
+        .score-medium { background: #dbeafe; color: #1e40af; }
+        .score-low { background: #fef3c7; color: #92400e; }
+        .score-very-low { background: #fed7aa; color: #9a3412; }
+        .score-none { background: #f3f4f6; color: #374151; }
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9375rem;
+        }
+        .btn-primary-research {
+            background: var(--color-accent);
+            color: white;
+        }
+        .btn-primary-research:hover {
+            background: #1d4ed8;
+        }
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #059669;
+        }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        button:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+        }
+        textarea {
+            width: 100%;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
+        .status-message {
+            padding: var(--spacing-sm);
+            background: #dbeafe;
+            border: 1px solid #93c5fd;
+            border-radius: 8px;
+            color: #1e40af;
+            margin-top: var(--spacing-sm);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo-vbf.png" alt="Venture Builders Fund" class="logo-image">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Login Form -->
+    <div id="loginContainer" class="login-container">
+        <div class="login-box">
+            <h2>VBF Research Tool</h2>
+            <p style="text-align: center; color: var(--color-text-light); margin-bottom: var(--spacing-md);">Please sign in to access the research tool</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="error-message" id="errorMessage"></div>
+                <button type="submit" class="btn-primary-research" style="width: 100%;">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Research Content -->
+    <div id="researchContent" class="research-content" style="margin-top: 80px; padding: var(--spacing-md);">
+        <div class="container" style="max-width: 1400px;">
+            <div style="background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); border-radius: 12px; padding: var(--spacing-lg); color: white; margin-bottom: var(--spacing-md);">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">Venture Builder Fund Research Tool</h1>
+                        <p style="opacity: 0.9;">Reliable automated research with CBInsights/PitchBook priority</p>
+                    </div>
+                    <button onclick="resetTool()" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3);">
+                        Load New Data
+                    </button>
+                </div>
+            </div>
+
+            <!-- Data Loading Section -->
+            <div id="dataLoadingSection" style="background: white; border-radius: 12px; padding: var(--spacing-lg); border: 1px solid var(--color-border); margin-bottom: var(--spacing-md);">
+                <h2 style="font-size: 1.5rem; font-weight: 600; margin-bottom: var(--spacing-md);">Step 1: Load Data</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin-bottom: var(--spacing-md);">
+                    <div style="border: 2px dashed var(--color-border); border-radius: 12px; padding: var(--spacing-lg); text-align: center;">
+                        <p style="color: var(--color-text-light); margin-bottom: var(--spacing-sm);">Upload CSV file (recommended)</p>
+                        <input type="file" id="fileInput" accept=".csv,.tsv,.txt" style="display: none;">
+                        <button onclick="document.getElementById('fileInput').click()" class="btn-primary-research">Choose File</button>
+                    </div>
+                    <div style="border: 2px dashed var(--color-border); border-radius: 12px; padding: var(--spacing-md);">
+                        <p style="color: var(--color-text-light); margin-bottom: var(--spacing-sm); font-size: 0.875rem;">Or paste CSV data:</p>
+                        <textarea id="pastedData" rows="8" placeholder="Paste tab-separated data here..." style="width: 100%; font-size: 0.75rem;"></textarea>
+                    </div>
+                </div>
+                <div id="loadButtonContainer" style="display: none;">
+                    <button onclick="loadCompanies()" class="btn-success">Load & Clean Data</button>
+                    <span id="rowCount" style="margin-left: var(--spacing-sm); color: var(--color-text-light);"></span>
+                </div>
+            </div>
+
+            <!-- Research Section -->
+            <div id="researchSection" style="display: none;">
+                <!-- Stats -->
+                <div class="stats-grid-research">
+                    <div class="stat-card-research">
+                        <p>Researched</p>
+                        <p id="statTotal">0/0</p>
+                    </div>
+                    <div class="stat-card-research">
+                        <p>Acquired</p>
+                        <p id="statAcquired" style="color: #10b981;">0</p>
+                    </div>
+                    <div class="stat-card-research">
+                        <p>Active</p>
+                        <p id="statActive" style="color: #2563eb;">0</p>
+                    </div>
+                    <div class="stat-card-research">
+                        <p>High Score</p>
+                        <p id="statHighScore" style="color: #7c3aed;">0</p>
+                    </div>
+                    <div class="stat-card-research">
+                        <p>Avg Score</p>
+                        <p id="statAvgScore">0</p>
+                    </div>
+                    <div class="stat-card-research">
+                        <p>Skipped</p>
+                        <p id="statSkipped" style="color: #f59e0b;">0</p>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="research-controls">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+                        <div>
+                            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem;">Research Progress</h2>
+                            <p style="font-size: 0.875rem; color: var(--color-text-light);">
+                                Company <span id="currentIndex">1</span> of <span id="totalCompanies">0</span>
+                                <span id="autoStatus" style="margin-left: 0.5rem; color: #10b981; font-weight: 600; display: none;">● Running...</span>
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-xs); align-items: center;">
+                            <div style="background: var(--color-bg-light); padding: 0.5rem 0.75rem; border-radius: 8px;">
+                                <label style="font-size: 0.875rem; margin-right: 0.5rem;">Delay:</label>
+                                <select id="delaySelect" style="border: none; background: transparent; font-weight: 600; cursor: pointer;">
+                                    <option value="7">7s</option>
+                                    <option value="10" selected>10s (recommended)</option>
+                                    <option value="15">15s</option>
+                                    <option value="20">20s (safest)</option>
+                                </select>
+                            </div>
+                            <button id="autoResearchBtn" onclick="toggleAutoResearch()" class="btn-success">▶ Auto Research All</button>
+                            <button id="nextBtn" onclick="researchNext()" class="btn-primary-research">🔍 Next</button>
+                            <button id="exportBtn" onclick="exportResults()" class="btn-primary-research" style="background: #7c3aed;">⬇ Export</button>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <div id="statusMessage" class="status-message" style="display: none;"></div>
+                </div>
+
+                <!-- Results -->
+                <div id="resultsContainer" style="display: none;">
+                    <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--spacing-sm);">Latest Results (showing 15)</h2>
+                    <div id="resultsList" class="results-list"></div>
+                </div>
+            </div>
+
+            <!-- Info Box -->
+            <div style="background: #d1fae5; border: 2px solid #10b981; border-radius: 12px; padding: var(--spacing-md); margin-top: var(--spacing-md);">
+                <p style="font-weight: 700; color: #065f46; margin-bottom: var(--spacing-xs);">🛡️ Reliability Features:</p>
+                <ul style="font-size: 0.875rem; color: #065f46; line-height: 1.8;">
+                    <li>✅ <strong>30-second timeout</strong> on every request - never hangs indefinitely</li>
+                    <li>✅ <strong>Automatic skip</strong> on errors - always moves to next company</li>
+                    <li>✅ <strong>CBInsights/PitchBook priority</strong> - searches these databases first</li>
+                    <li>✅ <strong>File upload support</strong> - cleaner data loading</li>
+                    <li>✅ <strong>Smart deduplication</strong> - pre-processes data before research</li>
+                    <li>✅ <strong>Never stops</strong> - guaranteed to process all companies</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Authentication
+        const CORRECT_EMAIL = 'steve.r.hayton@gmail.com';
+        const CORRECT_PASSWORD = 'riyan88';
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (email === CORRECT_EMAIL && password === CORRECT_PASSWORD) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('researchContent').classList.add('active');
+                sessionStorage.setItem('authenticated', 'true');
+            } else {
+                errorMessage.textContent = 'Invalid email or password';
+                errorMessage.classList.add('show');
+            }
+        });
+
+        // Check if already authenticated
+        if (sessionStorage.getItem('authenticated') === 'true') {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('researchContent').classList.add('active');
+        }
+
+        // Research Tool State
+        let companies = [];
+        let rawCompanies = [];
+        let currentIndex = 0;
+        let researching = false;
+        let autoResearch = false;
+        let results = [];
+        let delay = 10;
+        let autoResearchTimeout = null;
+
+        // File upload
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('pastedData').value = e.target.result;
+                updateLoadButton();
+            };
+            reader.readAsText(file);
+        });
+
+        document.getElementById('pastedData').addEventListener('input', updateLoadButton);
+
+        function updateLoadButton() {
+            const data = document.getElementById('pastedData').value;
+            if (data.trim()) {
+                const parsed = parseCSV(data);
+                document.getElementById('rowCount').textContent = `Will deduplicate and clean ${parsed.length} rows`;
+                document.getElementById('loadButtonContainer').style.display = 'block';
+            } else {
+                document.getElementById('loadButtonContainer').style.display = 'none';
+            }
+        }
+
+        function parseCSV(csvText) {
+            const lines = csvText.trim().split('\n');
+            if (lines.length < 2) return [];
+            
+            const headers = lines[0].split('\t');
+            
+            const parsed = lines.slice(1).map((line, idx) => {
+                const values = line.split('\t');
+                const company = { _row: idx + 2 };
+                headers.forEach((header, i) => {
+                    company[header.trim()] = values[i]?.trim() || '';
+                });
+                return company;
+            }).filter(c => c['Company Name'] && c['Company Name'] !== '');
+
+            return parsed;
+        }
+
+        function cleanData(companies) {
+            const unique = {};
+            const skipped = [];
+            
+            companies.forEach(company => {
+                const url = company['Company URL'];
+                const name = company['Company Name'];
+                
+                const normalizedUrl = url ? url.toLowerCase()
+                    .replace(/^https?:\/\/(www\.)?/, '')
+                    .replace(/\/$/, '')
+                    .split('?')[0]
+                    : '';
+                
+                const key = normalizedUrl || name.toLowerCase().trim();
+                
+                if (!unique[key]) {
+                    unique[key] = company;
+                } else {
+                    skipped.push(company);
+                    if (url && !unique[key]['Company URL']) {
+                        unique[key] = company;
+                    }
+                }
+            });
+
+            return Object.values(unique);
+        }
+
+        function loadCompanies() {
+            const pastedData = document.getElementById('pastedData').value;
+            const parsed = parseCSV(pastedData);
+            rawCompanies = parsed;
+            companies = cleanData(parsed);
+            currentIndex = 0;
+            results = [];
+            
+            document.getElementById('dataLoadingSection').style.display = 'none';
+            document.getElementById('researchSection').style.display = 'block';
+            updateStats();
+            updateUI();
+            
+            alert(`Loaded ${companies.length} unique companies (from ${parsed.length} total rows)`);
+        }
+
+        function resetTool() {
+            autoResearch = false;
+            companies = [];
+            rawCompanies = [];
+            currentIndex = 0;
+            results = [];
+            document.getElementById('pastedData').value = '';
+            document.getElementById('dataLoadingSection').style.display = 'block';
+            document.getElementById('researchSection').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'none';
+            updateUI();
+        }
+
+        async function fetchWithTimeout(url, options, timeout = 30000) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            
+            try {
+                const response = await fetch(url, {
+                    ...options,
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                return response;
+            } catch (error) {
+                clearTimeout(timeoutId);
+                if (error.name === 'AbortError') {
+                    throw new Error('Request timeout after 30 seconds');
+                }
+                throw error;
+            }
+        }
+
+        let apiKey = sessionStorage.getItem('anthropic_api_key');
+
+        async function researchCompany(company) {
+            const companyName = company['Company Name'];
+            const companyUrl = company['Company URL'];
+            const accelerator = company['Accelerator'];
+            
+            if (!apiKey) {
+                apiKey = prompt('Please enter your Anthropic API key:');
+                if (apiKey) {
+                    sessionStorage.setItem('anthropic_api_key', apiKey);
+                } else {
+                    updateStatus('❌ API key required to research companies');
+                    return {
+                        ...company,
+                        company_name: companyName,
+                        status: 'error',
+                        notes: 'API key not provided',
+                        score: 0,
+                        researched: true,
+                        error: 'API key required'
+                    };
+                }
+            }
+            
+            updateStatus(`🔍 Researching: ${companyName}...`);
+            
+            try {
+                const response = await fetchWithTimeout('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apiKey,
+                        'anthropic-version': '2023-06-01'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 2000,
+                        tools: [{
+                            type: "web_search_20250305",
+                            name: "web_search"
+                        }],
+                        messages: [{
+                            role: 'user',
+                            content: `Research this startup: "${companyName}"${companyUrl ? ` (${companyUrl})` : ''} from ${accelerator}.
+
+SEARCH STRATEGY:
+1. First, search CBInsights or PitchBook specifically: "site:cbinsights.com ${companyName}" OR "site:pitchbook.com ${companyName}"
+2. Then supplement with general search: "${companyName} ${accelerator} funding acquisition"
+
+Find:
+- Total funding raised (with amounts and dates)
+- Latest funding round details
+- Acquisition status (buyer, amount, date)
+- Current operating status
+- Notable achievements, customers, or press
+
+SCORING (be generous):
+0: No info/defunct
+1-3: Active, no funding info
+4-5: Seed funding or traction signals
+6-7: Series A+ or strong growth
+8-9: Series B+ or significant scale
+10: Acquired/IPO
+
+Return ONLY valid JSON (no markdown):
+{
+  "company_name": "${companyName}",
+  "status": "active|acquired|inactive",
+  "total_funding": "amount or Unknown",
+  "latest_round": "details or None",
+  "acquisition": "details or None",
+  "score": 0-10,
+  "notes": "2-3 sentence summary",
+  "sources": ["url1", "url2"]
+}`
+                        }]
+                    })
+                }, 30000);
+
+                if (!response.ok) {
+                    throw new Error(`API ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                if (!data?.content || !Array.isArray(data.content)) {
+                    throw new Error('Invalid API response format');
+                }
+                
+                const fullText = data.content
+                    .map(item => item.type === 'text' ? item.text : '')
+                    .filter(Boolean)
+                    .join('\n');
+                
+                if (!fullText) {
+                    throw new Error('Empty API response');
+                }
+                
+                const jsonMatch = fullText.match(/\{[\s\S]*\}/);
+                if (!jsonMatch) {
+                    throw new Error('No JSON in response');
+                }
+                
+                const jsonStr = jsonMatch[0].replace(/```json\n?/g, '').replace(/```\n?/g, '');
+                const parsed = JSON.parse(jsonStr);
+                parsed.score = parseInt(parsed.score) || 0;
+                
+                updateStatus(`✅ Success: ${companyName} (score: ${parsed.score})`);
+                
+                return {
+                    ...company,
+                    ...parsed,
+                    researched: true,
+                    research_date: new Date().toISOString()
+                };
+                
+            } catch (error) {
+                console.error(`ERROR researching ${companyName}:`, error.message);
+                updateStatus(`⚠️ Skipped: ${companyName} - ${error.message}`);
+                
+                return {
+                    ...company,
+                    company_name: companyName,
+                    status: 'error',
+                    notes: `Skipped: ${error.message}`,
+                    total_funding: 'Unknown',
+                    latest_round: 'None',
+                    acquisition: 'None',
+                    score: 0,
+                    researched: true,
+                    research_date: new Date().toISOString(),
+                    error: error.message
+                };
+            }
+        }
+
+        async function researchNext() {
+            if (currentIndex >= companies.length) {
+                autoResearch = false;
+                updateStatus('🎉 All companies researched!');
+                updateUI();
+                return;
+            }
+
+            researching = true;
+            updateUI();
+            const company = companies[currentIndex];
+            
+            const result = await researchCompany(company);
+            results.push(result);
+            currentIndex++;
+            updateStats();
+            updateUI();
+            renderResults();
+            researching = false;
+
+            if (autoResearch && currentIndex < companies.length) {
+                delay = parseInt(document.getElementById('delaySelect').value);
+                updateStatus(`⏳ Waiting ${delay}s before next company...`);
+                autoResearchTimeout = setTimeout(researchNext, delay * 1000);
+            } else if (autoResearch && currentIndex >= companies.length) {
+                autoResearch = false;
+                updateStatus('🎉 All companies researched!');
+                updateUI();
+            }
+        }
+
+        function toggleAutoResearch() {
+            autoResearch = !autoResearch;
+            updateUI();
+            if (autoResearch && currentIndex < companies.length) {
+                researchNext();
+            } else if (autoResearchTimeout) {
+                clearTimeout(autoResearchTimeout);
+            }
+        }
+
+        function updateStats() {
+            const stats = {
+                total: results.length,
+                acquired: results.filter(r => r.status === 'acquired').length,
+                active: results.filter(r => r.status === 'active').length,
+                inactive: results.filter(r => r.status === 'inactive').length,
+                errors: results.filter(r => r.status === 'error').length,
+                avgScore: results.length > 0 ? (results.reduce((sum, r) => sum + (r.score || 0), 0) / results.length).toFixed(1) : 0,
+                highScorers: results.filter(r => r.score >= 7).length
+            };
+
+            document.getElementById('statTotal').textContent = `${stats.total}/${companies.length}`;
+            document.getElementById('statAcquired').textContent = stats.acquired;
+            document.getElementById('statActive').textContent = stats.active;
+            document.getElementById('statHighScore').textContent = stats.highScorers;
+            document.getElementById('statAvgScore').textContent = stats.avgScore;
+            document.getElementById('statSkipped').textContent = stats.errors;
+            
+            const progress = companies.length > 0 ? (results.length / companies.length) * 100 : 0;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function updateUI() {
+            document.getElementById('currentIndex').textContent = currentIndex + 1;
+            document.getElementById('totalCompanies').textContent = companies.length;
+            
+            const nextBtn = document.getElementById('nextBtn');
+            const autoBtn = document.getElementById('autoResearchBtn');
+            const exportBtn = document.getElementById('exportBtn');
+            
+            nextBtn.disabled = researching || currentIndex >= companies.length || autoResearch;
+            autoBtn.disabled = currentIndex >= companies.length;
+            exportBtn.disabled = results.length === 0;
+            
+            if (autoResearch) {
+                autoBtn.textContent = '⏸ Pause';
+                autoBtn.className = 'btn-danger';
+                document.getElementById('autoStatus').style.display = 'inline';
+            } else {
+                autoBtn.textContent = '▶ Auto Research All';
+                autoBtn.className = 'btn-success';
+                document.getElementById('autoStatus').style.display = 'none';
+            }
+        }
+
+        function updateStatus(message) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.style.display = 'block';
+        }
+
+        function renderResults() {
+            if (results.length === 0) return;
+            
+            document.getElementById('resultsContainer').style.display = 'block';
+            const resultsList = document.getElementById('resultsList');
+            const recentResults = results.slice().reverse().slice(0, 15);
+            
+            resultsList.innerHTML = recentResults.map(result => {
+                const score = result.score || 0;
+                let scoreClass = 'score-none';
+                if (score >= 8) scoreClass = 'score-high';
+                else if (score >= 6) scoreClass = 'score-medium';
+                else if (score >= 4) scoreClass = 'score-low';
+                else if (score >= 1) scoreClass = 'score-very-low';
+                
+                return `
+                    <div class="result-item">
+                        <div class="result-header">
+                            <strong>${result.company_name || result['Company Name']}</strong>
+                            <span class="score-badge ${scoreClass}">${score}/10</span>
+                            ${result.error ? `<span style="color: #f59e0b; font-size: 0.75rem;">⚠ ${result.error}</span>` : ''}
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.75rem; color: var(--color-text-light); margin: 0.5rem 0;">
+                            <div><strong>Funding:</strong> ${result.total_funding || 'Unknown'}</div>
+                            <div><strong>Status:</strong> ${result.status || 'Unknown'}</div>
+                        </div>
+                        <p style="font-size: 0.75rem; color: var(--color-text);">${result.notes || ''}</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function exportResults() {
+            const csv = [
+                ['Company Name', 'Company URL', 'Accelerator', 'Industry Tag', 'Team Size', 'Status', 'Total Funding', 'Latest Round', 'Acquisition', 'Score', 'Notes', 'Error Message', 'Sources'].join('\t'),
+                ...results.map(r => [
+                    r.company_name || r['Company Name'],
+                    r['Company URL'] || '',
+                    r.Accelerator || '',
+                    r['Industry Tag'] || '',
+                    r['Team Size'] || '',
+                    r.status || '',
+                    r.total_funding || '',
+                    r.latest_round || '',
+                    r.acquisition || '',
+                    r.score || 0,
+                    (r.notes || '').replace(/\t/g, ' ').replace(/\n/g, ' '),
+                    r.error || '',
+                    (r.sources || []).join('; ')
+                ].join('\t'))
+            ].join('\n');
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `vbf-research-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        }
+    </script>
+</body>
+</html>
+
