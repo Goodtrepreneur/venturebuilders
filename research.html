@@ -206,7 +206,6 @@
             </a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="#" onclick="showOpalSection(); return false;">Opal Analysis</a></li>
             </ul>
         </div>
     </nav>
@@ -351,23 +350,6 @@
                     </div>
                     <div id="resultsList" class="results-list"></div>
                 </div>
-            </div>
-
-            <!-- Opal Integration Section -->
-            <div id="opalSection" style="background: white; border-radius: 12px; padding: var(--spacing-lg); border: 1px solid var(--color-border); margin-top: var(--spacing-md); display: none;">
-                <h2 style="font-size: 1.5rem; font-weight: 600; margin-bottom: var(--spacing-md);">Opal Analysis Tool</h2>
-                <div style="border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; min-height: 600px;">
-                    <iframe 
-                        id="opal-iframe" 
-                        style="width: 100%; height: 800px; border: none;"
-                        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-modals allow-storage-access-by-user-activation allow-downloads allow-top-navigation" 
-                        allow="clipboard-read; clipboard-write; microphone; camera"
-                        src="https://opal.google/?flow=drive:/1CiPPj0L03CD8zowmemzuZiO2DVG0rsbZ&shared&mode=app">
-                    </iframe>
-                </div>
-                <p style="margin-top: var(--spacing-sm); font-size: 0.875rem; color: var(--color-text-light); text-align: center;">
-                    Opal analysis tool loaded above. If the content doesn't appear, you may need to authenticate or check the Opal flow access.
-                </p>
             </div>
 
             <!-- Info Box -->
@@ -977,16 +959,6 @@ Return ONLY JSON (no markdown):
             a.href = url;
             a.download = `vbf-research-${new Date().toISOString().split('T')[0]}.csv`;
             a.click();
-        }
-
-        function showOpalSection() {
-            const opalSection = document.getElementById('opalSection');
-            if (opalSection.style.display === 'none' || !opalSection.style.display) {
-                opalSection.style.display = 'block';
-                opalSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                opalSection.style.display = 'none';
-            }
         }
     </script>
 </body>
