@@ -3,307 +3,334 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inpress Investment Vetting Report</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Venture Builders Fund provides first access to exceptional startups before traditional VCs see them. Investing at the true beginning of the venture pipeline.">
+    <title>Venture Builders Fund - First Access to Exceptional Startups</title>
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" type="image/png" href="favicon.png">
-    <style>
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .animate-fadeIn { animation: fadeIn 0.8s ease-out forwards; }
-        .animate-slideIn { animation: slideIn 0.8s ease-out forwards; }
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        .delay-400 { animation-delay: 0.4s; }
-        .delay-500 { animation-delay: 0.5s; }
-        .delay-600 { animation-delay: 0.6s; }
-        .delay-700 { animation-delay: 0.7s; }
-
-        .glass-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(17, 24, 39, 0.7));
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(75, 85, 99, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #8b5cf6, #3b82f6, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-    </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary-dark': '#0F172A', /* Slate-900 */
-                        'secondary-dark': '#1E293B', /* Slate-800 */
-                        'card-dark': '#2D3B4F', /* Slightly lighter slate for cards */
-                        'accent-purple': '#8B5CF6', /* Violet-500 */
-                        'accent-blue': '#3B82F6', /* Blue-500 */
-                        'accent-teal': '#06B6D4', /* Cyan-500 */
-                        'text-light': '#E2E8F0', /* Slate-200 */
-                        'text-muted': '#94A3B8', /* Slate-400 */
-                        'danger-red': '#EF4444', /* Red-500 */
-                        'success-green': '#22C55E', /* Green-500 */
-                    },
-                    fontFamily: {
-                        display: ['Outfit', 'sans-serif'],
-                        body: ['Inter', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.5)',
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-primary-dark text-text-light font-body antialiased min-h-screen p-4 md:p-8">
+<body id="top">
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                VENTURE<br>
+                BUILDERS<br>
+                FUND
+            </div>
+            <ul class="nav-links">
+                <li><a href="#approach">Approach</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#ecosystem">Ecosystem</a></li>
+                <li><a href="#team-section">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <div class="max-w-7xl mx-auto space-y-12 pb-16">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>First Access to Exceptional Startups<br>Before Traditional VCs See Them</h1>
+            <p>We invest at the true beginning of the venture pipeline—inside the world's top accelerators, venture studios, and innovation hubs</p>
+            <div class="cta-buttons">
+                <a href="#approach" class="btn btn-primary">View Our Approach</a>
+                <a href="#portfolio" class="btn btn-secondary">View Portfolio</a>
+            </div>
+            
+            <div class="flow-diagram">
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="flow-step-title">100+ Accelerators & Studios</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step-title">VBF Selection</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step-title">Your Portfolio</div>
+                    </div>
+                </div>
+                <p class="flow-diagram-note">Months/Years Earlier Access vs Traditional VC Deal Flow</p>
+            </div>
+        </div>
+    </section>
 
-        <!-- Header Section -->
-        <header class="text-center py-16 px-4 bg-gradient-to-br from-secondary-dark via-primary-dark to-secondary-dark rounded-3xl shadow-3xl overflow-hidden relative isolate">
-            <div class="absolute inset-0 z-[-1] opacity-20" style="background-image: radial-gradient(circle at top left, var(--tw-accent-purple) 0%, transparent 50%), radial-gradient(circle at bottom right, var(--tw-accent-blue) 0%, transparent 50%);"></div>
-            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-4 animate-fadeIn delay-100">
-                <span class="gradient-text">Inpress</span> Investment Vetting Report
-            </h1>
-            <p class="text-lg sm:text-xl text-text-muted max-w-2xl mx-auto animate-fadeIn delay-200">
-                Detailed analysis for the Accelerator-Side Fund, focusing on <span class="text-accent-teal font-semibold">InPress (the social platform app)</span>.
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Ecosystem Partners</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🦄</div>
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Unicorns Produced</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🌍</div>
+                <div class="stat-number">Global</div>
+                <div class="stat-label">Deal Flow</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-number">10 Years</div>
+                <div class="stat-label">Track Record</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Problem -->
+    <section class="comparison">
+        <div class="container">
+            <h2 class="section-title">Traditional VC Starts Too Late</h2>
+            <div class="comparison-table">
+                <div class="comparison-column traditional">
+                    <h3>Traditional VC Approach</h3>
+                    <div class="comparison-item">❌ Sees deals after Series A</div>
+                    <div class="comparison-item">❌ Competes in crowded rounds</div>
+                    <div class="comparison-item">❌ Limited founder validation</div>
+                    <div class="comparison-item">❌ High risk, high competition</div>
+                </div>
+                <div class="comparison-column vbf">
+                    <h3>Venture Builders Approach</h3>
+                    <div class="comparison-item">✅ First access at inception</div>
+                    <div class="comparison-item">✅ Proprietary deal flow</div>
+                    <div class="comparison-item">✅ Pre-vetted by accelerators</div>
+                    <div class="comparison-item">✅ Lower risk, lower competition</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Infrastructure -->
+    <section id="approach" class="container">
+        <div class="section">
+            <h2 class="section-title">Built Inside the Venture Creation Engine</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🌐</div>
+                    <h3>The Network</h3>
+                    <ul>
+                        <li>100+ top accelerators, studios & innovation hubs</li>
+                        <li>Direct referral relationships</li>
+                        <li>10-year proven partnerships</li>
+                        <li>Exclusive first-look rights</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✓</div>
+                    <h3>The Vetting</h3>
+                    <ul>
+                        <li>Founders vetted by ecosystem partners</li>
+                        <li>Operational support already provided</li>
+                        <li>Traction & product-market fit validated</li>
+                        <li>Corporate pilots unlocked</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>The Selection</h3>
+                    <ul>
+                        <li>Disciplined, repeatable process</li>
+                        <li>Sector & geography agnostic</li>
+                        <li>High-quality opportunity pool</li>
+                        <li>Double validation: ecosystem + our DD</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section id="portfolio" class="container">
+        <div class="section">
+            <h2 class="section-title">Featured Portfolio Companies</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">Company Logo</div>
+                <div class="portfolio-item">Company Logo</div>
+                <div class="portfolio-item">Company Logo</div>
+                <div class="portfolio-item">Company Logo</div>
+                <div class="portfolio-item">Company Logo</div>
+                <div class="portfolio-item">Company Logo</div>
+                <div class="portfolio-item">Company Logo</div>
+                <div class="portfolio-item">Company Logo</div>
+            </div>
+            <p style="text-align: center; margin-top: 2rem;">
+                <a href="#" style="color: #1e3a8a; font-weight: 600; font-size: 1.1rem;">View Full Portfolio →</a>
             </p>
-        </header>
+        </div>
+    </section>
 
-        <!-- Report Introduction -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-12 animate-fadeIn delay-300">
-            <div class="glass-card p-8 rounded-2xl">
-                <h2 class="text-3xl font-display font-semibold mb-4 gradient-text">Report Overview</h2>
-                <p class="text-text-light leading-relaxed">
-                    This report evaluates "Inpress" (the social platform app) against the specific investment criteria for an "Accelerator-Side Fund."
-                    It highlights strengths in market opportunity and product innovation, while also identifying critical information gaps concerning team dynamics, operational metrics, and financial data.
-                </p>
-                <p class="mt-4 text-text-muted text-sm">
-                    Other entities named "Inpress" are excluded as they do not fit the profile of an early-stage, accelerator-backed startup.
-                </p>
-            </div>
-            <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
-                <h3 class="text-2xl font-display font-semibold mb-4 text-accent-teal">Focus: InPress Social App</h3>
-                <ul class="space-y-3 text-text-light list-none pl-0">
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 mr-3 text-accent-purple flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                        Gamified news consumption
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 mr-3 text-accent-purple flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                        AI-driven social/dating connections
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 mr-3 text-accent-purple flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                        Addresses need for meaningful interactions
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Investment Criteria Section -->
-        <section class="mt-16 animate-fadeIn delay-400">
-            <h2 class="text-4xl font-display font-bold mb-8 text-center gradient-text">Investment Criteria for <br class="sm:hidden">Accelerator-Side Fund</h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Criterion 1: Velocity & Coachability -->
-                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 ease-in-out">
-                    <h3 class="text-xl font-display font-semibold mb-3 text-accent-purple">1. "Velocity & Coachability" Metric</h3>
-                    <p class="text-text-muted text-sm mb-4">Focuses on the rate of change during a 3-4 month program.</p>
-                    <ul class="space-y-2 text-text-light list-none pl-0">
-                        <li class="flex items-center"><span class="text-accent-teal mr-2 text-lg">•</span> Pivot Agility</li>
-                        <li class="flex items-center"><span class="text-accent-teal mr-2 text-lg">•</span> Execution Velocity</li>
-                        <li class="flex items-center"><span class="text-accent-teal mr-2 text-lg">•</span> Mentor NPS</li>
-                        <li class="flex items-center"><span class="text-accent-teal mr-2 text-lg">•</span> Absorption Rate</li>
+    <!-- LP Value Proposition -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">Early-Stage Alpha + Lower Risk</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🔐</div>
+                    <h3>Access</h3>
+                    <ul>
+                        <li>Proprietary deal flow months/years earlier</li>
+                        <li>Before traditional VC competition</li>
+                        <li>Highest conviction referrals only</li>
                     </ul>
                 </div>
-
-                <!-- Criterion 2: Selection & Network Filtering -->
-                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 ease-in-out">
-                    <h3 class="text-xl font-display font-semibold mb-3 text-accent-blue">2. Selection & Network Filtering</h3>
-                    <p class="text-text-muted text-sm mb-4">Utilizes a "Double Filter" (accelerator selection + investment committee).</p>
-                    <ul class="space-y-2 text-text-light list-none pl-0">
-                        <li class="flex items-center"><span class="text-accent-teal mr-2 text-lg">•</span> Cohort Ranking (Top 10-20%)</li>
-                        <li class="flex items-center"><span class="text-accent-teal mr-2 text-lg">•</span> Ecosystem "Density"</li>
-                        <li class="flex items-center"><span class="text-accent-teal mr-2 text-lg">•</span> Multi-Accelerator Validation</li>
+                <div class="card">
+                    <div class="card-icon">✅</div>
+                    <h3>Validation</h3>
+                    <ul>
+                        <li>Pre-vetted by proven ecosystem partners</li>
+                        <li>Operational support already delivered</li>
+                        <li>Customer traction demonstrated</li>
                     </ul>
                 </div>
-
-                <!-- Criterion 3: Standard Venture Fundamentals -->
-                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 ease-in-out">
-                    <h3 class="text-xl font-display font-semibold mb-3 text-accent-teal">3. Standard Venture Fundamentals</h3>
-                    <p class="text-text-muted text-sm mb-4">Ensures the business is venture-scale despite the community edge.</p>
-                    <ul class="space-y-2 text-text-light list-none pl-0">
-                        <li class="flex items-center"><span class="text-accent-purple mr-2 text-lg">•</span> Market Opportunity: <span class="font-semibold">$1B+ TAM</span></li>
-                        <li class="flex items-center"><span class="text-accent-purple mr-2 text-lg">•</span> Technical Defensibility</li>
-                        <li class="flex items-center"><span class="text-accent-purple mr-2 text-lg">•</span> Unit Economics: <span class="font-semibold">LTV/CAC > 3:1</span></li>
-                    </ul>
-                </div>
-
-                <!-- Criterion 4: Operational & Governance Criteria -->
-                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 ease-in-out">
-                    <h3 class="text-xl font-display font-semibold mb-3 text-accent-purple">4. Operational & Governance Criteria</h3>
-                    <p class="text-text-muted text-sm mb-4">Focuses on early-stage cleanliness.</p>
-                    <ul class="space-y-2 text-text-light list-none pl-0">
-                        <li class="flex items-center"><span class="text-accent-blue mr-2 text-lg">•</span> Capital Efficiency</li>
-                        <li class="flex items-center"><span class="text-accent-blue mr-2 text-lg">•</span> Cap Table Hygiene</li>
-                        <li class="flex items-center"><span class="text-accent-blue mr-2 text-lg">•</span> Follow-on Interest</li>
+                <div class="card">
+                    <div class="card-icon">📈</div>
+                    <h3>Diversification</h3>
+                    <ul>
+                        <li>Sector agnostic across abundant pipeline</li>
+                        <li>Geographic diversification</li>
+                        <li>Repeatable selection process</li>
                     </ul>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Comparison Table -->
-            <div class="mt-12 glass-card p-6 rounded-2xl animate-fadeIn delay-500">
-                <h3 class="text-2xl font-display font-semibold mb-6 text-center gradient-text">Comparison of Selection Filters</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left table-auto">
-                        <thead>
-                            <tr class="bg-secondary-dark rounded-md">
-                                <th class="py-3 px-4 text-text-muted font-medium text-sm">Traditional VC Filter</th>
-                                <th class="py-3 px-4 text-text-muted font-medium text-sm">Accelerator-Fund Filter</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b border-card-dark hover:bg-card-dark transition-colors duration-200">
-                                <td class="py-3 px-4 text-text-light">Pitch Deck Performance</td>
-                                <td class="py-3 px-4 text-accent-teal">Observed Work Ethic (Weekly Performance)</td>
-                            </tr>
-                            <tr class="border-b border-card-dark hover:bg-card-dark transition-colors duration-200">
-                                <td class="py-3 px-4 text-text-light">Warm Intros</td>
-                                <td class="py-3 px-4 text-accent-teal">Proprietary Pipeline (Internal Access)</td>
-                            </tr>
-                            <tr class="border-b border-card-dark hover:bg-card-dark transition-colors duration-200">
-                                <td class="py-3 px-4 text-text-light">Reference Calls</td>
-                                <td class="py-3 px-4 text-accent-teal">Mentor Deep-Dives (3 months of data)</td>
-                            </tr>
-                            <tr class="hover:bg-card-dark transition-colors duration-200">
-                                <td class="py-3 px-4 text-text-light">Market Hypotheses</td>
-                                <td class="py-3 px-4 text-accent-teal">Real-world Pivot Data</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
+    <!-- Testimonials -->
+    <section id="ecosystem" class="container">
+        <div class="testimonial">
+            <div class="testimonial-text">"Working with Venture Builders Fund gave us access to capital and an extended network that accelerated our growth beyond what we imagined possible."</div>
+            <div class="testimonial-author">— Founder Name, Company (Accelerator Alumni → VBF Portfolio)</div>
+        </div>
+        <div class="testimonial">
+            <div class="testimonial-text">"VBF has been an exceptional partner for our accelerator alumni. Their deep understanding of the ecosystem and commitment to founder success sets them apart."</div>
+            <div class="testimonial-author">— Partner Name, Top Accelerator</div>
+        </div>
+    </section>
 
-        <!-- Vetting Report Content: Inpress (Social Platform App) -->
-        <section class="mt-16 animate-fadeIn delay-600">
-            <h2 class="text-4xl font-display font-bold mb-10 text-center gradient-text">Inpress: Detailed Vetting Report</h2>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-                <!-- 1. Market Opportunity -->
-                <div class="lg:col-span-2 glass-card p-8 rounded-2xl flex flex-col justify-between hover:scale-[1.01] transition-transform duration-300 ease-in-out">
-                    <h3 class="text-2xl font-display font-semibold mb-4 text-accent-purple">1. Market Opportunity</h3>
-                    <div class="space-y-4 text-text-light">
-                        <p><span class="font-semibold text-accent-teal">Target Markets:</span> Factual news consumption, social networking, online matchmaking/dating.</p>
-                        <p><span class="font-semibold text-accent-teal">Value Proposition:</span> Gamified news with AI-driven matching for social/dating, addressing needs for meaningful interactions and informed discussions.</p>
-                        <div class="bg-secondary-dark p-4 rounded-lg">
-                            <p class="font-semibold text-text-light mb-2">Total Addressable Market (TAM):</p>
-                            <ul class="list-disc list-inside text-text-muted text-sm space-y-1">
-                                <li>Global social media: Hundreds of billions annually.</li>
-                                <li>Global online dating: ~$10-12 billion (2023), with projected growth.</li>
-                                <li>Global digital news: Tens of billions.</li>
-                            </ul>
-                        </div>
-                        <p><span class="font-semibold text-success-green">Venture Scale Potential:</span> Aggregate market exceeds <span class="text-accent-purple font-bold">$1B</span> threshold. Innovative combination positions InPress with "outlier potential."</p>
+    <!-- Team Section -->
+    <section id="team-section" class="container">
+        <div class="section">
+            <h2 class="section-title">Our Team</h2>
+            <div class="team-grid">
+                <!-- Paul Joo Yon Kim -->
+                <div class="team-member">
+                    <div class="team-image-wrapper">
+                        <img src="images/team/paul-kim.jpg" alt="Paul Joo Yon Kim" class="team-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Crect fill=%27%23e2e8f0%27 width=%27200%27 height=%27200%27/%3E%3Ctext fill=%27%2364748b%27 font-family=%27sans-serif%27 font-size=%2718%27 x=%2750%25%27 y=%2750%25%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27%3EPaul Kim%3C/text%3E%3C/svg%3E'">
                     </div>
-                </div>
-
-                <!-- 2. Product -->
-                <div class="glass-card p-8 rounded-2xl flex flex-col justify-between hover:scale-[1.01] transition-transform duration-300 ease-in-out">
-                    <h3 class="text-2xl font-display font-semibold mb-4 text-accent-blue">2. Product</h3>
-                    <div class="space-y-4 text-text-light">
-                        <p><span class="font-semibold text-accent-teal">Differentiation:</span> Integrates factual news, gamification, and AI-driven social matchmaking.</p>
-                        <ul class="list-disc list-inside text-text-light space-y-2">
-                            <li><span class="font-semibold">Core Features:</span> Curates news from vetted sources; gamified engagement (points, streaks, "InScore").</li>
-                            <li><span class="font-semibold">Social & Matchmaking:</span> "News + Connections Mode" uses AI for matching based on shared interests from news engagement.</li>
-                        </ul>
-                        <p><span class="font-semibold text-accent-teal">Technical Defensibility:</span> Potential in proprietary AI matching and gamification mechanics. Development by "Scoopt, Incorporated" suggests a capable team.</p>
-                        <p><span class="font-semibold text-accent-teal">Path to Unit Economics (LTV/CAC):</span> Gamified engagement improves LTV. Novel positioning may lead to lower CAC. Potential revenue: subscriptions, news partnerships.</p>
-                    </div>
-                </div>
-
-                <!-- 3. Team -->
-                <div class="glass-card p-8 rounded-2xl flex flex-col justify-between hover:scale-[1.01] transition-transform duration-300 ease-in-out">
-                    <h3 class="text-2xl font-display font-semibold mb-4 text-accent-teal">3. Team</h3>
-                    <div class="space-y-4 text-text-light">
-                        <p><span class="font-semibold text-accent-purple">Origin:</span> Developed by "Scoopt, Incorporated," from Syracuse's Newhouse School.</p>
-                        <p><span class="font-semibold text-danger-red">Information Gaps:</span> Limited specific details on founders, prior experience, or roles.</p>
-                        <p class="font-semibold text-danger-red mb-2">Inability to Assess Accelerator-Specific Criteria:</p>
-                        <ul class="list-disc list-inside text-text-muted text-sm space-y-1">
-                            <li>No data on Pivot Agility or Execution Velocity.</li>
-                            <li>No Mentor NPS or Absorption Rate metrics.</li>
-                            <li>Cannot assess Cohort Ranking, Ecosystem Density, or Multi-Accelerator Validation.</li>
-                        </ul>
-                        <p class="mt-4 text-danger-red font-semibold">Conclusion: Critical accelerator-specific team criteria cannot be evaluated without detailed insights.</p>
-                    </div>
-                </div>
-
-                <!-- 4. Financials & Operational / Governance -->
-                <div class="glass-card p-8 rounded-2xl flex flex-col justify-between hover:scale-[1.01] transition-transform duration-300 ease-in-out">
-                    <h3 class="text-2xl font-display font-semibold mb-4 text-accent-purple">4. Financials & Operational / Governance</h3>
-                    <div class="space-y-4 text-text-light">
-                        <p><span class="font-semibold text-danger-red">Information Gaps:</span> No specific financial data (revenue, profitability, burn rate) provided.</p>
-                        <p class="font-semibold text-danger-red mb-2">Inability to Assess Key Metrics:</p>
-                        <ul class="list-disc list-inside text-text-muted text-sm space-y-1">
-                            <li>No data on Capital Efficiency (remaining "accelerator check," burn rates).</li>
-                            <li>No Cap Table Hygiene details (dead equity, accelerator stake).</li>
-                            <li>No mention of Follow-on Interest from other institutional investors.</li>
-                        </ul>
-                        <p class="mt-4 text-danger-red font-semibold">Conclusion: Significant gaps exist in evaluating operational discipline and investor validation.</p>
-                    </div>
-                </div>
-
-                <!-- 5. Overall Investment Recommendation -->
-                <div class="lg:col-span-3 glass-card p-8 rounded-2xl text-center border-2 border-danger-red relative overflow-hidden animate-fadeIn delay-700">
-                    <div class="absolute inset-0 z-[-1] opacity-5" style="background-image: radial-gradient(circle at center, var(--tw-danger-red) 0%, transparent 70%);"></div>
-                    <h3 class="text-3xl font-display font-bold mb-4 text-danger-red">5. Overall Investment Recommendation</h3>
-                    <p class="text-5xl font-display font-extrabold text-danger-red mb-6 animate-pulse">
-                        NOT RECOMMENDED
-                    </p>
-                    <p class="text-lg text-text-light mb-4">
-                        <span class="font-semibold">Rationale:</span> Insufficient information to leverage the Accelerator-Side Fund model's core advantages.
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                        <div>
-                            <p class="text-xl font-display font-semibold text-success-green mb-3">Strengths Identified:</p>
-                            <ul class="list-disc list-inside text-text-light space-y-2 text-left w-fit mx-auto">
-                                <li>Compelling <span class="font-semibold text-accent-teal">Market Opportunity</span></li>
-                                <li>Unique, defensible <span class="font-semibold text-accent-teal">Product</span></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p class="text-xl font-display font-semibold text-danger-red mb-3">Critical Deficiencies:</p>
-                            <ul class="list-disc list-inside text-text-light space-y-2 text-left w-fit mx-auto">
-                                <li>No observable data for <span class="font-semibold text-danger-red">"Velocity & Coachability"</span></li>
-                                <li><span class="font-semibold text-danger-red">"Selection & Network Filtering"</span> criteria cannot be assessed</li>
-                                <li>Key <span class="font-semibold text-danger-red">"Operational & Governance"</span> metrics entirely missing</li>
-                            </ul>
+                    <div class="team-content">
+                        <h3 class="team-name">Paul Joo Yon Kim</h3>
+                        <p class="team-role">GP & Partner</p>
+                        <p class="team-company">Co-Founder, Know.Capital</p>
+                        <div class="team-bio">
+                            <p>Paul brings the institutional investor mindset to the partnership. As the founder of Know.Capital, he has spent years designing investment vehicles that align financial returns with social and ecosystem impact. His background spans venture building, philanthropy, university-linked funds, nonprofit investment structures, and value-aligned capital initiatives that support both founders and community infrastructure.</p>
+                            <p>Paul has deep experience evaluating and structuring investments tied to accelerators, universities, public-good innovation ecosystems, and mission-driven venture vehicles. He has previously helped organizations like Drexel University and TechSoup design funds that channel capital into vetted founders and underrepresented innovation communities — giving him a rare understanding of how venture-backed startups grow in alternative, high-talent ecosystems.</p>
+                            <p>Paul brings strong financial acumen, investment discipline, and governance strength, providing the fund with institutional-grade rigor. He complements Jillian's network leadership and Steve's operational founder judgment with a structured investment philosophy grounded in impact, asymmetric upside, and long-term sustainability.</p>
                         </div>
                     </div>
-                    <p class="mt-8 text-text-muted text-md">
-                        <span class="font-semibold text-accent-blue">Next Steps:</span> Further due diligence required, focusing on InPress's journey through an accelerator program (if any) and detailed operational/financial data.
-                    </p>
                 </div>
 
+                <!-- Jillian Friot -->
+                <div class="team-member">
+                    <div class="team-image-wrapper">
+                        <img src="images/team/jillian-friot.jpg" alt="Jillian Friot" class="team-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Crect fill=%27%23e2e8f0%27 width=%27200%27 height=%27200%27/%3E%3Ctext fill=%27%2364748b%27 font-family=%27sans-serif%27 font-size=%2718%27 x=%2750%25%27 y=%2750%25%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27%3EJillian Friot%3C/text%3E%3C/svg%3E'">
+                    </div>
+                    <div class="team-content">
+                        <h3 class="team-name">Jillian Friot</h3>
+                        <p class="team-role">GP & Managing Partner</p>
+                        <p class="team-company">CEO, Global Venture Network (GVN)</p>
+                        <div class="team-bio">
+                            <p>Jillian is recognized globally as one of the most trusted conveners of early-stage venture leaders. As CEO of the Global Venture Network, she oversees a community spanning 50+ countries, comprising the world's leading startup accelerators, venture studios, innovation hubs, corporate innovation teams, and early-stage investors. Her career centers on enabling the people and institutions who build the future — and she has unparalleled visibility into the highest-quality founders emerging from structured venture-building programs.</p>
+                            <p>She has personally supported thousands of founders through the networks she leads and has deep relationships with program managers, EIRs, ecosystem leads, corporate innovation executives, and investor partners. Her vantage point sits at the intersection of three critical ingredients of alpha generation: elite founder development, curated deal flow, and strong ecosystem pattern-matching.</p>
+                            <p>Her leadership experience extends from corporate strategy to global ecosystem-building, and her brand is synonymous with trust, founder advocacy, and operational excellence. Jillian brings a rare combination of venture fluency, community intelligence, and relationship-driven sourcing, enabling the fund to capture lower-beta, higher-conviction opportunities across the GVN ecosystem.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Steve Hayton -->
+                <div class="team-member">
+                    <div class="team-image-wrapper">
+                        <img src="images/team/steve-hayton.jpg" alt="Steve Hayton" class="team-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Crect fill=%27%23e2e8f0%27 width=%27200%27 height=%27200%27/%3E%3Ctext fill=%27%2364748b%27 font-family=%27sans-serif%27 font-size=%2718%27 x=%2750%25%27 y=%2750%25%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27%3ESteve Hayton%3C/text%3E%3C/svg%3E'">
+                    </div>
+                    <div class="team-content">
+                        <h3 class="team-name">Steve Hayton</h3>
+                        <p class="team-role">GP & Partner</p>
+                        <p class="team-company">Chief Experience Officer, Global Venture Network (GVN)</p>
+                        <div class="team-bio">
+                            <p>Steve is one of the most respected operators in the accelerator and venture-building world. As GVN's Chief Experience Officer, he architected the network's founder development frameworks, accelerator methodologies, and global programming — widely adopted playbooks used by venture organizations across North America, Europe, Asia, and Latin America.</p>
+                            <p>He has coached hundreds of founders and venture leaders, designed programs that have supported companies through millions in follow-on capital, and shaped how innovation organizations measure success. His work bridges behavioral science, venture modeling, and operational rigor — making him exceptionally skilled at evaluating founder readiness, startup resilience, and early inflection points.</p>
+                            <p>Steve's gift is spotting teams with coachability, grit, and execution capacity long before traditional investors can. As LPs at First Round often say, "early is a phase, not a stage," and Steve has spent the last decade working in that exact phase. His pattern recognition, diligence capability, and people-first investment lens provide the fund with a sharp, evidence-backed advantage in sourcing and underwriting early-stage opportunities from structured programs.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
 
-    </div>
+            <!-- Why This Team Works -->
+            <div class="team-why">
+                <h2 class="section-title">Why This Team Works</h2>
+                <p class="team-why-intro">Together, the partners combine:</p>
+                <div class="team-benefits-grid">
+                    <div class="team-benefit">
+                        <div class="team-benefit-icon">🌐</div>
+                        <h4>Unmatched Proprietary Access</h4>
+                        <p>Highest-quality startups emerging from accelerators, studios, hubs, and corporate innovation pipelines.</p>
+                    </div>
+                    <div class="team-benefit">
+                        <div class="team-benefit-icon">🔍</div>
+                        <h4>Deep Founder Assessment</h4>
+                        <p>Expertise rooted in behavioral observation, founder development, and performance frameworks.</p>
+                    </div>
+                    <div class="team-benefit">
+                        <div class="team-benefit-icon">🏛️</div>
+                        <h4>Institutional Investment Design</h4>
+                        <p>Ensuring strong governance, repeatable processes, and LP-aligned fund mechanics.</p>
+                    </div>
+                    <div class="team-benefit">
+                        <div class="team-benefit-icon">🌍</div>
+                        <h4>Global Community Advantage</h4>
+                        <p>Converting relationships into curated, lower-beta, higher-alpha opportunities.</p>
+                    </div>
+                </div>
+                <p class="team-why-conclusion">This fund is uniquely positioned to invest at precisely the point where innovation meets readiness, capturing high-potential deals validated through rigorous venture-building environments while leveraging a network that spans the entire early-stage ecosystem.</p>
+            </div>
+        </div>
+    </section>
 
+    <!-- Final CTA -->
+    <section id="contact" class="final-cta">
+        <div class="cta-grid">
+            <div class="cta-box">
+                <h3>For Limited Partners</h3>
+                <p>Partner with a fund that sees deals traditional VCs miss</p>
+                <a href="#" class="btn btn-primary">Download Investment Memo</a>
+                <a href="#" class="btn btn-secondary">Schedule LP Call</a>
+            </div>
+            <div class="cta-box">
+                <h3>For Founders</h3>
+                <p>Portfolio founders get ongoing support from our ecosystem network</p>
+                <a href="#" class="btn btn-primary">Apply to Portfolio</a>
+                <a href="#" style="color: #1e3a8a; font-weight: 600; display: block; margin-top: 1rem;">See Portfolio Benefits →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="team">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#approach">Approach</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#ecosystem">Ecosystem</a>
+                <a href="#team-section">Team</a>
+                <a href="#contact">Contact</a>
+                <a href="#">Resources</a>
+            </div>
+            <p>&copy; 2024 Venture Builders Fund. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
