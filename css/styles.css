@@ -144,6 +144,15 @@ nav {
     text-decoration: none;
 }
 
+.nav-heading {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text, #1e293b);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
 .logo-image {
     height: 40px;
     width: auto;
