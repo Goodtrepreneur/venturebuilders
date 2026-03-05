@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Founder Portal — Venture Builders Fund</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgMain: '#0f172a',
+                        cardMain: '#1e293b',
+                        accentCyan: '#22d3ee',
+                        accentBlue: '#3b82f6',
+                        accentPink: '#e879f9'
+                    }
+                }
+            }
+        }
+    </script>
+    <style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-bgMain text-slate-50 min-h-screen">
+
+    <!-- Auth: magic link -->
+    <div id="auth-screen" class="max-w-md mx-auto px-6 py-20">
+        <div class="bg-cardMain rounded-2xl p-8 border border-slate-700 shadow-xl">
+            <h1 class="text-2xl font-bold text-white mb-2">Founder Portal</h1>
+            <p class="text-slate-400 text-sm mb-6">Sign in with your email. We’ll send you a magic link—no password needed.</p>
+            <form id="auth-form" class="space-y-4">
+                <div>
+                    <label for="auth-email" class="block text-sm font-medium text-slate-300 mb-1">Email</label>
+                    <input type="email" id="auth-email" required placeholder="you@company.com"
+                        class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                </div>
+                <div id="auth-message" class="text-sm text-accentCyan hidden"></div>
+                <button type="submit" id="auth-submit" class="w-full py-3 px-4 bg-accentCyan text-bgMain font-semibold rounded-lg hover:bg-accentCyan/90 transition-colors">
+                    Send magic link
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- App: form (shown when logged in) -->
+    <div id="app-screen" class="hidden max-w-3xl mx-auto px-6 py-10 pb-20">
+        <div class="flex items-center justify-between mb-8">
+            <h1 class="text-2xl font-bold text-white">Your startup profile</h1>
+            <button type="button" id="sign-out-btn" class="text-sm text-slate-400 hover:text-accentCyan transition-colors">Sign out</button>
+        </div>
+
+        <form id="founder-form" class="space-y-8">
+            <!-- Optional: contact -->
+            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700">
+                <h2 class="text-lg font-bold text-accentCyan mb-4">Contact (optional)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-slate-300 mb-1">Email</label>
+                        <input type="email" id="email" name="email" placeholder="you@company.com"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                    </div>
+                    <div>
+                        <label for="founder_name" class="block text-sm font-medium text-slate-300 mb-1">Founder name</label>
+                        <input type="text" id="founder_name" name="founder_name" placeholder="Full name"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="co_founder_names" class="block text-sm font-medium text-slate-300 mb-1">Co-founder names</label>
+                        <input type="text" id="co_founder_names" name="co_founder_names" placeholder="Names, comma-separated"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-slate-300 mb-1">Phone</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+1 234 567 8900"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Required: company -->
+            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700">
+                <h2 class="text-lg font-bold text-accentCyan mb-4">Company <span class="text-slate-500 font-normal">(required)</span></h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="company_name" class="block text-sm font-medium text-slate-300 mb-1">Company name <span class="text-slate-500">*</span></label>
+                        <input type="text" id="company_name" name="company_name" required placeholder="Acme Inc."
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                    </div>
+                    <div>
+                        <label for="one_liner" class="block text-sm font-medium text-slate-300 mb-1">One-liner / tagline <span class="text-slate-500">*</span></label>
+                        <input type="text" id="one_liner" name="one_liner" required placeholder="One sentence that describes your company"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                    </div>
+                    <div>
+                        <label for="website" class="block text-sm font-medium text-slate-300 mb-1">Website <span class="text-slate-500">*</span></label>
+                        <input type="url" id="website" name="website" required placeholder="https://example.com"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="stage" class="block text-sm font-medium text-slate-300 mb-1">Stage <span class="text-slate-500">*</span></label>
+                            <select id="stage" name="stage" required class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                                <option value="">Select stage</option>
+                                <option value="idea">Idea</option>
+                                <option value="pre-seed">Pre-seed</option>
+                                <option value="seed">Seed</option>
+                                <option value="series-a">Series A</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="industry" class="block text-sm font-medium text-slate-300 mb-1">Industry / sector <span class="text-slate-500">*</span></label>
+                            <input type="text" id="industry" name="industry" required placeholder="e.g. Fintech, Health"
+                                class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-slate-300 mb-1">Description / problem & solution <span class="text-slate-500">*</span></label>
+                        <textarea id="description" name="description" required rows="4" placeholder="What you do and the problem you solve"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan"></textarea>
+                    </div>
+                    <div>
+                        <label for="target_market" class="block text-sm font-medium text-slate-300 mb-1">Target market <span class="text-slate-500">*</span></label>
+                        <textarea id="target_market" name="target_market" required rows="2" placeholder="Who are your customers?"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan"></textarea>
+                    </div>
+                    <div>
+                        <label for="business_model" class="block text-sm font-medium text-slate-300 mb-1">Business model <span class="text-slate-500">*</span></label>
+                        <textarea id="business_model" name="business_model" required rows="2" placeholder="How you make money"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan"></textarea>
+                    </div>
+                    <div>
+                        <label for="traction" class="block text-sm font-medium text-slate-300 mb-1">Traction <span class="text-slate-500">*</span></label>
+                        <input type="text" id="traction" name="traction" required placeholder="Revenue, users, pilots, etc."
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="funding_to_date" class="block text-sm font-medium text-slate-300 mb-1">Funding to date <span class="text-slate-500">*</span></label>
+                            <input type="text" id="funding_to_date" name="funding_to_date" required placeholder="e.g. $0, $50k"
+                                class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        </div>
+                        <div>
+                            <label for="current_ask" class="block text-sm font-medium text-slate-300 mb-1">Current ask <span class="text-slate-500">*</span></label>
+                            <input type="text" id="current_ask" name="current_ask" required placeholder="What you’re raising or looking for"
+                                class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="location" class="block text-sm font-medium text-slate-300 mb-1">Location / HQ city <span class="text-slate-500">*</span></label>
+                            <input type="text" id="location" name="location" required placeholder="e.g. San Francisco, CA"
+                                class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        </div>
+                        <div>
+                            <label for="founded_date" class="block text-sm font-medium text-slate-300 mb-1">Founded (year or date) <span class="text-slate-500">*</span></label>
+                            <input type="text" id="founded_date" name="founded_date" required placeholder="e.g. 2024"
+                                class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Optional: program -->
+            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700">
+                <h2 class="text-lg font-bold text-accentCyan mb-4">Program (optional)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="program_name" class="block text-sm font-medium text-slate-300 mb-1">Program name</label>
+                        <input type="text" id="program_name" name="program_name" placeholder="e.g. Accelerator X"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                    </div>
+                    <div>
+                        <label for="cohort_date" class="block text-sm font-medium text-slate-300 mb-1">Cohort / batch</label>
+                        <input type="text" id="cohort_date" name="cohort_date" placeholder="e.g. Spring 2024"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="how_you_heard" class="block text-sm font-medium text-slate-300 mb-1">How you heard about us</label>
+                        <input type="text" id="how_you_heard" name="how_you_heard" placeholder="e.g. Referral from Jane"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                    </div>
+                </div>
+            </section>
+
+            <div id="form-message" class="text-sm hidden"></div>
+            <button type="submit" id="form-submit" class="w-full py-3 px-4 bg-accentCyan text-bgMain font-semibold rounded-lg hover:bg-accentCyan/90 transition-colors">
+                Save startup profile
+            </button>
+        </form>
+    </div>
+
+    <script src="js/supabase-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script>
+        (function() {
+            var supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+            var authScreen = document.getElementById('auth-screen');
+            var appScreen = document.getElementById('app-screen');
+            var authForm = document.getElementById('auth-form');
+            var authEmail = document.getElementById('auth-email');
+            var authMessage = document.getElementById('auth-message');
+            var authSubmit = document.getElementById('auth-submit');
+            var founderForm = document.getElementById('founder-form');
+            var formMessage = document.getElementById('form-message');
+            var formSubmit = document.getElementById('form-submit');
+            var signOutBtn = document.getElementById('sign-out-btn');
+
+            function showAuth() {
+                authScreen.classList.remove('hidden');
+                appScreen.classList.add('hidden');
+            }
+            function showApp() {
+                authScreen.classList.add('hidden');
+                appScreen.classList.remove('hidden');
+            }
+            function setAuthMessage(text, isError) {
+                authMessage.textContent = text;
+                authMessage.classList.remove('hidden');
+                authMessage.classList.toggle('text-red-400', isError);
+                authMessage.classList.toggle('text-accentCyan', !isError);
+            }
+            function setFormMessage(text, isError) {
+                formMessage.textContent = text;
+                formMessage.classList.remove('hidden');
+                formMessage.className = 'text-sm ' + (isError ? 'text-red-400' : 'text-accentCyan');
+            }
+
+            authForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var email = authEmail.value.trim();
+                if (!email) return;
+                authSubmit.disabled = true;
+                setAuthMessage('Sending magic link…', false);
+                var redirectTo = window.location.origin + window.location.pathname;
+                supabase.auth.signInWithOtp({ email: email, options: { emailRedirectTo: redirectTo } })
+                    .then(function(res) {
+                        if (res.error) {
+                            setAuthMessage(res.error.message || 'Something went wrong.', true);
+                            authSubmit.disabled = false;
+                            return;
+                        }
+                        setAuthMessage('Check your email and click the link to sign in.', false);
+                        authSubmit.disabled = false;
+                    })
+                    .catch(function(err) {
+                        setAuthMessage(err.message || 'Something went wrong.', true);
+                        authSubmit.disabled = false;
+                    });
+            });
+
+            signOutBtn.addEventListener('click', function() {
+                supabase.auth.signOut().then(function() { showAuth(); });
+            });
+
+            function formDataToPayload() {
+                var fd = new FormData(founderForm);
+                var payload = {};
+                fd.forEach(function(value, key) { payload[key] = value || null; });
+                return payload;
+            }
+            function fillForm(row) {
+                var names = ['email','founder_name','co_founder_names','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','location','founded_date','program_name','cohort_date','how_you_heard'];
+                names.forEach(function(name) {
+                    var el = founderForm.elements[name];
+                    if (el && row[name] != null) el.value = row[name] || '';
+                });
+            }
+
+            founderForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                formSubmit.disabled = true;
+                formMessage.classList.add('hidden');
+                var payload = formDataToPayload();
+
+                supabase.auth.getUser()
+                    .then(function(userRes) {
+                        var user = userRes.data && userRes.data.user;
+                        if (!user) {
+                            setFormMessage('You must be signed in.', true);
+                            formSubmit.disabled = false;
+                            return Promise.reject(new Error('not signed in'));
+                        }
+                        payload.user_id = user.id;
+                        return supabase.from('founder_startups').select('id').eq('user_id', user.id).maybeSingle();
+                    })
+                    .then(function(res) {
+                        if (res && res.error) {
+                            setFormMessage(res.error.message || 'Failed to save.', true);
+                            formSubmit.disabled = false;
+                            return;
+                        }
+                        var uid = payload.user_id;
+                        if (res && res.data) {
+                            return supabase.from('founder_startups').update(payload).eq('user_id', uid).select().single();
+                        } else {
+                            return supabase.from('founder_startups').insert(payload).select().single();
+                        }
+                    })
+                    .then(function(res) {
+                        if (res && res.error) {
+                            setFormMessage(res.error.message || 'Failed to save.', true);
+                        } else if (res) {
+                            setFormMessage('Saved. You can come back anytime to update your profile.', false);
+                        }
+                        formSubmit.disabled = false;
+                    })
+                    .catch(function(err) {
+                        if (err && err.message !== 'not signed in') {
+                            setFormMessage(err.message || 'Something went wrong.', true);
+                        }
+                        formSubmit.disabled = false;
+                    });
+            });
+
+            supabase.auth.onAuthStateChange(function(event, session) {
+                if (session && session.user) {
+                    showApp();
+                    authMessage.classList.add('hidden');
+                    supabase.from('founder_startups').select('*').eq('user_id', session.user.id).maybeSingle()
+                        .then(function(res) {
+                            if (res.data) fillForm(res.data);
+                            if (session.user.email && !founderForm.elements['email'].value) founderForm.elements['email'].value = session.user.email;
+                        });
+                } else {
+                    showAuth();
+                }
+            });
+
+            // Initial state: if already logged in (e.g. return from magic link), onAuthStateChange will run
+            supabase.auth.getSession().then(function(res) {
+                if (res.data && res.data.session) {
+                    showApp();
+                    var uid = res.data.session.user.id;
+                    supabase.from('founder_startups').select('*').eq('user_id', uid).maybeSingle()
+                        .then(function(r) {
+                            if (r.data) fillForm(r.data);
+                            if (res.data.session.user.email && !founderForm.elements['email'].value) founderForm.elements['email'].value = res.data.session.user.email;
+                        });
+                } else {
+                    showAuth();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
