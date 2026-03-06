@@ -1,5 +1,58 @@
 # Founder portal setup
 
+## Running migrations (Supabase CLI)
+
+To apply the SQL migrations in `supabase/migrations/` (e.g. `001_initial_schema.sql`) to your linked Supabase project:
+
+1. **Install the Supabase CLI** (if needed):  
+   [Installation guide](https://supabase.com/docs/guides/cli/getting-started)
+
+2. **Log in and link your project** (one-time):
+   ```bash
+   supabase login
+   supabase link --project-ref YOUR_PROJECT_REF
+   ```
+   Get `YOUR_PROJECT_REF` from the project URL in the dashboard:  
+   `https://supabase.com/dashboard/project/<project-ref>`.
+
+3. **Push migrations to the remote database**:
+   ```bash
+   supabase db push
+   ```
+   This runs any new migration files in `supabase/migrations/` that haven’t been applied yet.
+
+To create a new migration after changing the schema locally:
+```bash
+supabase migration new your_migration_name
+```
+Then edit the new file in `supabase/migrations/` and run `supabase db push` again.
+
+---
+
+## Edge Function: notify-reveal
+
+The `notify-reveal` function is invoked when a user reveals an email on the dashboard. It sends a Slack message and creates an Airtable record in parallel.
+
+**Deploy the function:**
+```bash
+supabase functions deploy notify-reveal
+```
+
+**Set secrets** (Dashboard → Project Settings → Edge Functions, or CLI):
+```bash
+supabase secrets set SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
+supabase secrets set AIRTABLE_TOKEN=your_airtable_personal_access_token
+supabase secrets set AIRTABLE_BASE_ID=your_airtable_base_id
+```
+
+- **SLACK_WEBHOOK_URL**: Incoming webhook URL from Slack.
+- **AIRTABLE_TOKEN**: Airtable personal access token (with `data.records:write` scope for the base).
+- **AIRTABLE_BASE_ID**: Base ID from the Airtable base URL (`https://airtable.com/appXXXXXXXXXXXXXX` → `appXXXXXXXXXXXXXX`).
+
+The Airtable base must have a table named **"Email Reveals"** with fields: **User**, **Record**, **Revealed At**. Failures are logged but do not change the HTTP response (200 OK).
+
+---
+
 ## 1. Run the SQL in Supabase
 
 1. Open [Supabase Dashboard](https://supabase.com/dashboard) → your project.
