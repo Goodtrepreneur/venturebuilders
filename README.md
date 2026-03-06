@@ -29,8 +29,13 @@ Set these in the Supabase Dashboard: **Edge Functions** → **Environment Variab
 | `SLACK_WEBHOOK_URL` | Slack app → **Incoming Webhooks** → webhook URL for your workspace/channel |
 | `AIRTABLE_TOKEN` | Airtable account → **Personal Access Tokens** (create a token with access to the base) |
 | `AIRTABLE_BASE_ID` | Airtable base URL in the browser: `https://airtable.com/appXXXXXXXXXX` → the `appXXXXXXXXXX` part |
+| `AIRTABLE_TABLE` | Airtable table name or table id (for **sync-to-airtable** and optionally **notify-reveal**) |
+| `DB_URL` | Supabase project URL (Project Settings → API) — for **sync-to-airtable** |
+| `DB_SERVICE_KEY` | Supabase **service role** key (Project Settings → API) — for **sync-to-airtable** |
+| `SUPABASE_TABLE` | Supabase table name to update when writing back Airtable id (e.g. `founderbase`) — for **sync-to-airtable** |
 
-Used by the `notify-reveal` Edge Function (Slack notification + Airtable “Email Reveals” table).
+- **notify-reveal**: Slack + Airtable “Email Reveals” (uses `SLACK_WEBHOOK_URL`, `AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`).
+- **sync-to-airtable**: Syncs a Supabase row to Airtable (create or update) and writes Airtable id back (uses all of the above).
 
 ---
 

@@ -53,6 +53,29 @@ The Airtable base must have a table named **"Email Reveals"** with fields: **Use
 
 ---
 
+## Edge Function: sync-to-airtable
+
+Syncs a Supabase table row to Airtable. POST the full row as JSON. If the row has no `airtable_id`, a new Airtable record is created and the returned Airtable id is written back to the Supabase row. If `airtable_id` is present, the existing Airtable record is updated (PATCH). All fields except `id`, `airtable_id`, and `email` are sent to Airtable.
+
+**Deploy:**
+```bash
+supabase functions deploy sync-to-airtable
+```
+
+**Secrets** (Dashboard → Edge Functions → Environment Variables, or CLI):
+```bash
+supabase secrets set AIRTABLE_TOKEN=...
+supabase secrets set AIRTABLE_BASE_ID=...
+supabase secrets set AIRTABLE_TABLE=...        # Airtable table name or id
+supabase secrets set DB_URL=...              # Project URL (e.g. https://xxx.supabase.co)
+supabase secrets set DB_SERVICE_KEY=...      # Service role key
+supabase secrets set SUPABASE_TABLE=...       # Supabase table to update (e.g. founderbase)
+```
+
+Ensure the Supabase table has an `airtable_id` column (see migration `003_founderbase_airtable_id.sql` for founderbase).
+
+---
+
 ## 1. Run the SQL in Supabase
 
 1. Open [Supabase Dashboard](https://supabase.com/dashboard) → your project.
