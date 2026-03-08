@@ -152,9 +152,76 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="location" class="block text-sm font-medium text-slate-300 mb-1">Location / HQ city <span class="text-slate-500">*</span></label>
-                            <input type="text" id="location" name="location" required placeholder="e.g. San Francisco, CA"
+                            <label for="city" class="block text-sm font-medium text-slate-300 mb-1">City</label>
+                            <input type="text" id="city" name="city" placeholder="e.g. San Francisco"
                                 class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        </div>
+                        <div>
+                            <label for="state_region" class="block text-sm font-medium text-slate-300 mb-1">State / Region / Province</label>
+                            <input type="text" id="state_region" name="state_region" placeholder="e.g. California"
+                                class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="country" class="block text-sm font-medium text-slate-300 mb-1">Country</label>
+                            <select id="country" name="country" class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                                <option value="">—</option>
+                                <option value="Afghanistan">Afghanistan</option>
+                                <option value="Albania">Albania</option>
+                                <option value="Algeria">Algeria</option>
+                                <option value="Argentina">Argentina</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Austria">Austria</option>
+                                <option value="Bangladesh">Bangladesh</option>
+                                <option value="Belgium">Belgium</option>
+                                <option value="Brazil">Brazil</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Chile">Chile</option>
+                                <option value="China">China</option>
+                                <option value="Colombia">Colombia</option>
+                                <option value="Costa Rica">Costa Rica</option>
+                                <option value="Czech Republic">Czech Republic</option>
+                                <option value="Denmark">Denmark</option>
+                                <option value="Egypt">Egypt</option>
+                                <option value="Estonia">Estonia</option>
+                                <option value="Finland">Finland</option>
+                                <option value="France">France</option>
+                                <option value="Germany">Germany</option>
+                                <option value="Ghana">Ghana</option>
+                                <option value="Greece">Greece</option>
+                                <option value="Hong Kong">Hong Kong</option>
+                                <option value="Hungary">Hungary</option>
+                                <option value="India">India</option>
+                                <option value="Indonesia">Indonesia</option>
+                                <option value="Ireland">Ireland</option>
+                                <option value="Israel">Israel</option>
+                                <option value="Italy">Italy</option>
+                                <option value="Japan">Japan</option>
+                                <option value="Kenya">Kenya</option>
+                                <option value="Malaysia">Malaysia</option>
+                                <option value="Mexico">Mexico</option>
+                                <option value="Netherlands">Netherlands</option>
+                                <option value="New Zealand">New Zealand</option>
+                                <option value="Nigeria">Nigeria</option>
+                                <option value="Norway">Norway</option>
+                                <option value="Pakistan">Pakistan</option>
+                                <option value="Philippines">Philippines</option>
+                                <option value="Poland">Poland</option>
+                                <option value="Portugal">Portugal</option>
+                                <option value="Romania">Romania</option>
+                                <option value="Singapore">Singapore</option>
+                                <option value="South Africa">South Africa</option>
+                                <option value="South Korea">South Korea</option>
+                                <option value="Spain">Spain</option>
+                                <option value="Sweden">Sweden</option>
+                                <option value="Switzerland">Switzerland</option>
+                                <option value="Taiwan">Taiwan</option>
+                                <option value="Thailand">Thailand</option>
+                                <option value="Turkey">Turkey</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="United States">United States</option>
+                                <option value="Vietnam">Vietnam</option>
+                                <option value="Other">Other</option>
+                            </select>
                         </div>
                         <div>
                             <label for="founded_date" class="block text-sm font-medium text-slate-300 mb-1">Founded date <span class="text-slate-500">*</span></label>
@@ -294,6 +361,10 @@
                     payload.current_ask = (typeof av === 'number' && !isNaN(av) && av >= 0) ? av : 0;
                 }
                 payload.how_you_heard = null;
+                if (payload.location !== undefined) delete payload.location;
+                ['city', 'state_region', 'country'].forEach(function(k) {
+                    if (payload[k] !== undefined && (payload[k] === '' || payload[k] == null)) payload[k] = null;
+                });
                 return payload;
             }
             function getCoFoundersFromForm() {
@@ -331,7 +402,7 @@
             document.getElementById('add-co-founder-btn').addEventListener('click', function() { addCoFounderRow(); });
 
             function fillForm(row, coFounders) {
-                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','location','program_name'];
+                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','city','state_region','country','program_name'];
                 names.forEach(function(name) {
                     var el = founderForm.elements[name];
                     if (el && row[name] != null) el.value = row[name] || '';
