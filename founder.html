@@ -67,9 +67,11 @@
                             class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                     </div>
                     <div class="md:col-span-2">
-                        <label for="co_founder_names" class="block text-sm font-medium text-slate-300 mb-1">Co-founder names</label>
-                        <input type="text" id="co_founder_names" name="co_founder_names" placeholder="Names, comma-separated"
-                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Co-founders</label>
+                        <div id="co-founders-container" class="space-y-3"></div>
+                        <button type="button" id="add-co-founder-btn" class="mt-2 text-sm text-accentCyan hover:text-accentCyan/80 transition-colors">
+                            + Add co-founder
+                        </button>
                     </div>
                     <div>
                         <label for="phone" class="block text-sm font-medium text-slate-300 mb-1">Phone</label>
@@ -155,8 +157,8 @@
                                 class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                         </div>
                         <div>
-                            <label for="founded_date" class="block text-sm font-medium text-slate-300 mb-1">Founded (year or date) <span class="text-slate-500">*</span></label>
-                            <input type="text" id="founded_date" name="founded_date" required placeholder="e.g. 2024"
+                            <label for="founded_date" class="block text-sm font-medium text-slate-300 mb-1">Founded date <span class="text-slate-500">*</span></label>
+                            <input type="date" id="founded_date" name="founded_date" required
                                 class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                         </div>
                     </div>
@@ -207,6 +209,11 @@
             var formMessage = document.getElementById('form-message');
             var formSubmit = document.getElementById('form-submit');
             var signOutBtn = document.getElementById('sign-out-btn');
+
+            (function setFoundedDateMax() {
+                var foundedDateInput = document.getElementById('founded_date');
+                if (foundedDateInput) foundedDateInput.setAttribute('max', new Date().toISOString().split('T')[0]);
+            })();
 
             function showAuth() {
                 authScreen.classList.remove('hidden');
@@ -259,14 +266,51 @@
                 var fd = new FormData(founderForm);
                 var payload = {};
                 fd.forEach(function(value, key) { payload[key] = value || null; });
+                delete payload.co_founder_names;
                 return payload;
             }
-            function fillForm(row) {
-                var names = ['email','founder_name','co_founder_names','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','location','founded_date','program_name','cohort_date','how_you_heard'];
+            function getCoFoundersFromForm() {
+                var rows = founderForm.querySelectorAll('.co-founder-row');
+                var list = [];
+                rows.forEach(function(row) {
+                    var first = (row.querySelector('.co-founder-first-name') || {}).value;
+                    var last = (row.querySelector('.co-founder-last-name') || {}).value;
+                    var role = (row.querySelector('.co-founder-role') || {}).value;
+                    if (first && last) list.push({ first_name: first.trim(), last_name: last.trim(), role: role ? role.trim() : null });
+                });
+                return list;
+            }
+            var inputClass = 'w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan';
+            function addCoFounderRow(data) {
+                data = data || {};
+                var row = document.createElement('div');
+                row.className = 'co-founder-row flex flex-wrap items-end gap-3 p-3 rounded-lg bg-slate-800/50 border border-slate-700';
+                row.innerHTML =
+                    '<div class="flex-1 min-w-[120px]"><input type="text" class="co-founder-first-name ' + inputClass + '" placeholder="First name"></div>' +
+                    '<div class="flex-1 min-w-[120px]"><input type="text" class="co-founder-last-name ' + inputClass + '" placeholder="Last name"></div>' +
+                    '<div class="flex-1 min-w-[100px]"><input type="text" class="co-founder-role ' + inputClass + '" placeholder="Role (optional)"></div>' +
+                    '<button type="button" class="co-founder-remove text-slate-400 hover:text-red-400 transition-colors px-2 py-1" title="Remove">Remove</button>';
+                row.querySelector('.co-founder-first-name').value = data.first_name || '';
+                row.querySelector('.co-founder-last-name').value = data.last_name || '';
+                row.querySelector('.co-founder-role').value = data.role || '';
+                var container = document.getElementById('co-founders-container');
+                container.appendChild(row);
+                row.querySelector('.co-founder-remove').addEventListener('click', function() { row.remove(); });
+            }
+            function clearCoFoundersContainer() {
+                var container = document.getElementById('co-founders-container');
+                if (container) container.innerHTML = '';
+            }
+            document.getElementById('add-co-founder-btn').addEventListener('click', function() { addCoFounderRow(); });
+
+            function fillForm(row, coFounders) {
+                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','location','founded_date','program_name','cohort_date','how_you_heard'];
                 names.forEach(function(name) {
                     var el = founderForm.elements[name];
                     if (el && row[name] != null) el.value = row[name] || '';
                 });
+                clearCoFoundersContainer();
+                (coFounders || []).forEach(function(c) { addCoFounderRow(c); });
             }
 
             founderForm.addEventListener('submit', function(e) {
@@ -290,22 +334,46 @@
                         if (res && res.error) {
                             setFormMessage(res.error.message || 'Failed to save.', true);
                             formSubmit.disabled = false;
-                            return;
+                            return Promise.reject(new Error('save failed'));
                         }
                         var uid = payload.user_id;
-                        if (res && res.data) {
-                            return supabase.from('founder_startups').update(payload).eq('user_id', uid).select().single();
+                        var existingId = res && res.data ? res.data.id : null;
+                        if (existingId) {
+                            return supabase.from('founder_startups').update(payload).eq('user_id', uid).select().single()
+                                .then(function(up) { return up.data ? { data: up.data, id: up.data.id } : up; });
                         } else {
-                            return supabase.from('founder_startups').insert(payload).select().single();
+                            return supabase.from('founder_startups').insert(payload).select().single()
+                                .then(function(ins) { return ins.data ? { data: ins.data, id: ins.data.id } : ins; });
                         }
                     })
                     .then(function(res) {
                         if (res && res.error) {
                             setFormMessage(res.error.message || 'Failed to save.', true);
-                        } else if (res) {
-                            setFormMessage('Saved. You can come back anytime to update your profile.', false);
+                            formSubmit.disabled = false;
+                            return;
                         }
-                        formSubmit.disabled = false;
+                        var founderStartupId = res && res.id ? res.id : null;
+                        if (!founderStartupId) {
+                            setFormMessage('Saved. You can come back anytime to update your profile.', false);
+                            formSubmit.disabled = false;
+                            return;
+                        }
+                        var coFounders = getCoFoundersFromForm();
+                        return supabase.from('co_founders').delete().eq('founder_startup_id', founderStartupId)
+                            .then(function() {
+                                if (coFounders.length === 0) return Promise.resolve();
+                                return supabase.from('co_founders').insert(coFounders.map(function(c) {
+                                    return { founder_startup_id: founderStartupId, first_name: c.first_name, last_name: c.last_name, role: c.role };
+                                }));
+                            })
+                            .then(function(coRes) {
+                                if (coRes && coRes.error) {
+                                    setFormMessage(coRes.error.message || 'Profile saved but co-founders failed.', true);
+                                } else {
+                                    setFormMessage('Saved. You can come back anytime to update your profile.', false);
+                                }
+                                formSubmit.disabled = false;
+                            });
                     })
                     .catch(function(err) {
                         if (err && err.message !== 'not signed in') {
@@ -321,7 +389,12 @@
                     authMessage.classList.add('hidden');
                     supabase.from('founder_startups').select('*').eq('user_id', session.user.id).maybeSingle()
                         .then(function(res) {
-                            if (res.data) fillForm(res.data);
+                            if (res.data) {
+                                return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', res.data.id).order('created_at')
+                                    .then(function(cf) { fillForm(res.data, cf.data || []); });
+                            }
+                        })
+                        .then(function() {
                             if (session.user.email && !founderForm.elements['email'].value) founderForm.elements['email'].value = session.user.email;
                         });
                 } else {
@@ -336,7 +409,12 @@
                     var uid = res.data.session.user.id;
                     supabase.from('founder_startups').select('*').eq('user_id', uid).maybeSingle()
                         .then(function(r) {
-                            if (r.data) fillForm(r.data);
+                            if (r.data) {
+                                return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', r.data.id).order('created_at')
+                                    .then(function(cf) { fillForm(r.data, cf.data || []); });
+                            }
+                        })
+                        .then(function() {
                             if (res.data.session.user.email && !founderForm.elements['email'].value) founderForm.elements['email'].value = res.data.session.user.email;
                         });
                 } else {

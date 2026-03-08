@@ -1,4 +1,4 @@
-# Venture Builders – Next.js App
+# founderbase – Next.js App
 
 Next.js 14 app with App Router, TypeScript, Tailwind CSS, Supabase, and shadcn/ui.
 

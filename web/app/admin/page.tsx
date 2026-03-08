@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { LogoutButton } from "@/components/logout-button"
 import { AdminPanel } from "@/components/admin-panel"
 
-const ADMIN_EMAIL = "steve@venturebuilders.fund"
+const ADMIN_EMAIL = "steve@veturebuilders.fund"
 
 export default async function AdminPage() {
   const supabase = await createClient()
@@ -34,7 +34,7 @@ export default async function AdminPage() {
       <header className="sticky top-0 z-10 border-b border-border bg-background/95 px-4 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:px-6">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-2">
           <h1 className="truncate text-lg font-semibold tracking-tight text-foreground sm:text-xl">
-            Venture Builders
+            founderbase
           </h1>
           <LogoutButton variant="outline" size="sm" className="shrink-0" />
         </div>

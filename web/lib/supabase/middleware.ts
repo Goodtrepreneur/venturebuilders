@@ -38,7 +38,7 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  if (pathname.startsWith("/admin") && user?.email !== "steve@venturebuilders.fund") {
+  if (pathname.startsWith("/admin") && user?.email !== "steve@veturebuilders.fund") {
     return NextResponse.redirect(new URL("/dashboard", request.url))
   }
 

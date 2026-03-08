@@ -10,10 +10,10 @@ To apply the SQL migrations in `supabase/migrations/` (e.g. `001_initial_schema.
 2. **Log in and link your project** (one-time):
    ```bash
    supabase login
-   supabase link --project-ref YOUR_PROJECT_REF
+   supabase link --project-ref asuophspmfqcnlzgqsfa
    ```
-   Get `YOUR_PROJECT_REF` from the project URL in the dashboard:  
-   `https://supabase.com/dashboard/project/<project-ref>`.
+   Get the project ref from the project URL in the dashboard:
+   `https://supabase.com/dashboard/project/asuophspmfqcnlzgqsfa`
 
 3. **Push migrations to the remote database**:
    ```bash

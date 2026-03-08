@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: { default: "Venture Builders", template: "%s — Venture Builders" },
-  description: "Venture Builders app",
+  title: { default: "founderbase", template: "%s — founderbase" },
+  description: "founderbase app",
   icons: { icon: "/icon.svg" },
 }
 
