@@ -97,7 +97,7 @@
                     </div>
                     <div>
                         <label for="website" class="block text-sm font-medium text-slate-300 mb-1">Website <span class="text-slate-500">*</span></label>
-                        <input type="url" id="website" name="website" required placeholder="https://example.com"
+                        <input type="url" id="website" name="website" required placeholder="yourwebsite.com"
                             class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -269,6 +269,10 @@
                 var payload = {};
                 fd.forEach(function(value, key) { payload[key] = value || null; });
                 delete payload.co_founder_names;
+                var websiteVal = (payload.website || '').trim();
+                if (websiteVal && !/^https?:\/\//i.test(websiteVal)) {
+                    payload.website = 'https://' + websiteVal;
+                }
                 var foundedDateEl = founderForm.elements['founded_date'];
                 if (foundedDateEl) {
                     var v = (foundedDateEl.value || '').trim();
