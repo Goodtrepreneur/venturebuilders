@@ -175,8 +175,8 @@
                             class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                     </div>
                     <div>
-                        <label for="cohort_date" class="block text-sm font-medium text-slate-300 mb-1">Cohort / batch</label>
-                        <input type="text" id="cohort_date" name="cohort_date" placeholder="e.g. Spring 2024"
+                        <label for="cohort_date" class="block text-sm font-medium text-slate-300 mb-1">Cohort date</label>
+                        <input type="date" id="cohort_date" name="cohort_date"
                             class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                     </div>
                     <div class="md:col-span-2">
@@ -272,6 +272,11 @@
                     var v = (foundedDateEl.value || '').trim();
                     payload.founded_date = /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null;
                 }
+                var cohortDateEl = founderForm.elements['cohort_date'];
+                if (cohortDateEl) {
+                    var cv = (cohortDateEl.value || '').trim();
+                    payload.cohort_date = /^\d{4}-\d{2}-\d{2}$/.test(cv) ? cv : null;
+                }
                 return payload;
             }
             function getCoFoundersFromForm() {
@@ -309,7 +314,7 @@
             document.getElementById('add-co-founder-btn').addEventListener('click', function() { addCoFounderRow(); });
 
             function fillForm(row, coFounders) {
-                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','location','program_name','cohort_date','how_you_heard'];
+                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','location','program_name','how_you_heard'];
                 names.forEach(function(name) {
                     var el = founderForm.elements[name];
                     if (el && row[name] != null) el.value = row[name] || '';
@@ -318,6 +323,11 @@
                 if (dateEl && row.founded_date != null) {
                     var d = String(row.founded_date).trim();
                     dateEl.value = /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : '';
+                }
+                var cohortEl = founderForm.elements['cohort_date'];
+                if (cohortEl && row.cohort_date != null) {
+                    var cd = String(row.cohort_date).trim();
+                    cohortEl.value = /^\d{4}-\d{2}-\d{2}$/.test(cd) ? cd : '';
                 }
                 clearCoFoundersContainer();
                 (coFounders || []).forEach(function(c) { addCoFounderRow(c); });
