@@ -267,6 +267,11 @@
                 var payload = {};
                 fd.forEach(function(value, key) { payload[key] = value || null; });
                 delete payload.co_founder_names;
+                var foundedDateEl = founderForm.elements['founded_date'];
+                if (foundedDateEl) {
+                    var v = (foundedDateEl.value || '').trim();
+                    payload.founded_date = /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null;
+                }
                 return payload;
             }
             function getCoFoundersFromForm() {
@@ -304,11 +309,16 @@
             document.getElementById('add-co-founder-btn').addEventListener('click', function() { addCoFounderRow(); });
 
             function fillForm(row, coFounders) {
-                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','location','founded_date','program_name','cohort_date','how_you_heard'];
+                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','location','program_name','cohort_date','how_you_heard'];
                 names.forEach(function(name) {
                     var el = founderForm.elements[name];
                     if (el && row[name] != null) el.value = row[name] || '';
                 });
+                var dateEl = founderForm.elements['founded_date'];
+                if (dateEl && row.founded_date != null) {
+                    var d = String(row.founded_date).trim();
+                    dateEl.value = /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : '';
+                }
                 clearCoFoundersContainer();
                 (coFounders || []).forEach(function(c) { addCoFounderRow(c); });
             }
