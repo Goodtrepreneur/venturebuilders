@@ -278,6 +278,7 @@
             var formMessage = document.getElementById('form-message');
             var formSubmit = document.getElementById('form-submit');
             var signOutBtn = document.getElementById('sign-out-btn');
+            var formSubmitting = false;
 
             (function setFoundedDateMax() {
                 var foundedDateInput = document.getElementById('founded_date');
@@ -423,6 +424,8 @@
 
             founderForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+                if (formSubmitting) return;
+                formSubmitting = true;
                 formSubmit.disabled = true;
                 formMessage.classList.add('hidden');
                 var payload = formDataToPayload();
@@ -432,6 +435,7 @@
                         var user = userRes.data && userRes.data.user;
                         if (!user) {
                             setFormMessage('You must be signed in.', true);
+                            formSubmitting = false;
                             formSubmit.disabled = false;
                             return Promise.reject(new Error('not signed in'));
                         }
@@ -441,6 +445,7 @@
                     .then(function(res) {
                         if (res && res.error) {
                             setFormMessage(res.error.message || 'Failed to save.', true);
+                            formSubmitting = false;
                             formSubmit.disabled = false;
                             return Promise.reject(new Error('save failed'));
                         }
@@ -457,12 +462,14 @@
                     .then(function(res) {
                         if (res && res.error) {
                             setFormMessage(res.error.message || 'Failed to save.', true);
+                            formSubmitting = false;
                             formSubmit.disabled = false;
                             return;
                         }
                         var founderStartupId = res && res.id ? res.id : null;
                         if (!founderStartupId) {
                             setFormMessage('Saved. You can come back anytime to update your profile.', false);
+                            formSubmitting = false;
                             formSubmit.disabled = false;
                             return;
                         }
@@ -480,6 +487,7 @@
                                 } else {
                                     setFormMessage('Saved. You can come back anytime to update your profile.', false);
                                 }
+                                formSubmitting = false;
                                 formSubmit.disabled = false;
                             });
                     })
@@ -487,6 +495,7 @@
                         if (err && err.message !== 'not signed in') {
                             setFormMessage(err.message || 'Something went wrong.', true);
                         }
+                        formSubmitting = false;
                         formSubmit.disabled = false;
                     });
             });
