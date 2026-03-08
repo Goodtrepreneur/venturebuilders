@@ -362,7 +362,6 @@
                     payload.current_ask = (typeof av === 'number' && !isNaN(av) && av >= 0) ? av : 0;
                 }
                 payload.how_you_heard = null;
-                if (payload.location !== undefined) delete payload.location;
                 ['city', 'state_region', 'country'].forEach(function(k) {
                     if (payload[k] !== undefined && (payload[k] === '' || payload[k] == null)) payload[k] = null;
                 });
