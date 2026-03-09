@@ -49,7 +49,7 @@
         // ============================================================================
         // Uses credentials from js/supabase-config.js when available
         const SUPABASE_URL = typeof window !== 'undefined' && window.SUPABASE_URL ? window.SUPABASE_URL : null;
-        const SUPABASE_ANON_KEY = typeof window !== 'undefined' && window.SUPABASE_ANON_KEY ? window.SUPABASE_ANON_KEY : null;
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im13d2hidm5taGpoc3FmcmZoam1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3Njc5ODEsImV4cCI6MjA4ODM0Mzk4MX0.ArGF5cWWoxm71uIlkMh_mvVxTVaIeuN8Ba7e7uXTruY';
         const supabase = (SUPABASE_URL && SUPABASE_ANON_KEY)
             ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
             : null;
