@@ -26,7 +26,42 @@
 <body class="bg-bgMain text-slate-50 min-h-screen">
 
     <!-- Auth: magic link -->
-    <div id="auth-screen" class="max-w-md mx-auto px-6 py-20">
+    <div id="auth-screen" class="max-w-md mx-auto px-6 py-12">
+        <!-- Hero / intro (login screen only) -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-white mb-3">Join Our Founder Database</h1>
+            <p class="text-slate-300 text-lg leading-relaxed mb-6">
+                Get discovered by VCs in our network. Tell us about what you're building and we'll connect you with the right investors.
+            </p>
+            <ul class="space-y-2 text-slate-300 mb-8">
+                <li class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-accentCyan flex-shrink-0"></span>
+                    Get on the radar of active investors
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-accentCyan flex-shrink-0"></span>
+                    Visibility across our entire LP and VC network
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-accentCyan flex-shrink-0"></span>
+                    Access to webinars, playbooks, and resources
+                </li>
+            </ul>
+        </div>
+
+        <!-- Sponsor block (login screen only) -->
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-8">
+            <span class="text-xs font-semibold tracking-wider text-slate-500 uppercase flex-shrink-0">Sponsored by</span>
+            <div class="flex-1 rounded-xl bg-cardMain border border-slate-700 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <span class="rounded-lg bg-white px-3 py-2 flex items-center justify-center flex-shrink-0">
+                    <img src="assets/truespace_logo_2024-r.png" alt="TrueSpace" class="h-8 sm:h-9 w-auto object-contain" />
+                </span>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    TrueSpace helps second-stage businesses achieve and certify Scale-Readiness™, and connects them to capital and key resources.
+                </p>
+            </div>
+        </div>
+
         <div class="bg-cardMain rounded-2xl p-8 border border-slate-700 shadow-xl">
             <h1 class="text-2xl font-bold text-white mb-2">Founder Portal</h1>
             <p class="text-slate-400 text-sm mb-6">Sign in with your email. We’ll send you a magic link—no password needed.</p>
@@ -46,39 +81,6 @@
 
     <!-- App: form (shown when logged in) -->
     <div id="app-screen" class="hidden max-w-3xl mx-auto px-6 py-10 pb-20">
-        <!-- Hero / intro -->
-        <div class="mb-10">
-            <h1 class="text-3xl font-bold text-white mb-3">Join Our Founder Database</h1>
-            <p class="text-slate-300 text-lg leading-relaxed mb-6">
-                Get discovered by VCs in our network. Tell us about what you're building and we'll connect you with the right investors.
-            </p>
-            <ul class="space-y-2 text-slate-300">
-                <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-accentCyan flex-shrink-0"></span>
-                    Get on the radar of active investors
-                </li>
-                <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-accentCyan flex-shrink-0"></span>
-                    Visibility across our entire LP and VC network
-                </li>
-                <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-accentCyan flex-shrink-0"></span>
-                    Access to webinars, playbooks, and resources
-                </li>
-            </ul>
-        </div>
-
-        <!-- Sponsor block -->
-        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-10">
-            <span class="text-xs font-semibold tracking-wider text-slate-500 uppercase flex-shrink-0">Sponsored by</span>
-            <div class="flex-1 rounded-xl bg-cardMain border border-slate-700 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <img src="assets/truespace_logo_2024-r.png" alt="TrueSpace" class="h-8 sm:h-9 w-auto object-contain object-left" />
-                <p class="text-sm text-slate-400 leading-relaxed">
-                    TrueSpace helps second-stage businesses achieve and certify Scale-Readiness™, and connects them to capital and key resources.
-                </p>
-            </div>
-        </div>
-
         <div class="flex items-center justify-between mb-8">
             <h1 class="text-2xl font-bold text-white">Your startup profile</h1>
             <button type="button" id="sign-out-btn" class="text-sm text-slate-400 hover:text-accentCyan transition-colors">Sign out</button>
