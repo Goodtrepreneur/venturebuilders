@@ -18,9 +18,6 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- Project Supabase config (sets window.SUPABASE_URL, window.SUPABASE_ANON_KEY) -->
-    <script src="js/supabase-config.js"></script>
-    
     <style>
         /* Custom scrollbar for better UX */
         ::-webkit-scrollbar {
@@ -47,12 +44,11 @@
         // ============================================================================
         // SUPABASE CONFIGURATION
         // ============================================================================
-        // Uses credentials from js/supabase-config.js when available
-        const SUPABASE_URL = typeof window !== 'undefined' && window.SUPABASE_URL ? window.SUPABASE_URL : null;
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im13d2hidm5taGpoc3FmcmZoam1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3Njc5ODEsImV4cCI6MjA4ODM0Mzk4MX0.ArGF5cWWoxm71uIlkMh_mvVxTVaIeuN8Ba7e7uXTruY';
-        const supabase = (SUPABASE_URL && SUPABASE_ANON_KEY)
-            ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-            : null;
+        const SUPABASE_URL = 'https://mwwhbvnmhjhsqfrfhjms.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY_HERE';  // You'll need to get this from Supabase Settings → API
+
+        // Initialize Supabase
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         // ============================================================================
 
         // Lucide React Icons (inline SVG components)
@@ -111,57 +107,23 @@
             </svg>
         );
 
-        const Lock = ({ className }) => (
+        const Calendar = ({ className }) => (
             <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
         );
 
-        const BUDGET_PASSWORD = 'keith2026';
+        const ExternalLink = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+        );
 
-        function PasswordGate({ onUnlock }) {
-            const [password, setPassword] = useState('');
-            const [error, setError] = useState('');
-            const handleSubmit = (e) => {
-                e.preventDefault();
-                setError('');
-                if (password === BUDGET_PASSWORD) {
-                    onUnlock();
-                } else {
-                    setError('Incorrect password. Please try again.');
-                }
-            }
-            return (
-                <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-8">
-                    <div className="w-full max-w-md">
-                        <div className="bg-slate-800 rounded-xl p-8 border-2 border-blue-500/30 shadow-xl">
-                            <div className="flex justify-center mb-6">
-                                <Lock className="w-12 h-12 text-blue-400" />
-                            </div>
-                            <h1 className="text-2xl font-bold text-white text-center mb-2">Budget Calculator</h1>
-                            <p className="text-slate-400 text-center text-sm mb-6">Enter the password to continue</p>
-                            <form onSubmit={handleSubmit}>
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => { setPassword(e.target.value); setError(''); }}
-                                    placeholder="Password"
-                                    className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors mb-4"
-                                    autoFocus
-                                />
-                                {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
-                                <button
-                                    type="submit"
-                                    className="w-full font-semibold py-3 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition-colors"
-                                >
-                                    Enter
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
+        const X = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        );
 
         function BudgetCalculator() {
             // ============================================================================
@@ -180,10 +142,12 @@
             const [contactInfo, setContactInfo] = useState({
                 name: '',
                 email: '',
-                organization: ''
+                organization: '',
+                budgetRenewalDate: ''
             });
             const [isSubmitting, setIsSubmitting] = useState(false);
             const [submitSuccess, setSubmitSuccess] = useState(false);
+            const [showSuccessModal, setShowSuccessModal] = useState(false);
 
             // Pricing
             const PEER_GROUP_PRICE = 5000;
@@ -219,6 +183,11 @@
                 setIsSubmitting(true);
                 
                 const budgetData = {
+                    accelerator_name: ACCELERATOR_NAME,
+                    contact_name: contactInfo.name,
+                    contact_email: contactInfo.email,
+                    organization_name: contactInfo.organization,
+                    budget_renewal_date: contactInfo.budgetRenewalDate,
                     peer_group_participants: peerGroupParticipants,
                     peer_group_total: peerGroupTotal,
                     event_tickets: totalEventTickets,
@@ -231,24 +200,22 @@
                 };
 
                 try {
-                    if (!supabase) {
-                        console.log('Budget submission (no Supabase):', budgetData);
-                        setSubmitSuccess(true);
-                        setTimeout(() => setSubmitSuccess(false), 3000);
-                        return;
-                    }
                     const { data, error } = await supabase
-                        .from('budget_submissions')
-                        .insert([budgetData]);
+                      .from('budget_submissions')
+                      .insert([budgetData]);
                     
                     if (error) throw error;
                     
-                    console.log('Successfully saved:', data);
+                    console.log('Budget submission successful:', budgetData);
+                    
                     setSubmitSuccess(true);
+                    setShowSuccessModal(true);
+                    
+                    // Reset success message after 3 seconds
                     setTimeout(() => setSubmitSuccess(false), 3000);
                 } catch (error) {
                     console.error('Error submitting budget:', error);
-                    alert('Error saving budget. Please try again.');
+                    alert('Error submitting budget. Please try again or contact support.');
                 } finally {
                     setIsSubmitting(false);
                 }
@@ -259,8 +226,8 @@
                 { name: 'SXSW', location: 'Austin', time: '(March)' },
                 { name: 'Futura', location: 'Ireland', time: '(Spring)' },
                 { name: 'TechGALA', location: 'Japan', time: '(Summer)' },
-                { name: 'VB Retreat / CES Unveiled', location: 'Milan', time: '(October)', featured: true },
-                { name: 'More events to be announced soon', location: '', time: '' }
+                { name: 'VB Retreat', location: 'Milan', time: '(October)', featured: true },
+                { name: 'CES Unveiled', location: 'Las Vegas', time: '(January)' }
             ];
 
             return (
@@ -371,7 +338,7 @@
                                             {events.map((event, idx) => (
                                                 <div key={idx} className="flex items-start gap-2">
                                                     <CheckCircle2 className={`w-4 h-4 ${event.featured ? 'text-purple-400' : 'text-cyan-400'} mt-0.5 flex-shrink-0`} />
-                                                    <span><strong>{event.name}</strong>{event.location ? ` — ${event.location} ${event.time}` : ''}</span>
+                                                    <span><strong>{event.name}</strong> — {event.location} {event.time}</span>
                                                 </div>
                                             ))}
                                         </div>
@@ -471,9 +438,9 @@
                                             <div className="flex items-start gap-4 mb-4">
                                                 <TrendingUp className="w-6 h-6 text-yellow-400 mt-1" />
                                                 <div className="flex-1">
-                                                    <h3 className="text-white font-semibold text-lg mb-2">Speaking Opportunities</h3>
+                                                    <h3 className="text-white font-semibold text-lg mb-2">Speaking & Publication Placements</h3>
                                                     <p className="text-sm text-slate-400 mb-4">
-                                                        Secured speaking opportunities at globally recognized programs and events. Showcase thought leadership and attract world-class founders. Includes preparation, coordination, and professional content capture.
+                                                        Secured speaking opportunities, panel placements, and publications with globally recognized programs and media outlets. Showcase thought leadership and attract world-class founders. Includes preparation, coordination, and professional content capture.
                                                     </p>
                                                     
                                                     <div className="flex items-center gap-4">
@@ -488,7 +455,7 @@
                                                             <div className="text-3xl font-bold text-yellow-400">
                                                                 {notorietyOptions.speakingOpportunities}
                                                             </div>
-                                                            <div className="text-xs text-slate-400">opportunities</div>
+                                                            <div className="text-xs text-slate-400">placements</div>
                                                         </div>
                                                         <button
                                                             onClick={() => updateNotoriety('speakingOpportunities', 1)}
@@ -500,7 +467,7 @@
                                                     
                                                     {notorietyOptions.speakingOpportunities > 0 && (
                                                         <div className="mt-4 text-sm text-slate-300">
-                                                            {notorietyOptions.speakingOpportunities} opportunity{notorietyOptions.speakingOpportunities > 1 ? 'ies' : ''} × $2,000 = {formatCurrency(notorietyOptions.speakingOpportunities * SPEAKING_OPP_PRICE)}
+                                                            {notorietyOptions.speakingOpportunities} placement{notorietyOptions.speakingOpportunities > 1 ? 's' : ''} × $2,000 = {formatCurrency(notorietyOptions.speakingOpportunities * SPEAKING_OPP_PRICE)}
                                                         </div>
                                                     )}
                                                 </div>
@@ -548,7 +515,7 @@
                                                             <div>• {notorietyOptions.leadershipInterviews} interview{notorietyOptions.leadershipInterviews > 1 ? 's' : ''}</div>
                                                         )}
                                                         {notorietyOptions.speakingOpportunities > 0 && (
-                                                            <div>• {notorietyOptions.speakingOpportunities} speaking opportunity{notorietyOptions.speakingOpportunities > 1 ? 'ies' : ''}</div>
+                                                            <div>• {notorietyOptions.speakingOpportunities} placement{notorietyOptions.speakingOpportunities > 1 ? 's' : ''}</div>
                                                         )}
                                                     </div>
                                                 </div>
@@ -598,7 +565,7 @@
                                                 <div className="flex items-start gap-2">
                                                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                                                     <span className="text-slate-300">
-                                                        {notorietyOptions.speakingOpportunities} speaking opportunity{notorietyOptions.speakingOpportunities > 1 ? 'ies' : ''}
+                                                        {notorietyOptions.speakingOpportunities} speaking/publication placement{notorietyOptions.speakingOpportunities > 1 ? 's' : ''}
                                                     </span>
                                                 </div>
                                             )}
@@ -649,18 +616,49 @@
                                                     className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors"
                                                 />
                                             </div>
+                                            
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                                    When does your budget renew? <span className="text-red-400">*</span>
+                                                </label>
+                                                <p className="text-xs text-slate-400 mb-2">
+                                                    This helps us know when to send you an invoice for the services you've selected.
+                                                </p>
+                                                <div className="relative">
+                                                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+                                                    <input
+                                                        type="date"
+                                                        value={contactInfo.budgetRenewalDate}
+                                                        onChange={(e) => setContactInfo(prev => ({ ...prev, budgetRenewalDate: e.target.value }))}
+                                                        className="w-full pl-11 pr-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    {/* Book a Call Button */}
+                                    <a 
+                                        href="https://calendar.app.google/6YRuk1kjFCc5wspZ7"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-full bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 border border-slate-600 hover:border-slate-500"
+                                    >
+                                        <Calendar className="w-5 h-5" />
+                                        <span>Book a Call to Discuss</span>
+                                        <ExternalLink className="w-4 h-4" />
+                                    </a>
 
                                     {/* Submit Button */}
                                     <button 
                                         onClick={handleSubmit}
-                                        disabled={isSubmitting || grandTotal === 0 || !contactInfo.name || !contactInfo.email}
+                                        disabled={isSubmitting || grandTotal === 0 || !contactInfo.name || !contactInfo.email || !contactInfo.budgetRenewalDate}
                                         className={`w-full font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-lg flex items-center justify-center gap-2 ${
                                             submitSuccess 
                                                 ? 'bg-green-600 hover:bg-green-700' 
                                                 : 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600'
-                                        } text-white ${(isSubmitting || grandTotal === 0 || !contactInfo.name || !contactInfo.email) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-xl'}`}
+                                        } text-white ${(isSubmitting || grandTotal === 0 || !contactInfo.name || !contactInfo.email || !contactInfo.budgetRenewalDate) ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-xl'}`}
                                     >
                                         {submitSuccess ? (
                                             <>
@@ -677,9 +675,18 @@
                                         )}
                                     </button>
                                     
-                                    <p className="text-center text-slate-400 text-sm">
-                                        {grandTotal === 0 
-                                            ? 'Select at least one option to save your budget'
+                                    <div className="text-center space-y-2">
+                                        <p className="text-slate-400 text-sm">
+                                            {grandTotal === 0 
+                                                ? 'Select at least one option to save your budget'
+                                                : !contactInfo.name || !contactInfo.email || !contactInfo.budgetRenewalDate
+                                                ? 'Please complete all required fields to continue'
+                                                : 'This is non-binding — just helps us understand your needs and timing'}
+                                        </p>
+                                        <p className="text-slate-500 text-xs">
+                                            💡 This tool is for planning only. No commitment required.
+                                        </p>
+                                    </div>
                                             : !contactInfo.name || !contactInfo.email
                                             ? 'Please enter your name and email to continue'
                                             : 'Your preferences will be saved for review'}
@@ -695,21 +702,101 @@
                             </p>
                         </div>
                     </div>
+
+                    {/* Success Modal */}
+                    {showSuccessModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                            <div className="bg-slate-800 rounded-2xl max-w-2xl w-full p-8 border-2 border-green-500 relative">
+                                {/* Close button */}
+                                <button
+                                    onClick={() => setShowSuccessModal(false)}
+                                    className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+                                >
+                                    <X className="w-6 h-6" />
+                                </button>
+
+                                {/* Success content */}
+                                <div className="text-center mb-6">
+                                    <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <CheckCircle2 className="w-10 h-10 text-white" />
+                                    </div>
+                                    <h2 className="text-3xl font-bold text-white mb-2">Budget Preferences Saved!</h2>
+                                    <p className="text-slate-300 text-lg">
+                                        Thank you, {contactInfo.name}. We've received your budget preferences.
+                                    </p>
+                                </div>
+
+                                {/* What happens next */}
+                                <div className="bg-slate-700/50 rounded-xl p-6 mb-6">
+                                    <h3 className="text-xl font-bold text-white mb-3">What Happens Next</h3>
+                                    <ul className="space-y-3 text-slate-300">
+                                        <li className="flex items-start gap-3">
+                                            <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                                            <span>We'll review your preferences and prepare a customized proposal</span>
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                                            <span>You'll receive an invoice around your budget renewal date: <strong>{new Date(contactInfo.budgetRenewalDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</strong></span>
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                                            <span>This is completely non-binding — you can adjust or cancel anytime</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                {/* Free Bulk Upload CTA */}
+                                <div className="bg-gradient-to-br from-blue-900/40 to-purple-900/40 border-2 border-blue-500/50 rounded-xl p-6 mb-6">
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <TrendingUp className="w-6 h-6 text-white" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-xl font-bold text-white mb-2">🎁 Free Bonus: Upload Your Founders</h3>
+                                            <p className="text-slate-300 mb-4">
+                                                While you're here, upload your portfolio founders to our deal flow pipeline — completely free. Help your startups get discovered by investors and partners in our network.
+                                            </p>
+                                            <a
+                                                href="https://venturebuilders.fund/bulk-upload.html"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+                                            >
+                                                <span>Upload Founders Now (Free)</span>
+                                                <ExternalLink className="w-4 h-4" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Action buttons */}
+                                <div className="flex gap-4">
+                                    <a
+                                        href="https://calendar.app.google/6YRuk1kjFCc5wspZ7"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
+                                    >
+                                        <Calendar className="w-5 h-5" />
+                                        <span>Book a Call</span>
+                                    </a>
+                                    <button
+                                        onClick={() => setShowSuccessModal(false)}
+                                        className="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             );
         }
 
-        function App() {
-            const [unlocked, setUnlocked] = useState(false);
-            if (!unlocked) {
-                return <PasswordGate onUnlock={() => setUnlocked(true)} />;
-            }
-            return <BudgetCalculator />;
-        }
-
         // Render the app
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        root.render(<BudgetCalculator />);
     </script>
 </body>
 </html>
