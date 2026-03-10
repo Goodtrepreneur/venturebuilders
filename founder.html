@@ -293,6 +293,20 @@
                 </div>
             </section>
 
+            <!-- Pitch deck -->
+            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700">
+                <h2 class="text-lg font-bold text-accentCyan mb-4">Pitch Deck</h2>
+                <p class="text-slate-400 text-sm mb-2">PDF only, max 10MB</p>
+                <div id="deck-existing-note" class="hidden text-sm text-slate-400 mb-3 p-2 rounded bg-slate-800/50 border border-slate-600">
+                    You have an existing deck uploaded — upload a new file to replace it.
+                </div>
+                <input type="file" id="pitch-deck-file" accept=".pdf"
+                    class="w-full text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-slate-700 file:text-white file:font-medium hover:file:bg-slate-600">
+                <div id="deck-upload-progress" class="hidden mt-2 text-sm text-accentCyan">
+                    <span id="deck-upload-status">Uploading pitch deck…</span>
+                </div>
+            </section>
+
             <div id="form-message" class="text-sm hidden"></div>
             <button type="submit" id="form-submit" class="w-full py-3 px-4 bg-accentCyan text-bgMain font-semibold rounded-lg hover:bg-accentCyan/90 transition-colors">
                 Save startup profile
@@ -456,6 +470,8 @@
                 }
                 clearCoFoundersContainer();
                 (coFounders || []).forEach(function(c) { addCoFounderRow(c); });
+                var deckNote = document.getElementById('deck-existing-note');
+                if (deckNote) deckNote.classList.toggle('hidden', !(row.deck_url));
             }
 
             founderForm.addEventListener('submit', function(e) {
@@ -509,23 +525,69 @@
                             formSubmit.disabled = false;
                             return;
                         }
-                        var coFounders = getCoFoundersFromForm();
-                        return supabase.from('co_founders').delete().eq('founder_startup_id', founderStartupId)
-                            .then(function() {
-                                if (coFounders.length === 0) return Promise.resolve();
-                                return supabase.from('co_founders').insert(coFounders.map(function(c) {
-                                    return { founder_startup_id: founderStartupId, first_name: c.first_name, last_name: c.last_name, role: c.role };
-                                }));
-                            })
-                            .then(function(coRes) {
-                                if (coRes && coRes.error) {
-                                    setFormMessage(coRes.error.message || 'Profile saved but co-founders failed.', true);
-                                } else {
-                                    setFormMessage('Saved. You can come back anytime to update your profile.', false);
-                                }
+                        var uid = payload.user_id;
+                        var deckFileInput = document.getElementById('pitch-deck-file');
+                        var deckFile = deckFileInput && deckFileInput.files && deckFileInput.files[0];
+                        var progressEl = document.getElementById('deck-upload-progress');
+                        var statusEl = document.getElementById('deck-upload-status');
+
+                        function runCoFoundersThenFinish() {
+                            var coFounders = getCoFoundersFromForm();
+                            return supabase.from('co_founders').delete().eq('founder_startup_id', founderStartupId)
+                                .then(function() {
+                                    if (coFounders.length === 0) return Promise.resolve();
+                                    return supabase.from('co_founders').insert(coFounders.map(function(c) {
+                                        return { founder_startup_id: founderStartupId, first_name: c.first_name, last_name: c.last_name, role: c.role };
+                                    }));
+                                })
+                                .then(function(coRes) {
+                                    if (coRes && coRes.error) {
+                                        setFormMessage(coRes.error.message || 'Profile saved but co-founders failed.', true);
+                                    } else {
+                                        setFormMessage('Saved. You can come back anytime to update your profile.', false);
+                                    }
+                                    if (progressEl) progressEl.classList.add('hidden');
+                                    formSubmitting = false;
+                                    formSubmit.disabled = false;
+                                });
+                        }
+
+                        if (deckFile && founderStartupId) {
+                            if (deckFile.size > 10 * 1024 * 1024) {
+                                setFormMessage('Pitch deck must be 10MB or less.', true);
                                 formSubmitting = false;
                                 formSubmit.disabled = false;
-                            });
+                                return;
+                            }
+                            if (deckFile.type !== 'application/pdf') {
+                                setFormMessage('Pitch deck must be a PDF file.', true);
+                                formSubmitting = false;
+                                formSubmit.disabled = false;
+                                return;
+                            }
+                            var deckPath = uid + '/' + founderStartupId + '.pdf';
+                            if (progressEl) progressEl.classList.remove('hidden');
+                            if (statusEl) statusEl.textContent = 'Uploading pitch deck…';
+                            supabase.storage.from('pitch-decks').upload(deckPath, deckFile, { upsert: true })
+                                .then(function(uploadRes) {
+                                    if (uploadRes.error) throw uploadRes.error;
+                                    return supabase.from('founder_startups').update({ deck_url: deckPath }).eq('id', founderStartupId);
+                                })
+                                .then(function(updateRes) {
+                                    if (updateRes.error) throw updateRes.error;
+                                    if (statusEl) statusEl.textContent = 'Pitch deck uploaded.';
+                                    return runCoFoundersThenFinish();
+                                })
+                                .catch(function(err) {
+                                    setFormMessage(err.message || 'Pitch deck upload failed.', true);
+                                    if (progressEl) progressEl.classList.add('hidden');
+                                    formSubmitting = false;
+                                    formSubmit.disabled = false;
+                                });
+                            return;
+                        }
+
+                        return runCoFoundersThenFinish();
                     })
                     .catch(function(err) {
                         if (err && err.message !== 'not signed in') {
