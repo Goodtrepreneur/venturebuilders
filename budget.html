@@ -239,11 +239,44 @@
                                 <h1 className="text-5xl font-bold text-white mb-2">
                                     {ACCELERATOR_DISPLAY_NAME}
                                 </h1>
-                                <p className="text-xl text-blue-300">Venture Builder Partnership Budget Calculator</p>
+                                <p className="text-xl text-blue-300">Partnership Budget Planning Tool</p>
                             </div>
-                            <p className="text-lg text-slate-300 max-w-3xl mx-auto">
-                                Configure your partnership package to connect with fellow accelerator leaders, attend premier global events, and amplify your program's visibility.
+                            <p className="text-lg text-slate-300 max-w-3xl mx-auto mb-3">
+                                Use this tool to estimate your annual budget for paid partnership activities. This is purely for planning—not a commitment.
                             </p>
+                            <p className="text-sm text-slate-400 max-w-2xl mx-auto">
+                                Configure options below to help set aside funding for peer groups, events, and visibility programs.
+                            </p>
+                        </div>
+
+                        {/* Free Community Access Banner */}
+                        <div className="bg-gradient-to-r from-green-900/40 to-emerald-900/40 border-2 border-green-500/50 rounded-xl p-6 mb-8">
+                            <div className="flex items-start gap-4">
+                                <CheckCircle2 className="w-8 h-8 text-green-400 flex-shrink-0 mt-1" />
+                                <div>
+                                    <h3 className="text-2xl font-bold text-white mb-3">Free Community Access — Always Included</h3>
+                                    <p className="text-slate-200 mb-4">
+                                        Every partner gets complimentary access to our venture builder community. No fees, no commitments required.
+                                    </p>
+                                    <div className="grid md:grid-cols-3 gap-4">
+                                        <div className="bg-slate-900/50 rounded-lg p-4">
+                                            <h4 className="text-green-300 font-semibold mb-2">Deal Flow Pipeline</h4>
+                                            <p className="text-sm text-slate-300">Add your portfolio founders to our deal flow pipeline and connect them with investors in our network.</p>
+                                        </div>
+                                        <div className="bg-slate-900/50 rounded-lg p-4">
+                                            <h4 className="text-green-300 font-semibold mb-2">Monthly Roundtables</h4>
+                                            <p className="text-sm text-slate-300">Join monthly accelerator and studio roundtable discussions with ecosystem builders nationwide.</p>
+                                        </div>
+                                        <div className="bg-slate-900/50 rounded-lg p-4">
+                                            <h4 className="text-green-300 font-semibold mb-2">Webinar Content</h4>
+                                            <p className="text-sm text-slate-300">Access exclusive webinars, workshops, and educational content for accelerator leaders and teams.</p>
+                                        </div>
+                                    </div>
+                                    <p className="text-sm text-green-200 mt-4">
+                                        ✓ Available to all partners immediately • No credit card required • Always free
+                                    </p>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="grid lg:grid-cols-3 gap-8">
@@ -254,22 +287,32 @@
                                 <div className="bg-slate-800 rounded-xl p-8 border-2 border-blue-500/30">
                                     <div className="flex items-center gap-3 mb-6">
                                         <Users className="w-7 h-7 text-blue-400" />
-                                        <h2 className="text-3xl font-bold text-white">Accelerator Leaders Peer Groups</h2>
+                                        <h2 className="text-3xl font-bold text-white">Peer Group Seats</h2>
                                     </div>
                                     
-                                    <p className="text-slate-300 mb-6">
-                                        Connect with fellow accelerator and innovation program leaders facing the same challenges you are. High-trust, facilitated peer circles focused on program design, fundraising, stakeholder management, impact measurement, and scaling operations.
+                                    <p className="text-slate-300 mb-4">
+                                        <strong>Purchase seats in our YPO/EO-style peer forums</strong> for your team leaders and staff members. High-trust, facilitated circles focused on the real challenges of running accelerator and innovation programs.
                                     </p>
 
-                                    <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-6">
+                                    <p className="text-slate-300 mb-6">
+                                        Topics include: program design, fundraising, stakeholder management, impact measurement, scaling operations, and navigating the unique challenges accelerator leaders face.
+                                    </p>
+
+                                    <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-4">
                                         <p className="text-blue-200 text-sm">
-                                            <strong>For Program Directors & Operators:</strong> Share best practices, troubleshoot challenges, and build lasting relationships with leaders running accelerators across the country.
+                                            <strong>$5,000 per seat annually.</strong> Each seat gives one team member access to quarterly in-person gatherings and monthly virtual peer sessions.
+                                        </p>
+                                    </div>
+
+                                    <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4 mb-6">
+                                        <p className="text-purple-200 text-sm">
+                                            <strong>Interested in founder cohorts?</strong> We can also host peer groups specifically for cohorts of your portfolio founders. <a href="https://calendar.app.google/6YRuk1kjFCc5wspZ7" target="_blank" rel="noopener noreferrer" className="text-purple-300 underline hover:text-purple-100">Reach out to discuss</a> custom cohort pricing and structure.
                                         </p>
                                     </div>
 
                                     <div className="bg-slate-700/50 rounded-lg p-6 mb-6">
                                         <div className="flex justify-between items-center mb-4">
-                                            <label className="text-slate-200 font-semibold text-lg">Number of Team Members</label>
+                                            <label className="text-slate-200 font-semibold text-lg">Number of Seats for Your Team</label>
                                             <span className="text-4xl font-bold text-blue-400">{peerGroupParticipants}</span>
                                         </div>
                                         <input
@@ -492,7 +535,7 @@
                                         <div className="space-y-4 mb-6">
                                             {peerGroupTotal > 0 && (
                                                 <div className="flex justify-between text-slate-200">
-                                                    <span>Peer Groups ({peerGroupParticipants})</span>
+                                                    <span>Peer Group Seats ({peerGroupParticipants})</span>
                                                     <span className="font-semibold">{formatCurrency(peerGroupTotal)}</span>
                                                 </div>
                                             )}
@@ -534,11 +577,21 @@
                                     <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
                                         <h3 className="text-lg font-bold text-white mb-4">Your Partnership Includes</h3>
                                         <div className="space-y-3 text-sm">
+                                            {/* Free Community Always Included */}
+                                            <div className="bg-green-900/30 border border-green-500/30 rounded-lg p-3 mb-4">
+                                                <div className="flex items-start gap-2">
+                                                    <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                                                    <div>
+                                                        <p className="text-green-200 text-xs font-semibold mb-1">FREE COMMUNITY ACCESS</p>
+                                                        <p className="text-xs text-slate-300">Deal flow pipeline, monthly roundtables, and webinar content—always included at no cost.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             {peerGroupParticipants > 0 && (
                                                 <div className="flex items-start gap-2">
                                                     <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                                                     <span className="text-slate-300">
-                                                        Peer group access for {peerGroupParticipants} team member{peerGroupParticipants > 1 ? 's' : ''}
+                                                        {peerGroupParticipants} peer group seat{peerGroupParticipants > 1 ? 's' : ''} for your team
                                                     </span>
                                                 </div>
                                             )}
@@ -679,8 +732,8 @@
                                         <p className="text-slate-400 text-sm">
                                             {grandTotal === 0 
                                                 ? 'Select at least one option to save your budget'
-                                                : !contactInfo.name || !contactInfo.email || !contactInfo.organization
-                                                ? 'Please complete all required fields (name, email, organization) to continue'
+                                                : !contactInfo.name || !contactInfo.email || !contactInfo.budgetRenewalDate
+                                                ? 'Please complete all required fields to continue'
                                                 : 'This is non-binding — just helps us understand your needs and timing'}
                                         </p>
                                         <p className="text-slate-500 text-xs">
