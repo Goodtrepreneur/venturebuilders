@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pivot | The Founder Story Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #141414;
+      --muted: #b3b3b3;
+      --text: #f5f5f5;
+      --accent: #e50914;
+      --line: #2a2a2a;
+      --good: #22c55e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1200px, 92vw); margin: 0 auto; }
+    .hidden { display: none !important; }
+    .btn {
+      border: 0;
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn.secondary { background: #262626; border: 1px solid #3a3a3a; }
+    .btn.linkish { background: transparent; border: 1px solid #3a3a3a; }
+    .header {
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+    .wordmark {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .wordmark h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: 0.02em;
+    }
+    .wordmark .tagline {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .nudge {
+      margin-top: 12px;
+      border: 1px solid #3a3a3a;
+      background: #111;
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nudge small { color: var(--muted); }
+    .main { padding: 22px 0 40px; }
+    .banner-slot {
+      min-height: 82px;
+      background: linear-gradient(90deg, #171717, #101010);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .banner-content { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .banner-content img {
+      width: 90px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #0f0f0f;
+      border: 1px solid #222;
+      padding: 6px;
+    }
+    .banner-content p { margin: 0; color: var(--muted); }
+    .filters {
+      overflow-x: auto;
+      white-space: nowrap;
+      display: flex;
+      gap: 8px;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+    .pill {
+      border: 1px solid #3a3a3a;
+      background: #121212;
+      color: #d8d8d8;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+    .pill.active { border-color: var(--accent); color: #fff; background: #210608; }
+    .search-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .field, select {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #3a3a3a;
+      background: #111;
+      color: #fff;
+      padding: 11px 12px;
+      font-size: 0.95rem;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .featured {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .featured img {
+      width: 100%;
+      height: min(50vw, 420px);
+      object-fit: cover;
+      display: block;
+    }
+    .featured-body { padding: 14px; }
+    .featured-body h2 { margin: 0 0 6px; font-size: 1.25rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #494949;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      color: #ddd;
+      margin-right: 6px;
+      margin-top: 8px;
+    }
+    .sponsor-overlay {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(0, 0, 0, 0.72);
+      border: 1px solid #3d3d3d;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.76rem;
+    }
+    .section-sponsor {
+      margin: 14px 0 8px;
+      font-size: 0.82rem;
+      color: #ccc;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #313131;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: #101010;
+    }
+    .section-sponsor img { height: 20px; width: auto; max-width: 74px; object-fit: contain; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease;
+      position: relative;
+    }
+    .card:hover { transform: translateY(-2px) scale(1.01); border-color: #4f4f4f; }
+    .card .thumb-wrap { position: relative; }
+    .card img { width: 100%; height: 190px; object-fit: cover; display: block; }
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,.05));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .2s ease;
+    }
+    .card:hover .play-overlay { opacity: 1; }
+    .play-overlay span {
+      border: 1px solid #fff;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .card-body { padding: 12px; }
+    .card-body h3 { margin: 0 0 6px; font-size: 1rem; line-height: 1.35; }
+    .card-body .meta { font-size: 0.82rem; }
+    .content-wrap { display: grid; grid-template-columns: 1fr; gap: 18px; }
+    .sidebar-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      height: fit-content;
+    }
+    .sidebar-card img {
+      width: 100%;
+      max-height: 78px;
+      object-fit: contain;
+      background: #0f0f0f;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 8px;
+    }
+    .video-modal,
+    .access-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(0, 0, 0, 0.78);
+    }
+    .modal-inner {
+      width: min(980px, 95vw);
+      background: #111;
+      border: 1px solid #2e2e2e;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.65);
+      border: 1px solid #4a4a4a;
+      color: #fff;
+      border-radius: 999px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      z-index: 4;
+    }
+    .embed-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background: #000;
+    }
+    .embed-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .preroll {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+      background: rgba(0,0,0,.92);
+      z-index: 3;
+      padding: 18px;
+    }
+    .preroll img { max-width: 180px; max-height: 70px; object-fit: contain; }
+    .access-card {
+      width: min(520px, 95vw);
+      background: #111;
+      border: 1px solid #2e2e2e;
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .access-card h2 { margin-top: 2px; margin-bottom: 10px; }
+    .access-card p { color: #d0d0d0; line-height: 1.5; }
+    .access-actions { display: flex; gap: 10px; margin-top: 12px; }
+    .small-link {
+      margin-top: 10px;
+      text-align: center;
+      color: #b7b7b7;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .footer {
+      margin-top: 24px;
+      border-top: 1px solid var(--line);
+      padding: 18px 0 30px;
+      color: #bfbfbf;
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+    .muted { color: var(--muted); }
+    .status { margin-top: 10px; font-size: 0.9rem; color: #d1d1d1; min-height: 1.2em; }
+    .error { color: #f87171; }
+
+    @media (min-width: 700px) {
+      .search-row { grid-template-columns: 1fr 220px; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (min-width: 1024px) {
+      .content-wrap { grid-template-columns: minmax(0, 1fr) 280px; align-items: start; }
+      .sidebar-card { position: sticky; top: 90px; }
+      .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <div class="wordmark">
+        <h1>Pivot</h1>
+        <span class="tagline">The Founder Story Library</span>
+      </div>
+      <a href="/founder.html" class="btn">Update Your Profile</a>
+    </div>
+  </header>
+
+  <main id="portal-content" class="main hidden">
+    <div class="container">
+      <div id="founder-nudge" class="nudge hidden">
+        <small>Keep your founder profile up to date — investors are watching.</small>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <a href="/founder.html" class="btn secondary">Update Profile →</a>
+          <button id="dismiss-nudge" class="btn linkish" aria-label="Dismiss">X</button>
+        </div>
+      </div>
+
+      <section id="banner-slot" class="banner-slot hidden"></section>
+
+      <section class="filters" id="type-filters"></section>
+      <div class="search-row">
+        <input id="search-input" class="field" type="search" placeholder="Search title, speaker, company..." />
+        <select id="industry-filter" aria-label="Industry filter">
+          <option value="">All industries</option>
+        </select>
+      </div>
+
+      <div class="content-wrap">
+        <div>
+          <section id="featured-slot"></section>
+          <div id="sections-root"></div>
+        </div>
+        <aside>
+          <div id="sidebar-slot" class="sidebar-card hidden"></div>
+        </aside>
+      </div>
+
+      <footer class="footer">
+        <div>Powered by Venture Builders Fund</div>
+        <div class="footer-links">
+          <a href="https://venturebuilders.fund" target="_blank" rel="noopener noreferrer">venturebuilders.fund</a>
+          <a href="https://storieswithsteve.com" target="_blank" rel="noopener noreferrer">storieswithsteve.com</a>
+          <a href="/venturenext">VentureNext</a>
+        </div>
+        <div style="margin-top:8px;">
+          <a href="/founder.html">Want to be featured? Submit your story →</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <div id="video-modal" class="video-modal hidden" role="dialog" aria-modal="true" aria-label="Video player">
+    <div class="modal-inner">
+      <button class="modal-close" id="close-video-modal" aria-label="Close video">✕</button>
+      <div class="embed-wrap" id="embed-wrap"></div>
+    </div>
+  </div>
+
+  <div id="access-modal" class="access-modal hidden" role="dialog" aria-modal="true" aria-label="Access Pivot">
+    <div class="access-card">
+      <h2>Built for Founders. Powered by Real Stories.</h2>
+      <p>
+        Watch founder interviews, keynotes, and panels from builders who've done it.
+        Enter your email to get access — and keep your founder profile fresh for investors.
+      </p>
+      <label for="access-email" class="muted" style="display:block;margin-top:10px;">Email</label>
+      <input id="access-email" class="field" type="email" placeholder="you@company.com" />
+      <div class="access-actions">
+        <button id="access-submit" class="btn">Get Access</button>
+      </div>
+      <div id="access-status" class="status"></div>
+      <div id="access-browse" class="small-link">Just browsing</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const SUPABASE_URL = "https://asuophspmfqcnlzgqsfa.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzdW9waHNwbWZxY25semdxc2ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3MjI3NzMsImV4cCI6MjA4ODI5ODc3M30.ffLvnmFzkzWQ9c8naigftXD99y8X2qXSA8VOH9VCilk";
+      const BREVO_API_KEY = "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";
+      const BREVO_LIST_ID = 9;
+      const ACCESS_COOKIE = "pivot_access";
+      const PROFILE_NUDGE_COOKIE = "pivot_profile_nudge_dismissed";
+
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      let videos = [];
+      let sponsors = [];
+      let bannerSponsors = [];
+      let sidebarSponsors = [];
+      let currentBannerIndex = 0;
+      let currentType = "All";
+      let currentIndustry = "";
+      let searchTerm = "";
+      let activeVideo = null;
+      let bannerTimer = null;
+
+      const portalContent = document.getElementById("portal-content");
+      const accessModal = document.getElementById("access-modal");
+      const accessEmail = document.getElementById("access-email");
+      const accessSubmit = document.getElementById("access-submit");
+      const accessStatus = document.getElementById("access-status");
+      const accessBrowse = document.getElementById("access-browse");
+      const founderNudge = document.getElementById("founder-nudge");
+      const dismissNudge = document.getElementById("dismiss-nudge");
+      const bannerSlot = document.getElementById("banner-slot");
+      const featuredSlot = document.getElementById("featured-slot");
+      const sectionsRoot = document.getElementById("sections-root");
+      const typeFilters = document.getElementById("type-filters");
+      const industryFilter = document.getElementById("industry-filter");
+      const searchInput = document.getElementById("search-input");
+      const sidebarSlot = document.getElementById("sidebar-slot");
+      const videoModal = document.getElementById("video-modal");
+      const closeVideoModal = document.getElementById("close-video-modal");
+      const embedWrap = document.getElementById("embed-wrap");
+
+      function setCookie(name, value, days) {
+        const expires = new Date(Date.now() + days * 86400000).toUTCString();
+        document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expires + "; path=/; SameSite=Lax";
+      }
+
+      function getCookie(name) {
+        const target = name + "=";
+        const parts = document.cookie.split(";").map(function (x) { return x.trim(); });
+        for (let i = 0; i < parts.length; i += 1) {
+          if (parts[i].indexOf(target) === 0) return decodeURIComponent(parts[i].slice(target.length));
+        }
+        return null;
+      }
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function titleCase(value) {
+        if (!value) return "";
+        return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+      }
+
+      function byId(list) {
+        const map = {};
+        list.forEach(function (item) {
+          if (item && item.id !== undefined && item.id !== null) map[item.id] = item;
+        });
+        return map;
+      }
+
+      function getThumb(video) {
+        if (video.thumbnail_url) return video.thumbnail_url;
+        return "https://img.youtube.com/vi/" + encodeURIComponent(video.youtube_id) + "/maxresdefault.jpg";
+      }
+
+      function formatDate(value) {
+        if (!value) return "recently";
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) return "recently";
+        return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+      }
+
+      function showPortal() {
+        portalContent.classList.remove("hidden");
+        accessModal.classList.add("hidden");
+      }
+
+      function showAccessModal() {
+        accessModal.classList.remove("hidden");
+      }
+
+      function applyFounderNudge(message) {
+        if (getCookie(PROFILE_NUDGE_COOKIE) === "1") return;
+        founderNudge.querySelector("small").textContent = message;
+        founderNudge.classList.remove("hidden");
+      }
+
+      function dismissFounderNudge() {
+        founderNudge.classList.add("hidden");
+        setCookie(PROFILE_NUDGE_COOKIE, "1", 30);
+      }
+
+      async function sendToBrevo(email) {
+        try {
+          await fetch("https://api.brevo.com/v3/contacts", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "api-key": BREVO_API_KEY
+            },
+            body: JSON.stringify({
+              email: email,
+              listIds: [BREVO_LIST_ID],
+              updateEnabled: true
+            })
+          });
+        } catch (err) {
+          console.warn("Brevo request failed:", err);
+        }
+      }
+
+      async function handleEmailAccess(email) {
+        accessStatus.textContent = "Checking access...";
+        accessStatus.classList.remove("error");
+
+        const normalizedEmail = email.toLowerCase();
+        const nowIso = new Date().toISOString();
+
+        const subRes = await supabase
+          .from("pivot_subscribers")
+          .select("id, email, is_founder, founder_id, subscribed_at, last_seen")
+          .eq("email", normalizedEmail)
+          .maybeSingle();
+
+        if (subRes.error) throw subRes.error;
+
+        let subscriber = subRes.data;
+        if (subscriber) {
+          const updateRes = await supabase
+            .from("pivot_subscribers")
+            .update({ last_seen: nowIso })
+            .eq("email", normalizedEmail)
+            .select("id, email, is_founder, founder_id, subscribed_at, last_seen")
+            .maybeSingle();
+          if (!updateRes.error && updateRes.data) subscriber = updateRes.data;
+        } else {
+          const insertRes = await supabase
+            .from("pivot_subscribers")
+            .insert([{ email: normalizedEmail, subscribed_at: nowIso, last_seen: nowIso }])
+            .select("id, email, is_founder, founder_id, subscribed_at, last_seen")
+            .maybeSingle();
+          if (insertRes.error) throw insertRes.error;
+          subscriber = insertRes.data;
+          await sendToBrevo(normalizedEmail);
+        }
+
+        let isFounder = subscriber && subscriber.is_founder;
+        let founderId = subscriber && subscriber.founder_id;
+        const founderCheck = await supabase
+          .from("founderbase")
+          .select("id, email")
+          .eq("email", normalizedEmail)
+          .maybeSingle();
+
+        if (!founderCheck.error && founderCheck.data) {
+          isFounder = true;
+          founderId = founderCheck.data.id;
+          await supabase
+            .from("pivot_subscribers")
+            .update({ is_founder: true, founder_id: founderId, last_seen: nowIso })
+            .eq("email", normalizedEmail);
+        }
+
+        setCookie(ACCESS_COOKIE, normalizedEmail, 30);
+        showPortal();
+
+        if (isFounder) {
+          const dateText = formatDate((subscriber && (subscriber.last_seen || subscriber.subscribed_at)) || nowIso);
+          applyFounderNudge("Welcome back. Your founder profile was last updated " + dateText + ". Keep it fresh for investors.");
+          accessStatus.textContent = "";
+        } else {
+          accessStatus.textContent = "You're in. Explore the Pivot library below.";
+          setTimeout(function () {
+            accessStatus.textContent = "";
+          }, 1800);
+        }
+      }
+
+      function justBrowsingFlow() {
+        setCookie(ACCESS_COOKIE, "browsing", 1);
+        showPortal();
+        applyFounderNudge("Keep your founder profile up to date — investors are watching.");
+      }
+
+      function renderTypeFilters() {
+        const labels = ["All", "Interviews", "Keynotes", "Panels"];
+        typeFilters.innerHTML = "";
+        labels.forEach(function (label) {
+          const btn = document.createElement("button");
+          btn.className = "pill" + (currentType === label ? " active" : "");
+          btn.textContent = label;
+          btn.type = "button";
+          btn.addEventListener("click", function () {
+            currentType = label;
+            renderTypeFilters();
+            renderSections();
+          });
+          typeFilters.appendChild(btn);
+        });
+      }
+
+      function renderIndustryFilter() {
+        const seen = {};
+        const industries = videos
+          .map(function (v) { return (v.industry || "").trim(); })
+          .filter(function (i) { return i && !seen[i] && (seen[i] = true); })
+          .sort(function (a, b) { return a.localeCompare(b); });
+
+        industryFilter.innerHTML = '<option value="">All industries</option>';
+        industries.forEach(function (industry) {
+          const opt = document.createElement("option");
+          opt.value = industry;
+          opt.textContent = industry;
+          industryFilter.appendChild(opt);
+        });
+        industryFilter.value = currentIndustry;
+      }
+
+      function matchesFilters(video) {
+        const ct = (video.content_type || "").toLowerCase();
+        const q = searchTerm.trim().toLowerCase();
+        const haystack = [video.title, video.speaker_name, video.company].join(" ").toLowerCase();
+        const typeMatch = currentType === "All" || ct === currentType.toLowerCase().slice(0, -1);
+        const industryMatch = !currentIndustry || (video.industry || "") === currentIndustry;
+        const searchMatch = !q || haystack.indexOf(q) !== -1;
+        return typeMatch && industryMatch && searchMatch;
+      }
+
+      function pickFeatured() {
+        const featured = videos.find(function (v) { return !!v.is_featured; });
+        if (featured && matchesFilters(featured)) return featured;
+        const filtered = videos.filter(matchesFilters);
+        return filtered.length ? filtered[0] : null;
+      }
+
+      function findSponsorById(id) {
+        if (!id) return null;
+        return sponsors.find(function (s) { return s.id === id; }) || null;
+      }
+
+      function openVideoModal(video) {
+        activeVideo = video;
+        videoModal.classList.remove("hidden");
+        renderVideoModal(video);
+      }
+
+      function closeModal() {
+        videoModal.classList.add("hidden");
+        embedWrap.innerHTML = "";
+        activeVideo = null;
+      }
+
+      function renderVideoModal(video) {
+        const sponsor = findSponsorById(video.sponsor_id);
+        const embedUrl = "https://www.youtube.com/embed/" + encodeURIComponent(video.youtube_id) + "?autoplay=1";
+        if (!sponsor) {
+          embedWrap.innerHTML = '<iframe allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen src="' + embedUrl + '"></iframe>';
+          return;
+        }
+
+        embedWrap.innerHTML = [
+          '<div class="preroll" id="preroll">',
+          sponsor.logo_url ? '<img src="' + escapeHtml(sponsor.logo_url) + '" alt="' + escapeHtml(sponsor.name || "Sponsor") + '" />' : "",
+          '<div class="muted">Brought to you by ' + escapeHtml(sponsor.name || "our sponsor") + '</div>',
+          sponsor.tagline ? '<div>' + escapeHtml(sponsor.tagline) + '</div>' : "",
+          '<button id="skip-preroll" class="btn secondary" disabled>Skip in 3s</button>',
+          '</div>',
+          '<iframe id="yt-iframe" class="hidden" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen src="' + embedUrl + '"></iframe>'
+        ].join("");
+
+        const skipBtn = document.getElementById("skip-preroll");
+        const preroll = document.getElementById("preroll");
+        const iframe = document.getElementById("yt-iframe");
+        let elapsed = 0;
+        const timer = setInterval(function () {
+          elapsed += 1;
+          if (elapsed >= 3 && skipBtn) {
+            skipBtn.disabled = false;
+            skipBtn.textContent = "Skip";
+          } else if (skipBtn) {
+            skipBtn.textContent = "Skip in " + (3 - elapsed) + "s";
+          }
+          if (elapsed >= 5) {
+            clearInterval(timer);
+            if (preroll) preroll.remove();
+            if (iframe) iframe.classList.remove("hidden");
+          }
+        }, 1000);
+
+        skipBtn.addEventListener("click", function () {
+          if (skipBtn.disabled) return;
+          clearInterval(timer);
+          if (preroll) preroll.remove();
+          if (iframe) iframe.classList.remove("hidden");
+        });
+      }
+
+      function renderFeatured() {
+        const featured = pickFeatured();
+        if (!featured) {
+          featuredSlot.innerHTML = '<div class="muted" style="padding:8px 0 12px;">No videos found for the current filters.</div>';
+          return;
+        }
+        const sponsor = findSponsorById(featured.sponsor_id);
+        featuredSlot.innerHTML = [
+          '<article class="featured" id="featured-card">',
+          sponsor ? '<div class="sponsor-overlay">Brought to you by ' + escapeHtml(sponsor.name || "Sponsor") + '</div>' : "",
+          '<img src="' + escapeHtml(getThumb(featured)) + '" alt="' + escapeHtml(featured.title) + '" />',
+          '<div class="featured-body">',
+          '<h2>' + escapeHtml(featured.title || "Untitled") + '</h2>',
+          '<div class="meta">' + escapeHtml((featured.speaker_name || "Unknown speaker") + " • " + (featured.company || "Unknown company")) + '</div>',
+          featured.industry ? '<span class="badge">' + escapeHtml(featured.industry) + '</span>' : "",
+          featured.content_type ? '<span class="badge">' + escapeHtml(titleCase(featured.content_type)) + '</span>' : "",
+          featured.is_premium ? '<span class="badge">Premium</span>' : "",
+          "</div>",
+          "</article>"
+        ].join("");
+        document.getElementById("featured-card").addEventListener("click", function () {
+          openVideoModal(featured);
+        });
+      }
+
+      function renderSections() {
+        renderFeatured();
+        const featured = pickFeatured();
+        const items = videos
+          .filter(matchesFilters)
+          .filter(function (v) { return !featured || v.youtube_id !== featured.youtube_id; });
+
+        const grouped = {};
+        items.forEach(function (v) {
+          const key = titleCase(v.content_type || "Other");
+          if (!grouped[key]) grouped[key] = [];
+          grouped[key].push(v);
+        });
+
+        const order = ["Interview", "Keynote", "Panel"];
+        const keys = Object.keys(grouped).sort(function (a, b) {
+          const ai = order.indexOf(a);
+          const bi = order.indexOf(b);
+          if (ai === -1 && bi === -1) return a.localeCompare(b);
+          if (ai === -1) return 1;
+          if (bi === -1) return -1;
+          return ai - bi;
+        });
+
+        sectionsRoot.innerHTML = "";
+        if (!keys.length) {
+          sectionsRoot.innerHTML = '<div class="muted" style="padding:10px 0;">No additional videos match your filters.</div>';
+          return;
+        }
+
+        keys.forEach(function (key) {
+          const sectionVideos = grouped[key];
+          const section = document.createElement("section");
+          section.style.marginTop = "14px";
+
+          const sponsoredVideo = sectionVideos.find(function (v) { return !!v.sponsor_id; });
+          const sectionSponsor = sponsoredVideo ? findSponsorById(sponsoredVideo.sponsor_id) : null;
+
+          section.innerHTML = '<h3 style="margin:0 0 8px;">' + escapeHtml(key + "s") + "</h3>";
+          if (sectionSponsor) {
+            const row = document.createElement("div");
+            row.className = "section-sponsor";
+            row.innerHTML = [
+              "<span>Sponsored by</span>",
+              sectionSponsor.logo_url ? '<img src="' + escapeHtml(sectionSponsor.logo_url) + '" alt="' + escapeHtml(sectionSponsor.name || "Sponsor") + '" />' : '<strong>' + escapeHtml(sectionSponsor.name || "Sponsor") + "</strong>"
+            ].join("");
+            section.appendChild(row);
+          }
+
+          const grid = document.createElement("div");
+          grid.className = "grid";
+          sectionVideos.forEach(function (v) {
+            const card = document.createElement("article");
+            card.className = "card";
+            card.innerHTML = [
+              '<div class="thumb-wrap">',
+              '<img src="' + escapeHtml(getThumb(v)) + '" alt="' + escapeHtml(v.title || "Video thumbnail") + '" />',
+              '<div class="play-overlay"><span>Play</span></div>',
+              "</div>",
+              '<div class="card-body">',
+              '<h3>' + escapeHtml(v.title || "Untitled") + "</h3>",
+              '<div class="meta">' + escapeHtml((v.speaker_name || "Unknown speaker") + " • " + (v.company || "Unknown company")) + "</div>",
+              (v.industry ? '<span class="badge">' + escapeHtml(v.industry) + "</span>" : ""),
+              (v.content_type ? '<span class="badge">' + escapeHtml(titleCase(v.content_type)) + "</span>" : ""),
+              (v.is_premium ? '<span class="badge">Premium</span>' : ""),
+              "</div>"
+            ].join("");
+            card.addEventListener("click", function () {
+              openVideoModal(v);
+            });
+            grid.appendChild(card);
+          });
+          section.appendChild(grid);
+          sectionsRoot.appendChild(section);
+        });
+      }
+
+      function rotateBanner() {
+        if (!bannerSponsors.length) {
+          bannerSlot.classList.add("hidden");
+          bannerSlot.innerHTML = "";
+          return;
+        }
+        const sponsor = bannerSponsors[currentBannerIndex % bannerSponsors.length];
+        bannerSlot.classList.remove("hidden");
+        bannerSlot.innerHTML = [
+          '<div class="banner-content">',
+          sponsor.logo_url ? '<img src="' + escapeHtml(sponsor.logo_url) + '" alt="' + escapeHtml(sponsor.name || "Sponsor") + '" />' : "",
+          '<div>',
+          '<div style="font-weight:700;">' + escapeHtml(sponsor.name || "Sponsor") + "</div>",
+          '<p>' + escapeHtml(sponsor.tagline || "") + "</p>",
+          "</div>",
+          "</div>",
+          sponsor.website_url ? '<a class="btn secondary" href="' + escapeHtml(sponsor.website_url) + '" target="_blank" rel="noopener noreferrer">Visit Sponsor</a>' : ""
+        ].join("");
+      }
+
+      function initBannerRotation() {
+        if (bannerTimer) clearInterval(bannerTimer);
+        rotateBanner();
+        if (bannerSponsors.length > 1) {
+          bannerTimer = setInterval(function () {
+            currentBannerIndex += 1;
+            rotateBanner();
+          }, 7000);
+        }
+      }
+
+      function renderSidebar() {
+        if (!sidebarSponsors.length) {
+          sidebarSlot.classList.add("hidden");
+          return;
+        }
+        const sponsor = sidebarSponsors[0];
+        sidebarSlot.classList.remove("hidden");
+        sidebarSlot.innerHTML = [
+          '<div class="muted" style="font-size:.8rem;margin-bottom:8px;">Sponsor</div>',
+          sponsor.logo_url ? '<img src="' + escapeHtml(sponsor.logo_url) + '" alt="' + escapeHtml(sponsor.name || "Sponsor") + '" />' : "",
+          '<h4 style="margin:10px 0 6px;">' + escapeHtml(sponsor.name || "Sponsor") + "</h4>",
+          '<p class="muted" style="margin:0 0 12px;">' + escapeHtml(sponsor.tagline || "") + "</p>",
+          sponsor.website_url ? '<a class="btn secondary" href="' + escapeHtml(sponsor.website_url) + '" target="_blank" rel="noopener noreferrer">Learn More</a>' : ""
+        ].join("");
+      }
+
+      async function loadData() {
+        const videoReq = supabase
+          .from("pivot_videos")
+          .select("id,youtube_id,title,speaker_name,company,industry,content_type,tags,is_featured,is_premium,sponsor_id,thumbnail_url,view_count,published_at")
+          .order("published_at", { ascending: false });
+        const sponsorReq = supabase
+          .from("pivot_sponsors")
+          .select("id,name,logo_url,website_url,tagline,placement,is_active,priority")
+          .eq("is_active", true)
+          .order("priority", { ascending: false });
+
+        const results = await Promise.all([videoReq, sponsorReq]);
+        if (results[0].error) throw results[0].error;
+        if (results[1].error) throw results[1].error;
+
+        videos = results[0].data || [];
+        sponsors = results[1].data || [];
+        bannerSponsors = sponsors.filter(function (s) { return (s.placement || "").toLowerCase() === "banner"; });
+        sidebarSponsors = sponsors.filter(function (s) { return (s.placement || "").toLowerCase() === "sidebar"; });
+
+        renderIndustryFilter();
+        renderTypeFilters();
+        initBannerRotation();
+        renderSidebar();
+        renderSections();
+      }
+
+      function attachEvents() {
+        searchInput.addEventListener("input", function (e) {
+          searchTerm = e.target.value || "";
+          renderSections();
+        });
+        industryFilter.addEventListener("change", function (e) {
+          currentIndustry = e.target.value || "";
+          renderSections();
+        });
+        closeVideoModal.addEventListener("click", closeModal);
+        videoModal.addEventListener("click", function (e) {
+          if (e.target === videoModal) closeModal();
+        });
+        accessBrowse.addEventListener("click", justBrowsingFlow);
+        dismissNudge.addEventListener("click", dismissFounderNudge);
+        accessSubmit.addEventListener("click", async function () {
+          const email = (accessEmail.value || "").trim();
+          if (!email) {
+            accessStatus.textContent = "Please enter your email.";
+            accessStatus.classList.add("error");
+            return;
+          }
+          accessSubmit.disabled = true;
+          try {
+            await handleEmailAccess(email);
+          } catch (err) {
+            accessStatus.textContent = (err && err.message) ? err.message : "Unable to process access right now.";
+            accessStatus.classList.add("error");
+          } finally {
+            accessSubmit.disabled = false;
+          }
+        });
+      }
+
+      async function init() {
+        attachEvents();
+        const hasAccess = !!getCookie(ACCESS_COOKIE);
+        if (hasAccess) {
+          showPortal();
+        } else {
+          showAccessModal();
+        }
+
+        try {
+          await loadData();
+        } catch (err) {
+          console.error("Pivot load error:", err);
+          sectionsRoot.innerHTML = '<div class="error" style="padding:8px 0;">Unable to load videos right now.</div>';
+        }
+
+        if (hasAccess) {
+          const email = getCookie(ACCESS_COOKIE);
+          if (email && email.indexOf("@") > 0) {
+            const sub = await supabase
+              .from("pivot_subscribers")
+              .select("email,is_founder,last_seen,subscribed_at")
+              .eq("email", email)
+              .maybeSingle();
+            if (!sub.error && sub.data && sub.data.is_founder) {
+              const text = "Keep your founder profile up to date — investors are watching.";
+              applyFounderNudge(text);
+            }
+          } else if (email === "browsing") {
+            applyFounderNudge("Keep your founder profile up to date — investors are watching.");
+          }
+        }
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
