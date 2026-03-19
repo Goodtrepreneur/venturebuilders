@@ -6,7 +6,7 @@
   <title>Pivot | The Founder Story Library</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
@@ -61,11 +61,13 @@
     #hero{position:relative;width:100%;height:80vh;min-height:500px;max-height:760px;overflow:hidden;background:#0a0a0a;}
     #hero-bg{position:absolute;inset:0;background-size:cover;background-position:center top;transform:scale(1.04);transition:background-image 600ms;}
     #hero::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#080808 0%,rgba(8,8,8,.6) 35%,transparent 65%),linear-gradient(90deg,rgba(8,8,8,.85) 0%,transparent 55%),linear-gradient(180deg,rgba(8,8,8,.5) 0%,transparent 25%);pointer-events:none;}
-    #hero-content{position:absolute;bottom:15%;left:4%;z-index:2;max-width:580px;}
+    #hero-content{position:absolute;bottom:15%;left:4%;z-index:2;max-width:580px;border-radius:8px;overflow:hidden;}
+    .hero-content-inner{position:relative;z-index:1;padding:1.75rem 2rem;backdrop-filter:blur(2px);}
     .hero-type-badge{display:inline-flex;align-items:center;gap:.4rem;margin-bottom:.75rem;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2);}
     .hero-type-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
-    #hero-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:1rem;text-shadow:0 2px 20px rgba(0,0,0,.5);}
+    #hero-title{font-family:'Inter',sans-serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem;text-shadow:0 2px 20px rgba(0,0,0,.5);}
     #hero-desc{font-size:clamp(.85rem,1.4vw,1rem);color:var(--text-2);line-height:1.6;margin-bottom:1.5rem;max-width:460px;text-shadow:0 1px 8px rgba(0,0,0,.8);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+    #hero-content-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.45);border-radius:8px;z-index:0;}
     .hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;}
     .hero-btn-play{display:inline-flex;align-items:center;gap:.6rem;padding:.75rem 1.75rem;background:#fff;color:#000;border-radius:4px;font-size:.95rem;font-weight:700;transition:var(--transition);}
     .hero-btn-play:hover{background:rgba(255,255,255,.85);transform:translateY(-2px);}
@@ -198,8 +200,8 @@
 
 <div id="founder-nudge">
   Keep your founder profile up to date — investors are watching.
-  <a href="https://venturebuilders.fund/founder.html"> Update Profile</a>
-  <button class="nudge-close" onclick="this.parentElement.classList.remove('visible')">&#x2715;</button>
+  <a href="https://venturebuilders.fund/founder"> Update Profile</a>
+  <button type="button" class="nudge-close" id="nudge-close" aria-label="Dismiss">&#x2715;</button>
 </div>
 
 <header id="main-header">
@@ -215,12 +217,12 @@
   </div>
   <div class="header-right">
     <div class="header-search-wrap">
-      <button class="header-search-toggle" id="search-toggle">
+      <button type="button" class="header-search-toggle" id="search-toggle">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>
       <input type="text" class="header-search-input" id="search-input" placeholder="Search founders..." />
     </div>
-    <a href="https://venturebuilders.fund/founder.html" class="header-profile-btn">Update Profile</a>
+    <a href="https://venturebuilders.fund/founder" class="header-profile-btn">Update Profile</a>
   </div>
 </header>
 
@@ -234,18 +236,21 @@
 <div id="hero">
   <div id="hero-bg"></div>
   <div id="hero-content">
-    <div class="hero-type-badge"><div class="hero-type-dot"></div><span id="hero-type-label">Interview</span></div>
-    <h1 id="hero-title">Loading...</h1>
-    <p id="hero-desc"></p>
-    <div class="hero-actions">
-      <button class="hero-btn-play" id="hero-play-btn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        Play
-      </button>
-      <button class="hero-btn-info" id="hero-info-btn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        More Info
-      </button>
+    <div id="hero-content-backdrop" aria-hidden="true"></div>
+    <div class="hero-content-inner">
+      <div class="hero-type-badge"><div class="hero-type-dot"></div><span id="hero-type-label">Interview</span></div>
+      <h1 id="hero-title">Loading...</h1>
+      <p id="hero-desc"></p>
+      <div class="hero-actions">
+        <button type="button" class="hero-btn-play" id="hero-play-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Play
+        </button>
+        <button type="button" class="hero-btn-info" id="hero-info-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          More Info
+        </button>
+      </div>
     </div>
   </div>
   <div class="hero-meta"><span class="hero-industry-tag" id="hero-industry"></span></div>
@@ -253,11 +258,11 @@
 </div>
 
 <div id="filter-bar">
-  <button class="pill active" data-type="all">All</button>
-  <button class="pill" data-type="interview">Interviews</button>
-  <button class="pill" data-type="keynote">Keynotes</button>
-  <button class="pill" data-type="panel">Panels</button>
-  <button class="pill" data-type="speaker_series">Speaker Series</button>
+  <button type="button" class="pill active" data-type="all">All</button>
+  <button type="button" class="pill" data-type="interview">Interviews</button>
+  <button type="button" class="pill" data-type="keynote">Keynotes</button>
+  <button type="button" class="pill" data-type="panel">Panels</button>
+  <button type="button" class="pill" data-type="speaker_series">Speaker Series</button>
   <select class="filter-select" id="industry-filter"><option value="">All Industries</option></select>
 </div>
 
@@ -268,13 +273,13 @@
       <span class="row-title-new">New</span>
     </div>
     <div class="row-track-wrap">
-      <button class="row-arrow left" onclick="scrollRow('row-recent',-1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 2L2 10l8 8"/></svg></button>
+      <button type="button" class="row-arrow left" onclick="scrollRow('row-recent',-1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 2L2 10l8 8"/></svg></button>
       <div class="row-track" id="track-recent">
         <div class="v-card" style="flex:0 0 20%;min-width:180px;"><div class="skeleton" style="aspect-ratio:16/9;"></div></div>
         <div class="v-card" style="flex:0 0 20%;min-width:180px;"><div class="skeleton" style="aspect-ratio:16/9;"></div></div>
         <div class="v-card" style="flex:0 0 20%;min-width:180px;"><div class="skeleton" style="aspect-ratio:16/9;"></div></div>
       </div>
-      <button class="row-arrow right" onclick="scrollRow('row-recent',1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l8 8-8 8"/></svg></button>
+      <button type="button" class="row-arrow right" onclick="scrollRow('row-recent',1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l8 8-8 8"/></svg></button>
     </div>
   </div>
   <div id="sponsor-section-slot"></div>
@@ -285,21 +290,19 @@
   <div class="footer-brand">Powered by <span>Venture Builders Fund</span></div>
   <div class="footer-links">
     <a href="https://venturebuilders.fund">venturebuilders.fund</a>
-    <a href="https://storieswithsteve.com">storieswithsteve.com</a>
-    <a href="/venturenext">VentureNext</a>
   </div>
 </footer>
 
 <div id="video-modal">
   <div class="modal-inner">
-    <button class="modal-close" id="modal-close-btn">&#x2715;</button>
+    <button type="button" class="modal-close" id="modal-close-btn">&#x2715;</button>
     <div class="modal-video-wrap">
       <div id="preroll">
         <div class="preroll-label">This episode is brought to you by</div>
         <div class="preroll-name" id="preroll-name"></div>
         <div class="preroll-tag" id="preroll-tag"></div>
         <div class="preroll-timer" id="preroll-timer"></div>
-        <button class="preroll-skip" id="preroll-skip">Skip</button>
+        <button type="button" class="preroll-skip" id="preroll-skip">Skip</button>
       </div>
       <iframe id="video-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
@@ -326,7 +329,7 @@
     <p class="popup-sub">Watch interviews, keynotes, panels, and speaker series from builders who've raised, scaled, and pivoted. Enter your email to get access — and keep your founder profile fresh for investors.</p>
     <input type="text"  class="popup-input" id="popup-firstname" placeholder="First name (optional)"/>
     <input type="email" class="popup-input" id="popup-email"     placeholder="Your email address"/>
-    <button class="popup-submit" id="popup-submit">Get Access</button>
+    <button type="button" class="popup-submit" id="popup-submit">Get Access</button>
     <div class="popup-message" id="popup-message"></div>
     <div class="popup-dismiss" id="popup-dismiss">Just browsing</div>
   </div>
@@ -343,13 +346,45 @@
   let allVideos=[], allSponsors=[], currentType='all', currentIndustry='';
   let heroIndex=0, heroTimer=null, prerollInterval=null, heroVideos=[];
 
-  const setCookie=(n,v,d)=>{const e=new Date();e.setTime(e.getTime()+d*864e5);document.cookie=n+'='+encodeURIComponent(v)+';expires='+e.toUTCString()+';path=/;SameSite=Lax';};
-  const getCookie=n=>{const c=document.cookie.split(';').find(function(x){return x.trim().startsWith(n+'=');});return c?decodeURIComponent(c.trim().split('=').slice(1).join('=')):null;};
+  function setCookie(n,v,d){
+    var e=new Date();
+    e.setTime(e.getTime()+d*864e5);
+    document.cookie=n+'='+encodeURIComponent(v)+';expires='+e.toUTCString()+';path=/;SameSite=Lax';
+  }
+  function getCookie(n){
+    var parts=document.cookie.split(';');
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i].trim();
+      if(p.indexOf(n+'=')===0)return decodeURIComponent(p.slice(n.length+1));
+    }
+    return null;
+  }
 
-  window.addEventListener('scroll',function(){document.getElementById('main-header').classList.toggle('scrolled',window.scrollY>60);});
+  function escapeHtml(s){
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function escapeAttr(s){
+    return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+  }
+
+  function updateHeaderOffset(){
+    var nudge=document.getElementById('founder-nudge');
+    var header=document.getElementById('main-header');
+    var h=nudge.classList.contains('visible')?nudge.offsetHeight:0;
+    header.style.top=h+'px';
+  }
+
+  window.addEventListener('scroll',function(){
+    document.getElementById('main-header').classList.toggle('scrolled',window.scrollY>60);
+  });
+  updateHeaderOffset();
+  document.getElementById('nudge-close').addEventListener('click',function(){
+    document.getElementById('founder-nudge').classList.remove('visible');
+    setTimeout(updateHeaderOffset,50);
+  });
 
   document.getElementById('search-toggle').addEventListener('click',function(){
-    const i=document.getElementById('search-input');
+    var i=document.getElementById('search-input');
     i.classList.toggle('open');
     if(i.classList.contains('open'))i.focus();
   });
@@ -382,12 +417,16 @@
   async function init(){
     if(!getCookie(COOKIE_NAME))document.getElementById('subscribe-popup').classList.add('open');
     await Promise.all([loadVideos(),loadSponsors()]);
-    if(getCookie(COOKIE_NAME)){
-      var em=getCookie(COOKIE_NAME);
-      if(em && em.indexOf('@')>0){
-        var sub=await sb.from('pivot_subscribers').select('is_founder').eq('email',em.toLowerCase()).maybeSingle();
-        if(!sub.error && sub.data && sub.data.is_founder)document.getElementById('founder-nudge').classList.add('visible');
-      } else if(em==='browsing')document.getElementById('founder-nudge').classList.add('visible');
+    var ck=getCookie(COOKIE_NAME);
+    if(ck && ck.indexOf('@')>0){
+      var sub=await sb.from('pivot_subscribers').select('is_founder').eq('email',ck.toLowerCase()).maybeSingle();
+      if(!sub.error && sub.data && sub.data.is_founder){
+        document.getElementById('founder-nudge').classList.add('visible');
+        updateHeaderOffset();
+      }
+    } else if(ck==='browsing'){
+      document.getElementById('founder-nudge').classList.add('visible');
+      updateHeaderOffset();
     }
   }
 
@@ -430,13 +469,6 @@
           '</div>'+
         '</div>';
     }
-  }
-
-  function escapeHtml(s){
-    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-  function escapeAttr(s){
-    return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
   }
 
   function renderHero(){
@@ -518,9 +550,9 @@
             '<span class="row-see-all">See all</span>'+
           '</div>'+
           '<div class="row-track-wrap">'+
-            '<button class="row-arrow left" onclick="scrollRow(\'row-'+row.key+'\',-1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 2L2 10l8 8"/></svg></button>'+
+            '<button type="button" class="row-arrow left" onclick="scrollRow(\'row-'+row.key+'\',-1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 2L2 10l8 8"/></svg></button>'+
             '<div class="row-track" id="track-'+row.key+'">'+vids.map(function(v){return renderCard(v,false);}).join('')+'</div>'+
-            '<button class="row-arrow right" onclick="scrollRow(\'row-'+row.key+'\',1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l8 8-8 8"/></svg></button>'+
+            '<button type="button" class="row-arrow right" onclick="scrollRow(\'row-'+row.key+'\',1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l8 8-8 8"/></svg></button>'+
           '</div>'+
         '</div>';
       });
@@ -620,7 +652,11 @@
       if(s<=0){clearInterval(prerollInterval);prerollInterval=null;sk.classList.add('ready');ti.textContent='';}
       else ti.textContent='Skippable in '+s+'s';
     },1000);
-    sk.onclick=function(){if(!sk.classList.contains('ready'))return;clearInterval(prerollInterval);prerollInterval=null;pr.classList.remove('visible');document.getElementById('video-iframe').src='https://www.youtube.com/embed/'+encodeURIComponent(ytId)+'?autoplay=1';};
+    sk.onclick=function(){
+      clearInterval(prerollInterval);prerollInterval=null;
+      pr.classList.remove('visible');
+      document.getElementById('video-iframe').src='https://www.youtube.com/embed/'+encodeURIComponent(ytId)+'?autoplay=1';
+    };
   }
 
   function showMsg(html,type){
@@ -642,7 +678,7 @@
         await sb.from('pivot_subscribers').update({last_seen:new Date().toISOString()}).eq('email',email);
       } else {
         var founder=await sb.from('founderbase').select('id').eq('email',email).maybeSingle();
-        var fid=(!founder.error&&founder.data)?founder.data.id:null;
+        var fid=(founder.data&&founder.data.id)?founder.data.id:null;
         var ins=await sb.from('pivot_subscribers').insert({email:email,first_name:fn||null,is_founder:!!fid,founder_id:fid,subscribed_at:new Date().toISOString(),last_seen:new Date().toISOString()});
         if(ins.error)throw ins.error;
         var subRes=await fetch(SUBSCRIBE_FN,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_ANON,'apikey':SUPABASE_ANON},body:JSON.stringify({email:email,first_name:fn||null})});
@@ -650,8 +686,9 @@
       }
       var sub=await sb.from('pivot_subscribers').select('is_founder').eq('email',email).maybeSingle();
       if(sub.data&&sub.data.is_founder){
-        showMsg('Welcome back, founder. Keep your profile fresh — investors are watching. <a href="https://venturebuilders.fund/founder.html" style="color:inherit;font-weight:700;text-decoration:underline;">Update Profile</a>','founder');
+        showMsg('Welcome back, founder. Keep your profile fresh — investors are watching. <a href="https://venturebuilders.fund/founder" style="color:inherit;font-weight:700;text-decoration:underline;">Update Profile</a>','founder');
         document.getElementById('founder-nudge').classList.add('visible');
+        updateHeaderOffset();
       } else showMsg("You're in. Explore the Pivot library.",'success');
       setCookie(COOKIE_NAME,email,30);
       btn.textContent='Access Granted';
@@ -659,7 +696,12 @@
     }catch(err){console.error(err);showMsg('Something went wrong. Please try again.','error');btn.disabled=false;btn.textContent='Get Access';}
   });
 
-  document.getElementById('popup-dismiss').addEventListener('click',function(){setCookie(COOKIE_NAME,'browsing',1);document.getElementById('subscribe-popup').classList.remove('open');document.getElementById('founder-nudge').classList.add('visible');});
+  document.getElementById('popup-dismiss').addEventListener('click',function(){
+    setCookie(COOKIE_NAME,'browsing',1);
+    document.getElementById('subscribe-popup').classList.remove('open');
+    document.getElementById('founder-nudge').classList.add('visible');
+    updateHeaderOffset();
+  });
   document.getElementById('popup-email').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('popup-submit').click();});
 
   init();
