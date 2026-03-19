@@ -77,6 +77,9 @@ Deno.serve(async (req: Request) => {
   }
 
   const fields = buildAirtableFields(record)
+  const filteredFields = Object.fromEntries(
+    Object.entries(fields).filter(([_, v]) => v !== null && v !== undefined && v !== '')
+  )
   const airtableRecordId = record.airtable_id as string | undefined | null
   const baseUrl = `https://api.airtable.com/v0/${encodeURIComponent(airtableBaseId)}/${encodeURIComponent(airtableTable)}`
   const headers = {
@@ -90,7 +93,7 @@ Deno.serve(async (req: Request) => {
       const createRes = await fetch(baseUrl, {
         method: "POST",
         headers,
-        body: JSON.stringify({ records: [{ fields }] }),
+        body: JSON.stringify({ records: [{ fields: filteredFields }] }),
       })
       if (!createRes.ok) {
         const errText = await createRes.text()
@@ -133,7 +136,7 @@ Deno.serve(async (req: Request) => {
     const patchRes = await fetch(patchUrl, {
       method: "PATCH",
       headers,
-      body: JSON.stringify({ fields }),
+      body: JSON.stringify({ fields: filteredFields }),
     })
     if (!patchRes.ok) {
       const errText = await patchRes.text()
