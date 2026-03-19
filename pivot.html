@@ -431,8 +431,7 @@
     (function () {
       const SUPABASE_URL = "https://asuophspmfqcnlzgqsfa.supabase.co";
       const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzdW9waHNwbWZxY25semdxc2ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3MjI3NzMsImV4cCI6MjA4ODI5ODc3M30.ffLvnmFzkzWQ9c8naigftXD99y8X2qXSA8VOH9VCilk";
-      const BREVO_API_KEY = "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";
-      const BREVO_LIST_ID = 9;
+      const SUBSCRIBE_FUNCTION_URL = "https://asuophspmfqcnlzgqsfa.supabase.co/functions/v1/subscribe-pivot";
       const ACCESS_COOKIE = "pivot_access";
       const PROFILE_NUDGE_COOKIE = "pivot_profile_nudge_dismissed";
 
@@ -536,22 +535,20 @@
         setCookie(PROFILE_NUDGE_COOKIE, "1", 30);
       }
 
-      async function sendToBrevo(email) {
+      async function sendToBrevo(email, firstName) {
         try {
-          await fetch("https://api.brevo.com/v3/contacts", {
+          await fetch(SUBSCRIBE_FUNCTION_URL, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              "api-key": BREVO_API_KEY
+              "Content-Type": "application/json"
             },
             body: JSON.stringify({
               email: email,
-              listIds: [BREVO_LIST_ID],
-              updateEnabled: true
+              first_name: firstName || ""
             })
           });
         } catch (err) {
-          console.warn("Brevo request failed:", err);
+          console.warn("subscribe-pivot request failed:", err);
         }
       }
 
@@ -587,7 +584,8 @@
             .maybeSingle();
           if (insertRes.error) throw insertRes.error;
           subscriber = insertRes.data;
-          await sendToBrevo(normalizedEmail);
+          const guessedFirstName = normalizedEmail.split("@")[0] || "";
+          await sendToBrevo(normalizedEmail, guessedFirstName);
         }
 
         let isFounder = subscriber && subscriber.is_founder;
