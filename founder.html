@@ -368,8 +368,12 @@
                 if (!email) return;
                 authSubmit.disabled = true;
                 setAuthMessage('Sending magic link…', false);
-                var redirectTo = window.location.origin + window.location.pathname;
-                supabase.auth.signInWithOtp({ email: email, options: { emailRedirectTo: redirectTo } })
+                supabase.auth.signInWithOtp({
+                    email: email,
+                    options: {
+                        emailRedirectTo: 'https://venturebuilders.fund/founder.html'
+                    }
+                })
                     .then(function(res) {
                         if (res.error) {
                             setAuthMessage(res.error.message || 'Something went wrong.', true);
