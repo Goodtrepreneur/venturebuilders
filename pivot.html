@@ -375,9 +375,20 @@
 
   let allVideos=[], allSponsors=[], currentType='all', currentIndustry='';
   let heroIndex=0, heroTimer=null, prerollInterval=null, heroVideos=[];
+  let currentImpressionId=null;
 
   const setCookie=(n,v,d)=>{const e=new Date();e.setTime(e.getTime()+d*864e5);document.cookie=`${n}=${v};expires=${e.toUTCString()};path=/`;};
   const getCookie=n=>{const c=document.cookie.split(';').find(c=>c.trim().startsWith(n+'='));return c?c.trim().split('=')[1]:null;};
+  function getViewerEmailFromAccessCookie(){
+    const raw=getCookie(COOKIE_NAME);
+    if(!raw||raw==='browsing')return null;
+    try{
+      const decoded=atob(raw);
+      return decoded&&decoded.indexOf('@')>-1?decoded:null;
+    }catch(e){
+      return null;
+    }
+  }
 
   function updateHeaderOffset(){
     const nudge=document.getElementById('founder-nudge');
@@ -452,6 +463,16 @@
       document.getElementById('banner-sponsor-link').href=banner.website_url||'#';
       document.getElementById('sponsor-banner').classList.add('visible');
       document.body.classList.add('banner-visible');
+      (async()=>{
+        try{
+          await sb.from('pivot_sponsor_impressions').insert({
+            sponsor_id:banner.id,
+            placement:'banner',
+            skipped:false,
+            viewer_email:getViewerEmailFromAccessCookie()
+          });
+        }catch(err){console.error('banner impression insert failed:',err);}
+      })();
       // set banner height as CSS var for header offset
       setTimeout(()=>{
         const bh=document.getElementById('sponsor-banner').offsetHeight;
@@ -648,10 +669,21 @@
       adLogo.src=document.getElementById('banner-sponsor-logo').src||'';
       adLogo.alt=adSponsor.name;
       adSlot.style.display='block';
+      (async()=>{
+        try{
+          await sb.from('pivot_sponsor_impressions').insert({
+            sponsor_id:adSponsor.id,
+            video_id:v.id,
+            placement:'sidebar',
+            skipped:false,
+            viewer_email:getViewerEmailFromAccessCookie()
+          });
+        }catch(err){console.error('modal ad impression insert failed:',err);}
+      })();
     } else {
       adSlot.style.display='none';
     }
-    if(sponsor){showPreroll(sponsor,v.youtube_id);}
+    if(sponsor){showPreroll(sponsor,v.youtube_id,v.id);}
     else{document.getElementById('preroll').classList.remove('visible');document.getElementById('video-iframe').src=`https://www.youtube.com/embed/${v.youtube_id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&color=white`;}
     document.getElementById('video-modal').classList.add('open');
     document.body.style.overflow='hidden';
@@ -669,14 +701,39 @@
   document.getElementById('video-modal').addEventListener('click',e=>{if(e.target.id==='video-modal')closeModal();});
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
-  function showPreroll(sponsor,ytId){
+  function showPreroll(sponsor,ytId,videoId){
     const pr=document.getElementById('preroll'),sk=document.getElementById('preroll-skip'),ti=document.getElementById('preroll-timer');
+    currentImpressionId=null;
     document.getElementById('preroll-name').textContent=sponsor.name;
     document.getElementById('preroll-tag').textContent=sponsor.tagline||'';
     pr.classList.add('visible');sk.classList.remove('ready');
+    (async()=>{
+      try{
+        const{data,error}=await sb.from('pivot_sponsor_impressions').insert({
+          sponsor_id:sponsor.id,
+          video_id:videoId,
+          placement:'pre-roll',
+          skipped:false,
+          viewer_email:getViewerEmailFromAccessCookie()
+        }).select('id').single();
+        if(error)throw error;
+        currentImpressionId=data&&data.id?data.id:null;
+      }catch(err){console.error('pre-roll impression insert failed:',err);}
+    })();
     let s=5;ti.textContent=`Skippable in ${s}s`;
     prerollInterval=setInterval(()=>{s--;if(s<=0){clearInterval(prerollInterval);sk.classList.add('ready');ti.textContent='';}else ti.textContent=`Skippable in ${s}s`;},1000);
-    sk.onclick=()=>{clearInterval(prerollInterval);pr.classList.remove('visible');document.getElementById('video-iframe').src=`https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&color=white`;};
+    sk.onclick=()=>{
+      clearInterval(prerollInterval);
+      pr.classList.remove('visible');
+      if(currentImpressionId){
+        (async()=>{
+          try{
+            await sb.from('pivot_sponsor_impressions').update({skipped:true}).eq('id',currentImpressionId);
+          }catch(err){console.error('pre-roll impression skip update failed:',err);}
+        })();
+      }
+      document.getElementById('video-iframe').src=`https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&color=white`;
+    };
   }
 
   document.getElementById('popup-submit').addEventListener('click',async()=>{
