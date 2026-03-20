@@ -51,13 +51,14 @@
     .header-profile-btn:hover{background:#ff8044;transform:translateY(-1px);}
     @media(max-width:700px){.header-nav{display:none;}.logo{font-size:1.4rem;}}
 
-    /* Sponsor banner - fixed top strip */
+    /* Sponsor banner - fixed below header */
     #sponsor-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:60;align-items:center;justify-content:center;gap:.75rem;padding:.45rem 2rem;background:#0d0d0d;border-bottom:1px solid rgba(0,212,255,0.2);font-size:.8rem;color:var(--text-2);}
     #sponsor-banner.visible{display:flex;}
     .sponsor-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);}
     #sponsor-banner a{color:var(--teal);font-weight:600;font-size:.78rem;}
     #sponsor-banner strong{color:var(--text);font-weight:600;}
     .sponsor-banner-logo{height:20px;width:auto;border-radius:4px;}
+    body.banner-visible #main-header{top:32px;}
     body.banner-visible #hero{padding-top:0;}
 
     /* Hero */
@@ -82,14 +83,14 @@
     .hero-dot.active{background:var(--accent);}
 
     /* Filter bar */
-    #filter-bar{display:flex;align-items:center;gap:.5rem;padding:1.5rem 4% 0;flex-wrap:wrap;position:relative;z-index:5;scroll-margin-top:calc(var(--header-h) + 40px);}
+    #filter-bar{display:flex;align-items:center;gap:.5rem;padding:1.5rem 4% 1rem;flex-wrap:wrap;position:relative;z-index:2;}
     .pill{padding:.4rem 1rem;border-radius:4px;border:1px solid var(--border);font-size:.8rem;font-weight:500;color:var(--text-2);background:rgba(255,255,255,.06);transition:var(--transition);white-space:nowrap;}
     .pill:hover,.pill.active{border-color:var(--text);color:var(--text);background:rgba(255,255,255,.15);}
     .filter-select{padding:.4rem 1.8rem .4rem .9rem;border-radius:4px;border:1px solid var(--border);font-size:.8rem;font-weight:500;color:var(--text-2);background:rgba(255,255,255,.06);font-family:inherit;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .6rem center;transition:var(--transition);}
     .filter-select:focus{border-color:var(--text);color:var(--text);}
 
     /* Content rows */
-    #pivot-content{position:relative;z-index:2;margin-top:-80px;padding-bottom:4rem;}
+    #pivot-content{position:relative;z-index:3;padding-bottom:4rem;}
     .content-row{margin-bottom:2.5rem;padding:0 4%;opacity:0;transform:translateY(20px);transition:opacity 500ms ease,transform 500ms ease;}
     .content-row.visible{opacity:1;transform:translateY(0);}
     .row-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:.75rem;}
@@ -109,7 +110,7 @@
 
     /* Video card */
     .v-card{flex:0 0 calc(20% - .4rem);min-width:180px;max-width:280px;border-radius:var(--radius);overflow:visible;cursor:pointer;position:relative;transition:transform 300ms cubic-bezier(0.25,0,0,1),z-index 0ms 300ms;}
-    .v-card:hover{transform:scale(1.1);z-index:20;transition:transform 300ms cubic-bezier(0.25,0,0,1),z-index 0ms 0ms;}
+    .v-card:hover{transform:scale(1.1);z-index:100;transition:transform 300ms cubic-bezier(0.25,0,0,1),z-index 0ms 0ms;}
     .v-card:first-child:hover{transform:scale(1.1) translateX(5%);}
     .v-card:last-child:hover{transform:scale(1.1) translateX(-5%);}
     .v-card-thumb{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:#1a1a1a;}
@@ -696,30 +697,21 @@
       const{data:ex}=await sb.from('pivot_subscribers').select('id,is_founder').eq('email',email).maybeSingle();
       if(ex){
         await sb.from('pivot_subscribers').update({last_seen:new Date().toISOString()}).eq('email',email);
-        setCookie(COOKIE_NAME,btoa(email),30);
-        if(ex.is_founder){
-          showMsg('Welcome back, founder. Keep your profile fresh — investors are watching. <a href="https://venturebuilders.fund/founder" style="color:inherit;font-weight:700;text-decoration:underline;">Update Profile</a>','founder');
-          document.getElementById('founder-nudge').classList.add('visible');
-          updateHeaderOffset();
-        } else {
-          showMsg("Welcome back. You're already in — enjoy the library.",'success');
-        }
-        btn.textContent='Access Granted';
-        btn.disabled=false;
-        setTimeout(()=>document.getElementById('subscribe-popup').classList.remove('open'),2000);
-        return;
+      } else {
+        const{data:founder}=await sb.from('founderbase').select('id').eq('email',email).maybeSingle();
+        await sb.from('pivot_subscribers').insert({email,first_name:fn||null,is_founder:!!founder,founder_id:founder?.id||null,subscribed_at:new Date().toISOString(),last_seen:new Date().toISOString()});
+        try{
+          await fetch(SUBSCRIBE_FN,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${SUPABASE_ANON}`,'apikey':SUPABASE_ANON},body:JSON.stringify({email,first_name:fn||null})});
+        }catch(brevoErr){console.warn('Brevo sync skipped:',brevoErr);}
       }
-      const{data:founder}=await sb.from('founderbase').select('id').eq('email',email).maybeSingle();
-      await sb.from('pivot_subscribers').insert({email,first_name:fn||null,is_founder:!!founder,founder_id:founder?.id||null,subscribed_at:new Date().toISOString(),last_seen:new Date().toISOString()});
-      try{
-        await fetch(SUBSCRIBE_FN,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${SUPABASE_ANON}`,'apikey':SUPABASE_ANON},body:JSON.stringify({email,first_name:fn||null})});
-      }catch(brevoErr){console.warn('Brevo sync skipped:',brevoErr);}
       const{data:sub}=await sb.from('pivot_subscribers').select('is_founder').eq('email',email).maybeSingle();
       if(sub&&sub.is_founder){
         showMsg('Welcome back, founder. Keep your profile fresh — investors are watching. <a href="https://venturebuilders.fund/founder" style="color:inherit;font-weight:700;text-decoration:underline;">Update Profile</a>','founder');
         document.getElementById('founder-nudge').classList.add('visible');
         updateHeaderOffset();
-      } else showMsg("You're in. Explore the Pivot library.",'success');
+      } else {
+        showMsg("You're in. Explore the Pivot library.",'success');
+      }
       setCookie(COOKIE_NAME,btoa(email),30);
       btn.textContent='Access Granted';
       setTimeout(()=>document.getElementById('subscribe-popup').classList.remove('open'),2000);
