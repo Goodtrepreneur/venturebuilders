@@ -51,23 +51,26 @@
     .header-profile-btn:hover{background:#ff8044;transform:translateY(-1px);}
     @media(max-width:700px){.header-nav{display:none;}.logo{font-size:1.4rem;}}
 
-    /* Sponsor banner */
-    #sponsor-banner{display:none;align-items:center;justify-content:center;gap:1rem;padding:.6rem 2rem;background:var(--bg2);border-bottom:1px solid var(--border);font-size:.8rem;color:var(--text-2);position:relative;z-index:40;}
+    /* Sponsor banner - fixed below header */
+    #sponsor-banner{display:none;position:fixed;top:var(--header-h);left:0;right:0;z-index:49;align-items:center;justify-content:center;gap:1rem;padding:.55rem 2rem;background:rgba(10,10,10,.97);border-bottom:1px solid rgba(255,107,43,0.25);font-size:.8rem;color:var(--text-2);backdrop-filter:blur(10px);}
     #sponsor-banner.visible{display:flex;}
     .sponsor-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);}
     #sponsor-banner a{color:var(--teal);font-weight:600;}
+    #sponsor-banner strong{color:var(--accent);}
+    /* offset body when banner visible */
+    body.banner-visible #hero{margin-top:36px;}
+    body.banner-visible{padding-top:0;}
 
     /* Hero */
     #hero{position:relative;width:100%;height:80vh;min-height:500px;max-height:760px;overflow:hidden;background:#0a0a0a;}
     #hero-bg{position:absolute;inset:0;background-size:cover;background-position:center top;transform:scale(1.04);transition:background-image 600ms;}
     #hero::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#080808 0%,rgba(8,8,8,.6) 35%,transparent 65%),linear-gradient(90deg,rgba(8,8,8,.85) 0%,transparent 55%),linear-gradient(180deg,rgba(8,8,8,.5) 0%,transparent 25%);pointer-events:none;}
-    #hero-content{position:absolute;bottom:15%;left:4%;z-index:2;max-width:580px;border-radius:8px;overflow:hidden;}
-    .hero-content-inner{position:relative;z-index:1;padding:1.75rem 2rem;backdrop-filter:blur(2px);}
+    #hero-content{position:absolute;bottom:15%;left:4%;z-index:2;max-width:580px;background:rgba(0,0,0,0.5);padding:1.75rem 2rem;border-radius:8px;backdrop-filter:blur(2px);}
     .hero-type-badge{display:inline-flex;align-items:center;gap:.4rem;margin-bottom:.75rem;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2);}
     .hero-type-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
     #hero-title{font-family:'Inter',sans-serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem;text-shadow:0 2px 20px rgba(0,0,0,.5);}
     #hero-desc{font-size:clamp(.85rem,1.4vw,1rem);color:var(--text-2);line-height:1.6;margin-bottom:1.5rem;max-width:460px;text-shadow:0 1px 8px rgba(0,0,0,.8);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
-    #hero-content-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.45);border-radius:8px;z-index:0;}
+    #hero-content-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.45);border-radius:8px;}
     .hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;}
     .hero-btn-play{display:inline-flex;align-items:center;gap:.6rem;padding:.75rem 1.75rem;background:#fff;color:#000;border-radius:4px;font-size:.95rem;font-weight:700;transition:var(--transition);}
     .hero-btn-play:hover{background:rgba(255,255,255,.85);transform:translateY(-2px);}
@@ -192,7 +195,14 @@
     .footer-links a{font-size:.78rem;color:var(--text-3);transition:color 150ms;}
     .footer-links a:hover{color:var(--text-2);}
 
-    @media(max-width:900px){.v-card{flex:0 0 calc(33% - .35rem);}#hero{height:60vh;}}
+    /* Sponsor row card */
+    .sponsor-row{margin:0 4% 2rem;padding:1rem 1.5rem;background:linear-gradient(90deg,rgba(255,107,43,0.08) 0%,rgba(0,212,255,0.05) 100%);border:1px solid rgba(255,107,43,0.2);border-radius:8px;display:flex;align-items:center;gap:1.5rem;}
+    .sponsor-row-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);white-space:nowrap;}
+    .sponsor-row-name{font-size:.95rem;font-weight:700;color:var(--accent);white-space:nowrap;}
+    .sponsor-row-tagline{font-size:.82rem;color:var(--text-2);line-height:1.5;flex:1;}
+    .sponsor-row-link{white-space:nowrap;padding:.45rem 1rem;border:1px solid rgba(0,212,255,0.3);border-radius:4px;font-size:.78rem;font-weight:600;color:var(--teal);transition:var(--transition);}
+    .sponsor-row-link:hover{background:var(--teal);color:#000;}
+    @media(max-width:600px){.sponsor-row{flex-wrap:wrap;gap:.75rem;}.sponsor-row-tagline{width:100%;order:3;}}
     @media(max-width:600px){.v-card{flex:0 0 calc(50% - .25rem);}#hero{height:55vh;}.popup-card{padding:2rem 1.5rem;}.hero-actions{gap:.5rem;}.hero-btn-play,.hero-btn-info{padding:.6rem 1.2rem;font-size:.85rem;}#main-header{padding:0 1rem;}#filter-bar,.content-row{padding-left:1rem;padding-right:1rem;}}
   </style>
 </head>
@@ -201,7 +211,7 @@
 <div id="founder-nudge">
   Keep your founder profile up to date — investors are watching.
   <a href="https://venturebuilders.fund/founder"> Update Profile</a>
-  <button type="button" class="nudge-close" id="nudge-close" aria-label="Dismiss">&#x2715;</button>
+  <button type="button" class="nudge-close" aria-label="Dismiss">&#x2715;</button>
 </div>
 
 <header id="main-header">
@@ -217,7 +227,7 @@
   </div>
   <div class="header-right">
     <div class="header-search-wrap">
-      <button type="button" class="header-search-toggle" id="search-toggle">
+      <button class="header-search-toggle" id="search-toggle">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>
       <input type="text" class="header-search-input" id="search-input" placeholder="Search founders..." />
@@ -230,27 +240,24 @@
   <span class="sponsor-label">Sponsored by</span>
   <strong id="banner-sponsor-name"></strong>
   <span id="banner-sponsor-tagline"></span>
-  <a id="banner-sponsor-link" href="#" target="_blank" rel="noopener noreferrer">Learn more</a>
+  <a id="banner-sponsor-link" href="#" target="_blank">Learn more</a>
 </div>
 
 <div id="hero">
   <div id="hero-bg"></div>
   <div id="hero-content">
-    <div id="hero-content-backdrop" aria-hidden="true"></div>
-    <div class="hero-content-inner">
-      <div class="hero-type-badge"><div class="hero-type-dot"></div><span id="hero-type-label">Interview</span></div>
-      <h1 id="hero-title">Loading...</h1>
-      <p id="hero-desc"></p>
-      <div class="hero-actions">
-        <button type="button" class="hero-btn-play" id="hero-play-btn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Play
-        </button>
-        <button type="button" class="hero-btn-info" id="hero-info-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          More Info
-        </button>
-      </div>
+    <div class="hero-type-badge"><div class="hero-type-dot"></div><span id="hero-type-label">Interview</span></div>
+    <h1 id="hero-title">Loading...</h1>
+    <p id="hero-desc"></p>
+    <div class="hero-actions">
+      <button class="hero-btn-play" id="hero-play-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Play
+      </button>
+      <button class="hero-btn-info" id="hero-info-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        More Info
+      </button>
     </div>
   </div>
   <div class="hero-meta"><span class="hero-industry-tag" id="hero-industry"></span></div>
@@ -258,11 +265,11 @@
 </div>
 
 <div id="filter-bar">
-  <button type="button" class="pill active" data-type="all">All</button>
-  <button type="button" class="pill" data-type="interview">Interviews</button>
-  <button type="button" class="pill" data-type="keynote">Keynotes</button>
-  <button type="button" class="pill" data-type="panel">Panels</button>
-  <button type="button" class="pill" data-type="speaker_series">Speaker Series</button>
+  <button class="pill active" data-type="all">All</button>
+  <button class="pill" data-type="interview">Interviews</button>
+  <button class="pill" data-type="keynote">Keynotes</button>
+  <button class="pill" data-type="panel">Panels</button>
+  <button class="pill" data-type="speaker_series">Speaker Series</button>
   <select class="filter-select" id="industry-filter"><option value="">All Industries</option></select>
 </div>
 
@@ -273,13 +280,13 @@
       <span class="row-title-new">New</span>
     </div>
     <div class="row-track-wrap">
-      <button type="button" class="row-arrow left" onclick="scrollRow('row-recent',-1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 2L2 10l8 8"/></svg></button>
+      <button class="row-arrow left" onclick="scrollRow('row-recent',-1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 2L2 10l8 8"/></svg></button>
       <div class="row-track" id="track-recent">
         <div class="v-card" style="flex:0 0 20%;min-width:180px;"><div class="skeleton" style="aspect-ratio:16/9;"></div></div>
         <div class="v-card" style="flex:0 0 20%;min-width:180px;"><div class="skeleton" style="aspect-ratio:16/9;"></div></div>
         <div class="v-card" style="flex:0 0 20%;min-width:180px;"><div class="skeleton" style="aspect-ratio:16/9;"></div></div>
       </div>
-      <button type="button" class="row-arrow right" onclick="scrollRow('row-recent',1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l8 8-8 8"/></svg></button>
+      <button class="row-arrow right" onclick="scrollRow('row-recent',1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l8 8-8 8"/></svg></button>
     </div>
   </div>
   <div id="sponsor-section-slot"></div>
@@ -295,14 +302,14 @@
 
 <div id="video-modal">
   <div class="modal-inner">
-    <button type="button" class="modal-close" id="modal-close-btn">&#x2715;</button>
+    <button class="modal-close" id="modal-close-btn">&#x2715;</button>
     <div class="modal-video-wrap">
       <div id="preroll">
         <div class="preroll-label">This episode is brought to you by</div>
         <div class="preroll-name" id="preroll-name"></div>
         <div class="preroll-tag" id="preroll-tag"></div>
         <div class="preroll-timer" id="preroll-timer"></div>
-        <button type="button" class="preroll-skip" id="preroll-skip">Skip</button>
+        <button class="preroll-skip" id="preroll-skip">Skip</button>
       </div>
       <iframe id="video-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
@@ -329,7 +336,7 @@
     <p class="popup-sub">Watch interviews, keynotes, panels, and speaker series from builders who've raised, scaled, and pivoted. Enter your email to get access — and keep your founder profile fresh for investors.</p>
     <input type="text"  class="popup-input" id="popup-firstname" placeholder="First name (optional)"/>
     <input type="email" class="popup-input" id="popup-email"     placeholder="Your email address"/>
-    <button type="button" class="popup-submit" id="popup-submit">Get Access</button>
+    <button class="popup-submit" id="popup-submit">Get Access</button>
     <div class="popup-message" id="popup-message"></div>
     <div class="popup-dismiss" id="popup-dismiss">Just browsing</div>
   </div>
@@ -338,304 +345,312 @@
 <script>
   const SUPABASE_URL  = 'https://asuophspmfqcnlzgqsfa.supabase.co';
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzdW9waHNwbWZxY25semdxc2ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3MjI3NzMsImV4cCI6MjA4ODI5ODc3M30.ffLvnmFzkzWQ9c8naigftXD99y8X2qXSA8VOH9VCilk';
-  const SUBSCRIBE_FN  = SUPABASE_URL + '/functions/v1/subscribe-pivot';
+  const SUBSCRIBE_FN  = `${SUPABASE_URL}/functions/v1/subscribe-pivot`;
   const COOKIE_NAME   = 'pivot_access';
   const RECENT_DAYS   = 14;
-  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
   let allVideos=[], allSponsors=[], currentType='all', currentIndustry='';
   let heroIndex=0, heroTimer=null, prerollInterval=null, heroVideos=[];
 
-  function setCookie(n,v,d){
-    var e=new Date();
-    e.setTime(e.getTime()+d*864e5);
-    document.cookie=n+'='+encodeURIComponent(v)+';expires='+e.toUTCString()+';path=/;SameSite=Lax';
-  }
-  function getCookie(n){
-    var parts=document.cookie.split(';');
-    for(var i=0;i<parts.length;i++){
-      var p=parts[i].trim();
-      if(p.indexOf(n+'=')===0)return decodeURIComponent(p.slice(n.length+1));
+  const setCookie=(n,v,d)=>{const e=new Date();e.setTime(e.getTime()+d*864e5);document.cookie=`${n}=${encodeURIComponent(String(v))};expires=${e.toUTCString()};path=/`;};
+  const getCookie=n=>{
+    const parts=document.cookie.split(';');
+    for(let i=0;i<parts.length;i++){
+      const p=parts[i].trim();
+      if(p.indexOf(n+'=')===0){
+        const raw=p.slice(n.length+1);
+        try{return decodeURIComponent(raw);}catch(e){return raw;}
+      }
     }
+    return null;
+  };
+
+  function emailFromAccessCookie(ck){
+    if(!ck||ck==='browsing')return null;
+    if(ck.indexOf('@')!==-1)return ck.toLowerCase();
+    try{const fromBtoa=atob(ck);if(fromBtoa.indexOf('@')!==-1)return fromBtoa.toLowerCase();}catch(e){}
     return null;
   }
 
-  /** Plain email or base64 (btoa) email from pivot_access cookie */
-  function emailFromAccessCookie(ck){
-    if(!ck||ck==='browsing')return ck;
-    if(ck.indexOf('@')!==-1)return ck.toLowerCase();
-    try{
-      var fromBtoa=atob(ck);
-      if(fromBtoa.indexOf('@')!==-1)return fromBtoa.toLowerCase();
-    }catch(e){}
-    return ck;
-  }
-
-  function escapeHtml(s){
-    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-  function escapeAttr(s){
-    return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-  }
+  function escapeHtml(s){if(s==null||s==='')return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function safeUrl(href){if(!href)return'#';const u=String(href).trim();if(/^https?:\/\//i.test(u))return u;return'#';}
 
   function updateHeaderOffset(){
-    var nudge=document.getElementById('founder-nudge');
-    var header=document.getElementById('main-header');
-    var h=nudge.classList.contains('visible')?nudge.offsetHeight:0;
-    header.style.top=h+'px';
+    const nudge=document.getElementById('founder-nudge');
+    const header=document.getElementById('main-header');
+    const banner=document.getElementById('sponsor-banner');
+    const nudgeH=nudge.classList.contains('visible')?nudge.offsetHeight:0;
+    const bannerH=banner.classList.contains('visible')?banner.offsetHeight:0;
+    header.style.top=nudgeH+'px';
+    if(banner.classList.contains('visible')){
+      banner.style.top=`calc(var(--header-h) + ${nudgeH}px)`;
+    }
   }
-
-  window.addEventListener('scroll',function(){
+  window.addEventListener('scroll',()=>{
     document.getElementById('main-header').classList.toggle('scrolled',window.scrollY>60);
   });
   updateHeaderOffset();
-  document.getElementById('nudge-close').addEventListener('click',function(){
+  document.querySelector('.nudge-close').addEventListener('click',()=>{
     document.getElementById('founder-nudge').classList.remove('visible');
     setTimeout(updateHeaderOffset,50);
   });
 
-  document.getElementById('search-toggle').addEventListener('click',function(){
-    var i=document.getElementById('search-input');
+  document.getElementById('search-toggle').addEventListener('click',()=>{
+    const i=document.getElementById('search-input');
     i.classList.toggle('open');
     if(i.classList.contains('open'))i.focus();
   });
-  var st;
-  document.getElementById('search-input').addEventListener('input',function(){clearTimeout(st);st=setTimeout(renderAllRows,300);});
+  let st;
+  document.getElementById('search-input').addEventListener('input',()=>{clearTimeout(st);st=setTimeout(renderAllRows,300);});
 
-  document.querySelectorAll('[data-nav]').forEach(function(a){
-    a.addEventListener('click',function(e){
+  document.querySelectorAll('[data-nav]').forEach(a=>{
+    a.addEventListener('click',e=>{
       e.preventDefault();
-      document.querySelectorAll('[data-nav]').forEach(function(x){x.classList.remove('active');});
+      document.querySelectorAll('[data-nav]').forEach(x=>x.classList.remove('active'));
       a.classList.add('active');
       currentType=a.dataset.nav;
-      document.querySelectorAll('.pill').forEach(function(p){p.classList.toggle('active',p.dataset.type===currentType);});
+      document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('active',p.dataset.type===currentType));
       renderAllRows();
     });
   });
 
-  document.querySelectorAll('.pill').forEach(function(pill){
-    pill.addEventListener('click',function(){
-      document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.pill').forEach(pill=>{
+    pill.addEventListener('click',()=>{
+      document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
       pill.classList.add('active');
       currentType=pill.dataset.type;
-      document.querySelectorAll('[data-nav]').forEach(function(a){a.classList.toggle('active',a.dataset.nav===currentType);});
+      document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===currentType));
       renderAllRows();
     });
   });
 
-  document.getElementById('industry-filter').addEventListener('change',function(e){currentIndustry=e.target.value;renderAllRows();});
+  document.getElementById('industry-filter').addEventListener('change',e=>{currentIndustry=e.target.value;renderAllRows();});
 
   async function init(){
     if(!getCookie(COOKIE_NAME))document.getElementById('subscribe-popup').classList.add('open');
     await Promise.all([loadVideos(),loadSponsors()]);
-    var ck=getCookie(COOKIE_NAME);
-    var em=emailFromAccessCookie(ck);
-    if(em && em.indexOf('@')>0){
-      var sub=await sb.from('pivot_subscribers').select('is_founder').eq('email',em).maybeSingle();
-      if(!sub.error && sub.data && sub.data.is_founder){
+    const ck=getCookie(COOKIE_NAME);
+    const em=emailFromAccessCookie(ck);
+    if(em&&em.indexOf('@')>0){
+      const{data:sub}=await sb.from('pivot_subscribers').select('is_founder').eq('email',em).maybeSingle();
+      if(sub&&sub.is_founder){
         document.getElementById('founder-nudge').classList.add('visible');
         updateHeaderOffset();
       }
-    } else if(ck==='browsing'){
-      document.getElementById('founder-nudge').classList.add('visible');
-      updateHeaderOffset();
     }
   }
 
   async function loadVideos(){
-    var res=await sb.from('pivot_videos').select('*').order('published_at',{ascending:false});
-    if(res.error){console.error(res.error);return;}
-    allVideos=res.data||[];
+    const{data,error}=await sb.from('pivot_videos').select('*').order('published_at',{ascending:false});
+    if(error){console.error(error);return;}
+    allVideos=data||[];
     populateIndustryFilter();
     renderHero();
     renderAllRows();
   }
 
   async function loadSponsors(){
-    var today=new Date().toISOString().split('T')[0];
-    var res=await sb.from('pivot_sponsors').select('*').eq('is_active',true).or('active_to.is.null,active_to.gte.'+today).order('priority',{ascending:false});
-    if(res.error){
-      res=await sb.from('pivot_sponsors').select('*').eq('is_active',true).order('priority',{ascending:false});
-    }
-    allSponsors=res.data||[];
+    const today=new Date().toISOString().split('T')[0];
+    const{data}=await sb.from('pivot_sponsors').select('*').eq('is_active',true).or(`active_to.is.null,active_to.gte.${today}`).order('priority',{ascending:false});
+    allSponsors=data||[];
     renderSponsors();
   }
 
   function renderSponsors(){
-    var banner=allSponsors.find(function(s){return s.placement==='banner';});
-    var section=allSponsors.find(function(s){return s.placement==='section';});
+    const banner=allSponsors.find(s=>s.placement==='banner');
+    const section=allSponsors.find(s=>s.placement==='section')||allSponsors[0];
+
     if(banner){
       document.getElementById('banner-sponsor-name').textContent=banner.name;
       document.getElementById('banner-sponsor-tagline').textContent=banner.tagline||'';
-      document.getElementById('banner-sponsor-link').href=banner.website_url||'#';
+      document.getElementById('banner-sponsor-link').href=safeUrl(banner.website_url);
       document.getElementById('sponsor-banner').classList.add('visible');
+      document.body.classList.add('banner-visible');
+      updateHeaderOffset();
     }
+
     if(section){
-      document.getElementById('sponsor-section-slot').innerHTML=
-        '<div class="content-row visible" style="padding-top:.5rem;">'+
-          '<div style="display:flex;align-items:center;gap:1rem;padding:1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">'+
-            '<span style="font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);">Partner</span>'+
-            '<strong>'+escapeHtml(section.name)+'</strong>'+
-            (section.tagline?'<span style="font-size:.82rem;color:var(--text-2);">'+escapeHtml(section.tagline)+'</span>':'')+
-            (section.website_url?'<a href="'+escapeAttr(section.website_url)+'" target="_blank" rel="noopener noreferrer" style="margin-left:auto;font-size:.78rem;color:var(--teal);font-weight:600;">Learn more</a>':'')+
-          '</div>'+
-        '</div>';
+      const href=safeUrl(section.website_url);
+      document.getElementById('sponsor-section-slot').innerHTML=`
+        <div class="sponsor-row">
+          <span class="sponsor-row-label">Partner</span>
+          <span class="sponsor-row-name">${escapeHtml(section.name)}</span>
+          <span class="sponsor-row-tagline">${escapeHtml(section.tagline||'')}</span>
+          ${href!=='#'?`<a class="sponsor-row-link" href="${href}" target="_blank" rel="noopener noreferrer">Learn More</a>`:''}
+        </div>`;
     }
   }
 
   function renderHero(){
-    heroVideos=allVideos.filter(function(v,i){return v.is_featured||i<5;}).slice(0,5);
+    heroVideos=allVideos.filter((v,i)=>v.is_featured||i<5).slice(0,5);
     if(!heroVideos.length)return;
-    document.getElementById('hero-dots').innerHTML=heroVideos.map(function(_,i){return '<div class="hero-dot'+(i===0?' active':'')+'" onclick="setHero('+i+')"></div>';}).join('');
+    document.getElementById('hero-dots').innerHTML=heroVideos.map((_,i)=>`<div class="hero-dot${i===0?' active':''}" onclick="setHero(${i})"></div>`).join('');
     setHero(0);
     if(heroTimer)clearInterval(heroTimer);
-    heroTimer=setInterval(function(){setHero((heroIndex+1)%heroVideos.length);},7000);
+    heroTimer=setInterval(()=>setHero((heroIndex+1)%heroVideos.length),7000);
   }
 
   window.setHero=function(idx){
     heroIndex=idx;
-    var v=heroVideos[idx];if(!v)return;
-    var thumb=v.thumbnail_url||('https://img.youtube.com/vi/'+encodeURIComponent(v.youtube_id)+'/maxresdefault.jpg');
-    document.getElementById('hero-bg').style.backgroundImage='url('+thumb+')';
+    const v=heroVideos[idx];if(!v)return;
+    const thumb=v.thumbnail_url||`https://img.youtube.com/vi/${v.youtube_id}/maxresdefault.jpg`;
+    document.getElementById('hero-bg').style.backgroundImage=`url(${thumb})`;
     document.getElementById('hero-title').textContent=v.title;
-    document.getElementById('hero-desc').textContent=v.description||(v.speaker_name||'')+(v.company?' from '+v.company:'')+' — '+String(v.content_type||'interview').replace(/_/g,' ');
-    document.getElementById('hero-type-label').textContent=String(v.content_type||'interview').replace(/_/g,' ');
+    document.getElementById('hero-desc').textContent=v.description||`${v.speaker_name||''}${v.company?' from '+v.company:''} — ${(v.content_type||'interview').replace('_',' ')}`;
+    document.getElementById('hero-type-label').textContent=(v.content_type||'interview').replace('_',' ');
     document.getElementById('hero-industry').textContent=v.industry||'';
-    document.querySelectorAll('.hero-dot').forEach(function(d,i){d.classList.toggle('active',i===idx);});
-    document.getElementById('hero-play-btn').onclick=function(){openModal(v);};
-    document.getElementById('hero-info-btn').onclick=function(){openModal(v);};
+    document.querySelectorAll('.hero-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+    document.getElementById('hero-play-btn').onclick=()=>openModal(v);
+    document.getElementById('hero-info-btn').onclick=()=>openModal(v);
   };
 
   function getFiltered(){
-    var q=(document.getElementById('search-input').value||'').toLowerCase();
-    return allVideos.filter(function(v){
-      var tOk=currentType==='all'||v.content_type===currentType;
-      var iOk=!currentIndustry||v.industry===currentIndustry;
-      var qOk=!q||(v.title||'').toLowerCase().indexOf(q)!==-1||(v.speaker_name||'').toLowerCase().indexOf(q)!==-1||(v.company||'').toLowerCase().indexOf(q)!==-1;
+    const q=(document.getElementById('search-input').value||'').toLowerCase();
+    return allVideos.filter(v=>{
+      const tOk=currentType==='all'||v.content_type===currentType;
+      const iOk=!currentIndustry||v.industry===currentIndustry;
+      const qOk=!q||(v.title||'').toLowerCase().includes(q)||(v.speaker_name||'').toLowerCase().includes(q)||(v.company||'').toLowerCase().includes(q);
       return tOk&&iOk&&qOk;
     });
   }
 
   function isRecent(v){
     if(!v.published_at)return false;
-    var c=new Date();c.setDate(c.getDate()-RECENT_DAYS);
+    const c=new Date();c.setDate(c.getDate()-RECENT_DAYS);
     return new Date(v.published_at)>=c;
   }
 
   function renderAllRows(){
-    var filtered=getFiltered();
-    var recent=filtered.filter(function(v){return isRecent(v);});
-    var recentRow=document.getElementById('row-recent');
-    var recentTrack=document.getElementById('track-recent');
+    const filtered=getFiltered();
+    const recent=filtered.filter(v=>isRecent(v));
+    const recentRow=document.getElementById('row-recent');
+    const recentTrack=document.getElementById('track-recent');
     if(recent.length>0){
       recentRow.style.display='block';
-      recentTrack.innerHTML=recent.map(function(v){return renderCard(v,true);}).join('');
+      recentTrack.innerHTML=recent.map(v=>renderCard(v,true)).join('');
       bindClicks(recentTrack);
     } else {
       recentRow.style.display='none';
     }
 
-    var rowDefs=[
+    const rowDefs=[
       {key:'interview',      label:'Founder Interviews'},
       {key:'keynote',        label:'Keynotes'},
       {key:'panel',          label:'Panels & Roundtables'},
       {key:'speaker_series', label:'Speaker Series'},
     ];
 
-    var dynEl=document.getElementById('dynamic-rows');
-    var html='';
+    const dynEl=document.getElementById('dynamic-rows');
+    let html='';
 
     if(currentType!=='all'){
-      html='<div class="content-row" id="row-filtered">'+
-        '<div class="row-header"><h2 class="row-title">'+filtered.length+' result'+(filtered.length!==1?'s':'')+'</h2></div>'+
-        '<div class="row-track-wrap">'+
-          '<div class="row-track" id="track-filtered">'+filtered.map(function(v){return renderCard(v,false);}).join('')+'</div>'+
-        '</div>'+
-      '</div>';
+      html=`<div class="content-row" id="row-filtered">
+        <div class="row-header"><h2 class="row-title">${filtered.length} result${filtered.length!==1?'s':''}</h2></div>
+        <div class="row-track-wrap">
+          <div class="row-track" id="track-filtered">${filtered.map(v=>renderCard(v,false)).join('')}</div>
+        </div>
+      </div>`;
     } else {
-      rowDefs.forEach(function(row){
-        var vids=filtered.filter(function(v){return v.content_type===row.key;});
+      rowDefs.forEach(row=>{
+        const vids=filtered.filter(v=>v.content_type===row.key);
         if(!vids.length)return;
-        html+='<div class="content-row" id="row-'+row.key+'">'+
-          '<div class="row-header">'+
-            '<h2 class="row-title">'+row.label+'</h2>'+
-            '<span class="row-see-all">See all</span>'+
-          '</div>'+
-          '<div class="row-track-wrap">'+
-            '<button type="button" class="row-arrow left" onclick="scrollRow(\'row-'+row.key+'\',-1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 2L2 10l8 8"/></svg></button>'+
-            '<div class="row-track" id="track-'+row.key+'">'+vids.map(function(v){return renderCard(v,false);}).join('')+'</div>'+
-            '<button type="button" class="row-arrow right" onclick="scrollRow(\'row-'+row.key+'\',1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l8 8-8 8"/></svg></button>'+
-          '</div>'+
-        '</div>';
+        html+=`<div class="content-row" id="row-${row.key}">
+          <div class="row-header">
+            <h2 class="row-title">${escapeHtml(row.label)}</h2>
+            <span class="row-see-all">See all</span>
+          </div>
+          <div class="row-track-wrap">
+            <button class="row-arrow left" onclick="scrollRow('row-${row.key}',-1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 2L2 10l8 8"/></svg></button>
+            <div class="row-track" id="track-${row.key}">${vids.map(v=>renderCard(v,false)).join('')}</div>
+            <button class="row-arrow right" onclick="scrollRow('row-${row.key}',1)"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l8 8-8 8"/></svg></button>
+          </div>
+        </div>`;
       });
     }
 
     dynEl.innerHTML=html;
-    dynEl.querySelectorAll('.row-track').forEach(function(t){bindClicks(t);});
+    dynEl.querySelectorAll('.row-track').forEach(t=>bindClicks(t));
 
-    var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
-    document.querySelectorAll('.content-row:not(.visible)').forEach(function(r){obs.observe(r);});
+    // Insert sponsor card between first and second row if sponsor exists
+    const sponsorForRows=allSponsors.find(s=>s.placement==='pre-roll'||s.placement==='section'||s.placement==='banner');
+    if(sponsorForRows){
+      const rows=dynEl.querySelectorAll('.content-row');
+      if(rows.length>1){
+        const sponsorCard=document.createElement('div');
+        sponsorCard.className='sponsor-row';
+        const href=safeUrl(sponsorForRows.website_url);
+        sponsorCard.innerHTML=`
+          <span class="sponsor-row-label">Sponsored</span>
+          <span class="sponsor-row-name">${escapeHtml(sponsorForRows.name)}</span>
+          <span class="sponsor-row-tagline">${escapeHtml(sponsorForRows.tagline||'')}</span>
+          ${href!=='#'?`<a class="sponsor-row-link" href="${href}" target="_blank" rel="noopener noreferrer">Learn More</a>`:''}`;
+        rows[1].parentNode.insertBefore(sponsorCard, rows[1]);
+      }
+    }
+
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+    document.querySelectorAll('.content-row:not(.visible)').forEach(r=>obs.observe(r));
     recentRow.classList.add('visible');
   }
 
   function renderCard(v,showNew){
-    var thumb=v.thumbnail_url||('https://img.youtube.com/vi/'+encodeURIComponent(v.youtube_id)+'/maxresdefault.jpg');
-    var ct=(v.content_type||'interview');
-    var badgeClass='badge-'+ct.replace(/_/g,'-');
-    var badgeLabel=ct.replace(/_/g,' ');
-    return '<div class="v-card" data-id="'+escapeAttr(String(v.id))+'">'+
-      '<div class="v-card-thumb">'+
-        (showNew?'<div class="new-ribbon">New</div>':'')+
-        '<img src="'+escapeAttr(thumb)+'" alt="'+escapeAttr(v.title)+'" loading="lazy"/>'+
-      '</div>'+
-      '<div class="v-card-info">'+
-        '<div class="v-card-actions">'+
-          '<div class="v-play-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="#111"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>'+
-        '</div>'+
-        '<div class="v-card-name">'+escapeHtml(v.title)+'</div>'+
-        '<div class="v-card-meta">'+
-          '<span class="v-badge '+badgeClass+'">'+escapeHtml(badgeLabel)+'</span>'+
-          (v.company?'<span class="v-company">'+escapeHtml(v.company)+'</span>':'')+
-        '</div>'+
-      '</div>'+
-    '</div>';
+    const thumb=v.thumbnail_url||`https://img.youtube.com/vi/${v.youtube_id}/maxresdefault.jpg`;
+    const ct=(v.content_type||'interview');
+    const badgeClass=`badge-${ct.replace('_','-')}`;
+    const badgeLabel=ct.replace('_',' ');
+    const titleEsc=escapeHtml(v.title);
+    const companyEsc=escapeHtml(v.company||'');
+    return `<div class="v-card" data-id="${escapeHtml(v.id)}">
+      <div class="v-card-thumb">
+        ${showNew?'<div class="new-ribbon">New</div>':''}
+        <img src="${thumb}" alt="${titleEsc}" loading="lazy"/>
+      </div>
+      <div class="v-card-info">
+        <div class="v-card-actions">
+          <div class="v-play-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="#111"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="v-card-name">${titleEsc}</div>
+        <div class="v-card-meta">
+          <span class="v-badge ${badgeClass}">${escapeHtml(badgeLabel)}</span>
+          ${v.company?`<span class="v-company">${companyEsc}</span>`:''}
+        </div>
+      </div>
+    </div>`;
   }
 
   function bindClicks(track){
-    track.querySelectorAll('.v-card').forEach(function(card){
-      card.addEventListener('click',function(){
-        var v=allVideos.find(function(x){return String(x.id)===card.dataset.id;});
+    track.querySelectorAll('.v-card').forEach(card=>{
+      card.addEventListener('click',()=>{
+        const v=allVideos.find(x=>x.id===card.dataset.id);
         if(v)openModal(v);
       });
     });
   }
 
   function populateIndustryFilter(){
-    var inds=[];
-    var seen={};
-    allVideos.forEach(function(v){if(v.industry&&!seen[v.industry]){seen[v.industry]=1;inds.push(v.industry);}});
-    inds.sort();
-    var sel=document.getElementById('industry-filter');
-    inds.forEach(function(ind){var o=document.createElement('option');o.value=ind;o.textContent=ind;sel.appendChild(o);});
+    const inds=[...new Set(allVideos.map(v=>v.industry).filter(Boolean))].sort();
+    const sel=document.getElementById('industry-filter');
+    inds.forEach(ind=>{const o=document.createElement('option');o.value=ind;o.textContent=ind;sel.appendChild(o);});
   }
 
   window.scrollRow=function(rowId,dir){
-    var t=document.querySelector('#'+rowId+' .row-track');
+    const t=document.querySelector(`#${rowId} .row-track`);
     if(t)t.scrollBy({left:dir*t.clientWidth*.75,behavior:'smooth'});
   };
 
   function openModal(v){
-    var ct=(v.content_type||'interview');
-    document.getElementById('modal-meta').innerHTML='<span class="v-badge badge-'+ct.replace(/_/g,'-')+'" style="font-size:.75rem;">'+escapeHtml(ct.replace(/_/g,' '))+'</span>'+(v.industry?'<span style="font-size:.78rem;color:var(--text-3);">'+escapeHtml(v.industry)+'</span>':'');
+    const ct=(v.content_type||'interview');
+    document.getElementById('modal-meta').innerHTML=`<span class="v-badge badge-${ct.replace('_','-')}" style="font-size:.75rem;">${escapeHtml(ct.replace('_',' '))}</span>${v.industry?`<span style="font-size:.78rem;color:var(--text-3);">${escapeHtml(v.industry)}</span>`:''}`;
     document.getElementById('modal-title').textContent=v.title;
-    document.getElementById('modal-speaker').textContent=(v.speaker_name||'')+(v.company?' — '+v.company:'');
+    document.getElementById('modal-speaker').textContent=`${v.speaker_name||''}${v.company?' — '+v.company:''}`;
     document.getElementById('modal-desc').textContent=v.description||'';
-    var sponsor=allSponsors.find(function(s){return s.id===v.sponsor_id;});
-    var st2=document.getElementById('modal-sponsor-tag');
+    const sponsor=allSponsors.find(s=>s.id===v.sponsor_id);
+    const st2=document.getElementById('modal-sponsor-tag');
     st2.style.display=sponsor?'block':'none';
-    if(sponsor)st2.textContent='Presented by '+sponsor.name;
+    if(sponsor)st2.textContent=`Presented by ${sponsor.name}`;
     if(sponsor){showPreroll(sponsor,v.youtube_id);}
-    else{document.getElementById('preroll').classList.remove('visible');document.getElementById('video-iframe').src='https://www.youtube.com/embed/'+encodeURIComponent(v.youtube_id)+'?autoplay=1';}
+    else{document.getElementById('preroll').classList.remove('visible');document.getElementById('video-iframe').src=`https://www.youtube.com/embed/${v.youtube_id}?autoplay=1`;}
     document.getElementById('video-modal').classList.add('open');
     document.body.style.overflow='hidden';
   }
@@ -649,47 +664,31 @@
   }
 
   document.getElementById('modal-close-btn').addEventListener('click',closeModal);
-  document.getElementById('video-modal').addEventListener('click',function(e){if(e.target.id==='video-modal')closeModal();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+  document.getElementById('video-modal').addEventListener('click',e=>{if(e.target.id==='video-modal')closeModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
   function showPreroll(sponsor,ytId){
-    var pr=document.getElementById('preroll'),sk=document.getElementById('preroll-skip'),ti=document.getElementById('preroll-timer');
+    const pr=document.getElementById('preroll'),sk=document.getElementById('preroll-skip'),ti=document.getElementById('preroll-timer');
     document.getElementById('preroll-name').textContent=sponsor.name;
     document.getElementById('preroll-tag').textContent=sponsor.tagline||'';
     pr.classList.add('visible');sk.classList.remove('ready');
-    var s=5;ti.textContent='Skippable in '+s+'s';
-    if(prerollInterval)clearInterval(prerollInterval);
-    prerollInterval=setInterval(function(){
-      s--;
-      if(s<=0){clearInterval(prerollInterval);prerollInterval=null;sk.classList.add('ready');ti.textContent='';}
-      else ti.textContent='Skippable in '+s+'s';
-    },1000);
-    sk.onclick=function(){
-      clearInterval(prerollInterval);prerollInterval=null;
-      pr.classList.remove('visible');
-      document.getElementById('video-iframe').src='https://www.youtube.com/embed/'+encodeURIComponent(ytId)+'?autoplay=1';
-    };
+    let s=5;ti.textContent=`Skippable in ${s}s`;
+    prerollInterval=setInterval(()=>{s--;if(s<=0){clearInterval(prerollInterval);sk.classList.add('ready');ti.textContent='';}else ti.textContent=`Skippable in ${s}s`;},1000);
+    sk.onclick=()=>{clearInterval(prerollInterval);pr.classList.remove('visible');document.getElementById('video-iframe').src=`https://www.youtube.com/embed/${ytId}?autoplay=1`;};
   }
 
-  function showMsg(html,type){
-    var el=document.getElementById('popup-message');
-    el.innerHTML=html;
-    el.className='popup-message '+type;
-  }
-
-  document.getElementById('popup-submit').addEventListener('click',async function(){
-    var email=document.getElementById('popup-email').value.trim().toLowerCase();
-    var fn=document.getElementById('popup-firstname').value.trim();
-    var btn=document.getElementById('popup-submit');
-    if(!email||!/^\S+@\S+\.\S+$/.test(email)){showMsg('Please enter a valid email address.','error');return;}
+  document.getElementById('popup-submit').addEventListener('click',async()=>{
+    const email=document.getElementById('popup-email').value.trim();
+    const fn=document.getElementById('popup-firstname').value.trim();
+    const btn=document.getElementById('popup-submit');
+    if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showMsg('Please enter a valid email address.','error');return;}
     btn.disabled=true;btn.textContent='Checking...';
     try{
-      var ex=await sb.from('pivot_subscribers').select('id,is_founder').eq('email',email).maybeSingle();
-      if(ex.error)throw ex.error;
-      if(ex.data){
+      const{data:ex}=await sb.from('pivot_subscribers').select('id,is_founder').eq('email',email).maybeSingle();
+      if(ex){
         await sb.from('pivot_subscribers').update({last_seen:new Date().toISOString()}).eq('email',email);
         setCookie(COOKIE_NAME,btoa(email),30);
-        if(ex.data.is_founder){
+        if(ex.is_founder){
           showMsg('Welcome back, founder. Keep your profile fresh — investors are watching. <a href="https://venturebuilders.fund/founder" style="color:inherit;font-weight:700;text-decoration:underline;">Update Profile</a>','founder');
           document.getElementById('founder-nudge').classList.add('visible');
           updateHeaderOffset();
@@ -698,34 +697,29 @@
         }
         btn.textContent='Access Granted';
         btn.disabled=false;
-        setTimeout(function(){document.getElementById('subscribe-popup').classList.remove('open');},2000);
+        setTimeout(()=>document.getElementById('subscribe-popup').classList.remove('open'),2000);
         return;
       }
-      var founder=await sb.from('founderbase').select('id').eq('email',email).maybeSingle();
-      var fid=(founder.data&&founder.data.id)?founder.data.id:null;
-      var ins=await sb.from('pivot_subscribers').insert({email:email,first_name:fn||null,is_founder:!!fid,founder_id:fid,subscribed_at:new Date().toISOString(),last_seen:new Date().toISOString()});
-      if(ins.error)throw ins.error;
-      var subRes=await fetch(SUBSCRIBE_FN,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_ANON,'apikey':SUPABASE_ANON},body:JSON.stringify({email:email,first_name:fn||null})});
-      if(!subRes.ok)console.warn('subscribe-pivot:',await subRes.text());
-      var sub=await sb.from('pivot_subscribers').select('is_founder').eq('email',email).maybeSingle();
-      if(sub.data&&sub.data.is_founder){
+      const{data:founder}=await sb.from('founderbase').select('id').eq('email',email).maybeSingle();
+      await sb.from('pivot_subscribers').insert({email,first_name:fn||null,is_founder:!!founder,founder_id:founder?.id||null,subscribed_at:new Date().toISOString(),last_seen:new Date().toISOString()});
+      try{
+        await fetch(SUBSCRIBE_FN,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${SUPABASE_ANON}`,'apikey':SUPABASE_ANON},body:JSON.stringify({email,first_name:fn||null})});
+      }catch(brevoErr){console.warn('Brevo sync skipped:',brevoErr);}
+      const{data:sub}=await sb.from('pivot_subscribers').select('is_founder').eq('email',email).maybeSingle();
+      if(sub&&sub.is_founder){
         showMsg('Welcome back, founder. Keep your profile fresh — investors are watching. <a href="https://venturebuilders.fund/founder" style="color:inherit;font-weight:700;text-decoration:underline;">Update Profile</a>','founder');
         document.getElementById('founder-nudge').classList.add('visible');
         updateHeaderOffset();
       } else showMsg("You're in. Explore the Pivot library.",'success');
-      setCookie(COOKIE_NAME,email,30);
+      setCookie(COOKIE_NAME,btoa(email),30);
       btn.textContent='Access Granted';
-      setTimeout(function(){document.getElementById('subscribe-popup').classList.remove('open');},2000);
+      setTimeout(()=>document.getElementById('subscribe-popup').classList.remove('open'),2000);
     }catch(err){console.error(err);showMsg('Something went wrong. Please try again.','error');btn.disabled=false;btn.textContent='Get Access';}
   });
 
-  document.getElementById('popup-dismiss').addEventListener('click',function(){
-    setCookie(COOKIE_NAME,'browsing',1);
-    document.getElementById('subscribe-popup').classList.remove('open');
-    document.getElementById('founder-nudge').classList.add('visible');
-    updateHeaderOffset();
-  });
-  document.getElementById('popup-email').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('popup-submit').click();});
+  function showMsg(html,type){const el=document.getElementById('popup-message');el.innerHTML=html;el.className=`popup-message ${type}`;}
+  document.getElementById('popup-dismiss').addEventListener('click',()=>{setCookie(COOKIE_NAME,'browsing',1);document.getElementById('subscribe-popup').classList.remove('open');});
+  document.getElementById('popup-email').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('popup-submit').click();});
 
   init();
 </script>
