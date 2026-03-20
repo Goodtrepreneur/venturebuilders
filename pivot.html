@@ -56,7 +56,6 @@
     #sponsor-banner.visible{display:flex;}
     .sponsor-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);}
     #sponsor-banner a{color:var(--teal);font-weight:600;font-size:.78rem;}
-    #sponsor-banner strong{color:var(--text);font-weight:600;}
     .sponsor-banner-logo{height:20px;width:auto;border-radius:4px;}
     body.banner-visible #main-header{top:32px;}
     body.banner-visible #hero{padding-top:0;}
@@ -238,8 +237,7 @@
 
 <div id="sponsor-banner">
   <span class="sponsor-label">Partner</span>
-  <img class="sponsor-banner-logo" id="banner-sponsor-logo" src="assets/tspace.png" alt="TrueSpace" />
-  <strong id="banner-sponsor-name"></strong>
+  <img class="sponsor-banner-logo" id="banner-sponsor-logo" src="assets/tspace.png" alt="Partner logo" />
   <span id="banner-sponsor-tagline" style="color:var(--text-3);font-size:.75rem;max-width:420px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></span>
   <a id="banner-sponsor-link" href="#" target="_blank" rel="noopener noreferrer">Learn more</a>
 </div>
@@ -468,7 +466,6 @@
     const section=allSponsors.find(s=>s.placement==='section')||allSponsors[0];
 
     if(banner){
-      document.getElementById('banner-sponsor-name').textContent=banner.name;
       document.getElementById('banner-sponsor-tagline').textContent=banner.tagline||'';
       document.getElementById('banner-sponsor-link').href=safeUrl(banner.website_url);
       const logoEl=document.getElementById('banner-sponsor-logo');
