@@ -51,15 +51,14 @@
     .header-profile-btn:hover{background:#ff8044;transform:translateY(-1px);}
     @media(max-width:700px){.header-nav{display:none;}.logo{font-size:1.4rem;}}
 
-    /* Sponsor banner - fixed below header */
-    #sponsor-banner{display:none;position:fixed;top:var(--header-h);left:0;right:0;z-index:49;align-items:center;justify-content:center;gap:1rem;padding:.55rem 2rem;background:rgba(10,10,10,.97);border-bottom:1px solid rgba(255,107,43,0.25);font-size:.8rem;color:var(--text-2);backdrop-filter:blur(10px);}
+    /* Sponsor banner - fixed top strip */
+    #sponsor-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:60;align-items:center;justify-content:center;gap:.75rem;padding:.45rem 2rem;background:#0d0d0d;border-bottom:1px solid rgba(0,212,255,0.2);font-size:.8rem;color:var(--text-2);}
     #sponsor-banner.visible{display:flex;}
-    .sponsor-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);}
-    #sponsor-banner a{color:var(--teal);font-weight:600;}
-    #sponsor-banner strong{color:var(--accent);}
-    /* offset body when banner visible */
-    body.banner-visible #hero{margin-top:36px;}
-    body.banner-visible{padding-top:0;}
+    .sponsor-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);}
+    #sponsor-banner a{color:var(--teal);font-weight:600;font-size:.78rem;}
+    #sponsor-banner strong{color:var(--text);font-weight:600;}
+    .sponsor-banner-logo{height:20px;width:auto;border-radius:4px;}
+    body.banner-visible #hero{padding-top:0;}
 
     /* Hero */
     #hero{position:relative;width:100%;height:80vh;min-height:500px;max-height:760px;overflow:hidden;background:#0a0a0a;}
@@ -83,7 +82,7 @@
     .hero-dot.active{background:var(--accent);}
 
     /* Filter bar */
-    #filter-bar{display:flex;align-items:center;gap:.5rem;padding:1.5rem 4% 0;flex-wrap:wrap;position:relative;z-index:5;}
+    #filter-bar{display:flex;align-items:center;gap:.5rem;padding:1.5rem 4% 0;flex-wrap:wrap;position:relative;z-index:5;scroll-margin-top:calc(var(--header-h) + 40px);}
     .pill{padding:.4rem 1rem;border-radius:4px;border:1px solid var(--border);font-size:.8rem;font-weight:500;color:var(--text-2);background:rgba(255,255,255,.06);transition:var(--transition);white-space:nowrap;}
     .pill:hover,.pill.active{border-color:var(--text);color:var(--text);background:rgba(255,255,255,.15);}
     .filter-select{padding:.4rem 1.8rem .4rem .9rem;border-radius:4px;border:1px solid var(--border);font-size:.8rem;font-weight:500;color:var(--text-2);background:rgba(255,255,255,.06);font-family:inherit;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .6rem center;transition:var(--transition);}
@@ -98,38 +97,38 @@
     .row-title-new{font-size:.75rem;font-weight:700;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;}
     .row-see-all{font-size:.75rem;color:var(--teal);font-weight:500;margin-left:auto;opacity:0;transition:opacity 200ms;}
     .content-row:hover .row-see-all{opacity:1;}
-    .row-track-wrap{position:relative;}
-    .row-track{display:flex;gap:.5rem;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding:1rem 0 1rem;margin-top:-1rem;}
+    .row-track-wrap{position:relative;overflow:hidden;}
+    .row-track{display:flex;gap:.5rem;overflow-x:auto;overflow-y:visible;scroll-behavior:smooth;scrollbar-width:none;
+      padding:1rem 0 100px;margin-bottom:-100px;}
     .row-track::-webkit-scrollbar{display:none;}
-    .row-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:10;width:40px;height:80%;background:rgba(8,8,8,.7);border:1px solid var(--border);color:var(--text);display:none;align-items:center;justify-content:center;cursor:pointer;transition:background 150ms;backdrop-filter:blur(4px);}
+    .row-arrow{position:absolute;top:40%;transform:translateY(-50%);z-index:10;width:40px;height:60%;background:rgba(8,8,8,.85);border:1px solid var(--border);color:var(--text);display:none;align-items:center;justify-content:center;cursor:pointer;transition:background 150ms;backdrop-filter:blur(4px);}
     .row-arrow:hover{background:rgba(20,20,20,.95);}
-    .row-arrow.left{left:-1rem;border-radius:0 4px 4px 0;}
-    .row-arrow.right{right:-1rem;border-radius:4px 0 0 4px;}
+    .row-arrow.left{left:0;border-radius:0 4px 4px 0;}
+    .row-arrow.right{right:0;border-radius:4px 0 0 4px;}
     .content-row:hover .row-arrow{display:flex;}
 
     /* Video card */
     .v-card{flex:0 0 calc(20% - .4rem);min-width:180px;max-width:280px;border-radius:var(--radius);overflow:visible;cursor:pointer;position:relative;transition:transform 300ms cubic-bezier(0.25,0,0,1),z-index 0ms 300ms;}
-    .v-card:hover{transform:scale(1.12);z-index:20;transition:transform 300ms cubic-bezier(0.25,0,0,1),z-index 0ms 0ms;}
-    .v-card:first-child:hover{transform:scale(1.12) translateX(5%);}
-    .v-card:last-child:hover{transform:scale(1.12) translateX(-5%);}
+    .v-card:hover{transform:scale(1.1);z-index:20;transition:transform 300ms cubic-bezier(0.25,0,0,1),z-index 0ms 0ms;}
+    .v-card:first-child:hover{transform:scale(1.1) translateX(5%);}
+    .v-card:last-child:hover{transform:scale(1.1) translateX(-5%);}
     .v-card-thumb{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:#1a1a1a;}
-    .v-card-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:filter 300ms;}
-    .v-card:hover .v-card-thumb img{filter:brightness(.5);}
-    .v-card-info{position:absolute;bottom:0;left:0;right:0;background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:.75rem;opacity:0;transition:opacity 250ms 50ms ease,border-color 250ms;pointer-events:none;}
-    .v-card:hover .v-card-thumb{border-radius:var(--radius) var(--radius) 0 0;}
-    .v-card:hover .v-card-info{opacity:1;pointer-events:all;border-color:rgba(255,107,43,.2);}
-    .v-card-actions{display:flex;align-items:center;gap:.4rem;margin-bottom:.5rem;}
-    .v-play-btn{width:30px;height:30px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0;}
-    .v-play-btn:hover{background:rgba(255,255,255,.85);transform:scale(1.08);}
+    .v-card-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:filter 300ms,transform 300ms;}
+    .v-card:hover .v-card-thumb img{filter:brightness(.35);transform:scale(1.04);}
+    .v-card-info{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:.65rem;opacity:0;transition:opacity 220ms ease;pointer-events:none;background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,transparent 50%);}
+    .v-card:hover .v-card-info{opacity:1;pointer-events:all;}
+    .v-card-actions{display:flex;align-items:center;gap:.4rem;margin-bottom:.4rem;}
+    .v-play-btn{width:28px;height:28px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0;}
+    .v-play-btn:hover{background:rgba(255,255,255,.85);transform:scale(1.1);}
     .v-play-btn svg{margin-left:2px;}
-    .v-card-name{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;line-height:1.3;margin-bottom:.25rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-    .v-card-meta{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;}
-    .v-badge{padding:.15rem .45rem;border-radius:3px;font-size:.65rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
-    .badge-interview{background:rgba(0,212,255,.15);color:#00d4ff;}
-    .badge-keynote{background:rgba(255,200,50,.15);color:#ffc832;}
-    .badge-panel{background:rgba(170,100,255,.15);color:#aa64ff;}
-    .badge-speaker_series,.badge-speaker-series{background:rgba(50,200,100,.15);color:#32c864;}
-    .v-company{font-size:.72rem;color:var(--text-3);}
+    .v-card-name{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;line-height:1.25;margin-bottom:.25rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.8);}
+    .v-card-meta{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;}
+    .v-badge{padding:.15rem .4rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+    .badge-interview{background:rgba(0,212,255,.25);color:#00d4ff;}
+    .badge-keynote{background:rgba(255,200,50,.25);color:#ffc832;}
+    .badge-panel{background:rgba(170,100,255,.25);color:#aa64ff;}
+    .badge-speaker_series,.badge-speaker-series{background:rgba(50,200,100,.25);color:#32c864;}
+    .v-company{font-size:.68rem;color:rgba(255,255,255,.6);}
     .new-ribbon{position:absolute;top:.4rem;left:.4rem;background:var(--accent);color:#fff;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:.15rem .4rem;border-radius:3px;z-index:2;}
 
     /* Skeleton */
@@ -237,10 +236,11 @@
 </header>
 
 <div id="sponsor-banner">
-  <span class="sponsor-label">Sponsored by</span>
+  <span class="sponsor-label">Partner</span>
+  <img class="sponsor-banner-logo" id="banner-sponsor-logo" src="assets/tspace.png" alt="TrueSpace" />
   <strong id="banner-sponsor-name"></strong>
-  <span id="banner-sponsor-tagline"></span>
-  <a id="banner-sponsor-link" href="#" target="_blank">Learn more</a>
+  <span id="banner-sponsor-tagline" style="color:var(--text-3);font-size:.75rem;max-width:420px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></span>
+  <a id="banner-sponsor-link" href="#" target="_blank" rel="noopener noreferrer">Learn more</a>
 </div>
 
 <div id="hero">
@@ -348,6 +348,7 @@
   const SUBSCRIBE_FN  = `${SUPABASE_URL}/functions/v1/subscribe-pivot`;
   const COOKIE_NAME   = 'pivot_access';
   const RECENT_DAYS   = 14;
+  const DEFAULT_PARTNER_LOGO = 'assets/tspace.png';
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
   let allVideos=[], allSponsors=[], currentType='all', currentIndustry='';
@@ -374,6 +375,7 @@
   }
 
   function escapeHtml(s){if(s==null||s==='')return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function escapeAttr(s){if(s==null||s==='')return'';return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
   function safeUrl(href){if(!href)return'#';const u=String(href).trim();if(/^https?:\/\//i.test(u))return u;return'#';}
 
   function updateHeaderOffset(){
@@ -381,10 +383,13 @@
     const header=document.getElementById('main-header');
     const banner=document.getElementById('sponsor-banner');
     const nudgeH=nudge.classList.contains('visible')?nudge.offsetHeight:0;
-    const bannerH=banner.classList.contains('visible')?banner.offsetHeight:0;
-    header.style.top=nudgeH+'px';
     if(banner.classList.contains('visible')){
-      banner.style.top=`calc(var(--header-h) + ${nudgeH}px)`;
+      banner.style.top=nudgeH+'px';
+      const bh=banner.offsetHeight;
+      header.style.top=(nudgeH+bh)+'px';
+    } else {
+      banner.style.top='';
+      header.style.top=nudgeH+'px';
     }
   }
   window.addEventListener('scroll',()=>{
@@ -465,17 +470,20 @@
       document.getElementById('banner-sponsor-name').textContent=banner.name;
       document.getElementById('banner-sponsor-tagline').textContent=banner.tagline||'';
       document.getElementById('banner-sponsor-link').href=safeUrl(banner.website_url);
+      const logoEl=document.getElementById('banner-sponsor-logo');
+      if(logoEl)logoEl.src=banner.logo_url||DEFAULT_PARTNER_LOGO;
       document.getElementById('sponsor-banner').classList.add('visible');
       document.body.classList.add('banner-visible');
-      updateHeaderOffset();
+      setTimeout(updateHeaderOffset,50);
     }
 
     if(section){
       const href=safeUrl(section.website_url);
+      const logoUrl=escapeAttr(section.logo_url||DEFAULT_PARTNER_LOGO);
       document.getElementById('sponsor-section-slot').innerHTML=`
         <div class="sponsor-row">
           <span class="sponsor-row-label">Partner</span>
-          <span class="sponsor-row-name">${escapeHtml(section.name)}</span>
+          <img src="${logoUrl}" style="height:28px;width:auto;border-radius:5px;" alt="${escapeHtml(section.name)}" />
           <span class="sponsor-row-tagline">${escapeHtml(section.tagline||'')}</span>
           ${href!=='#'?`<a class="sponsor-row-link" href="${href}" target="_blank" rel="noopener noreferrer">Learn More</a>`:''}
         </div>`;
@@ -580,9 +588,10 @@
         const sponsorCard=document.createElement('div');
         sponsorCard.className='sponsor-row';
         const href=safeUrl(sponsorForRows.website_url);
+        const rowLogo=escapeAttr(sponsorForRows.logo_url||DEFAULT_PARTNER_LOGO);
         sponsorCard.innerHTML=`
           <span class="sponsor-row-label">Sponsored</span>
-          <span class="sponsor-row-name">${escapeHtml(sponsorForRows.name)}</span>
+          <img src="${rowLogo}" style="height:28px;width:auto;border-radius:5px;" alt="${escapeHtml(sponsorForRows.name)}" />
           <span class="sponsor-row-tagline">${escapeHtml(sponsorForRows.tagline||'')}</span>
           ${href!=='#'?`<a class="sponsor-row-link" href="${href}" target="_blank" rel="noopener noreferrer">Learn More</a>`:''}`;
         rows[1].parentNode.insertBefore(sponsorCard, rows[1]);
@@ -605,15 +614,15 @@
       <div class="v-card-thumb">
         ${showNew?'<div class="new-ribbon">New</div>':''}
         <img src="${thumb}" alt="${titleEsc}" loading="lazy"/>
-      </div>
-      <div class="v-card-info">
-        <div class="v-card-actions">
-          <div class="v-play-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="#111"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-        </div>
-        <div class="v-card-name">${titleEsc}</div>
-        <div class="v-card-meta">
-          <span class="v-badge ${badgeClass}">${escapeHtml(badgeLabel)}</span>
-          ${v.company?`<span class="v-company">${companyEsc}</span>`:''}
+        <div class="v-card-info">
+          <div class="v-card-actions">
+            <div class="v-play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#111"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          </div>
+          <div class="v-card-name">${titleEsc}</div>
+          <div class="v-card-meta">
+            <span class="v-badge ${badgeClass}">${escapeHtml(badgeLabel)}</span>
+            ${v.company?`<span class="v-company">${companyEsc}</span>`:''}
+          </div>
         </div>
       </div>
     </div>`;
