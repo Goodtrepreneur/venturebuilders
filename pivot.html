@@ -54,7 +54,6 @@
     /* Sponsor banner - fixed below header */
     #sponsor-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:60;align-items:center;justify-content:center;gap:.75rem;padding:.45rem 2rem;background:#0d0d0d;border-bottom:1px solid rgba(0,212,255,0.2);font-size:.8rem;color:var(--text-2);}
     #sponsor-banner.visible{display:flex;}
-    .sponsor-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);}
     #sponsor-banner a{color:var(--teal);font-weight:600;font-size:.78rem;}
     .sponsor-banner-logo{height:20px;width:auto;border-radius:4px;}
     body.banner-visible #main-header{top:32px;}
@@ -236,7 +235,6 @@
 </header>
 
 <div id="sponsor-banner">
-  <span class="sponsor-label">Partner</span>
   <img class="sponsor-banner-logo" id="banner-sponsor-logo" src="assets/tspace.png" alt="Partner logo" />
   <span id="banner-sponsor-tagline" style="color:var(--text-3);font-size:.75rem;max-width:420px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></span>
   <a id="banner-sponsor-link" href="#" target="_blank" rel="noopener noreferrer">Learn more</a>
@@ -657,7 +655,7 @@
     st2.style.display=sponsor?'block':'none';
     if(sponsor)st2.textContent=`Presented by ${sponsor.name}`;
     if(sponsor){showPreroll(sponsor,v.youtube_id);}
-    else{document.getElementById('preroll').classList.remove('visible');document.getElementById('video-iframe').src=`https://www.youtube.com/embed/${v.youtube_id}?autoplay=1`;}
+    else{document.getElementById('preroll').classList.remove('visible');document.getElementById('video-iframe').src=`https://www.youtube.com/embed/${v.youtube_id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&color=white`;}
     document.getElementById('video-modal').classList.add('open');
     document.body.style.overflow='hidden';
   }
@@ -681,7 +679,7 @@
     pr.classList.add('visible');sk.classList.remove('ready');
     let s=5;ti.textContent=`Skippable in ${s}s`;
     prerollInterval=setInterval(()=>{s--;if(s<=0){clearInterval(prerollInterval);sk.classList.add('ready');ti.textContent='';}else ti.textContent=`Skippable in ${s}s`;},1000);
-    sk.onclick=()=>{clearInterval(prerollInterval);pr.classList.remove('visible');document.getElementById('video-iframe').src=`https://www.youtube.com/embed/${ytId}?autoplay=1`;};
+    sk.onclick=()=>{clearInterval(prerollInterval);pr.classList.remove('visible');document.getElementById('video-iframe').src=`https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&color=white`;};
   }
 
   document.getElementById('popup-submit').addEventListener('click',async()=>{
