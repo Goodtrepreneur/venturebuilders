@@ -207,9 +207,8 @@
     .footer-brand a span{color:var(--accent);}
     .footer-brand a:hover span{text-decoration:underline;text-underline-offset:2px;}
     .footer-links{display:flex;gap:1.5rem;align-items:center;}
-    .footer-logo-link{display:inline-flex;align-items:center;line-height:0;transition:opacity 150ms;}
-    .footer-logo-link:hover{opacity:.88;}
-    .footer-logo{height:36px;width:auto;display:block;}
+    .footer-logo-wrap{display:inline-flex;align-items:center;line-height:0;}
+    .footer-logo{height:36px;width:auto;display:block;opacity:.5;}
     @media(max-width:600px){.footer-logo{height:30px;}}
 
     /* Sponsor row card */
@@ -313,9 +312,9 @@
 <footer>
   <div class="footer-brand">Powered by <a href="https://venturebuilders.fund" target="_blank" rel="noopener noreferrer"><span>Venture Builders Fund</span></a></div>
   <div class="footer-links">
-    <a class="footer-logo-link" href="https://venturebuilders.fund" target="_blank" rel="noopener noreferrer">
+    <span class="footer-logo-wrap">
       <img class="footer-logo" src="pivot-white.png" alt="Pivot." />
-    </a>
+    </span>
   </div>
 </footer>
 
