@@ -427,7 +427,7 @@
               event_type:'search',
               metadata:{query:currentSearch}
             });
-          }catch(err){console.error('search click event insert failed:',err);}
+          }catch(e){}
         })();
       }
     },300);
@@ -456,7 +456,7 @@
             event_type:'filter_use',
             metadata:{filter_type:'content_type',value:currentType}
           });
-        }catch(err){console.error('filter click event insert failed:',err);}
+        }catch(e){}
       })();
       document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===currentType));
       renderAllRows();
@@ -503,7 +503,7 @@
             skipped:false,
             viewer_email:getViewerEmailFromAccessCookie()
           });
-        }catch(err){console.error('banner impression insert failed:',err);}
+        }catch(e){}
       })();
       // set banner height as CSS var for header offset
       setTimeout(()=>{
@@ -666,23 +666,21 @@
         if(v){
           (async()=>{
             try{
-              const{data,error}=await sb.from('pivot_watch_events').insert({
+              const{data}=await sb.from('pivot_watch_events').insert({
                 viewer_email:getViewerEmail(),
                 video_id:v.id,
                 youtube_id:v.youtube_id,
                 is_founder:false
               }).select('id').single();
-              if(error)throw error;
               const rowId=data&&data.id?data.id:null;
               const email=getViewerEmail();
               if(rowId&&email){
-                const{data:sub,error:subErr}=await sb.from('pivot_subscribers').select('is_founder').eq('email',email).maybeSingle();
-                if(subErr)throw subErr;
+                const{data:sub}=await sb.from('pivot_subscribers').select('is_founder').eq('email',email).maybeSingle();
                 if(sub&&sub.is_founder){
                   await sb.from('pivot_watch_events').update({is_founder:true}).eq('id',rowId);
                 }
               }
-            }catch(err){console.error('watch event tracking failed:',err);}
+            }catch(e){}
           })();
           openModal(v);
         }
@@ -727,7 +725,7 @@
               event_type:'sponsor_click',
               metadata:{sponsor_name:adSponsor.name,placement:'modal'}
             });
-          }catch(err){console.error('modal sponsor click insert failed:',err);}
+          }catch(e){}
         })();
       };
       const adLogo=document.getElementById('modal-ad-logo');
@@ -743,7 +741,7 @@
             skipped:false,
             viewer_email:getViewerEmailFromAccessCookie()
           });
-        }catch(err){console.error('modal ad impression insert failed:',err);}
+        }catch(e){}
       })();
     } else {
       adSlot.style.display='none';
@@ -767,7 +765,7 @@
           event_type:'sponsor_click',
           metadata:{sponsor_name:sponsorName,placement:'section'}
         });
-      }catch(err){console.error('section sponsor click insert failed:',err);}
+      }catch(e){}
     })();
   });
 
@@ -800,7 +798,7 @@
         }).select('id').single();
         if(error)throw error;
         currentImpressionId=data&&data.id?data.id:null;
-      }catch(err){console.error('pre-roll impression insert failed:',err);}
+      }catch(e){}
     })();
     let s=5;ti.textContent=`Skippable in ${s}s`;
     prerollInterval=setInterval(()=>{s--;if(s<=0){clearInterval(prerollInterval);sk.classList.add('ready');ti.textContent='';}else ti.textContent=`Skippable in ${s}s`;},1000);
@@ -811,7 +809,7 @@
         (async()=>{
           try{
             await sb.from('pivot_sponsor_impressions').update({skipped:true}).eq('id',currentImpressionId);
-          }catch(err){console.error('pre-roll impression skip update failed:',err);}
+          }catch(e){}
         })();
       }
       document.getElementById('video-iframe').src=`https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&color=white`;
