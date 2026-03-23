@@ -379,21 +379,21 @@
   const RECENT_DAYS   = 14;
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  let allVideos=[], allSponsors=[], currentType='all', currentIndustry='';
+  let allVideos=[], allSponsors=[], currentType='all', currentIndustry='', currentSearch='';
   let heroIndex=0, heroTimer=null, prerollInterval=null, heroVideos=[];
   let currentImpressionId=null;
 
   const setCookie=(n,v,d)=>{const e=new Date();e.setTime(e.getTime()+d*864e5);document.cookie=`${n}=${v};expires=${e.toUTCString()};path=/`;};
   const getCookie=n=>{const c=document.cookie.split(';').find(c=>c.trim().startsWith(n+'='));return c?c.trim().split('=')[1]:null;};
-  function getViewerEmailFromAccessCookie(){
-    const raw=getCookie(COOKIE_NAME);
-    if(!raw||raw==='browsing')return null;
+  function getViewerEmail(){
     try{
-      const decoded=atob(raw);
-      return decoded&&decoded.indexOf('@')>-1?decoded:null;
-    }catch(e){
-      return null;
-    }
+      const ck=getCookie('pivot_access');
+      if(!ck||ck==='browsing')return null;
+      return atob(ck);
+    }catch(e){return null;}
+  }
+  function getViewerEmailFromAccessCookie(){
+    return getViewerEmail();
   }
 
   function updateHeaderOffset(){
@@ -414,7 +414,24 @@
     if(i.classList.contains('open'))i.focus();
   });
   let st;
-  document.getElementById('search-input').addEventListener('input',()=>{clearTimeout(st);st=setTimeout(renderAllRows,300);});
+  document.getElementById('search-input').addEventListener('input',()=>{
+    clearTimeout(st);
+    st=setTimeout(()=>{
+      currentSearch=(document.getElementById('search-input').value||'').trim();
+      renderAllRows();
+      if(currentSearch){
+        (async()=>{
+          try{
+            await sb.from('pivot_click_events').insert({
+              viewer_email:getViewerEmail(),
+              event_type:'search',
+              metadata:{query:currentSearch}
+            });
+          }catch(err){console.error('search click event insert failed:',err);}
+        })();
+      }
+    },300);
+  });
 
   document.querySelectorAll('[data-nav]').forEach(a=>{
     a.addEventListener('click',e=>{
@@ -432,6 +449,15 @@
       document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
       pill.classList.add('active');
       currentType=pill.dataset.type;
+      (async()=>{
+        try{
+          await sb.from('pivot_click_events').insert({
+            viewer_email:getViewerEmail(),
+            event_type:'filter_use',
+            metadata:{filter_type:'content_type',value:currentType}
+          });
+        }catch(err){console.error('filter click event insert failed:',err);}
+      })();
       document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===currentType));
       renderAllRows();
     });
@@ -637,7 +663,29 @@
     track.querySelectorAll('.v-card').forEach(card=>{
       card.addEventListener('click',()=>{
         const v=allVideos.find(x=>x.id===card.dataset.id);
-        if(v)openModal(v);
+        if(v){
+          (async()=>{
+            try{
+              const{data,error}=await sb.from('pivot_watch_events').insert({
+                viewer_email:getViewerEmail(),
+                video_id:v.id,
+                youtube_id:v.youtube_id,
+                is_founder:false
+              }).select('id').single();
+              if(error)throw error;
+              const rowId=data&&data.id?data.id:null;
+              const email=getViewerEmail();
+              if(rowId&&email){
+                const{data:sub,error:subErr}=await sb.from('pivot_subscribers').select('is_founder').eq('email',email).maybeSingle();
+                if(subErr)throw subErr;
+                if(sub&&sub.is_founder){
+                  await sb.from('pivot_watch_events').update({is_founder:true}).eq('id',rowId);
+                }
+              }
+            }catch(err){console.error('watch event tracking failed:',err);}
+          })();
+          openModal(v);
+        }
       });
     });
   }
@@ -671,6 +719,17 @@
       document.getElementById('modal-ad-name').textContent=adSponsor.name;
       document.getElementById('modal-ad-tagline').textContent=adSponsor.tagline||'';
       document.getElementById('modal-ad-cta').href=adSponsor.website_url||'#';
+      document.getElementById('modal-ad-cta').onclick=()=>{
+        (async()=>{
+          try{
+            await sb.from('pivot_click_events').insert({
+              viewer_email:getViewerEmail(),
+              event_type:'sponsor_click',
+              metadata:{sponsor_name:adSponsor.name,placement:'modal'}
+            });
+          }catch(err){console.error('modal sponsor click insert failed:',err);}
+        })();
+      };
       const adLogo=document.getElementById('modal-ad-logo');
       adLogo.src=document.getElementById('banner-sponsor-logo').src||'';
       adLogo.alt=adSponsor.name;
@@ -694,6 +753,23 @@
     document.getElementById('video-modal').classList.add('open');
     document.body.style.overflow='hidden';
   }
+
+  document.addEventListener('click',e=>{
+    const link=e.target.closest('.sponsor-row-link');
+    if(!link)return;
+    const row=link.closest('.sponsor-row');
+    const sponsorNameEl=row?row.querySelector('img[alt]'):null;
+    const sponsorName=sponsorNameEl?sponsorNameEl.getAttribute('alt'):'';
+    (async()=>{
+      try{
+        await sb.from('pivot_click_events').insert({
+          viewer_email:getViewerEmail(),
+          event_type:'sponsor_click',
+          metadata:{sponsor_name:sponsorName,placement:'section'}
+        });
+      }catch(err){console.error('section sponsor click insert failed:',err);}
+    })();
+  });
 
   function closeModal(){
     document.getElementById('video-modal').classList.remove('open');
