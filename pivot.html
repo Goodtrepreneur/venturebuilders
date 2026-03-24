@@ -469,7 +469,7 @@
   }
 
   async function loadVideos(){
-    const{data,error}=await sb.from('pivot_videos').select('*').order('published_at',{ascending:false});
+    const{data,error}=await sb.from('pivot_videos').select('*').order('sort_order',{ascending:true});
     if(error){console.error(error);return;}
     allVideos=data||[];
     populateIndustryFilter();
