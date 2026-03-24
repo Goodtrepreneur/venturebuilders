@@ -68,8 +68,8 @@
     #hero-bg{position:absolute;inset:0;background-size:cover;background-position:center top;transform:scale(1.04);transition:background-image 600ms;}
     #hero::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#080808 0%,rgba(8,8,8,.6) 35%,transparent 65%),linear-gradient(90deg,rgba(8,8,8,.85) 0%,transparent 55%),linear-gradient(180deg,rgba(8,8,8,.5) 0%,transparent 25%);pointer-events:none;}
     #hero-content{position:absolute;bottom:15%;left:4%;z-index:2;max-width:580px;
-      background:radial-gradient(ellipse at 30% 60%,rgba(0,0,0,0.95) 0%,rgba(0,0,0,0.90) 25%,rgba(0,0,0,0.70) 50%,rgba(0,0,0,0.35) 75%,transparent 100%);
-      padding:2.5rem 3rem 3rem 2rem;border-radius:0;backdrop-filter:none;}
+      background: radial-gradient(ellipse at 30% 60%, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.90) 25%, rgba(0,0,0,0.70) 50%, rgba(0,0,0,0.35) 75%, transparent 100%);
+      padding:2.5rem 3rem 3rem 2rem;border-radius:0;}
     .hero-type-badge{display:inline-flex;align-items:center;gap:.4rem;margin-bottom:.75rem;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2);}
     .hero-type-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
     #hero-title{font-family:'Inter',sans-serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem;text-shadow:0 2px 20px rgba(0,0,0,.5);}
@@ -99,7 +99,7 @@
     .row-header{position:relative;z-index:5;display:flex;align-items:baseline;gap:1rem;margin-bottom:.75rem;}
     .row-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:-.01em;}
     .row-title-new{font-size:.75rem;font-weight:700;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;}
-    .row-see-all{opacity:1;cursor:pointer;font-size:.75rem;color:var(--teal);font-weight:500;margin-left:auto;}
+    .row-see-all{opacity: 1; cursor: pointer; font-size:.75rem;color:var(--teal);font-weight:500;margin-left:auto;}
     .row-track-wrap{position:relative;overflow:hidden;}
     /* Overflow trick: outer clips x, inner shows y for hover panels */
     .row-track{display:flex;gap:.5rem;overflow-x:auto;overflow-y:visible;scroll-behavior:smooth;scrollbar-width:none;
@@ -613,17 +613,6 @@
 
     dynEl.innerHTML=html;
     dynEl.querySelectorAll('.row-track').forEach(t=>bindClicks(t));
-    document.querySelectorAll('.row-see-all').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        const type=btn.dataset.type;
-        if(!type)return;
-        currentType=type;
-        document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('active',p.dataset.type===type));
-        document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===type));
-        renderAllRows();
-        document.getElementById('filter-bar').scrollIntoView({behavior:'smooth'});
-      });
-    });
 
     // Insert sponsor card between first and second row if sponsor exists
     const sponsorForRows=allSponsors.find(s=>s.placement==='pre-roll'||s.placement==='section'||s.placement==='banner');
@@ -645,6 +634,23 @@
     const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
     document.querySelectorAll('.content-row:not(.visible)').forEach(r=>obs.observe(r));
     recentRow.classList.add('visible');
+
+    document.querySelectorAll('.row-see-all').forEach(btn => {
+      btn.style.opacity = '1';
+      btn.style.cursor = 'pointer';
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.type;
+        if (!type) return;
+        currentType = type;
+        document.querySelectorAll('.pill').forEach(p =>
+          p.classList.toggle('active', p.dataset.type === type));
+        document.querySelectorAll('[data-nav]').forEach(a =>
+          a.classList.toggle('active', a.dataset.nav === type));
+        renderAllRows();
+        document.getElementById('filter-bar')
+          .scrollIntoView({ behavior: 'smooth' });
+      });
+    });
   }
 
   function renderCard(v,showNew){
