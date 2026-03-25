@@ -359,8 +359,8 @@
       <span class="popup-pill">Panels</span>
       <span class="popup-pill">Speaker Series</span>
     </div>
-    <h2 class="popup-headline">Built for Founders.<br/><em>Powered by Real Stories.</em></h2>
-    <p class="popup-sub">Watch interviews, keynotes, panels, and speaker series from builders who've raised, scaled, and pivoted. Enter your email to get access — and keep your founder profile fresh for investors.</p>
+    <h2 class="popup-headline" id="popup-headline">Built for Founders.<br/><em>Powered by Real Stories.</em></h2>
+    <p class="popup-sub" id="popup-sub">Watch interviews, keynotes, panels, and speaker series from builders who've raised, scaled, and pivoted. Enter your email to get access — and keep your founder profile fresh for investors.</p>
     <input type="text"  class="popup-input" id="popup-firstname" placeholder="First name (optional)"/>
     <input type="email" class="popup-input" id="popup-email"     placeholder="Your email address"/>
     <button class="popup-submit" id="popup-submit">Get Access</button>
@@ -380,6 +380,83 @@
   let allVideos=[], allSponsors=[], currentType='all', currentIndustry='', currentSearch='';
   let heroIndex=0, heroTimer=null, prerollInterval=null, heroVideos=[];
   let currentImpressionId=null;
+  let pendingVideo=null;
+
+  const POPUP_HEADLINE_MARKETING='Built for Founders.<br/><em>Powered by Real Stories.</em>';
+  const POPUP_SUB_MARKETING='Watch interviews, keynotes, panels, and speaker series from builders who\'ve raised, scaled, and pivoted. Enter your email to get access — and keep your founder profile fresh for investors.';
+  const POPUP_HEADLINE_GATE='Enter your email to watch';
+  const POPUP_SUB_GATE='Free to watch. Takes 10 seconds. Keep your founder profile fresh for investors while you\'re here.';
+
+  function resetSubscribePopupCopy(){
+    document.getElementById('popup-headline').innerHTML=POPUP_HEADLINE_MARKETING;
+    document.getElementById('popup-sub').textContent=POPUP_SUB_MARKETING;
+  }
+  function applyGateSubscribePopupCopy(){
+    document.getElementById('popup-headline').textContent=POPUP_HEADLINE_GATE;
+    document.getElementById('popup-sub').textContent=POPUP_SUB_GATE;
+  }
+  function clearPopupMessage(){
+    const el=document.getElementById('popup-message');
+    el.innerHTML='';
+    el.className='popup-message';
+  }
+  function shouldGateVideoPlay(){
+    const c=getCookie(COOKIE_NAME);
+    return !c||c==='browsing';
+  }
+  function openVideoWithAccess(v){
+    (async()=>{
+      try{
+        const{data}=await sb.from('pivot_watch_events').insert({
+          viewer_email:getViewerEmail(),
+          video_id:v.id,
+          youtube_id:v.youtube_id,
+          is_founder:false
+        }).select('id').single();
+        const rowId=data&&data.id?data.id:null;
+        const email=getViewerEmail();
+        if(rowId&&email){
+          const{data:sub}=await sb.from('pivot_subscribers').select('is_founder').eq('email',email).maybeSingle();
+          if(sub&&sub.is_founder){
+            await sb.from('pivot_watch_events').update({is_founder:true}).eq('id',rowId);
+          }
+        }
+      }catch(e){}
+    })();
+    openModal(v);
+  }
+  function showFounderNudgeIfHidden(){
+    const nudge=document.getElementById('founder-nudge');
+    if(nudge.classList.contains('visible'))return;
+    nudge.classList.add('visible');
+    updateHeaderOffset();
+  }
+  /** Non-blocking: only shows nudge if subscriber row returns within PLAY_FOUNDER_CHECK_MS. */
+  const PLAY_FOUNDER_CHECK_MS=500;
+  function maybeShowFounderNudgeAfterPlay(decodedEmail){
+    if(!decodedEmail)return;
+    Promise.race([
+      sb.from('pivot_subscribers').select('is_founder, first_name').eq('email', decodedEmail).maybeSingle(),
+      new Promise(resolve=>setTimeout(()=>resolve(null), PLAY_FOUNDER_CHECK_MS))
+    ]).then(res=>{
+      if(res===null)return;
+      const{data:sub,error}=res;
+      if(error)return;
+      if(sub?.is_founder===true)showFounderNudgeIfHidden();
+    });
+  }
+  function requestVideoPlay(v){
+    if(shouldGateVideoPlay()){
+      pendingVideo=v;
+      applyGateSubscribePopupCopy();
+      clearPopupMessage();
+      document.getElementById('subscribe-popup').classList.add('open');
+      return;
+    }
+    const decodedEmail=getViewerEmail();
+    openVideoWithAccess(v);
+    maybeShowFounderNudgeAfterPlay(decodedEmail);
+  }
 
   const setCookie=(n,v,d)=>{const e=new Date();e.setTime(e.getTime()+d*864e5);document.cookie=`${n}=${v};expires=${e.toUTCString()};path=/`;};
   const getCookie=n=>{const c=document.cookie.split(';').find(c=>c.trim().startsWith(n+'='));return c?c.trim().split('=')[1]:null;};
@@ -464,7 +541,11 @@
   document.getElementById('industry-filter').addEventListener('change',e=>{currentIndustry=e.target.value;renderAllRows();});
 
   async function init(){
-    if(!getCookie(COOKIE_NAME))document.getElementById('subscribe-popup').classList.add('open');
+    if(!getCookie(COOKIE_NAME)){
+      pendingVideo=null;
+      resetSubscribePopupCopy();
+      document.getElementById('subscribe-popup').classList.add('open');
+    }
     await Promise.all([loadVideos(),loadSponsors()]);
   }
 
@@ -541,7 +622,7 @@
     document.getElementById('hero-type-label').textContent=(v.content_type||'interview').replace('_',' ');
     document.getElementById('hero-industry').textContent=v.industry||'';
     document.querySelectorAll('.hero-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
-    document.getElementById('hero-play-btn').onclick=()=>openModal(v);
+    document.getElementById('hero-play-btn').onclick=()=>requestVideoPlay(v);
     document.getElementById('hero-info-btn').onclick=()=>openModal(v);
   };
 
@@ -673,27 +754,7 @@
     track.querySelectorAll('.v-card').forEach(card=>{
       card.addEventListener('click',()=>{
         const v=allVideos.find(x=>x.id===card.dataset.id);
-        if(v){
-          (async()=>{
-            try{
-              const{data}=await sb.from('pivot_watch_events').insert({
-                viewer_email:getViewerEmail(),
-                video_id:v.id,
-                youtube_id:v.youtube_id,
-                is_founder:false
-              }).select('id').single();
-              const rowId=data&&data.id?data.id:null;
-              const email=getViewerEmail();
-              if(rowId&&email){
-                const{data:sub}=await sb.from('pivot_subscribers').select('is_founder').eq('email',email).maybeSingle();
-                if(sub&&sub.is_founder){
-                  await sb.from('pivot_watch_events').update({is_founder:true}).eq('id',rowId);
-                }
-              }
-            }catch(e){}
-          })();
-          openModal(v);
-        }
+        if(v)requestVideoPlay(v);
       });
     });
   }
@@ -845,12 +906,25 @@
       else showMsg("You're in. Explore the Pivot library.",'success');
       setCookie(COOKIE_NAME,btoa(email),30);
       btn.textContent='Access Granted';
-      setTimeout(()=>document.getElementById('subscribe-popup').classList.remove('open'),2000);
+      setTimeout(()=>{
+        document.getElementById('subscribe-popup').classList.remove('open');
+        const pv=pendingVideo;
+        pendingVideo=null;
+        resetSubscribePopupCopy();
+        btn.disabled=false;
+        btn.textContent='Get Access';
+        if(pv)openVideoWithAccess(pv);
+      },2000);
     }catch(err){console.error(err);showMsg('Something went wrong. Please try again.','error');btn.disabled=false;btn.textContent='Get Access';}
   });
 
   function showMsg(html,type){const el=document.getElementById('popup-message');el.innerHTML=html;el.className=`popup-message ${type}`;}
-  document.getElementById('popup-dismiss').addEventListener('click',()=>{setCookie(COOKIE_NAME,'browsing',1);document.getElementById('subscribe-popup').classList.remove('open');});
+  document.getElementById('popup-dismiss').addEventListener('click',()=>{
+    setCookie(COOKIE_NAME,'browsing',1);
+    pendingVideo=null;
+    resetSubscribePopupCopy();
+    document.getElementById('subscribe-popup').classList.remove('open');
+  });
   document.getElementById('popup-email').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('popup-submit').click();});
 
   init();
