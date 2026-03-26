@@ -200,6 +200,13 @@
                                 class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                         </div>
                     </div>
+                    <div>
+                        <label class="inline-flex items-center gap-3 text-sm font-medium text-slate-300">
+                            <input type="checkbox" id="is_raising" name="is_raising"
+                                class="h-4 w-4 rounded border-slate-600 bg-slate-800 text-accentCyan focus:ring-accentCyan">
+                            Are you currently raising?
+                        </label>
+                    </div>
                 </div>
             </section>
 
@@ -422,6 +429,8 @@
                     var av = (askEl.value !== '' && askEl.value != null) ? Number(askEl.value) : NaN;
                     payload.current_ask = (typeof av === 'number' && !isNaN(av) && av >= 0) ? av : 0;
                 }
+                var isRaisingEl = founderForm.elements['is_raising'];
+                payload.is_raising = !!(isRaisingEl && isRaisingEl.checked);
                 payload.how_you_heard = null;
                 ['city', 'state_region', 'country'].forEach(function(k) {
                     if (payload[k] !== undefined && (payload[k] === '' || payload[k] == null)) payload[k] = null;
@@ -468,6 +477,8 @@
                     var el = founderForm.elements[name];
                     if (el && row[name] != null) el.value = row[name] || '';
                 });
+                var isRaisingEl = founderForm.elements['is_raising'];
+                if (isRaisingEl) isRaisingEl.checked = !!row.is_raising;
                 var dateEl = founderForm.elements['founded_date'];
                 if (dateEl && row.founded_date != null) {
                     var d = String(row.founded_date).trim();
