@@ -321,6 +321,16 @@
             </section>
 
             <div id="form-message" class="text-sm hidden"></div>
+
+            <div class="rounded-2xl border border-slate-700 bg-cardMain p-6">
+                <label class="flex items-start gap-3 text-sm text-slate-200">
+                    <input type="checkbox" id="marketing_consent" name="marketing_consent" required
+                        class="mt-1 h-4 w-4 shrink-0 rounded border-slate-600 bg-slate-800 text-accentCyan focus:ring-accentCyan">
+                    <span>I agree to be added to the Venture Builders Fund founder mailing list. You'll receive founder news, funding opportunities, and invitations to free events and webinars.</span>
+                </label>
+                <p class="mt-2 pl-7 text-xs text-slate-500">You can unsubscribe at any time.</p>
+            </div>
+
             <button type="submit" id="form-submit" class="w-full py-3 px-4 bg-accentCyan text-bgMain font-semibold rounded-lg hover:bg-accentCyan/90 transition-colors">
                 Save startup profile
             </button>
@@ -405,6 +415,7 @@
                 var payload = {};
                 fd.forEach(function(value, key) { payload[key] = value || null; });
                 delete payload.co_founder_names;
+                delete payload.marketing_consent;
                 var websiteVal = (payload.website || '').trim();
                 if (websiteVal && !/^https?:\/\//i.test(websiteVal)) {
                     payload.website = 'https://' + websiteVal;
@@ -497,6 +508,10 @@
 
             founderForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+                if (!founderForm.checkValidity()) {
+                    founderForm.reportValidity();
+                    return;
+                }
                 if (formSubmitting) return;
                 formSubmitting = true;
                 formSubmit.disabled = true;
