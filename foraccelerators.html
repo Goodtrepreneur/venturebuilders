@@ -192,6 +192,8 @@
   "url": "https://venturebuilders.fund/foraccelerators"
 }
 </script>
+  <script src="/js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -204,8 +206,7 @@
       <li><a href="forfounders.html">For Founders</a></li>
       <li><a href="index.html#team">Team</a></li>
     </ul>
-    <a href="/pivot" class="nav-pivot">Pivot</a>
-    <a href="#contact" class="nav-cta">Let's Talk</a>
+    <a href="/pivot" class="nav-cta">Pivot</a>
   </div>
 </nav>
 
@@ -470,17 +471,19 @@
         <h3>Let's start a conversation</h3>
         <p>Tell us about your ecosystem and what you're trying to build. We'll get back to you within a few business days.</p>
         <div class="contact-form">
-          <div class="form-row-2">
-            <div class="form-group"><label>Your name *</label><input type="text" placeholder="Jane Smith" required></div>
-            <div class="form-group"><label>Organization *</label><input type="text" placeholder="Innovation Hub Name" required></div>
-          </div>
-          <div class="form-group"><label>Email address *</label><input type="email" placeholder="jane@organization.org" required></div>
-          <div class="form-group"><label>Location</label><input type="text" placeholder="City, State / Country"></div>
-          <div class="form-group" style="margin-bottom:1rem">
-            <label style="color:rgba(255,255,255,0.75);font-size:0.85rem;font-weight:600;display:block;margin-bottom:0.4rem">Tell us about your ecosystem and goals</label>
-            <textarea placeholder="What are you building, how many founders do you work with, and what do you need help with?"></textarea>
-          </div>
-          <button class="form-submit" onclick="handleContact(this)">Send Message</button>
+          <form id="accelerator-contact-form" onsubmit="return false;">
+            <div class="form-row-2">
+              <div class="form-group"><label>Your name *</label><input type="text" id="accel-name" name="contact_name" placeholder="Jane Smith" required></div>
+              <div class="form-group"><label>Organization *</label><input type="text" id="accel-org" name="organization" placeholder="Innovation Hub Name" required></div>
+            </div>
+            <div class="form-group"><label>Email address *</label><input type="email" id="accel-email" name="email" placeholder="jane@organization.org" required></div>
+            <div class="form-group"><label>Location</label><input type="text" id="accel-location" name="location" placeholder="City, State / Country"></div>
+            <div class="form-group" style="margin-bottom:1rem">
+              <label style="color:rgba(255,255,255,0.75);font-size:0.85rem;font-weight:600;display:block;margin-bottom:0.4rem">Tell us about your ecosystem and goals</label>
+              <textarea id="accel-message" name="message" placeholder="What are you building, how many founders do you work with, and what do you need help with?"></textarea>
+            </div>
+            <button class="form-submit" onclick="handleContact(this)">Send Message</button>
+          </form>
         </div>
       </div>
     </div>
@@ -514,16 +517,111 @@
   </div>
 </footer>
 
+<!-- 
+SUPABASE SETUP REQUIRED — run this SQL once in the Supabase dashboard:
+CREATE TABLE IF NOT EXISTS accelerator_enquiries (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  contact_name text NOT NULL,
+  organization text,
+  email text NOT NULL,
+  location text,
+  message text NOT NULL,
+  created_at timestamptz DEFAULT now()
+);
+
+-- Allow anonymous inserts (the form is public)
+ALTER TABLE accelerator_enquiries ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public inserts" ON accelerator_enquiries
+  FOR INSERT TO anon
+  WITH CHECK (true);
+
+-- Only allow authenticated users (the VBF team) to read submissions  
+CREATE POLICY "Allow authenticated reads" ON accelerator_enquiries
+  FOR SELECT TO authenticated
+  USING (true);
+-->
 <script defer>
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  function handleContact(btn) {
-    btn.textContent = 'Sending...'; btn.disabled = true;
-    setTimeout(() => { btn.textContent = 'Message sent — we\'ll be in touch soon'; }, 1200);
+async function handleContact(btn) {
+  const name = document.getElementById('accel-name').value.trim();
+  const org = document.getElementById('accel-org').value.trim();
+  const email = document.getElementById('accel-email').value.trim();
+  const location = document.getElementById('accel-location').value.trim();
+  const message = document.getElementById('accel-message').value.trim();
+
+  // Basic validation
+  if (!name || !email || !message) {
+    btn.textContent = 'Please fill in your name, email, and message';
+    btn.style.background = '#c42840';
+    setTimeout(() => {
+      btn.textContent = 'Send Message';
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 3000);
+    return;
   }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    btn.textContent = 'Please enter a valid email address';
+    btn.style.background = '#c42840';
+    setTimeout(() => {
+      btn.textContent = 'Send Message';
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 3000);
+    return;
+  }
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  try {
+    const client = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+
+    const { error } = await client
+      .from('accelerator_enquiries')
+      .insert([{
+        contact_name: name,
+        organization: org || null,
+        email: email,
+        location: location || null,
+        message: message,
+        created_at: new Date().toISOString()
+      }]);
+
+    if (error) throw error;
+
+    // Success state
+    btn.textContent = "Message sent — we'll be in touch soon";
+    btn.style.background = '#1a7a4a';
+    btn.disabled = true;
+
+    // Clear the form
+    document.getElementById('accel-name').value = '';
+    document.getElementById('accel-org').value = '';
+    document.getElementById('accel-email').value = '';
+    document.getElementById('accel-location').value = '';
+    document.getElementById('accel-message').value = '';
+
+  } catch (err) {
+    console.error('Contact form error:', err);
+    btn.textContent = 'Something went wrong — please email hello@venturebuilders.fund';
+    btn.style.background = '#c42840';
+    btn.style.fontSize = '0.78rem';
+    setTimeout(() => {
+      btn.textContent = 'Try Again';
+      btn.style.background = '';
+      btn.style.fontSize = '';
+      btn.disabled = false;
+    }, 5000);
+  }
+}
 </script>
 </body>
 </html>
