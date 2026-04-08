@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog | Venture Builders Fund</title>
+  <meta name="description" content="Insights from Venture Builders Fund on early-stage investing, accelerator ecosystems, and founders building in overlooked markets.">
+  <link rel="icon" href="fav.png">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-free">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vbf.css">
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="logo-dark.png" alt="Venture Builders Fund logo"></a>
+    <ul class="nav-links">
+      <li><a href="/#pillars">How We Work</a></li>
+      <li><a href="/foraccelerators">Accelerator</a></li>
+      <li><a href="/forfounders">For Founders</a></li>
+      <li><a href="/#team">Team</a></li>
+    </ul>
+    <a href="/pivot" class="nav-pivot">Pivot</a>
+    <a href="mailto:hello@venturebuilders.fund" class="nav-cta">Get In Touch</a>
+  </div>
+</nav>
+
+<main>
+  <section style="background:#fff;padding:9rem 2rem 5rem;">
+    <div style="max-width:1200px;margin:0 auto">
+      <p class="sec-tag">Insights</p>
+      <h1 style="font-family:var(--font-head);font-size:clamp(2.5rem,5vw,4rem);font-weight:800;line-height:1.08;margin-bottom:1rem">
+        Perspectives on venture, ecosystems, and the founders building the future
+      </h1>
+      <p style="color:var(--ink-mid);font-size:1.05rem;line-height:1.75;max-width:560px">
+        Thinking from the VBF team on early-stage investing, accelerator ecosystems, and the founders others overlook.
+      </p>
+    </div>
+  </section>
+
+  <section style="background:#fff;padding:5rem 2rem;">
+    <div style="max-width:1200px;margin:0 auto;display:grid;gap:2rem;" class="blog-grid reveal">
+      <a href="/blog/why-the-best-founders-dont-raise-in-silicon-valley" class="blog-card">
+        <div class="blog-card-body">
+          <span class="blog-cat">Ecosystem</span>
+          <h2>Why the Best Founders Don't Raise in Silicon Valley</h2>
+          <p>The venture capital industry has a geography problem. Capital concentrates in a handful of cities, while exceptional founders build everywhere else. Here's why that's changing.</p>
+          <div class="blog-meta"><span>Steve Hayton</span><span class="blog-meta-dot"></span><span>April 2026</span><span class="blog-meta-dot"></span><span>5 min read</span></div>
+        </div>
+      </a>
+      <a href="/blog/what-accelerator-backed-deal-flow-actually-means" class="blog-card">
+        <div class="blog-card-body">
+          <span class="blog-cat">Investing</span>
+          <h2>What Accelerator-Backed Deal Flow Actually Means</h2>
+          <p>Everyone says they have deal flow. Few have the behavioral data that comes from watching a founder operate under pressure for six months. That's the difference.</p>
+          <div class="blog-meta"><span>Jillian Friot</span><span class="blog-meta-dot"></span><span>March 2026</span><span class="blog-meta-dot"></span><span>4 min read</span></div>
+        </div>
+      </a>
+      <a href="/blog/the-case-for-fractional-accelerator-leadership" class="blog-card">
+        <div class="blog-card-body">
+          <span class="blog-cat">Accelerator</span>
+          <h2>The Case for Fractional Accelerator Leadership</h2>
+          <p>Most ecosystem organizations can't afford a world-class accelerator director. They shouldn't have to. Here's how the fractional model changes the economics.</p>
+          <div class="blog-meta"><span>Steve Hayton</span><span class="blog-meta-dot"></span><span>March 2026</span><span class="blog-meta-dot"></span><span>6 min read</span></div>
+        </div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div><img src="logo-white.png" alt="Venture Builders Fund" style="margin-bottom:0.6rem;"><p class="footer-legal">This website does not constitute an offer to sell or a solicitation of an offer to buy any securities.</p></div>
+    <ul class="footer-links"><li><a href="/forfounders">For Founders</a></li><li><a href="/foraccelerators">Accelerator</a></li><li><a href="/blog">Blog</a></li><li><a href="mailto:hello@venturebuilders.fund">Contact</a></li></ul>
+    <p class="footer-copy">&copy; 2026 Venture Builders Fund. All rights reserved.</p>
+  </div>
+</footer>
+
+<script defer>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+<style>@media (min-width: 768px) { .blog-grid { grid-template-columns: repeat(3, 1fr); } }</style>
+</body>
+</html>
