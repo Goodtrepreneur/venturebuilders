@@ -506,6 +506,34 @@
                 if (deckNote) deckNote.classList.toggle('hidden', !(row.deck_url));
             }
 
+            function loadFounderProfile(user) {
+                if (!user || !user.id) return Promise.resolve();
+                var userEmail = (user.email || '').trim();
+                return supabase.from('founder_startups').select('*').eq('user_id', user.id).maybeSingle()
+                    .then(function(byUid) {
+                        if (byUid.data) return byUid.data;
+                        if (!userEmail) return null;
+                        return supabase.from('founder_startups').select('*').eq('email', userEmail).limit(1).maybeSingle()
+                            .then(function(byEmail) {
+                                if (!byEmail.data) return null;
+                                return supabase.from('founder_startups').update({ user_id: user.id }).eq('id', byEmail.data.id).select('*').single()
+                                    .then(function(linked) {
+                                        if (linked.error) throw linked.error;
+                                        return linked.data;
+                                    });
+                            });
+                    })
+                    .then(function(row) {
+                        if (row) {
+                            return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', row.id).order('created_at')
+                                .then(function(cf) { fillForm(row, cf.data || []); });
+                        }
+                    })
+                    .then(function() {
+                        if (userEmail && !founderForm.elements['email'].value) founderForm.elements['email'].value = userEmail;
+                    });
+            }
+
             founderForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 if (!founderForm.checkValidity()) {
@@ -638,16 +666,7 @@
                 if (session && session.user) {
                     showApp();
                     authMessage.classList.add('hidden');
-                    supabase.from('founder_startups').select('*').eq('user_id', session.user.id).maybeSingle()
-                        .then(function(res) {
-                            if (res.data) {
-                                return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', res.data.id).order('created_at')
-                                    .then(function(cf) { fillForm(res.data, cf.data || []); });
-                            }
-                        })
-                        .then(function() {
-                            if (session.user.email && !founderForm.elements['email'].value) founderForm.elements['email'].value = session.user.email;
-                        });
+                    loadFounderProfile(session.user);
                 } else {
                     showAuth();
                 }
@@ -657,17 +676,7 @@
             supabase.auth.getSession().then(function(res) {
                 if (res.data && res.data.session) {
                     showApp();
-                    var uid = res.data.session.user.id;
-                    supabase.from('founder_startups').select('*').eq('user_id', uid).maybeSingle()
-                        .then(function(r) {
-                            if (r.data) {
-                                return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', r.data.id).order('created_at')
-                                    .then(function(cf) { fillForm(r.data, cf.data || []); });
-                            }
-                        })
-                        .then(function() {
-                            if (res.data.session.user.email && !founderForm.elements['email'].value) founderForm.elements['email'].value = res.data.session.user.email;
-                        });
+                    loadFounderProfile(res.data.session.user);
                 } else {
                     showAuth();
                 }
