@@ -289,7 +289,10 @@
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.classList.add('visible');
+    obs.observe(el);
+  });
 
   const flywheelPanel = document.getElementById('flywheel-detail-panel');
   const flywheelNodes = document.querySelectorAll('.flywheel-node');
