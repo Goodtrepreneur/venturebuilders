@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>For Founders — Venture Builders Fund</title>
+  <link rel="icon" href="fav.png">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-free">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vbf.css">
+  <style>
+    /* PAGE-SPECIFIC STYLES */
+    .page-hero {
+      padding: 9rem 2rem 6rem;
+      background: var(--white);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -120px; right: -80px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle at 65% 35%, rgba(var(--accent-rgb), 0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .page-hero-inner {
+      max-width: var(--max); margin: 0 auto;
+      display: grid; gap: 4rem; align-items: center;
+    }
+    @media (min-width: 768px) { .page-hero-inner { grid-template-columns: 1fr 1fr; } }
+    .page-hero-text { position: relative; z-index: 1; }
+    .page-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      font-weight: 800; line-height: 1.08; margin-bottom: 1.5rem;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--accent); }
+    .page-hero-sub {
+      font-size: 1.1rem; color: var(--ink-mid);
+      line-height: 1.78; max-width: 520px; margin-bottom: 2.25rem;
+    }
+
+    /* Founder value panel */
+    .founder-panel {
+      border-radius: 18px; overflow: hidden;
+      border: 1.5px solid rgba(0,0,0,0.08);
+      background: var(--white);
+    }
+    .panel-header {
+      background: var(--ink); color: var(--white);
+      padding: 1.5rem 2rem;
+    }
+    .panel-header h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; margin-bottom: 0.25rem; }
+    .panel-header p { font-size: 0.82rem; color: rgba(255,255,255,0.55); }
+    .panel-body { padding: 1.5rem 2rem; }
+    .panel-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 0.9rem 0; border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .panel-item:last-child { border-bottom: none; }
+    .panel-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); margin-top: 0.45rem; flex-shrink: 0;
+    }
+    .panel-item-text strong { display: block; font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 0.15rem; }
+    .panel-item-text span { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.5; }
+
+    /* What you get grid */
+    .benefits-grid { display: grid; gap: 1.25rem; }
+    @media (min-width: 640px) { .benefits-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .benefits-grid { grid-template-columns: repeat(3, 1fr); } }
+    .benefit-card {
+      border: 1.5px solid rgba(0,0,0,0.07); border-radius: 14px; padding: 2rem;
+      background: var(--white); transition: all 250ms cubic-bezier(0.25,0,0,1);
+    }
+    .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.07); }
+    .benefit-card.dark {
+      background: var(--ink); border-color: var(--ink);
+    }
+    .benefit-icon {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: rgba(var(--accent-rgb), 0.1);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem;
+    }
+    .benefit-card.dark .benefit-icon { background: rgba(var(--accent-rgb), 0.2); }
+    .benefit-icon svg { width: 20px; height: 20px; color: var(--accent); }
+    .benefit-card h3 { font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 0.6rem; }
+    .benefit-card.dark h3 { color: var(--white); }
+    .benefit-card p { font-size: 0.875rem; color: var(--ink-mid); line-height: 1.68; }
+    .benefit-card.dark p { color: rgba(255,255,255,0.55); }
+
+    /* Sessions section */
+    .sessions-grid {
+      max-width: var(--max); margin: 0 auto;
+      display: grid; gap: 4rem;
+    }
+    @media (min-width: 768px) { .sessions-grid { grid-template-columns: 2fr 3fr; align-items: start; } }
+    .calendar-wrap { border-radius: 12px; overflow: hidden; border: 1.5px solid rgba(0,0,0,0.08); }
+    .calendar-head {
+      background: var(--ink); color: var(--white); padding: 1.25rem 1.5rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .calendar-head svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; }
+    .calendar-head h4 { font-family: var(--font-head); font-size: 0.95rem; font-weight: 800; }
+    .calendar-head p { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 0.15rem; }
+
+    /* Profile form */
+    .profile-form-wrap {
+      max-width: 800px; margin: 3.5rem auto 0;
+      border: 1.5px solid rgba(0,0,0,0.08);
+      border-radius: 18px; overflow: hidden;
+    }
+    .form-section-head {
+      background: rgba(var(--accent-rgb), 0.05);
+      border-bottom: 1.5px solid rgba(0,0,0,0.07);
+      padding: 1.25rem 2rem;
+    }
+    .form-section-head h3 { font-family: var(--font-head); font-size: 1rem; font-weight: 800; color: var(--ink); }
+    .form-section-head p { font-size: 0.82rem; color: var(--ink-soft); margin-top: 0.2rem; }
+    .form-body { padding: 2rem; }
+
+    /* Step indicators */
+    .steps-row {
+      display: flex; gap: 0; margin-bottom: 2.5rem;
+      border: 1.5px solid rgba(0,0,0,0.07); border-radius: 10px; overflow: hidden;
+    }
+    .step-tab {
+      flex: 1; padding: 0.75rem 0.5rem; text-align: center;
+      background: var(--white); border-right: 1px solid rgba(0,0,0,0.07);
+      cursor: pointer; transition: all 180ms;
+    }
+    .step-tab:last-child { border-right: none; }
+    .step-tab.active { background: var(--accent); }
+    .step-tab-num { font-family: var(--font-head); font-size: 0.75rem; font-weight: 800; color: var(--ink-soft); }
+    .step-tab.active .step-tab-num { color: rgba(255,255,255,0.75); }
+    .step-tab-label { font-size: 0.72rem; color: var(--ink-mid); display: none; }
+    @media (min-width: 640px) { .step-tab-label { display: block; } }
+    .step-tab.active .step-tab-label { color: rgba(255,255,255,0.9); }
+
+    .form-step { display: none; }
+    .form-step.active { display: block; }
+
+    .form-note { font-size: 0.78rem; color: var(--ink-soft); margin-top: 1rem; text-align: center; line-height: 1.5; }
+    .form-nav { display: flex; gap: 1rem; margin-top: 1.5rem; }
+    .btn-next {
+      flex: 1; padding: 0.875rem; background: var(--accent); color: var(--white);
+      border: none; border-radius: var(--radius); font-family: var(--font-head);
+      font-size: 0.9rem; font-weight: 800; cursor: pointer;
+      transition: all 200ms cubic-bezier(0.25,0,0,1);
+    }
+    .btn-next:hover { background: var(--accent-dark); transform: translateY(-2px); }
+    .btn-back {
+      padding: 0.875rem 1.5rem; background: transparent; color: var(--ink-mid);
+      border: 1.5px solid rgba(0,0,0,0.15); border-radius: var(--radius);
+      font-size: 0.9rem; cursor: pointer; transition: all 200ms;
+    }
+    .btn-back:hover { border-color: var(--ink); color: var(--ink); }
+
+    .success-box { text-align: center; padding: 3rem 2rem; display: none; }
+    .success-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: rgba(var(--accent-rgb), 0.1);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;
+    }
+    .success-icon svg { width: 32px; height: 32px; }
+    .success-box h3 { font-family: var(--font-head); font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .success-box p { color: var(--ink-mid); line-height: 1.7; max-width: 420px; margin: 0 auto; }
+
+    .checkbox-group { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.75rem; }
+    .checkbox-group input[type="checkbox"] { margin-top: 0.2rem; accent-color: var(--accent); width: 16px; height: 16px; flex-shrink: 0; }
+    .checkbox-group label { font-size: 0.875rem; color: var(--ink-mid); line-height: 1.5; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="logo-dark.png" alt="Venture Builders"></a>
+    <ul class="nav-links">
+      <li><a href="index.html#pillars">How We Work</a></li>
+      <li><a href="foraccelerators.html">Accelerator</a></li>
+      <li><a href="forfounders.html" class="active">For Founders</a></li>
+      <li><a href="index.html#team">Team</a></li>
+    </ul>
+    <a href="#join" class="nav-cta">Join the Community</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-text reveal">
+        <p class="sec-tag">For Founders</p>
+        <h1>Your community. <em>Your story. Your future.</em></h1>
+        <p class="page-hero-sub">Join the VBF founder community — whether you're raising right now or just building. Get access to sessions, curated introductions, and the right people at the right moment.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap">
+          <a href="#join" class="btn-accent">Join the Community</a>
+          <a href="#sessions" class="btn-outline-dark">See Upcoming Sessions</a>
+        </div>
+      </div>
+      <div class="founder-panel reveal">
+        <div class="panel-header">
+          <h3>What's in it for you</h3>
+          <p>Open to all founders — at any stage</p>
+        </div>
+        <div class="panel-body">
+          <div class="panel-item">
+            <div class="panel-dot"></div>
+            <div class="panel-item-text">
+              <strong>Access to live sessions &amp; programming</strong>
+              <span>Workshops, AMAs, pitch practice, and speaker series — open to community members</span>
+            </div>
+          </div>
+          <div class="panel-item">
+            <div class="panel-dot"></div>
+            <div class="panel-item-text">
+              <strong>Visibility with investors</strong>
+              <span>Our investor community browses the founder database — be discoverable when they're looking</span>
+            </div>
+          </div>
+          <div class="panel-item">
+            <div class="panel-dot"></div>
+            <div class="panel-item-text">
+              <strong>Thoughtful introductions</strong>
+              <span>When the fit is genuine, we connect you to the right people at the right moment</span>
+            </div>
+          </div>
+          <div class="panel-item">
+            <div class="panel-dot"></div>
+            <div class="panel-item-text">
+              <strong>Investment consideration</strong>
+              <span>Raising? We invest in founders from vetted ecosystems — and we're already watching</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="sec" style="background:rgba(var(--accent-rgb),0.04);padding:5rem 2rem">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal">
+        <p class="sec-tag">Community benefits</p>
+        <h2 class="sec-h">Built for founders who are building</h2>
+        <p class="sec-sub">It doesn't matter if you're pre-revenue or post-Series A. The VBF community is for founders who are in it for the long game.</p>
+      </div>
+      <div class="benefits-grid" style="grid-template-columns:1fr 1fr">
+        <div class="benefit-card reveal">
+          <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <h3>Live Programming</h3>
+          <p>Regular sessions covering fundraising, product, growth, team-building, and more — hosted by practitioners, not consultants.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <h3>Investor Access</h3>
+          <p>When the fit is real, we make introductions. Not spray-and-pray — genuine, timed connections with investors who are already looking for what you're building.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <h3>Investment Consideration</h3>
+          <p>Raising from a vetted accelerator or venture studio? We invest in exactly that. Being in the database puts you in front of the fund from day one.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.38 2 2 0 0 1 3.55 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8a16 16 0 0 0 6 6l.27-.81a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <h3>Keep Your Profile Updated</h3>
+          <p>Update your stage, traction, and goals as you grow. The right opportunity finds you when your profile reflects where you are today.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SESSIONS + CALENDAR -->
+  <section class="sec" style="background:#fff;border-top:1px solid rgba(0,0,0,0.06)" id="sessions">
+    <div class="sessions-grid" style="max-width:1200px;margin:0 auto">
+      <div class="reveal">
+        <p class="sec-tag">VBF Programming</p>
+        <h2 class="sec-h" style="margin-bottom:1.25rem;">Live sessions for founders who are building</h2>
+        <p style="color:var(--ink-mid);line-height:1.78;margin-bottom:1rem;font-size:0.975rem;">We run ongoing programming designed to sharpen thinking, build skills, and connect you with the right voices at the right time.</p>
+        <p style="color:var(--ink-mid);line-height:1.78;font-size:0.975rem;">Sessions are virtual-first, open to all community members, and led by practitioners — people who've built, raised, and operated at scale.</p>
+        <ul class="bullet-list" style="margin-top:1.75rem">
+          <li>Founder workshops and deep-dives</li>
+          <li>Investor Q&amp;A and AMA sessions</li>
+          <li>Ecosystem builder roundtables</li>
+          <li>Pitch preparation and live feedback</li>
+          <li>Speaker series with market leaders</li>
+        </ul>
+        <div style="margin-top:2rem">
+          <a href="#join" class="btn-accent">Join to access sessions</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="calendar-wrap">
+          <div class="calendar-head">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <div>
+              <h4>Upcoming Sessions</h4>
+              <p>Register for free — open to all founders</p>
+            </div>
+          </div>
+          <iframe
+            src="https://luma.com/embed/calendar/cal-oQ8mbJbsazswrUr/events"
+            width="100%" height="480" frameborder="0"
+            style="display:block;border:none;"
+            allowfullscreen="" aria-hidden="false" tabindex="0"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote-sec">
+    <div class="quote-inner">
+      <p class="quote-text">"There have been countless times where he has kept us top of mind and proactively connected us to the right people at the right moment. You can tell he genuinely thrives on helping his network succeed."</p>
+      <p class="quote-attr">Paige McPheely, Founder <span>Base</span></p>
+    </div>
+  </section>
+
+  <!-- GET ACCESS -->
+  <section class="sec" style="background:#fff" id="join">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal">
+        <p class="sec-tag">Get access</p>
+        <h2 class="sec-h">Ready to join the VBF community?</h2>
+        <p class="sec-sub">Create your founder profile, stay discoverable as you grow, and get access to sessions, introductions, and the VBF ecosystem — at every stage of your journey.</p>
+      </div>
+      <div class="profile-form-wrap reveal" style="display:none">
+        <div class="form-section-head">
+          <h3>Founder Profile</h3>
+          <p>Takes about 3 minutes. You can update your profile any time.</p>
+        </div>
+        <div class="form-body" id="form-container">
+          <div class="steps-row">
+            <div class="step-tab active" data-step="1"><div class="step-tab-num">1</div><div class="step-tab-label">About You</div></div>
+            <div class="step-tab" data-step="2"><div class="step-tab-num">2</div><div class="step-tab-label">Your Company</div></div>
+            <div class="step-tab" data-step="3"><div class="step-tab-num">3</div><div class="step-tab-label">Your Story</div></div>
+          </div>
+
+          <!-- STEP 1: About You -->
+          <div class="form-step active" id="step-1">
+            <div class="form-row-2">
+              <div class="form-group"><label for="firstName">First name *</label><input type="text" id="firstName" placeholder="Jane" required></div>
+              <div class="form-group"><label for="lastName">Last name *</label><input type="text" id="lastName" placeholder="Smith" required></div>
+            </div>
+            <div class="form-group"><label for="email">Email address *</label><input type="email" id="email" placeholder="jane@yourcompany.com" required></div>
+            <div class="form-row-2">
+              <div class="form-group"><label for="linkedin">LinkedIn URL</label><input type="url" id="linkedin" placeholder="https://linkedin.com/in/janesmith"></div>
+              <div class="form-group"><label for="location">Location *</label><input type="text" id="location" placeholder="Denver, CO / London, UK" required></div>
+            </div>
+            <div class="form-nav">
+              <button class="btn-next" onclick="goToStep(2)">Next: Your Company &rarr;</button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Your Company -->
+          <div class="form-step" id="step-2">
+            <div class="form-row-2">
+              <div class="form-group"><label for="company">Company name *</label><input type="text" id="company" placeholder="Acme Inc." required></div>
+              <div class="form-group"><label for="website">Website</label><input type="url" id="website" placeholder="https://yourcompany.com"></div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="stage">Current stage *</label>
+                <select id="stage" required>
+                  <option value="" disabled selected>Select stage</option>
+                  <option>Pre-idea / Exploring</option>
+                  <option>Idea stage</option>
+                  <option>Pre-revenue</option>
+                  <option>Revenue stage</option>
+                  <option>Pre-seed</option>
+                  <option>Seed</option>
+                  <option>Series A</option>
+                  <option>Series B+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="raising">Currently raising?</label>
+                <select id="raising">
+                  <option value="" disabled selected>Select one</option>
+                  <option>Yes, actively fundraising</option>
+                  <option>Planning to raise in next 6 months</option>
+                  <option>Not raising right now</option>
+                  <option>Bootstrapped — not seeking investment</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="accelerator">Accelerator or venture studio (if applicable)</label>
+              <input type="text" id="accelerator" placeholder="e.g. Gener8tor, YC, Techstars, etc.">
+            </div>
+            <div class="form-group">
+              <label for="sector">Sector / industry</label>
+              <input type="text" id="sector" placeholder="e.g. HealthTech, B2B SaaS, Climate, Consumer...">
+            </div>
+            <div class="form-nav">
+              <button class="btn-back" onclick="goToStep(1)">&larr; Back</button>
+              <button class="btn-next" onclick="goToStep(3)">Next: Your Story &rarr;</button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Your Story -->
+          <div class="form-step" id="step-3">
+            <div class="form-group">
+              <label for="pitch">What are you building and why does it matter?</label>
+              <textarea id="pitch" placeholder="Give us the 3-sentence version. What problem, who for, and why you?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="traction">Any notable traction or milestones?</label>
+              <textarea id="traction" placeholder="Revenue, customers, partnerships, awards, press — whatever's most relevant right now." style="min-height:80px"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="goals">What are you looking for from the VBF community?</label>
+              <textarea id="goals" placeholder="e.g. investor introductions, co-founder connections, mentorship, programming, investment..." style="min-height:80px"></textarea>
+            </div>
+            <p style="font-size:0.85rem;font-weight:600;color:var(--ink);margin-bottom:0.75rem;margin-top:0.5rem;">Interests (select all that apply)</p>
+            <div class="checkbox-group"><input type="checkbox" id="c1"><label for="c1">Live sessions &amp; workshops</label></div>
+            <div class="checkbox-group"><input type="checkbox" id="c2"><label for="c2">Investor introductions</label></div>
+            <div class="checkbox-group"><input type="checkbox" id="c3"><label for="c3">Co-founder / team connections</label></div>
+            <div class="checkbox-group"><input type="checkbox" id="c4"><label for="c4">Mentorship &amp; advisory</label></div>
+            <div class="checkbox-group"><input type="checkbox" id="c5"><label for="c5">Being featured in founder stories / content</label></div>
+            <div class="form-nav">
+              <button class="btn-back" onclick="goToStep(2)">&larr; Back</button>
+              <button class="btn-next" onclick="submitForm()" id="submit-btn">Join the Community</button>
+            </div>
+            <p class="form-note">We'll be in touch to welcome you to the community. Keep your profile updated as your journey evolves.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Simple CTA -->
+      <div style="text-align:center;margin-top:3rem" class="reveal">
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+          <a href="https://venturebuilders.fund/founders" class="btn-accent" style="padding:1.1rem 2.5rem;font-size:1rem">Get Access</a>
+          <a href="#sessions" class="btn-outline-dark" style="padding:1.1rem 2.5rem;font-size:1rem">See Sessions</a>
+        </div>
+        <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--ink-soft)">Free to join. No pitch required. Update your profile any time.</p>
+      </div>
+
+      <div style="display:grid;gap:1.25rem;max-width:760px;margin:3.5rem auto 0;grid-template-columns:1fr 1fr" class="reveal">
+        <div style="background:rgba(var(--accent-rgb),0.04);border:1.5px solid rgba(var(--accent-rgb),0.12);border-radius:14px;padding:2rem">
+          <strong style="display:block;font-family:var(--font-head);font-size:0.95rem;font-weight:800;margin-bottom:0.5rem">Not raising right now? That's fine.</strong>
+          <p style="font-size:0.875rem;color:var(--ink-mid);line-height:1.65">Join the community, attend sessions, and build relationships. When the time comes, the right people will already know you.</p>
+        </div>
+        <div style="background:rgba(var(--accent-rgb),0.04);border:1.5px solid rgba(var(--accent-rgb),0.12);border-radius:14px;padding:2rem">
+          <strong style="display:block;font-family:var(--font-head);font-size:0.95rem;font-weight:800;margin-bottom:0.5rem">Keep your profile current.</strong>
+          <p style="font-size:0.875rem;color:var(--ink-mid);line-height:1.65">Your stage, traction, and goals change as you grow. Update your profile and the right opportunity finds you at the right moment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <img src="logo-white.png" alt="Venture Builders" style="margin-bottom:0.6rem;">
+      <p class="footer-legal">This website does not constitute an offer to sell or a solicitation of an offer to buy any securities.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="foraccelerators.html">Accelerator</a></li>
+      <li><a href="mailto:hello@venturebuilders.fund">Contact</a></li>
+    </ul>
+    <p class="footer-copy">&copy; 2026 Venture Builders Fund. All rights reserved.</p>
+  </div>
+</footer>
+
+<script defer>
+  // Reveal
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Multi-step form
+  let currentStep = 1;
+  function goToStep(n) {
+    document.getElementById('step-' + currentStep).classList.remove('active');
+    document.querySelectorAll('.step-tab').forEach((t, i) => {
+      t.classList.toggle('active', i + 1 === n);
+    });
+    currentStep = n;
+    document.getElementById('step-' + n).classList.add('active');
+    document.querySelector('.profile-form-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function submitForm() {
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Joining...'; btn.disabled = true;
+    setTimeout(() => {
+      document.getElementById('form-container').style.display = 'none';
+      document.getElementById('success-box').style.display = 'block';
+    }, 1200);
+  }
+</script>
+</body>
+</html>

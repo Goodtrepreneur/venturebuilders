@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accelerator-as-a-Service — Venture Builders Fund</title>
+  <link rel="icon" href="fav.png">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-free">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vbf.css">
+  <style>
+    /* PAGE-SPECIFIC */
+    .page-hero {
+      background: var(--dark);
+      padding: 10rem 2rem 7rem;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: 0; right: -200px;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle at 70% 40%, rgba(var(--accent-rgb), 0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .page-hero::after {
+      content: 'AaaS';
+      position: absolute; font-family: var(--font-head);
+      font-size: clamp(120px, 22vw, 280px); font-weight: 800;
+      color: rgba(255,255,255,0.025);
+      bottom: -20px; left: 2rem; line-height: 1; pointer-events: none;
+    }
+    .page-hero-inner { max-width: var(--max); margin: 0 auto; position: relative; z-index: 1; }
+    .hero-kicker { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.75rem; }
+    .hero-kicker-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .hero-kicker span { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+    .page-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800; line-height: 1.05; color: var(--white);
+      max-width: 900px; margin-bottom: 1.5rem;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--accent); }
+    .page-hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      color: rgba(255,255,255,0.65); max-width: 600px; line-height: 1.75; margin-bottom: 2.5rem;
+    }
+    .hero-pills { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .hero-pill {
+      padding: 0.4rem 1rem; border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.15); font-size: 0.8rem;
+      color: rgba(255,255,255,0.65); font-weight: 500;
+    }
+
+    /* PROBLEM SECTION */
+    .problem-grid { display: grid; gap: 1.25rem; }
+    @media (min-width: 640px) { .problem-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .problem-grid { grid-template-columns: repeat(4, 1fr); } }
+    .problem-card {
+      border-radius: 14px; padding: 2rem;
+      border: 1.5px solid rgba(0,0,0,0.08);
+      background: var(--white); transition: all 250ms;
+    }
+    .problem-card:hover { transform: translateY(-4px); border-color: rgba(var(--accent-rgb), 0.25); }
+    .problem-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.5rem;
+    }
+    .problem-card h3 { font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 0.65rem; }
+    .problem-card p { font-size: 0.875rem; color: var(--ink-mid); line-height: 1.68; }
+
+    /* THE LEAN ADVANTAGE */
+    .advantage-grid { display: grid; gap: 1.25rem; }
+    @media (min-width: 640px) { .advantage-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .advantage-grid { grid-template-columns: repeat(3, 1fr); } }
+    .adv-card {
+      border: 1.5px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 2rem;
+      background: rgba(255,255,255,0.04); transition: all 250ms;
+    }
+    .adv-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-4px); }
+    .adv-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: rgba(var(--accent-rgb), 0.2);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;
+    }
+    .adv-icon svg { width: 22px; height: 22px; color: var(--accent); }
+    .adv-card h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; color: var(--white); margin-bottom: 0.65rem; }
+    .adv-card p { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
+
+    /* LEAN OS SPLIT */
+    .os-split {
+      display: grid; gap: 4rem; max-width: var(--max); margin: 0 auto; align-items: start;
+    }
+    @media (min-width: 768px) { .os-split { grid-template-columns: 2fr 3fr; } }
+    .os-box {
+      background: var(--dark); border-radius: 18px; overflow: hidden;
+    }
+    .os-box-head {
+      background: var(--accent); padding: 2rem;
+    }
+    .os-box-head h3 { font-family: var(--font-head); font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 0.4rem; }
+    .os-box-head p { font-size: 0.875rem; color: rgba(255,255,255,0.8); line-height: 1.6; }
+    .os-box-body { padding: 2rem; }
+    .os-feature { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 1.25rem; }
+    .os-feature:last-child { margin-bottom: 0; }
+    .os-feature-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 0.5rem; flex-shrink: 0; }
+    .os-feature-text strong { display: block; font-size: 0.9rem; font-weight: 600; color: var(--white); margin-bottom: 0.2rem; }
+    .os-feature-text span { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+    /* HOW IT WORKS */
+    .steps-grid { display: grid; gap: 1.25rem; }
+    @media (min-width: 768px) { .steps-grid { grid-template-columns: repeat(4, 1fr); } }
+    .step-card {
+      border: 1.5px solid rgba(0,0,0,0.08); border-radius: 14px; padding: 2rem;
+      position: relative; transition: all 250ms;
+    }
+    .step-card:hover { border-color: rgba(var(--accent-rgb), 0.25); transform: translateY(-3px); }
+    .step-num { font-family: var(--font-head); font-size: 2.5rem; font-weight: 800; color: var(--accent); opacity: 0.5; line-height: 1; margin-bottom: 1rem; }
+    .step-card h3 { font-family: var(--font-head); font-size: 1rem; font-weight: 800; color: var(--ink); margin-bottom: 0.6rem; }
+    .step-card p { font-size: 0.875rem; color: var(--ink-mid); line-height: 1.68; }
+
+    /* BENEFITS */
+    .benefits-strip { display: grid; gap: 1.25rem; }
+    @media (min-width: 640px) { .benefits-strip { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .benefits-strip { grid-template-columns: repeat(4, 1fr); } }
+    .bstrip-card { padding: 1.75rem; border: 1.5px solid rgba(var(--accent-rgb),0.15); border-radius: 12px; background: rgba(var(--accent-rgb),0.03); }
+    .bstrip-card h3 { font-family: var(--font-head); font-size: 1rem; font-weight: 800; color: var(--ink); margin-bottom: 0.5rem; }
+    .bstrip-card p { font-size: 0.85rem; color: var(--ink-mid); line-height: 1.65; }
+
+    /* WHO IS THIS FOR */
+    .who-split { display: grid; gap: 4rem; max-width: var(--max); margin: 0 auto; align-items: center; }
+    @media (min-width: 768px) { .who-split { grid-template-columns: 1fr 1fr; } }
+    .who-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+    .who-list li {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem; border: 1.5px solid rgba(0,0,0,0.08);
+      border-radius: 12px; transition: all 250ms;
+    }
+    .who-list li:hover { border-color: rgba(var(--accent-rgb),0.25); }
+    .who-check {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(var(--accent-rgb),0.1);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .who-check svg { width: 14px; height: 14px; color: var(--accent); }
+    .who-list li span { font-size: 0.9rem; color: var(--ink-mid); line-height: 1.6; margin-top: 0.35rem; }
+    .contact-box {
+      background: var(--dark); border-radius: 18px; padding: 3rem;
+    }
+    .contact-box h3 { font-family: var(--font-head); font-size: 1.75rem; font-weight: 800; color: var(--white); margin-bottom: 0.75rem; }
+    .contact-box p { color: rgba(255,255,255,0.6); line-height: 1.75; margin-bottom: 1.75rem; font-size: 0.975rem; }
+    .contact-form .form-group input { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); color: var(--white); }
+    .contact-form .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+    .contact-form .form-group input:focus { border-color: var(--accent); }
+    .contact-form .form-group label { color: rgba(255,255,255,0.75); }
+    .contact-form textarea { background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.12); border-radius: var(--radius); color: var(--white); font-family: var(--font-body); font-size: 0.95rem; padding: 0.75rem 1rem; width: 100%; min-height: 110px; resize: vertical; outline: none; transition: border-color 200ms; }
+    .contact-form textarea:focus { border-color: var(--accent); }
+    .contact-form textarea::placeholder { color: rgba(255,255,255,0.3); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="logo-dark.png" alt="Venture Builders"></a>
+    <ul class="nav-links">
+      <li><a href="index.html#pillars">How We Work</a></li>
+      <li><a href="foraccelerators.html" class="active">Accelerator</a></li>
+      <li><a href="forfounders.html">For Founders</a></li>
+      <li><a href="index.html#team">Team</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Let's Talk</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO (dark) -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="hero-kicker"><span class="hero-kicker-dot"></span><span>Accelerator-as-a-Service</span></div>
+      <h1>World-Class Programming for <em>Underserved Ecosystems</em></h1>
+      <p class="page-hero-sub">Fractional accelerator leadership and centralized programming that brings global expertise to local startup communities — without the overhead of a full-time hire.</p>
+      <div class="hero-pills">
+        <div class="hero-pill">Variable cost model</div>
+        <div class="hero-pill">Expert-led curriculum</div>
+        <div class="hero-pill">World-class mentor access</div>
+        <div class="hero-pill">Virtual-first delivery</div>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="#contact" class="btn-primary">Let's Talk</a>
+        <a href="#how-it-works" class="btn-ghost">How It Works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section class="sec" style="background:#fff">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal">
+        <p class="sec-tag">The problem</p>
+        <h2 class="sec-h">Smaller ecosystems want to run great programs — but face structural challenges</h2>
+        <p class="sec-sub">Economic development agencies, universities, and innovation hubs face a trade-off between budget and quality that ultimately hurts the founders.</p>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-card reveal">
+          <p class="problem-label">Expertise Gap</p>
+          <h3>The Entry-Level Burden</h3>
+          <p>Program managers are often entry-level. Lacking entrepreneurial experience, they struggle to serve founders effectively — forcing senior partners to absorb the excess workload.</p>
+        </div>
+        <div class="problem-card reveal">
+          <p class="problem-label">Talent Attrition</p>
+          <h3>The Churn Problem</h3>
+          <p>High turnover among junior staff is common. Constant churn disrupts program continuity, destroys institutional knowledge, and requires repetitive, costly retraining.</p>
+        </div>
+        <div class="problem-card reveal">
+          <p class="problem-label">Payroll Inefficiency</p>
+          <h3>The Valley vs. Peak Problem</h3>
+          <p>Full-time staff must be paid during quiet periods and active cohorts alike. Organizations waste capital maintaining payroll when programming isn't running.</p>
+        </div>
+        <div class="problem-card reveal">
+          <p class="problem-label">Budget Impasse</p>
+          <h3>The Quality Ceiling</h3>
+          <p>Most budgets don't allow for the experienced talent required to run a world-class program, leaving ecosystems stuck in a cycle of mediocrity that limits what founders can achieve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAN ADVANTAGE (dark) -->
+  <section class="sec flywheel" style="padding:6rem 2rem">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal">
+        <p class="sec-tag">The lean advantage</p>
+        <h2 class="sec-h" style="color:#fff">We don't just run a program — we open a global gateway for local founders</h2>
+        <p class="sec-sub" style="color:rgba(255,255,255,0.55);margin:1rem auto 3.5rem">Every element is designed to give local founders access that was previously reserved for founders in major tech hubs.</p>
+      </div>
+      <div class="advantage-grid">
+        <div class="adv-card reveal">
+          <div class="adv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <h3>Global Expert Network</h3>
+          <p>We leverage our deep ecosystem connections to bring in the best speakers, industry leaders, and strategic partners — ensuring founders learn from world-class talent, not just local resources.</p>
+        </div>
+        <div class="adv-card reveal">
+          <div class="adv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Cross-Ecosystem Synergy</h3>
+          <p>We connect cohorts to opportunities and markets outside their own state or region. Founders gain collaboration partners and entry points that localized programs cannot offer.</p>
+        </div>
+        <div class="adv-card reveal">
+          <div class="adv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h3>1:1 Elite Mentorship</h3>
+          <p>Direct 1:1 time with experienced entrepreneurs who have been there and done that. No junior buffers — just high-value strategic guidance from people who've built real companies.</p>
+        </div>
+        <div class="adv-card reveal">
+          <div class="adv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+          <h3>Curated Mentor Pool</h3>
+          <p>Access to a curated pool of mentors tailored to the specific vertical of each founder — bridging the knowledge gap in niche technologies and markets.</p>
+        </div>
+        <div class="adv-card reveal">
+          <div class="adv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <h3>Tailored Programming</h3>
+          <p>We meet founders where they are. Unlike traditional cohorts with one-size-fits-all curriculum, our programming is individually tailored to each founder's current stage and challenges.</p>
+        </div>
+        <div class="adv-card reveal">
+          <div class="adv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <h3>Virtual-First, High-Touch</h3>
+          <p>Primarily virtual delivery keeps costs low without sacrificing quality. Strategic in-person moments at events like CES and SXSW create the connections that matter most.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAN ACCELERATOR OS -->
+  <section class="sec" style="background:rgba(var(--accent-rgb),0.04)">
+    <div class="os-split" style="max-width:1200px;margin:0 auto">
+      <div class="reveal">
+        <p class="sec-tag">Our model</p>
+        <h2 class="sec-h" style="margin-bottom:1.5rem;">The Lean AcceleratorOS</h2>
+        <p style="color:var(--ink-mid);line-height:1.78;font-size:0.975rem;margin-bottom:1rem;">A leaner solution to the structural impasse facing ecosystem organizations everywhere.</p>
+        <p style="color:var(--ink-mid);line-height:1.78;font-size:0.975rem;margin-bottom:2rem;">The Lean AcceleratorOS eliminates fixed staffing costs and brings in high-tier entrepreneurial expertise on a per-program basis. You get the output of a world-class program — without the overhead.</p>
+        <div class="diff-card" style="background:#fff;margin-bottom:1rem">
+          <h3>Variable Cost Model</h3>
+          <p>Only pay for what is delivered. No quiet period overhead, no payroll management, no costly retraining cycles.</p>
+        </div>
+        <div class="diff-card" style="background:#fff">
+          <h3>Expert-Led Curriculum</h3>
+          <p>Founders are taught by experienced leaders and practitioners — not entry-level program managers.</p>
+        </div>
+      </div>
+      <div class="os-box reveal">
+        <div class="os-box-head">
+          <h3>What's included</h3>
+          <p>Everything you need to run a world-class accelerator program — delivered to your ecosystem.</p>
+        </div>
+        <div class="os-box-body">
+          <div class="os-feature">
+            <div class="os-feature-dot"></div>
+            <div class="os-feature-text">
+              <strong>Centralized curriculum design</strong>
+              <span>Built around your cohort's specific stage, vertical, and needs — not a generic template.</span>
+            </div>
+          </div>
+          <div class="os-feature">
+            <div class="os-feature-dot"></div>
+            <div class="os-feature-text">
+              <strong>Mentor matching &amp; management</strong>
+              <span>We source, match, and manage mentors from our curated ecosystem — tailored to each founder's stage and vertical.</span>
+            </div>
+          </div>
+          <div class="os-feature">
+            <div class="os-feature-dot"></div>
+            <div class="os-feature-text">
+              <strong>Demo day preparation</strong>
+              <span>End-to-end prep including pitch coaching, storytelling, and investor Q&amp;A practice.</span>
+            </div>
+          </div>
+          <div class="os-feature">
+            <div class="os-feature-dot"></div>
+            <div class="os-feature-text">
+              <strong>Multiple simultaneous cohorts</strong>
+              <span>Our model supports several programs running at once — sharing resources while maintaining local identity.</span>
+            </div>
+          </div>
+          <div class="os-feature">
+            <div class="os-feature-dot"></div>
+            <div class="os-feature-text">
+              <strong>Global expert speaker series</strong>
+              <span>Curated speakers, industry leaders, and investor panels drawn from our network across six continents.</span>
+            </div>
+          </div>
+          <div class="os-feature">
+            <div class="os-feature-dot"></div>
+            <div class="os-feature-text">
+              <strong>Strategic event access</strong>
+              <span>Built-in connections to major events including CES and SXSW for high-value in-person touchpoints.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="sec" style="background:#fff" id="how-it-works">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal">
+        <p class="sec-tag">The process</p>
+        <h2 class="sec-h">How it works</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-num">01</div>
+          <h3>Centralized Programming</h3>
+          <p>We design and deliver curriculum, mentor matching, and demo day preparation from a central hub — remotely deployed to your ecosystem.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num">02</div>
+          <h3>Multiple Cohorts</h3>
+          <p>Our model supports several programs running simultaneously — sharing resources and global infrastructure while maintaining each program's local identity.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num">03</div>
+          <h3>Global Expert Mentors</h3>
+          <p>Founders access a curated network of mentors, investors, and industry leaders from around the world — matched specifically to their vertical and stage.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-num">04</div>
+          <h3>Virtual-First, In-Person Touchpoints</h3>
+          <p>Primarily virtual delivery with strategic in-person moments at events like CES and SXSW — keeping costs low while creating the connections that matter.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS STRIP -->
+  <section class="sec" style="background:rgba(var(--accent-rgb),0.04);padding:4rem 2rem">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal" style="margin-bottom:2.5rem">
+        <p class="sec-tag">Partnership benefits</p>
+        <h2 class="sec-h">What your ecosystem gains</h2>
+      </div>
+      <div class="benefits-strip">
+        <div class="bstrip-card reveal">
+          <h3>Notoriety</h3>
+          <p>Local programs gain credibility and recognition through association with a global brand and network.</p>
+        </div>
+        <div class="bstrip-card reveal">
+          <h3>Cost-Effective</h3>
+          <p>Fractional leadership means world-class programming at a fraction of the cost of a full-time hire.</p>
+        </div>
+        <div class="bstrip-card reveal">
+          <h3>Deep Connections</h3>
+          <p>Instant access to mentors, investors, and partners across North America and beyond from day one.</p>
+        </div>
+        <div class="bstrip-card reveal">
+          <h3>Strategic Partnerships</h3>
+          <p>Built-in connections to CES, SXSW, and other major industry events — and the people who matter there.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IS THIS FOR + CONTACT -->
+  <section class="sec" style="background:#fff" id="contact">
+    <div class="who-split">
+      <div class="reveal">
+        <p class="sec-tag">Who is this for</p>
+        <h2 class="sec-h" style="margin-bottom:1rem;">Built for ecosystem leaders</h2>
+        <p style="color:var(--ink-mid);line-height:1.78;font-size:0.975rem;margin-bottom:1rem;">Managing Directors and Executive Directors of organizations looking to launch or level-up their accelerator programs — without the traditional overhead.</p>
+        <ul class="who-list">
+          <li>
+            <div class="who-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span>Economic development agencies and regional innovation organizations</span>
+          </li>
+          <li>
+            <div class="who-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span>Universities and research institutions launching startup programs</span>
+          </li>
+          <li>
+            <div class="who-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span>Innovation hubs and co-working spaces building programming</span>
+          </li>
+          <li>
+            <div class="who-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span>Corporate innovation teams running accelerator or incubator programs</span>
+          </li>
+          <li>
+            <div class="who-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span>Existing accelerators looking to scale or professionalize their operations</span>
+          </li>
+        </ul>
+      </div>
+      <div class="contact-box reveal">
+        <h3>Let's start a conversation</h3>
+        <p>Tell us about your ecosystem and what you're trying to build. We'll get back to you within a few business days.</p>
+        <div class="contact-form">
+          <div class="form-row-2">
+            <div class="form-group"><label>Your name *</label><input type="text" placeholder="Jane Smith" required></div>
+            <div class="form-group"><label>Organization *</label><input type="text" placeholder="Innovation Hub Name" required></div>
+          </div>
+          <div class="form-group"><label>Email address *</label><input type="email" placeholder="jane@organization.org" required></div>
+          <div class="form-group"><label>Location</label><input type="text" placeholder="City, State / Country"></div>
+          <div class="form-group" style="margin-bottom:1rem">
+            <label style="color:rgba(255,255,255,0.75);font-size:0.85rem;font-weight:600;display:block;margin-bottom:0.4rem">Tell us about your ecosystem and goals</label>
+            <textarea placeholder="What are you building, how many founders do you work with, and what do you need help with?"></textarea>
+          </div>
+          <button class="form-submit" onclick="handleContact(this)">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="sec final-cta">
+    <h2>Geography and budget shouldn't determine founder quality</h2>
+    <p>Every startup ecosystem deserves world-class programming. We've spent 15 years building the network and expertise to deliver it.</p>
+    <div class="cta-row">
+      <a href="#contact" class="btn-white">Start a Conversation</a>
+      <a href="forfounders.html" class="btn-outline-white">For Founders</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <img src="logo-white.png" alt="Venture Builders" style="margin-bottom:0.6rem;">
+      <p class="footer-legal">This website does not constitute an offer to sell or a solicitation of an offer to buy any securities.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="forfounders.html">For Founders</a></li>
+      <li><a href="mailto:hello@venturebuilders.fund">Contact</a></li>
+    </ul>
+    <p class="footer-copy">&copy; 2026 Venture Builders Fund. All rights reserved.</p>
+  </div>
+</footer>
+
+<script defer>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  function handleContact(btn) {
+    btn.textContent = 'Sending...'; btn.disabled = true;
+    setTimeout(() => { btn.textContent = 'Message sent — we\'ll be in touch soon'; }, 1200);
+  }
+</script>
+</body>
+</html>

@@ -5,32 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Founder Portal — Venture Builders Fund</title>
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-free">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vbf.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        bgMain: '#0f172a',
-                        cardMain: '#1e293b',
-                        accentCyan: '#22d3ee',
-                        accentBlue: '#3b82f6',
-                        accentPink: '#e879f9'
+                        bgMain: 'var(--dark)',
+                        cardMain: 'var(--white)',
+                        accentCyan: 'var(--accent)',
+                        accentBlue: 'var(--accent)',
+                        accentPink: 'var(--accent)'
                     }
                 }
             }
         }
     </script>
-    <style> body { font-family: 'Inter', sans-serif; } </style>
+    <style>
+        body { font-family: var(--font-body); background: var(--white); color: var(--ink); }
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-head); }
+        #auth-screen, #app-screen { padding-top: 5.5rem; }
+        #auth-screen h1, #app-screen h1, #app-screen h2 { color: var(--ink); }
+        #auth-screen p, #app-screen p, #app-screen label, #app-screen li { color: var(--ink-mid); }
+        #auth-screen .bg-cardMain, #app-screen .bg-cardMain {
+            background: var(--white);
+            border: 1.5px solid rgba(0,0,0,0.08);
+            border-radius: 14px;
+            box-shadow: none;
+        }
+        #app-screen > .flex,
+        #founder-form > section,
+        #founder-form > .rounded-2xl,
+        #founder-form > button { margin-left: 0; margin-right: 0; }
+        #app-screen { max-width: 980px; padding: 6rem 2rem; }
+        #founder-form { gap: 1.75rem; }
+        #founder-form > section,
+        #founder-form > .rounded-2xl {
+            padding: 2rem;
+            border: 1.5px solid rgba(0,0,0,0.08) !important;
+            border-radius: 14px !important;
+            background: var(--white) !important;
+        }
+        input, select, textarea {
+            background: var(--white) !important;
+            color: var(--ink) !important;
+            border: 1.5px solid rgba(0,0,0,0.15) !important;
+        }
+        input::placeholder, textarea::placeholder { color: rgba(13,13,13,0.45) !important; }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 2px rgba(232,52,78,0.12) !important;
+            outline: none !important;
+        }
+        .text-accentCyan, .hover\:text-accentCyan:hover { color: var(--accent) !important; }
+        .bg-accentCyan { background: var(--accent) !important; }
+        .hover\:bg-accentCyan\/90:hover { background: #cf2f46 !important; }
+        #form-submit, #auth-submit {
+            font-family: var(--font-head);
+            font-weight: 800;
+            color: var(--white) !important;
+        }
+        #sign-out-btn, #add-co-founder-btn { color: var(--accent); }
+        #sign-out-btn:hover, #add-co-founder-btn:hover { color: #cf2f46 !important; }
+        #auth-screen .bg-slate-800\/60 { background: rgba(13,13,13,0.04) !important; border-top: 1px solid rgba(0,0,0,0.08) !important; }
+        #auth-screen .bg-slate-800, #auth-screen .bg-slate-800\/50, #app-screen .bg-slate-800, #app-screen .bg-slate-800\/50 { background: rgba(13,13,13,0.03) !important; }
+        #deck-existing-note { background: rgba(232,52,78,0.06) !important; border: 1px solid rgba(232,52,78,0.2) !important; color: var(--ink-mid) !important; }
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity .45s ease, transform .45s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+    </style>
 </head>
-<body class="bg-bgMain text-slate-50 min-h-screen">
+<body class="min-h-screen">
+    <nav>
+        <div class="nav-inner">
+            <a class="nav-logo" href="index.html"><img src="logo-dark.png" alt="Venture Builders"></a>
+            <ul class="nav-links">
+                <li><a href="index.html#pillars">How We Work</a></li>
+                <li><a href="foraccelerators.html">Accelerator</a></li>
+                <li><a href="forfounders.html">For Founders</a></li>
+                <li><a href="index.html#team">Team</a></li>
+            </ul>
+            <a href="mailto:hello@venturebuilders.fund" class="nav-cta">Get In Touch</a>
+        </div>
+    </nav>
 
     <!-- Auth: magic link -->
     <div id="auth-screen" class="min-h-screen flex flex-col">
         <div class="flex-1 flex items-center px-6 py-12">
             <div class="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-                <div>
+                <div class="reveal">
                     <h1 class="text-3xl lg:text-4xl font-bold text-white mb-3">Join Our Founder Database</h1>
             <p class="text-slate-300 text-lg leading-relaxed mb-6">
                 If you're currently fundraising in the US, join our database to get discovered by VCs in our network.
@@ -50,7 +115,7 @@
                 </li>
             </ul>
                 </div>
-                <div class="flex justify-center lg:justify-end">
+                <div class="flex justify-center lg:justify-end reveal">
                     <div class="w-full max-w-md bg-cardMain rounded-2xl p-8 border border-slate-700 shadow-xl">
             <h1 class="text-2xl font-bold text-white mb-2">Founder Portal</h1>
             <p class="text-slate-400 text-sm mb-6">Sign in with your email. We’ll send you a magic link—no password needed.</p>
@@ -61,7 +126,7 @@
                         class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                 </div>
                 <div id="auth-message" class="text-sm text-accentCyan hidden"></div>
-                <button type="submit" id="auth-submit" class="w-full py-3 px-4 bg-accentCyan text-bgMain font-semibold rounded-lg hover:bg-accentCyan/90 transition-colors">
+                <button type="submit" id="auth-submit" class="w-full py-3 px-4 bg-accentCyan text-bgMain font-semibold rounded-lg hover:bg-accentCyan/90 transition-colors btn-accent">
                     Send magic link
                 </button>
             </form>
@@ -71,7 +136,7 @@
         </div>
 
         <!-- Full-width sponsor band -->
-        <div class="w-full bg-slate-800/60 border-t border-slate-700 py-4 px-6">
+        <div class="w-full bg-slate-800/60 border-t border-slate-700 py-4 px-6 reveal">
             <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-center lg:justify-start gap-4 lg:gap-6">
                 <span class="text-xs font-semibold tracking-wider text-slate-500 uppercase">Sponsored by</span>
                 <img src="assets/tspace.png" alt="TrueSpace" style="height: 32px; width: auto;" />
@@ -84,14 +149,14 @@
 
     <!-- App: form (shown when logged in) -->
     <div id="app-screen" class="hidden max-w-3xl mx-auto px-6 py-10 pb-20">
-        <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center justify-between mb-8 reveal">
             <h1 class="text-2xl font-bold text-white">Your startup profile</h1>
-            <button type="button" id="sign-out-btn" class="text-sm text-slate-400 hover:text-accentCyan transition-colors">Sign out</button>
+            <button type="button" id="sign-out-btn" class="btn-outline-dark text-sm">Sign out</button>
         </div>
 
         <form id="founder-form" class="space-y-8">
             <!-- Company & product (required) -->
-            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700">
+            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700 reveal">
                 <h2 class="text-lg font-bold text-accentCyan mb-4">Company <span class="text-slate-500 font-normal">(required)</span></h2>
                 <div class="space-y-4">
                     <div>
@@ -142,7 +207,7 @@
             </section>
 
             <!-- Contact (optional) -->
-            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700">
+            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700 reveal">
                 <h2 class="text-lg font-bold text-accentCyan mb-4">Contact (optional)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -171,7 +236,7 @@
             </section>
 
             <!-- Business & traction -->
-            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700">
+            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700 reveal">
                 <h2 class="text-lg font-bold text-accentCyan mb-4">Business</h2>
                 <div class="space-y-4">
                     <div>
@@ -191,13 +256,32 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
+                            <label for="mrr" class="block text-sm font-medium text-slate-300 mb-1">Monthly Recurring Revenue ($)</label>
+                            <input type="number" id="mrr" name="mrr" min="0" placeholder="Enter 0 if pre-revenue"
+                                class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        </div>
+                        <div class="flex flex-col justify-center gap-3 pt-1">
+                            <label class="inline-flex items-center gap-3 text-sm font-medium text-slate-300">
+                                <input type="checkbox" id="is_post_product" name="is_post_product"
+                                    class="h-4 w-4 rounded border-slate-600 bg-slate-800 text-accentCyan focus:ring-accentCyan">
+                                We have a product in market
+                            </label>
+                            <label class="inline-flex items-center gap-3 text-sm font-medium text-slate-300">
+                                <input type="checkbox" id="is_post_revenue" name="is_post_revenue"
+                                    class="h-4 w-4 rounded border-slate-600 bg-slate-800 text-accentCyan focus:ring-accentCyan">
+                                We are generating revenue
+                            </label>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
                             <label for="funding_to_date" class="block text-sm font-medium text-slate-300 mb-1">Funding to date (USD) <span class="text-slate-500">*</span></label>
                             <input type="number" id="funding_to_date" name="funding_to_date" required min="0" placeholder="Amount in USD (e.g. 500000)"
                                 class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                         </div>
-                        <div>
+                        <div id="current-ask-field-wrap" style="display:none">
                             <label for="current_ask" class="block text-sm font-medium text-slate-300 mb-1">Current ask (USD) <span class="text-slate-500">*</span></label>
-                            <input type="number" id="current_ask" name="current_ask" required min="0" placeholder="Amount in USD (e.g. 500000)"
+                            <input type="number" id="current_ask" name="current_ask" min="0" placeholder="Amount in USD (e.g. 500000)"
                                 class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                         </div>
                     </div>
@@ -208,11 +292,33 @@
                             Are you currently raising?
                         </label>
                     </div>
+                    <div id="raising-extra-fields-wrap" class="grid grid-cols-1 md:grid-cols-2 gap-4" style="display:none">
+                        <div>
+                            <label for="uncommitted_amount" class="block text-sm font-medium text-slate-300 mb-1">Amount still uncommitted ($)</label>
+                            <input type="number" id="uncommitted_amount" name="uncommitted_amount" min="0" placeholder="e.g. 250000"
+                                class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        </div>
+                        <div>
+                            <label for="round_close_date" class="block text-sm font-medium text-slate-300 mb-1">Target close date</label>
+                            <input type="date" id="round_close_date" name="round_close_date"
+                                class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="investment_vehicle" class="block text-sm font-medium text-slate-300 mb-1">Investment vehicle</label>
+                            <select id="investment_vehicle" name="investment_vehicle" class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                                <option value="">Select one</option>
+                                <option value="SAFE">SAFE</option>
+                                <option value="Convertible Note">Convertible Note</option>
+                                <option value="Equity">Equity</option>
+                                <option value="Open to any">Open to any</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- Location -->
-            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700">
+            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700 reveal">
                 <h2 class="text-lg font-bold text-accentCyan mb-4">Location</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -291,7 +397,7 @@
             </section>
 
             <!-- Optional: program -->
-            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700">
+            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700 reveal">
                 <h2 class="text-lg font-bold text-accentCyan mb-4">Program (optional)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -308,7 +414,7 @@
             </section>
 
             <!-- Pitch deck -->
-            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700">
+            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700 reveal">
                 <h2 class="text-lg font-bold text-accentCyan mb-4">Pitch Deck</h2>
                 <p class="text-slate-400 text-sm mb-2">PDF only, max 10MB</p>
                 <div id="deck-existing-note" class="hidden text-sm text-slate-400 mb-3 p-2 rounded bg-slate-800/50 border border-slate-600">
@@ -323,7 +429,7 @@
 
             <div id="form-message" class="text-sm hidden"></div>
 
-            <div class="rounded-2xl border border-slate-700 bg-cardMain p-6">
+            <div class="rounded-2xl border border-slate-700 bg-cardMain p-6 reveal">
                 <label class="flex items-start gap-3 text-sm text-slate-200">
                     <input type="checkbox" id="marketing_consent" name="marketing_consent" required
                         class="mt-1 h-4 w-4 shrink-0 rounded border-slate-600 bg-slate-800 text-accentCyan focus:ring-accentCyan">
@@ -332,11 +438,56 @@
                 <p class="mt-2 pl-7 text-xs text-slate-500">You can unsubscribe at any time.</p>
             </div>
 
-            <button type="submit" id="form-submit" class="w-full py-3 px-4 bg-accentCyan text-bgMain font-semibold rounded-lg hover:bg-accentCyan/90 transition-colors">
+            <section class="bg-cardMain rounded-2xl p-6 border border-slate-700 reveal">
+                <h2 class="text-lg font-bold text-accentCyan">Founder background</h2>
+                <p class="mt-1 text-sm text-slate-400">Are any of your founders any of the following? Check all that apply.</p>
+                <div class="mt-4 space-y-3">
+                    <label class="inline-flex items-center gap-3 text-sm font-medium text-slate-300">
+                        <input type="checkbox" id="founder_is_female" name="founder_is_female"
+                            class="h-4 w-4 rounded border-slate-600 bg-slate-800 text-accentCyan focus:ring-accentCyan">
+                        Female founder
+                    </label>
+                    <label class="inline-flex items-center gap-3 text-sm font-medium text-slate-300">
+                        <input type="checkbox" id="founder_is_poc" name="founder_is_poc"
+                            class="h-4 w-4 rounded border-slate-600 bg-slate-800 text-accentCyan focus:ring-accentCyan">
+                        Founder of color
+                    </label>
+                    <label class="inline-flex items-center gap-3 text-sm font-medium text-slate-300">
+                        <input type="checkbox" id="founder_is_lgbtq" name="founder_is_lgbtq"
+                            class="h-4 w-4 rounded border-slate-600 bg-slate-800 text-accentCyan focus:ring-accentCyan">
+                        LGBTQ+ founder
+                    </label>
+                </div>
+            </section>
+
+            <button type="submit" id="form-submit" class="w-full py-3 px-4 bg-accentCyan text-bgMain font-semibold rounded-lg hover:bg-accentCyan/90 transition-colors btn-accent reveal">
                 Save startup profile
             </button>
         </form>
     </div>
+
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <img src="logo-white.png" alt="Venture Builders" style="margin-bottom:0.6rem;">
+                <p class="footer-legal">This website does not constitute an offer to sell or a solicitation of an offer to buy any securities.</p>
+            </div>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="forfounders.html">For Founders</a></li>
+                <li><a href="foraccelerators.html">Accelerator</a></li>
+                <li><a href="mailto:hello@venturebuilders.fund">Contact</a></li>
+            </ul>
+            <p class="footer-copy">&copy; 2026 Venture Builders Fund. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script defer>
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    </script>
 
     <script src="js/supabase-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -408,7 +559,11 @@
             });
 
             signOutBtn.addEventListener('click', function() {
-                supabase.auth.signOut().then(function() { showAuth(); });
+                supabase.auth.signOut().then(function() {
+                    founderForm.reset();
+                    syncCurrentAskVisibility();
+                    showAuth();
+                });
             });
 
             function formDataToPayload() {
@@ -441,8 +596,30 @@
                     var av = (askEl.value !== '' && askEl.value != null) ? Number(askEl.value) : NaN;
                     payload.current_ask = (typeof av === 'number' && !isNaN(av) && av >= 0) ? av : 0;
                 }
+                var uncommittedEl = founderForm.elements['uncommitted_amount'];
+                if (uncommittedEl) {
+                    var uv = (uncommittedEl.value !== '' && uncommittedEl.value != null) ? Number(uncommittedEl.value) : NaN;
+                    payload.uncommitted_amount = (typeof uv === 'number' && !isNaN(uv) && uv >= 0) ? uv : 0;
+                }
+                var mrrEl = founderForm.elements['mrr'];
+                if (mrrEl) {
+                    var mv = (mrrEl.value !== '' && mrrEl.value != null) ? Number(mrrEl.value) : NaN;
+                    payload.mrr = (typeof mv === 'number' && !isNaN(mv) && mv >= 0) ? mv : 0;
+                }
                 var isRaisingEl = founderForm.elements['is_raising'];
                 payload.is_raising = !!(isRaisingEl && isRaisingEl.checked);
+                var roundCloseEl = founderForm.elements['round_close_date'];
+                if (roundCloseEl) {
+                    var rcv = (roundCloseEl.value || '').trim();
+                    payload.round_close_date = /^\d{4}-\d{2}-\d{2}$/.test(rcv) ? rcv : null;
+                }
+                var investmentVehicleEl = founderForm.elements['investment_vehicle'];
+                payload.investment_vehicle = investmentVehicleEl && investmentVehicleEl.value ? investmentVehicleEl.value : null;
+                payload.is_post_product = !!(founderForm.elements['is_post_product'] && founderForm.elements['is_post_product'].checked);
+                payload.is_post_revenue = !!(founderForm.elements['is_post_revenue'] && founderForm.elements['is_post_revenue'].checked);
+                payload.founder_is_female = !!(founderForm.elements['founder_is_female'] && founderForm.elements['founder_is_female'].checked);
+                payload.founder_is_poc = !!(founderForm.elements['founder_is_poc'] && founderForm.elements['founder_is_poc'].checked);
+                payload.founder_is_lgbtq = !!(founderForm.elements['founder_is_lgbtq'] && founderForm.elements['founder_is_lgbtq'].checked);
                 payload.how_you_heard = null;
                 ['city', 'state_region', 'country'].forEach(function(k) {
                     if (payload[k] !== undefined && (payload[k] === '' || payload[k] == null)) payload[k] = null;
@@ -483,14 +660,50 @@
             }
             document.getElementById('add-co-founder-btn').addEventListener('click', function() { addCoFounderRow(); });
 
+            function syncCurrentAskVisibility() {
+                var wrap = document.getElementById('current-ask-field-wrap');
+                var raiseWrap = document.getElementById('raising-extra-fields-wrap');
+                var askEl = founderForm.elements['current_ask'];
+                var isRaisingEl = founderForm.elements['is_raising'];
+                if (!wrap || !askEl || !isRaisingEl) return;
+                if (isRaisingEl.checked) {
+                    wrap.style.display = '';
+                    if (raiseWrap) raiseWrap.style.display = '';
+                    askEl.setAttribute('required', 'required');
+                } else {
+                    wrap.style.display = 'none';
+                    if (raiseWrap) raiseWrap.style.display = 'none';
+                    askEl.value = '';
+                    askEl.removeAttribute('required');
+                    if (founderForm.elements['uncommitted_amount']) founderForm.elements['uncommitted_amount'].value = '';
+                    if (founderForm.elements['round_close_date']) founderForm.elements['round_close_date'].value = '';
+                    if (founderForm.elements['investment_vehicle']) founderForm.elements['investment_vehicle'].value = '';
+                }
+            }
+
+            var isRaisingCheckbox = founderForm.elements['is_raising'];
+            if (isRaisingCheckbox) isRaisingCheckbox.addEventListener('change', syncCurrentAskVisibility);
+            syncCurrentAskVisibility();
+
             function fillForm(row, coFounders) {
-                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','city','state_region','country','program_name'];
+                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','uncommitted_amount','round_close_date','investment_vehicle','mrr','city','state_region','country','program_name'];
                 names.forEach(function(name) {
                     var el = founderForm.elements[name];
                     if (el && row[name] != null) el.value = row[name] || '';
                 });
                 var isRaisingEl = founderForm.elements['is_raising'];
                 if (isRaisingEl) isRaisingEl.checked = !!row.is_raising;
+                var isPostProductEl = founderForm.elements['is_post_product'];
+                if (isPostProductEl) isPostProductEl.checked = !!row.is_post_product;
+                var isPostRevenueEl = founderForm.elements['is_post_revenue'];
+                if (isPostRevenueEl) isPostRevenueEl.checked = !!row.is_post_revenue;
+                var founderIsFemaleEl = founderForm.elements['founder_is_female'];
+                if (founderIsFemaleEl) founderIsFemaleEl.checked = !!row.founder_is_female;
+                var founderIsPocEl = founderForm.elements['founder_is_poc'];
+                if (founderIsPocEl) founderIsPocEl.checked = !!row.founder_is_poc;
+                var founderIsLgbtqEl = founderForm.elements['founder_is_lgbtq'];
+                if (founderIsLgbtqEl) founderIsLgbtqEl.checked = !!row.founder_is_lgbtq;
+                syncCurrentAskVisibility();
                 var dateEl = founderForm.elements['founded_date'];
                 if (dateEl && row.founded_date != null) {
                     var d = String(row.founded_date).trim();
