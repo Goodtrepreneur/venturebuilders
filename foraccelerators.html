@@ -206,9 +206,30 @@
       <li><a href="forfounders.html">Founders</a></li>
       <li><a href="index.html#team">Team</a></li>
     </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <a href="/pivot" class="nav-cta">Pivot</a>
   </div>
 </nav>
+  <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+    <div class="nav-drawer-inner">
+      <ul class="nav-drawer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#pillars">How We Work</a></li>
+        <li><a href="foraccelerators.html">Accelerator</a></li>
+        <li><a href="forfounders.html">Founders</a></li>
+        <li><a href="index.html#team">Team</a></li>
+      </ul>
+      <div class="nav-drawer-ctas">
+        <a href="/pivot" class="nav-drawer-pivot">Pivot</a>
+        <a href="forfounders.html" class="nav-drawer-join">Get Access</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-overlay" id="nav-overlay"></div>
 
 <main>
 
@@ -509,7 +530,7 @@
     </div>
     <ul class="footer-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="forfounders.html">For Founders</a></li>
+      <li><a href="forfounders.html">Founders</a></li>
       <li><a href="/blog">Blog</a></li>
       <li><a href="mailto:hello@venturebuilders.fund">Contact</a></li>
     </ul>
@@ -542,6 +563,42 @@ CREATE POLICY "Allow authenticated reads" ON accelerator_enquiries
   USING (true);
 -->
 <script defer>
+  // Mobile nav
+  (function() {
+    var btn = document.getElementById('nav-hamburger');
+    var drawer = document.getElementById('nav-drawer');
+    var overlay = document.getElementById('nav-overlay');
+    if (!btn || !drawer || !overlay) return;
+
+    function openMenu() {
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    btn.addEventListener('click', function() {
+      drawer.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    overlay.addEventListener('click', closeMenu);
+    drawer.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+  }());
+
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
