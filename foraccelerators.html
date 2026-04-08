@@ -203,7 +203,7 @@
     <ul class="nav-links">
       <li><a href="index.html#pillars">How We Work</a></li>
       <li><a href="foraccelerators.html" class="active">Accelerator</a></li>
-      <li><a href="forfounders.html">For Founders</a></li>
+      <li><a href="forfounders.html">Founders</a></li>
       <li><a href="index.html#team">Team</a></li>
     </ul>
     <a href="/pivot" class="nav-cta">Pivot</a>
@@ -547,18 +547,17 @@ CREATE POLICY "Allow authenticated reads" ON accelerator_enquiries
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-async function handleContact(btn) {
-  const name = document.getElementById('accel-name').value.trim();
-  const org = document.getElementById('accel-org').value.trim();
-  const email = document.getElementById('accel-email').value.trim();
-  const location = document.getElementById('accel-location').value.trim();
-  const message = document.getElementById('accel-message').value.trim();
+function handleContact(btn) {
+  var name = (document.getElementById('accel-name').value || '').trim();
+  var org = (document.getElementById('accel-org').value || '').trim();
+  var email = (document.getElementById('accel-email').value || '').trim();
+  var location = (document.getElementById('accel-location').value || '').trim();
+  var message = (document.getElementById('accel-message').value || '').trim();
 
-  // Basic validation
   if (!name || !email || !message) {
-    btn.textContent = 'Please fill in your name, email, and message';
+    btn.textContent = 'Please fill in name, email and message';
     btn.style.background = '#c42840';
-    setTimeout(() => {
+    setTimeout(function() {
       btn.textContent = 'Send Message';
       btn.style.background = '';
       btn.disabled = false;
@@ -566,11 +565,11 @@ async function handleContact(btn) {
     return;
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
+  var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!emailOk) {
     btn.textContent = 'Please enter a valid email address';
     btn.style.background = '#c42840';
-    setTimeout(() => {
+    setTimeout(function() {
       btn.textContent = 'Send Message';
       btn.style.background = '';
       btn.disabled = false;
@@ -581,46 +580,51 @@ async function handleContact(btn) {
   btn.textContent = 'Sending...';
   btn.disabled = true;
 
-  try {
-    const client = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+  var client = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
-    const { error } = await client
-      .from('accelerator_enquiries')
-      .insert([{
-        contact_name: name,
-        organization: org || null,
-        email: email,
-        location: location || null,
-        message: message,
-        created_at: new Date().toISOString()
-      }]);
-
-    if (error) throw error;
-
-    // Success state
-    btn.textContent = "Message sent — we'll be in touch soon";
-    btn.style.background = '#1a7a4a';
-    btn.disabled = true;
-
-    // Clear the form
-    document.getElementById('accel-name').value = '';
-    document.getElementById('accel-org').value = '';
-    document.getElementById('accel-email').value = '';
-    document.getElementById('accel-location').value = '';
-    document.getElementById('accel-message').value = '';
-
-  } catch (err) {
-    console.error('Contact form error:', err);
-    btn.textContent = 'Something went wrong — please email hello@venturebuilders.fund';
-    btn.style.background = '#c42840';
-    btn.style.fontSize = '0.78rem';
-    setTimeout(() => {
-      btn.textContent = 'Try Again';
-      btn.style.background = '';
-      btn.style.fontSize = '';
-      btn.disabled = false;
-    }, 5000);
-  }
+  client
+    .from('accelerator_enquiries')
+    .insert([{
+      contact_name: name,
+      organization: org || null,
+      email: email,
+      location: location || null,
+      message: message
+    }])
+    .then(function(res) {
+      if (res.error) {
+        console.error('Supabase error:', res.error);
+        btn.textContent = 'Something went wrong — email hello@venturebuilders.fund';
+        btn.style.background = '#c42840';
+        btn.style.fontSize = '0.78rem';
+        setTimeout(function() {
+          btn.textContent = 'Try Again';
+          btn.style.background = '';
+          btn.style.fontSize = '';
+          btn.disabled = false;
+        }, 5000);
+        return;
+      }
+      btn.textContent = "Message sent — we'll be in touch soon";
+      btn.style.background = '#1a7a4a';
+      document.getElementById('accel-name').value = '';
+      document.getElementById('accel-org').value = '';
+      document.getElementById('accel-email').value = '';
+      document.getElementById('accel-location').value = '';
+      document.getElementById('accel-message').value = '';
+    })
+    .catch(function(err) {
+      console.error('Form error:', err);
+      btn.textContent = 'Something went wrong — email hello@venturebuilders.fund';
+      btn.style.background = '#c42840';
+      btn.style.fontSize = '0.78rem';
+      setTimeout(function() {
+        btn.textContent = 'Try Again';
+        btn.style.background = '';
+        btn.style.fontSize = '';
+        btn.disabled = false;
+      }, 5000);
+    });
 }
 </script>
 </body>

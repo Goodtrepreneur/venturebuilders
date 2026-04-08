@@ -70,7 +70,7 @@
     <ul class="nav-links">
       <li><a href="#pillars">How We Work</a></li>
       <li><a href="foraccelerators.html">Accelerator</a></li>
-      <li><a href="forfounders.html">For Founders</a></li>
+      <li><a href="forfounders.html">Founders</a></li>
       <li><a href="#team">Team</a></li>
     </ul>
     <a href="/pivot" class="nav-cta">Pivot</a>
@@ -286,50 +286,51 @@
   </div>
 </footer>
 <script defer>
+  // Reveal on scroll
   const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => {
-    el.classList.add('visible');
-    obs.observe(el);
-  });
-
-  const flywheelPanel = document.getElementById('flywheel-detail-panel');
-  const flywheelNodes = document.querySelectorAll('.flywheel-node');
-  const flywheelContent = {
-    fund: '<p style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#E8344E;margin-bottom:0.75rem">The Fund</p><p style="color:rgba(255,255,255,0.7);line-height:1.75;font-size:0.95rem">Capital flows to vetted, accelerator-backed founders who wouldn\\'t otherwise have access. Strong founders attract more ecosystem partners. More partners generate better deal flow.</p>',
-    accelerator: '<p style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#E8344E;margin-bottom:0.75rem">Accelerator-as-a-Service</p><p style="color:rgba(255,255,255,0.7);line-height:1.75;font-size:0.95rem">World-class programming strengthens local ecosystems. Stronger ecosystems produce better founders. Better founders attract investor attention and fuel the fund.</p>',
-    community: '<p style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#E8344E;margin-bottom:0.75rem">Community & Content</p><p style="color:rgba(255,255,255,0.7);line-height:1.75;font-size:0.95rem">Founder stories attract investors seeking quality deal flow. Investors discovering founders through their stories reinforces the ecosystem. More visibility brings more founders into the network.</p>'
-  };
-
-  flywheelNodes.forEach((node) => {
-    node.addEventListener('click', function() {
-      flywheelNodes.forEach((n) => {
-        const circle = n.querySelector('.node-main');
-        if (circle) circle.setAttribute('fill', '#1a1a1a');
-        n.style.transform = 'scale(1)';
-      });
-      const selected = this.querySelector('.node-main');
-      if (selected) selected.setAttribute('fill', '#E8344E');
-      this.style.transform = 'scale(1.08)';
-      if (flywheelPanel) flywheelPanel.innerHTML = flywheelContent[this.dataset.node] || '<p style="color:rgba(255,255,255,0.4);font-size:0.9rem;text-align:center;padding:1rem 0">Click any node to explore the flywheel</p>';
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
     });
-  });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  function sizeFlywheelMobile() {
-    const wrap = document.getElementById('flywheel-diagram-wrap');
-    const panel = document.getElementById('flywheel-detail-panel');
-    if (!wrap) return;
-    if (window.innerWidth < 480) {
-      wrap.style.width = '90vw';
-      if (panel) panel.style.fontSize = '0.875rem';
-    } else {
-      wrap.style.width = '100%';
-      if (panel) panel.style.fontSize = '';
-    }
-  }
-  sizeFlywheelMobile();
-  window.addEventListener('resize', sizeFlywheelMobile);
+  // Flywheel node interaction
+  (function() {
+    const nodeGroups = document.querySelectorAll('[data-node]');
+    const detail = document.getElementById('flywheel-detail') || document.getElementById('flywheel-detail-panel');
+    if (!nodeGroups.length || !detail) return;
+
+    const content = {
+      fund: '<p style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#E8344E;margin-bottom:0.75rem">The Fund</p><p style="color:rgba(255,255,255,0.7);line-height:1.75;font-size:0.95rem">Capital flows to vetted, accelerator-backed founders who would not otherwise have access. Strong founders attract more ecosystem partners. More partners generate better deal flow.</p>',
+      accelerator: '<p style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#E8344E;margin-bottom:0.75rem">Accelerator-as-a-Service</p><p style="color:rgba(255,255,255,0.7);line-height:1.75;font-size:0.95rem">World-class programming strengthens local ecosystems. Stronger ecosystems produce better founders. Better founders attract investor attention and fuel the fund.</p>',
+      community: '<p style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#E8344E;margin-bottom:0.75rem">Community &amp; Content</p><p style="color:rgba(255,255,255,0.7);line-height:1.75;font-size:0.95rem">Founder stories attract investors seeking quality deal flow. Investors discovering founders through their stories reinforces the ecosystem. More visibility brings more founders into the network.</p>'
+    };
+
+    nodeGroups.forEach(function(group) {
+      group.style.cursor = 'pointer';
+      group.addEventListener('click', function() {
+        var nodeType = this.getAttribute('data-node');
+
+        // Reset all nodes
+        nodeGroups.forEach(function(g) {
+          var circle = g.querySelector('circle.node-main');
+          if (circle) circle.setAttribute('fill', '#1a1a1a');
+        });
+
+        // Highlight clicked node
+        var mainCircle = this.querySelector('circle.node-main');
+        if (mainCircle) mainCircle.setAttribute('fill', '#E8344E');
+
+        // Update detail panel
+        if (content[nodeType]) {
+          detail.innerHTML = content[nodeType];
+        }
+      });
+    });
+  }());
 </script>
 </body>
 </html>
