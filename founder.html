@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Founder Portal — Venture Builders Fund</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script>
@@ -506,26 +507,27 @@
                 if (deckNote) deckNote.classList.toggle('hidden', !(row.deck_url));
             }
 
-            /** After primary load + email pre-fill: if still no founder_startups row for this user, link bulk-imported row by email. */
-            function founderProfileEmailFallback(user) {
-                if (!user || !user.id) return Promise.resolve();
-                var userEmail = (user.email || '').trim();
-                if (!userEmail) return Promise.resolve();
-                return supabase.from('founder_startups').select('id').eq('user_id', user.id).maybeSingle()
-                    .then(function(uidCheck) {
-                        if (uidCheck.data) return;
-                        return supabase.from('founder_startups').select('*').eq('email', userEmail).limit(1).maybeSingle()
-                            .then(function(byEmail) {
-                                if (!byEmail.data) return;
-                                return supabase.from('founder_startups').update({ user_id: user.id }).eq('id', byEmail.data.id).select('*').single()
-                                    .then(function(linked) {
-                                        if (linked.error) throw linked.error;
-                                        return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', linked.data.id).order('created_at')
-                                            .then(function(cf) { fillForm(linked.data, cf.data || []); });
-                                    });
+            /** Runs right after the founder_startups lookup by user_id (uidRes). */
+            function applyFounderProfileFromUidQuery(uidRes, user) {
+                var data = uidRes && uidRes.data;
+                function fillFromRow(row) {
+                    return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', row.id).order('created_at')
+                        .then(function(cf) { fillForm(row, cf.data || []); });
+                }
+                if (data) {
+                    return fillFromRow(data);
+                }
+                if (!user || !user.email) return Promise.resolve();
+                return supabase.from('founder_startups').select('*').eq('email', user.email).is('user_id', null).limit(1).single()
+                    .then(function(emailRes) {
+                        var emailMatch = emailRes.data;
+                        if (!emailMatch || emailRes.error) return Promise.resolve();
+                        return supabase.from('founder_startups').update({ user_id: user.id }).eq('id', emailMatch.id)
+                            .then(function(upd) {
+                                if (upd.error) return Promise.resolve();
+                                return fillFromRow(emailMatch);
                             });
-                    })
-                    .catch(function() { /* keep session UI; primary path already set email */ });
+                    });
             }
 
             founderForm.addEventListener('submit', function(e) {
@@ -662,16 +664,10 @@
                     authMessage.classList.add('hidden');
                     supabase.from('founder_startups').select('*').eq('user_id', session.user.id).maybeSingle()
                         .then(function(res) {
-                            if (res.data) {
-                                return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', res.data.id).order('created_at')
-                                    .then(function(cf) { fillForm(res.data, cf.data || []); });
-                            }
+                            return applyFounderProfileFromUidQuery(res, session.user);
                         })
                         .then(function() {
                             if (session.user.email && !founderForm.elements['email'].value) founderForm.elements['email'].value = session.user.email;
-                        })
-                        .then(function() {
-                            return founderProfileEmailFallback(session.user);
                         });
                 } else {
                     showAuth();
@@ -685,16 +681,10 @@
                     var uid = res.data.session.user.id;
                     supabase.from('founder_startups').select('*').eq('user_id', uid).maybeSingle()
                         .then(function(r) {
-                            if (r.data) {
-                                return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', r.data.id).order('created_at')
-                                    .then(function(cf) { fillForm(r.data, cf.data || []); });
-                            }
+                            return applyFounderProfileFromUidQuery(r, res.data.session.user);
                         })
                         .then(function() {
                             if (res.data.session.user.email && !founderForm.elements['email'].value) founderForm.elements['email'].value = res.data.session.user.email;
-                        })
-                        .then(function() {
-                            return founderProfileEmailFallback(res.data.session.user);
                         });
                 } else {
                     showAuth();

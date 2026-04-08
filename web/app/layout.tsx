@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: { default: "founderbase", template: "%s — founderbase" },
   description: "founderbase app",
-  icons: { icon: "/icon.svg" },
+  icons: { icon: "/favicon.png" },
 }
 
 export default function RootLayout({
