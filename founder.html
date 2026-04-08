@@ -506,32 +506,26 @@
                 if (deckNote) deckNote.classList.toggle('hidden', !(row.deck_url));
             }
 
-            function loadFounderProfile(user) {
+            /** After primary load + email pre-fill: if still no founder_startups row for this user, link bulk-imported row by email. */
+            function founderProfileEmailFallback(user) {
                 if (!user || !user.id) return Promise.resolve();
                 var userEmail = (user.email || '').trim();
-                return supabase.from('founder_startups').select('*').eq('user_id', user.id).maybeSingle()
-                    .then(function(byUid) {
-                        if (byUid.data) return byUid.data;
-                        if (!userEmail) return null;
+                if (!userEmail) return Promise.resolve();
+                return supabase.from('founder_startups').select('id').eq('user_id', user.id).maybeSingle()
+                    .then(function(uidCheck) {
+                        if (uidCheck.data) return;
                         return supabase.from('founder_startups').select('*').eq('email', userEmail).limit(1).maybeSingle()
                             .then(function(byEmail) {
-                                if (!byEmail.data) return null;
+                                if (!byEmail.data) return;
                                 return supabase.from('founder_startups').update({ user_id: user.id }).eq('id', byEmail.data.id).select('*').single()
                                     .then(function(linked) {
                                         if (linked.error) throw linked.error;
-                                        return linked.data;
+                                        return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', linked.data.id).order('created_at')
+                                            .then(function(cf) { fillForm(linked.data, cf.data || []); });
                                     });
                             });
                     })
-                    .then(function(row) {
-                        if (row) {
-                            return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', row.id).order('created_at')
-                                .then(function(cf) { fillForm(row, cf.data || []); });
-                        }
-                    })
-                    .then(function() {
-                        if (userEmail && !founderForm.elements['email'].value) founderForm.elements['email'].value = userEmail;
-                    });
+                    .catch(function() { /* keep session UI; primary path already set email */ });
             }
 
             founderForm.addEventListener('submit', function(e) {
@@ -666,7 +660,19 @@
                 if (session && session.user) {
                     showApp();
                     authMessage.classList.add('hidden');
-                    loadFounderProfile(session.user);
+                    supabase.from('founder_startups').select('*').eq('user_id', session.user.id).maybeSingle()
+                        .then(function(res) {
+                            if (res.data) {
+                                return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', res.data.id).order('created_at')
+                                    .then(function(cf) { fillForm(res.data, cf.data || []); });
+                            }
+                        })
+                        .then(function() {
+                            if (session.user.email && !founderForm.elements['email'].value) founderForm.elements['email'].value = session.user.email;
+                        })
+                        .then(function() {
+                            return founderProfileEmailFallback(session.user);
+                        });
                 } else {
                     showAuth();
                 }
@@ -676,7 +682,20 @@
             supabase.auth.getSession().then(function(res) {
                 if (res.data && res.data.session) {
                     showApp();
-                    loadFounderProfile(res.data.session.user);
+                    var uid = res.data.session.user.id;
+                    supabase.from('founder_startups').select('*').eq('user_id', uid).maybeSingle()
+                        .then(function(r) {
+                            if (r.data) {
+                                return supabase.from('co_founders').select('first_name,last_name,role').eq('founder_startup_id', r.data.id).order('created_at')
+                                    .then(function(cf) { fillForm(r.data, cf.data || []); });
+                            }
+                        })
+                        .then(function() {
+                            if (res.data.session.user.email && !founderForm.elements['email'].value) founderForm.elements['email'].value = res.data.session.user.email;
+                        })
+                        .then(function() {
+                            return founderProfileEmailFallback(res.data.session.user);
+                        });
                 } else {
                     showAuth();
                 }
