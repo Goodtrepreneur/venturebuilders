@@ -606,6 +606,19 @@ function handleContact(btn) {
         return;
       }
       btn.textContent = "Message sent — we'll be in touch soon";
+      fetch('https://asuophspmfqcnlzgqsfa.supabase.co/functions/v1/notify-aaas-enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contact_name: name,
+          organization: org || null,
+          email: email,
+          location: location || null,
+          message: message
+        })
+      }).catch(function(slackErr) {
+        console.warn('Slack notify failed:', slackErr);
+      });
       btn.style.background = '#1a7a4a';
       document.getElementById('accel-name').value = '';
       document.getElementById('accel-org').value = '';
