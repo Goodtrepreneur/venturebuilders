@@ -37,7 +37,7 @@ nav {
   padding: 0 2rem; height: 68px;
   display: flex; align-items: center; justify-content: space-between;
 }
-.nav-logo img { height: 26px; display: block; }
+.nav-logo img { height: 26px; display: block; mix-blend-mode: multiply; }
 .nav-links { display: none; gap: 2.25rem; list-style: none; }
 @media (min-width: 768px) { .nav-links { display: flex; } }
 .nav-links a {
@@ -471,7 +471,7 @@ footer { background: #080808; padding: 3rem 2rem 2rem; border-top: 1px solid rgb
   }
   .footer-inner > .footer-copy { grid-row: 3; }
 }
-footer img { height: 22px; }
+footer img { height: 22px; mix-blend-mode: screen; }
 .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 180ms; }
 .footer-links a:hover { color: var(--white); }
 .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
