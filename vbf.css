@@ -37,7 +37,7 @@ nav {
   padding: 0 2rem; height: 68px;
   display: flex; align-items: center; justify-content: space-between;
 }
-.nav-logo img { height: 26px; display: block; mix-blend-mode: multiply; }
+.nav-logo img { height: 26px; display: block; mix-blend-mode: screen; }
 .nav-links { display: none; gap: 2.25rem; list-style: none; }
 @media (min-width: 768px) { .nav-links { display: flex; } }
 .nav-links a {
