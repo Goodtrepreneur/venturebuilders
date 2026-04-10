@@ -152,16 +152,6 @@
     .modal-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;line-height:1.2;margin-bottom:.35rem;}
     .modal-speaker{font-size:.9rem;color:var(--text-2);margin-bottom:.75rem;}
     .modal-desc{font-size:.85rem;color:var(--text-2);line-height:1.65;}
-    .modal-sponsor-tag{margin-top:1rem;font-size:.75rem;color:var(--text-3);border-top:1px solid var(--border);padding-top:.75rem;}
-    .modal-ad-slot{margin-top:1rem;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--card);}
-    .modal-ad-inner{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;}
-    .modal-ad-logo{width:36px;height:36px;border-radius:6px;object-fit:contain;flex-shrink:0;}
-    .modal-ad-copy{flex:1;}
-    .modal-ad-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:.2rem;}
-    .modal-ad-name{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.2rem;}
-    .modal-ad-tagline{font-size:.78rem;color:var(--text-2);line-height:1.45;}
-    .modal-ad-cta{white-space:nowrap;padding:.45rem 1rem;background:var(--accent);color:#fff;border-radius:6px;font-size:.78rem;font-weight:700;transition:all 200ms ease;flex-shrink:0;}
-    .modal-ad-cta:hover{background:#ff8044;transform:translateY(-1px);}
 
     /* Pre-roll */
     #preroll{display:none;position:absolute;inset:0;background:var(--bg);z-index:5;align-items:center;justify-content:center;flex-direction:column;gap:.75rem;text-align:center;}
@@ -334,18 +324,7 @@
       <div class="modal-title" id="modal-title"></div>
       <div class="modal-speaker" id="modal-speaker"></div>
       <div class="modal-desc" id="modal-desc"></div>
-      <div class="modal-sponsor-tag" id="modal-sponsor-tag" style="display:none;"></div>
-      <div class="modal-ad-slot" id="modal-ad-slot" style="display:none;">
-        <div class="modal-ad-inner">
-          <img class="modal-ad-logo" id="modal-ad-logo" src="" alt="" />
-          <div class="modal-ad-copy">
-            <div class="modal-ad-label">Sponsored</div>
-            <div class="modal-ad-name" id="modal-ad-name"></div>
-            <div class="modal-ad-tagline" id="modal-ad-tagline"></div>
-          </div>
-          <a class="modal-ad-cta" id="modal-ad-cta" href="#" target="_blank">Learn More</a>
-        </div>
-      </div>
+      <div id="below-video-sponsor" style="display:none;margin-top:1rem;"></div>
     </div>
   </div>
 </div>
@@ -784,53 +763,83 @@
     if(t)t.scrollBy({left:dir*t.clientWidth*.75,behavior:'smooth'});
   };
 
-  function openModal(v){
-    const ct=(v.content_type||'interview');
-    document.getElementById('modal-meta').innerHTML=`<span class="v-badge badge-${ct.replace('_','-')}" style="font-size:.75rem;">${ct.replace('_',' ')}</span>${v.industry?`<span style="font-size:.78rem;color:var(--text-3);">${v.industry}</span>`:''}`;
-    document.getElementById('modal-title').textContent=v.title;
-    document.getElementById('modal-speaker').textContent=`${v.speaker_name||''}${v.company?' — '+v.company:''}`;
-    document.getElementById('modal-desc').textContent=v.description||'';
-    const sponsor=allSponsors.find(s=>s.id===v.sponsor_id);
-    const st2=document.getElementById('modal-sponsor-tag');
-    st2.style.display=sponsor?'block':'none';
-    if(sponsor)st2.textContent=`Presented by ${sponsor.name}`;
+  async function renderBelowVideoSponsor(videoId){
+    const { data: sponsor, error } = await sb
+      .from('pivot_sponsors')
+      .select('*')
+      .eq('placement', 'section')
+      .eq('is_active', true)
+      .order('priority', { ascending: true })
+      .limit(1)
+      .single();
 
-    // Ad slot below description — use any active sponsor
-    const adSponsor=allSponsors[0];
-    const adSlot=document.getElementById('modal-ad-slot');
-    if(adSponsor){
-      document.getElementById('modal-ad-name').textContent=adSponsor.name;
-      document.getElementById('modal-ad-tagline').textContent=adSponsor.tagline||'';
-      document.getElementById('modal-ad-cta').href=adSponsor.website_url||'#';
-      document.getElementById('modal-ad-cta').onclick=()=>{
+    const container = document.getElementById('below-video-sponsor');
+    if (!container || error || !sponsor) {
+      if (container) {
+        container.innerHTML = '';
+        container.style.display = 'none';
+      }
+      return;
+    }
+
+    const esc = (t) => String(t ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+    const safeUrl = (u) => String(u || '').replace(/"/g,'');
+    const logo = sponsor.logo_url ? safeUrl(sponsor.logo_url) : '';
+    const name = esc(sponsor.name || '');
+    const tag = esc(sponsor.tagline || '');
+    const web = safeUrl(sponsor.website_url || '#');
+
+    container.innerHTML = `
+    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:8px;">Sponsored</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      ${logo ? `<img src="${logo}" alt="${name}" style="height:28px;width:auto;flex-shrink:0;" />` : ''}
+      <p style="margin:0;font-size:13px;color:#555;line-height:1.4;flex:1;">${tag}</p>
+      <a href="${web}" target="_blank" rel="noopener"
+        style="flex-shrink:0;padding:8px 18px;background:#1463FF;color:#fff;text-decoration:none;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap;">
+        Learn More
+      </a>
+    </div>
+  `;
+    container.style.display = 'block';
+
+    const a = container.querySelector('a');
+    if (a) {
+      a.addEventListener('click', () => {
         (async()=>{
           try{
             await sb.from('pivot_click_events').insert({
               viewer_email:getViewerEmail(),
               event_type:'sponsor_click',
-              metadata:{sponsor_name:adSponsor.name,placement:'modal'}
+              metadata:{sponsor_name:sponsor.name,placement:'modal'}
             });
           }catch(e){}
         })();
-      };
-      const adLogo=document.getElementById('modal-ad-logo');
-      adLogo.src=document.getElementById('banner-sponsor-logo').src||'';
-      adLogo.alt=adSponsor.name;
-      adSlot.style.display='block';
+      });
+    }
+
+    if (videoId) {
       (async()=>{
         try{
           await sb.from('pivot_sponsor_impressions').insert({
-            sponsor_id:adSponsor.id,
-            video_id:v.id,
+            sponsor_id:sponsor.id,
+            video_id:videoId,
             placement:'sidebar',
             skipped:false,
             viewer_email:getViewerEmailFromAccessCookie()
           });
         }catch(e){}
       })();
-    } else {
-      adSlot.style.display='none';
     }
+  }
+
+  async function openModal(v){
+    const ct=(v.content_type||'interview');
+    document.getElementById('modal-meta').innerHTML=`<span class="v-badge badge-${ct.replace('_','-')}" style="font-size:.75rem;">${ct.replace('_',' ')}</span>${v.industry?`<span style="font-size:.78rem;color:var(--text-3);">${v.industry}</span>`:''}`;
+    document.getElementById('modal-title').textContent=v.title;
+    document.getElementById('modal-speaker').textContent=`${v.speaker_name||''}${v.company?' — '+v.company:''}`;
+    document.getElementById('modal-desc').textContent=v.description||'';
+    await renderBelowVideoSponsor(v.id);
+    const sponsor=allSponsors.find(s=>s.id===v.sponsor_id);
     if(sponsor){showPreroll(sponsor,v.youtube_id,v.id);}
     else{document.getElementById('preroll').classList.remove('visible');document.getElementById('video-iframe').src=`https://www.youtube.com/embed/${v.youtube_id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&color=white`;}
     document.getElementById('video-modal').classList.add('open');
@@ -860,6 +869,8 @@
     document.body.style.overflow='';
     if(prerollInterval){clearInterval(prerollInterval);prerollInterval=null;}
     document.getElementById('preroll').classList.remove('visible');
+    const belowSponsor=document.getElementById('below-video-sponsor');
+    if(belowSponsor){belowSponsor.innerHTML='';belowSponsor.style.display='none';}
   }
 
   document.getElementById('modal-close-btn').addEventListener('click',closeModal);
