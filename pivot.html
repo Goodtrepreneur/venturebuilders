@@ -394,20 +394,11 @@
   function cssBackgroundUrl(u){
     return 'url("'+String(u).replace(/\\/g,'\\\\').replace(/"/g,'\\"')+'")';
   }
-  /** thumbnail_url first, then banner (only if thumb is not a Supabase file — avoids stale wide banners masking updated thumbs), then YouTube. */
   function heroBackgroundCandidates(v){
-    const out=[];
-    const seen=new Set();
+    const out=[], seen=new Set();
     const push=(x)=>{if(x&&!seen.has(x)){seen.add(x);out.push(x);}};
-    const tn=nonEmptyUrl(v.thumbnail_url);
-    const thBusted=withPivotImageCacheBust(v.thumbnail_url,v);
-    push(thBusted);
-    if(tn&&isSupabaseStorageObjectUrl(tn)&&thBusted&&thBusted!==tn){
-      push(tn);
-    }
-    if(!tn||!isSupabaseStorageObjectUrl(tn)){
-      push(withPivotImageCacheBust(v.banner_image_url,v));
-    }
+    push(withPivotImageCacheBust(v.banner_image_url,v));
+    push(withPivotImageCacheBust(v.thumbnail_url,v));
     const yt=v.youtube_id;
     if(yt){
       push(withPivotImageCacheBust('https://img.youtube.com/vi/'+yt+'/maxresdefault.jpg',v));
@@ -642,6 +633,9 @@
     if(banner){
       document.getElementById('banner-sponsor-tagline').textContent=banner.tagline||'';
       document.getElementById('banner-sponsor-link').href=banner.website_url||'#';
+      const logoEl=document.getElementById('banner-sponsor-logo');
+      if(logoEl&&banner.logo_url)logoEl.src=banner.logo_url;
+      if(logoEl&&banner.name)logoEl.alt=banner.name;
       document.getElementById('sponsor-banner').classList.add('visible');
       document.body.classList.add('banner-visible');
       (async()=>{
@@ -661,17 +655,18 @@
       },50);
     }
 
-    if(preRollSponsor){
+    const sectionSponsor=allSponsors.find(s=>s.placement==='section');
+    if(sectionSponsor){
       const esc=(t)=>String(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-      const logoImg=preRollSponsor.logo_url
-        ? '<img src="'+String(preRollSponsor.logo_url).replace(/"/g,'')+'" style="height:28px;width:auto;border-radius:5px;" alt="'+esc(preRollSponsor.name)+'" />'
+      const logoImg=sectionSponsor.logo_url
+        ? '<img src="'+String(sectionSponsor.logo_url).replace(/"/g,'')+'" style="height:28px;width:auto;border-radius:5px;" alt="'+esc(sectionSponsor.name)+'" />'
         : '';
       document.getElementById('sponsor-section-slot').innerHTML=
         '<div class="sponsor-row">'+
           '<span class="sponsor-row-label">Partner</span>'+
           logoImg+
-          '<span class="sponsor-row-tagline">'+esc(preRollSponsor.tagline)+'</span>'+
-          (preRollSponsor.website_url?'<a class="sponsor-row-link" href="'+String(preRollSponsor.website_url).replace(/"/g,'')+'" target="_blank">Learn More</a>':'')+
+          '<span class="sponsor-row-tagline">'+esc(sectionSponsor.tagline)+'</span>'+
+          (sectionSponsor.website_url?'<a class="sponsor-row-link" href="'+String(sectionSponsor.website_url).replace(/"/g,'')+'" target="_blank">Learn More</a>':'')+
         '</div>';
     } else {
       document.getElementById('sponsor-section-slot').innerHTML='';
@@ -768,7 +763,7 @@
     dynEl.querySelectorAll('.row-track').forEach(t=>bindClicks(t));
 
     // Insert sponsor card between first and second row if sponsor exists
-    const sponsorForRows=preRollSponsor;
+    const sponsorForRows=allSponsors.find(s=>s.placement==='section');
     if(sponsorForRows){
       const rows=dynEl.querySelectorAll('.content-row');
       if(rows.length>1){
