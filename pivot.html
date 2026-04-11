@@ -363,30 +363,33 @@
     const s=String(u).trim();
     return s||null;
   }
-  /** Bust browser cache when the row changes but the storage path string stays similar. */
+  /** Bust browser cache: use row timestamps when present, else video id (rows missing updated_at were getting naked URLs and staying stale). */
   function withPivotImageCacheBust(url,v){
     const u=nonEmptyUrl(url);
     if(!u)return null;
-    const ts=v&&(v.updated_at||v.created_at);
-    if(!ts)return u;
+    if(!v)return u;
+    const key=v.updated_at||v.created_at||v.id;
+    if(key==null||key==='')return u;
     const sep=u.indexOf('?')>=0?'&':'?';
-    return u+sep+'pivotcb='+encodeURIComponent(ts);
+    return u+sep+'pivotcb='+encodeURIComponent(String(key));
   }
   /** Quoted url("...") so ), &, etc. in signed/storage URLs do not break CSS. */
   function cssBackgroundUrl(u){
     return 'url("'+String(u).replace(/\\/g,'\\\\').replace(/"/g,'\\"')+'")';
   }
-  /** thumbnail_url first so refreshed card art wins; use banner_image_url when thumbnail is empty or as fallback after YT. */
+  /** thumbnail_url first, then banner_image_url, then YouTube; dedupe identical busted URLs. */
   function heroBackgroundCandidates(v){
     const out=[];
-    const th=withPivotImageCacheBust(v.thumbnail_url,v);if(th)out.push(th);
-    const b=withPivotImageCacheBust(v.banner_image_url,v);if(b)out.push(b);
+    const seen=new Set();
+    const push=(x)=>{if(x&&!seen.has(x)){seen.add(x);out.push(x);}};
+    push(withPivotImageCacheBust(v.thumbnail_url,v));
+    push(withPivotImageCacheBust(v.banner_image_url,v));
     const yt=v.youtube_id;
     if(yt){
-      out.push(withPivotImageCacheBust('https://img.youtube.com/vi/'+yt+'/maxresdefault.jpg',v));
-      out.push(withPivotImageCacheBust('https://img.youtube.com/vi/'+yt+'/hqdefault.jpg',v));
+      push(withPivotImageCacheBust('https://img.youtube.com/vi/'+yt+'/maxresdefault.jpg',v));
+      push(withPivotImageCacheBust('https://img.youtube.com/vi/'+yt+'/hqdefault.jpg',v));
     }
-    return out.filter(Boolean);
+    return out;
   }
   function applyHeroBackground(urls){
     const reqId=++heroBgRequestId;
