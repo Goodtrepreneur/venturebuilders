@@ -370,27 +370,44 @@
     for(let i=0;i<s.length;i++)h=(Math.imul(31,h)+s.charCodeAt(i))|0;
     return (h>>>0).toString(36);
   }
-  /** Bust browser cache: URL fingerprint + row version (timestamps or id). */
+  /** Bust browser cache: URL fingerprint + row version (timestamps or id). Uses URL() so existing ?query on Storage URLs is not corrupted. */
   function withPivotImageCacheBust(url,v){
     const u=nonEmptyUrl(url);
     if(!u)return null;
-    const sep=u.indexOf('?')>=0?'&':'?';
     const fp=pivotImageUrlFingerprint(u);
     const rowRev=v&&(v.updated_at||v.created_at||v.id);
-    const tail=rowRev!=null&&rowRev!==''?encodeURIComponent(String(rowRev)):'0';
-    return u+sep+'pivotcb='+fp+'.'+tail;
+    const tail=rowRev!=null&&rowRev!==''?String(rowRev):'0';
+    const pivotVal=fp+'.'+tail;
+    try{
+      const parsed=new URL(u);
+      parsed.searchParams.set('pivotcb',pivotVal);
+      return parsed.href;
+    }catch(e){
+      const sep=u.indexOf('?')>=0?'&':'?';
+      return u+sep+'pivotcb='+encodeURIComponent(pivotVal);
+    }
+  }
+  function isSupabaseStorageObjectUrl(u){
+    return /supabase\.co\/storage\/v1\/object\//i.test(String(u||''));
   }
   /** Quoted url("...") so ), &, etc. in signed/storage URLs do not break CSS. */
   function cssBackgroundUrl(u){
     return 'url("'+String(u).replace(/\\/g,'\\\\').replace(/"/g,'\\"')+'")';
   }
-  /** thumbnail_url first, then banner_image_url, then YouTube; dedupe identical busted URLs. */
+  /** thumbnail_url first, then banner (only if thumb is not a Supabase file — avoids stale wide banners masking updated thumbs), then YouTube. */
   function heroBackgroundCandidates(v){
     const out=[];
     const seen=new Set();
     const push=(x)=>{if(x&&!seen.has(x)){seen.add(x);out.push(x);}};
-    push(withPivotImageCacheBust(v.thumbnail_url,v));
-    push(withPivotImageCacheBust(v.banner_image_url,v));
+    const tn=nonEmptyUrl(v.thumbnail_url);
+    const thBusted=withPivotImageCacheBust(v.thumbnail_url,v);
+    push(thBusted);
+    if(tn&&isSupabaseStorageObjectUrl(tn)&&thBusted&&thBusted!==tn){
+      push(tn);
+    }
+    if(!tn||!isSupabaseStorageObjectUrl(tn)){
+      push(withPivotImageCacheBust(v.banner_image_url,v));
+    }
     const yt=v.youtube_id;
     if(yt){
       push(withPivotImageCacheBust('https://img.youtube.com/vi/'+yt+'/maxresdefault.jpg',v));
@@ -789,6 +806,7 @@
 
   function renderCard(v,showNew){
     const yt=v.youtube_id||'';
+    const thumbPlain=nonEmptyUrl(v.thumbnail_url);
     const thumbRaw=nonEmptyUrl(withPivotImageCacheBust(v.thumbnail_url,v))||(yt?withPivotImageCacheBust('https://img.youtube.com/vi/'+yt+'/maxresdefault.jpg',v):'');
     const ct=(v.content_type||'interview');
     const badgeClass=`badge-${ct.replace('_','-')}`;
@@ -796,7 +814,7 @@
     return `<div class="v-card" data-id="${v.id}">
       <div class="v-card-thumb">
         ${showNew?'<div class="new-ribbon">New</div>':''}
-        <img src="${escAttr(thumbRaw)}" alt="${escAttr(v.title)}" loading="lazy" data-yt="${escAttr(yt)}" onerror="(function(el){var y=el.dataset.yt;if(!y||el.dataset.fb)return;el.dataset.fb=1;el.src='https://img.youtube.com/vi/'+y+'/hqdefault.jpg';})(this)"/>
+        <img src="${escAttr(thumbRaw)}" alt="${escAttr(v.title)}" loading="lazy" data-yt="${escAttr(yt)}" data-plain="${escAttr(thumbPlain||'')}" onerror="(function(el){var p=el.dataset.plain;if(p&&!el.dataset.triedplain){el.dataset.triedplain=1;el.src=p;return;}var y=el.dataset.yt;if(!y||el.dataset.fb)return;el.dataset.fb=1;el.src='https://img.youtube.com/vi/'+y+'/hqdefault.jpg';})(this)"/>
         <div class="v-card-info">
           <div class="v-card-actions">
             <div class="v-play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#111"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
