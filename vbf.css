@@ -394,6 +394,37 @@ nav {
 .quote-attr { font-family: var(--font-head); font-size: 1rem; font-weight: 800; color: rgba(255,255,255,0.88); }
 .quote-attr span { display: block; font-family: var(--font-body); font-weight: 400; font-size: 0.85rem; margin-top: 0.2rem; opacity: 0.72; }
 
+.testimonial-slide {
+  display: none;
+  animation: fadeInQuote 600ms ease;
+}
+.testimonial-slide.active {
+  display: block;
+}
+@keyframes fadeInQuote {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.testimonial-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+.testimonial-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 300ms;
+}
+.testimonial-dot.active {
+  background: #ffffff;
+}
+
 /* -- DIFF CARDS -- */
 .diff-grid { display: grid; gap: 1.25rem; margin-top: 3.5rem; }
 @media (min-width: 640px) { .diff-grid { grid-template-columns: 1fr 1fr; } }

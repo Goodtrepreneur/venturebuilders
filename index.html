@@ -332,8 +332,34 @@
   </section>
   <section class="quote-sec">
     <div class="quote-inner">
-      <p class="quote-text">"Steve has been an invaluable connector for both my company, Base, and for me personally as a founder. He's incredibly quick to respond and consistently makes thoughtful introductions that have opened meaningful doors for us."</p>
-      <p class="quote-attr">Paige McPheely, Founder <span>Base</span></p>
+
+      <!-- Slide 1 -->
+      <div class="testimonial-slide active">
+        <p class="quote-text">"Steve has been an invaluable connector for
+        both my company, Base, and for me personally as a founder. He's
+        incredibly quick to respond and consistently makes thoughtful
+        introductions that have opened meaningful doors for us."</p>
+        <p class="quote-attr">Paige McPheely, Founder <span>Base</span></p>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="testimonial-slide">
+        <p class="quote-text">"Working with Jillian has been a game changer
+        for Fierce Foundry. She's helped us build critical operational
+        frameworks while opening doors through introductions that have
+        meaningfully moved our business forward. What sets her apart is
+        not just her experience — it's how much she genuinely cares."</p>
+        <p class="quote-attr">Fierce Foundry <span>Accelerator Partner</span></p>
+      </div>
+
+      <!-- Dots -->
+      <div class="testimonial-dots">
+        <button class="testimonial-dot active" onclick="goToSlide(0)"
+          aria-label="Testimonial 1"></button>
+        <button class="testimonial-dot" onclick="goToSlide(1)"
+          aria-label="Testimonial 2"></button>
+      </div>
+
     </div>
   </section>
   <section class="sec" style="background:#fff">
@@ -411,6 +437,30 @@
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Testimonial carousel
+  var testimonialSlides = document.querySelectorAll('.testimonial-slide');
+  var testimonialDots = document.querySelectorAll('.testimonial-dot');
+  var currentSlide = 0;
+  var testimonialTimer;
+
+  function goToSlide(n) {
+    testimonialSlides[currentSlide].classList.remove('active');
+    testimonialDots[currentSlide].classList.remove('active');
+    currentSlide = n;
+    testimonialSlides[currentSlide].classList.add('active');
+    testimonialDots[currentSlide].classList.add('active');
+    clearInterval(testimonialTimer);
+    testimonialTimer = setInterval(nextSlide, 6000);
+  }
+
+  function nextSlide() {
+    goToSlide((currentSlide + 1) % testimonialSlides.length);
+  }
+
+  if (testimonialSlides.length > 1) {
+    testimonialTimer = setInterval(nextSlide, 6000);
+  }
 
   // Flywheel node interaction
   (function() {
