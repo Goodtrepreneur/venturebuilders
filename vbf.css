@@ -528,3 +528,7 @@ footer img { height: 22px; mix-blend-mode: screen; }
   white-space: nowrap;
   border: 0;
 }
+
+@media (min-width: 640px) {
+  .misha-divider { display: block !important; }
+}
