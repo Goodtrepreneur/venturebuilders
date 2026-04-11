@@ -363,15 +363,22 @@
     const s=String(u).trim();
     return s||null;
   }
-  /** Bust browser cache: use row timestamps when present, else video id (rows missing updated_at were getting naked URLs and staying stale). */
+  /** Short hash so a new Storage path in the DB busts cache even if updated_at did not change. */
+  function pivotImageUrlFingerprint(u){
+    let h=5381|0;
+    const s=String(u);
+    for(let i=0;i<s.length;i++)h=(Math.imul(31,h)+s.charCodeAt(i))|0;
+    return (h>>>0).toString(36);
+  }
+  /** Bust browser cache: URL fingerprint + row version (timestamps or id). */
   function withPivotImageCacheBust(url,v){
     const u=nonEmptyUrl(url);
     if(!u)return null;
-    if(!v)return u;
-    const key=v.updated_at||v.created_at||v.id;
-    if(key==null||key==='')return u;
     const sep=u.indexOf('?')>=0?'&':'?';
-    return u+sep+'pivotcb='+encodeURIComponent(String(key));
+    const fp=pivotImageUrlFingerprint(u);
+    const rowRev=v&&(v.updated_at||v.created_at||v.id);
+    const tail=rowRev!=null&&rowRev!==''?encodeURIComponent(String(rowRev)):'0';
+    return u+sep+'pivotcb='+fp+'.'+tail;
   }
   /** Quoted url("...") so ), &, etc. in signed/storage URLs do not break CSS. */
   function cssBackgroundUrl(u){
