@@ -605,8 +605,8 @@
   window.setHero=function(idx){
     heroIndex=idx;
     const v=heroVideos[idx];if(!v)return;
-    const thumb=v.thumbnail_url||`https://img.youtube.com/vi/${v.youtube_id}/maxresdefault.jpg`;
-    document.getElementById('hero-bg').style.backgroundImage=`url(${thumb})`;
+    const bgImage=v.banner_image_url||v.thumbnail_url||`https://img.youtube.com/vi/${v.youtube_id}/maxresdefault.jpg`;
+    document.getElementById('hero-bg').style.backgroundImage=`url(${bgImage})`;
     document.getElementById('hero-title').textContent=v.title;
     document.getElementById('hero-desc').textContent=v.description||`${v.speaker_name||''}${v.company?' from '+v.company:''} — ${(v.content_type||'interview').replace('_',' ')}`;
     document.getElementById('hero-type-label').textContent=(v.content_type||'interview').replace('_',' ');
