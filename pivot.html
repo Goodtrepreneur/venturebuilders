@@ -356,6 +356,43 @@
   const RECENT_DAYS   = 14;
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
+  function nonEmptyUrl(u){
+    if(u==null)return null;
+    const s=String(u).trim();
+    return s||null;
+  }
+  /** Quoted url("...") so ), &, etc. in signed/storage URLs do not break CSS. */
+  function cssBackgroundUrl(u){
+    return 'url("'+String(u).replace(/\\/g,'\\\\').replace(/"/g,'\\"')+'")';
+  }
+  function heroBackgroundCandidates(v){
+    const out=[];
+    const b=nonEmptyUrl(v.banner_image_url);if(b)out.push(b);
+    const th=nonEmptyUrl(v.thumbnail_url);if(th)out.push(th);
+    const yt=v.youtube_id;
+    if(yt){
+      out.push('https://img.youtube.com/vi/'+yt+'/maxresdefault.jpg');
+      out.push('https://img.youtube.com/vi/'+yt+'/hqdefault.jpg');
+    }
+    return out;
+  }
+  function applyHeroBackground(urls){
+    const el=document.getElementById('hero-bg');
+    if(!urls.length){el.style.backgroundImage='none';return;}
+    let i=0;
+    (function tryNext(){
+      if(i>=urls.length){el.style.backgroundImage='none';return;}
+      const cand=urls[i];
+      const img=new Image();
+      img.onload=function(){el.style.backgroundImage=cssBackgroundUrl(cand);};
+      img.onerror=function(){i++;tryNext();};
+      img.src=cand;
+    })();
+  }
+  function escAttr(s){
+    return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+  }
+
   let allVideos=[], allSponsors=[], preRollSponsor=null, currentType='all', currentIndustry='', currentSearch='';
   let heroIndex=0, heroTimer=null, prerollInterval=null, heroVideos=[];
   let currentImpressionId=null;
@@ -605,8 +642,7 @@
   window.setHero=function(idx){
     heroIndex=idx;
     const v=heroVideos[idx];if(!v)return;
-    const bgImage=v.banner_image_url||v.thumbnail_url||`https://img.youtube.com/vi/${v.youtube_id}/maxresdefault.jpg`;
-    document.getElementById('hero-bg').style.backgroundImage=`url(${bgImage})`;
+    applyHeroBackground(heroBackgroundCandidates(v));
     document.getElementById('hero-title').textContent=v.title;
     document.getElementById('hero-desc').textContent=v.description||`${v.speaker_name||''}${v.company?' from '+v.company:''} — ${(v.content_type||'interview').replace('_',' ')}`;
     document.getElementById('hero-type-label').textContent=(v.content_type||'interview').replace('_',' ');
@@ -721,14 +757,15 @@
   }
 
   function renderCard(v,showNew){
-    const thumb=v.thumbnail_url||`https://img.youtube.com/vi/${v.youtube_id}/maxresdefault.jpg`;
+    const yt=v.youtube_id||'';
+    const thumbRaw=nonEmptyUrl(v.thumbnail_url)||(yt?'https://img.youtube.com/vi/'+yt+'/maxresdefault.jpg':'');
     const ct=(v.content_type||'interview');
     const badgeClass=`badge-${ct.replace('_','-')}`;
     const badgeLabel=ct.replace('_',' ');
     return `<div class="v-card" data-id="${v.id}">
       <div class="v-card-thumb">
         ${showNew?'<div class="new-ribbon">New</div>':''}
-        <img src="${thumb}" alt="${v.title}" loading="lazy"/>
+        <img src="${escAttr(thumbRaw)}" alt="${escAttr(v.title)}" loading="lazy" data-yt="${escAttr(yt)}" onerror="(function(el){var y=el.dataset.yt;if(!y||el.dataset.fb)return;el.dataset.fb=1;el.src='https://img.youtube.com/vi/'+y+'/hqdefault.jpg';})(this)"/>
         <div class="v-card-info">
           <div class="v-card-actions">
             <div class="v-play-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="#111"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
