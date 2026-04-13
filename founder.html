@@ -477,22 +477,28 @@
             </section>
 
             <div class="rounded-2xl border border-slate-700 bg-cardMain p-6 reveal">
-                <label class="flex items-start gap-3 text-sm text-slate-200">
-                    <input type="checkbox" id="marketing_consent" name="marketing_consent" required
-                        class="mt-1 h-4 w-4 shrink-0 rounded border-slate-600 bg-slate-800 text-accentCyan focus:ring-accentCyan">
-                    <span>I agree to be added to the Venture Builders Fund founder mailing list. You'll receive founder news, funding opportunities, and invitations to free events and webinars.</span>
-                </label>
-                <p class="mt-2 pl-7 text-xs text-slate-500">You can unsubscribe at any time.</p>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="third_party_consent" name="third_party_consent">
-                    <label for="third_party_consent">
+                <div style="margin-bottom: 16px;">
+                    <div style="display:flex;align-items:flex-start;gap:10px;">
+                        <input type="checkbox" id="marketing_consent" name="marketing_consent" required
+                            class="mt-1 h-4 w-4 shrink-0 rounded border-slate-600 bg-slate-800 text-accentCyan focus:ring-accentCyan">
+                        <label for="marketing_consent" style="line-height:1.5;font-size:0.875rem;" class="text-slate-200">I agree to be added to the Venture Builders Fund founder mailing list. You'll receive founder news, funding opportunities, and invitations to free events and webinars.</label>
+                    </div>
+                    <p class="mt-2 text-xs text-slate-500" style="margin-left:26px;">You can unsubscribe at any time.</p>
+                </div>
+
+                <div style="margin-bottom: 8px;">
+                    <div style="display:flex;align-items:flex-start;gap:10px;">
+                    <input type="checkbox" id="third_party_consent" name="third_party_consent" required>
+                    <label for="third_party_consent" style="line-height:1.5;font-size:0.875rem;" class="text-slate-200">
+                      <span style="color:#E8334D;margin-right:2px;">*</span>
                       I consent to my company profile being visible to vetted investors
                       and corporate partners who access the VBF founder database.
                       <span style="display:block;font-size:0.78rem;color:#9ca3af;margin-top:3px;">
                         You can update your preferences at any time from your profile.
                       </span>
                     </label>
-                  </div>
+                    </div>
+                </div>
             </div>
 
             <div style="text-align:center; margin-top: 1.5rem;">
@@ -546,8 +552,10 @@
         <p style="font-size:0.95rem;color:#6b7280;line-height:1.65;margin:0 0 1.5rem;">
           Saved. You can come back any time to update your profile —
           just use the same email and we'll send you a magic link.
+          We're also sending you over to our free founder events calendar
+          so you can see what's coming up.
         </p>
-        <button onclick="closeSuccessPopup()"
+        <button onclick="closeSuccessPopup(); window.location.href='https://lu.ma/vbf';"
           style="background:#E8334D;color:#fff;border:none;border-radius:8px;
           padding:0.75rem 2rem;font-size:0.95rem;font-weight:600;
           cursor:pointer;width:100%;">
@@ -837,6 +845,17 @@
                 e.preventDefault();
                 if (!founderForm.checkValidity()) {
                     founderForm.reportValidity();
+                    return;
+                }
+                if (!document.getElementById('third_party_consent').checked) {
+                    var label = document.querySelector('label[for="third_party_consent"]');
+                    if (label) {
+                        label.style.color = '#E8334D';
+                        setTimeout(function() { label.style.color = ''; }, 3000);
+                    }
+                    document.getElementById('third_party_consent').scrollIntoView(
+                      { behavior: 'smooth', block: 'center' }
+                    );
                     return;
                 }
                 if (formSubmitting) return;
