@@ -381,6 +381,35 @@ nav {
 .team-card p { font-size: 0.925rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 0.9rem; }
 .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.25rem; }
 .tag { font-size: 0.75rem; padding: 0.22rem 0.65rem; border-radius: 100px; background: rgba(var(--accent-rgb),0.08); color: var(--accent); font-weight: 500; }
+.team-linkedin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.06);
+  color: var(--ink-mid);
+  text-decoration: none;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  transition: all 200ms;
+  flex-shrink: 0;
+}
+.team-linkedin:hover {
+  background: #0077B5;
+  color: #ffffff;
+}
+.team-linkedin svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+.team-name-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
 
 /* -- QUOTE -- */
 .quote-sec { background: var(--accent); padding: 6rem 2rem; position: relative; overflow: hidden; }
