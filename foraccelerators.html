@@ -691,7 +691,7 @@ CREATE POLICY "Allow authenticated reads" ON accelerator_enquiries
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  // Newsletter popup — trigger at bottom of page
+  // Newsletter popup — trigger halfway down the page
   var popupShown = false;
   var popupDismissed = sessionStorage.getItem('vbf_popup_dismissed');
 
@@ -705,9 +705,9 @@ CREATE POLICY "Allow authenticated reads" ON accelerator_enquiries
   if (!popupDismissed) {
     window.addEventListener('scroll', function() {
       if (popupShown || popupDismissed) return;
-      var scrolled = window.scrollY + window.innerHeight;
-      var total = document.documentElement.scrollHeight;
-      if (scrolled >= total - 200) {
+      var scrollable = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      var halfway = scrollable * 0.5;
+      if (window.scrollY >= halfway) {
         popupShown = true;
         document.getElementById('newsletter-popup')
           .classList.add('visible');
