@@ -45,6 +45,7 @@
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-free">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="vbf.css">
+  <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
   <style>
     /* PAGE-SPECIFIC */
     .page-hero {
@@ -192,6 +193,77 @@
     .contact-form textarea { background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.12); border-radius: var(--radius); color: var(--white); font-family: var(--font-body); font-size: 0.95rem; padding: 0.75rem 1rem; width: 100%; min-height: 110px; resize: vertical; outline: none; transition: border-color 200ms; }
     .contact-form textarea:focus { border-color: var(--accent); }
     .contact-form textarea::placeholder { color: rgba(255,255,255,0.3); }
+
+    #newsletter-popup {
+      position: fixed;
+      bottom: -400px;
+      right: 2rem;
+      width: 360px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.18);
+      z-index: 9999;
+      overflow: hidden;
+      transition: bottom 500ms cubic-bezier(0.25,0,0,1);
+      border: 1.5px solid rgba(0,0,0,0.08);
+    }
+    #newsletter-popup.visible {
+      bottom: 2rem;
+    }
+    #newsletter-popup-header {
+      background: #0d0d0d;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    #newsletter-popup-header p {
+      margin: 0;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    #newsletter-popup-close {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 1.2rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+      transition: color 180ms;
+    }
+    #newsletter-popup-close:hover { color: #ffffff; }
+    #newsletter-popup-accent {
+      height: 3px;
+      background: #E8344E;
+    }
+    #newsletter-popup-body {
+      padding: 1.5rem 1.25rem;
+    }
+    #newsletter-popup-body h3 {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 0.5rem;
+    }
+    #newsletter-popup-body p {
+      font-size: 0.85rem;
+      color: var(--ink-mid);
+      line-height: 1.6;
+      margin: 0 0 1.25rem;
+    }
+
+    @media (max-width: 480px) {
+      #newsletter-popup {
+        right: 1rem;
+        left: 1rem;
+        width: auto;
+      }
+    }
   </style>
 <script type="application/ld+json">
 {
@@ -619,6 +691,37 @@ CREATE POLICY "Allow authenticated reads" ON accelerator_enquiries
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
+  // Newsletter popup — trigger at bottom of page
+  var popupShown = false;
+  var popupDismissed = sessionStorage.getItem('vbf_popup_dismissed');
+
+  function closeNewsletterPopup() {
+    document.getElementById('newsletter-popup')
+      .classList.remove('visible');
+    sessionStorage.setItem('vbf_popup_dismissed', '1');
+    popupDismissed = true;
+  }
+
+  if (!popupDismissed) {
+    window.addEventListener('scroll', function() {
+      if (popupShown || popupDismissed) return;
+      var scrolled = window.scrollY + window.innerHeight;
+      var total = document.documentElement.scrollHeight;
+      if (scrolled >= total - 200) {
+        popupShown = true;
+        document.getElementById('newsletter-popup')
+          .classList.add('visible');
+      }
+    });
+  }
+
+  // Also add Brevo script
+  var brevoScript = document.createElement('script');
+  brevoScript.defer = true;
+  brevoScript.src =
+    'https://sibforms.com/forms/end-form/build/main.js';
+  document.body.appendChild(brevoScript);
+
 function handleContact(btn) {
   var name = (document.getElementById('accel-name').value || '').trim();
   var org = (document.getElementById('accel-org').value || '').trim();
@@ -754,5 +857,68 @@ function handleContact(btn) {
     document.getElementById('cookie-banner').style.display = 'none';
   }
   </script>
+  <div id="newsletter-popup">
+    <div id="newsletter-popup-header">
+      <p>Venture Builders Fund</p>
+      <button id="newsletter-popup-close"
+        onclick="closeNewsletterPopup()"
+        aria-label="Close">&times;</button>
+    </div>
+    <div id="newsletter-popup-accent"></div>
+    <div id="newsletter-popup-body">
+      <h3>Stay in the loop</h3>
+      <p>Ecosystem insights, founder stories, and fund updates —
+      direct to your inbox.</p>
+
+      <!-- Brevo form — replace inner form block only, keep wrapper clean -->
+      <div id="sib-container" style="text-align:left">
+        <form id="sib-form-popup" method="POST"
+          action="https://6dae7a0a.sibforms.com/serve/MUIFABlUSFolD7b5ymOdWTk-_R5-aRHnX_9_bDtFFMgT1SJrNOIpwzdcB-f2Way5DjPLcca8Wj6Zm7SLQRpXQIX_nkG99B6BYxdBsCsiuAebeGHIRRzmeWzXNYHp95LNHE2SWJswWAoFEoYPdZluu_JsRHoynpEcQmUiroPTFWi2swRmsA8yQEaMzHdvu4FCX-1wx-UC92RE9C2Ekw=="
+          data-type="subscription"
+          style="display:flex;gap:0.5rem;margin-bottom:0.75rem">
+          <input type="text" id="POPUP_EMAIL" name="EMAIL"
+            autocomplete="off" placeholder="your@email.com"
+            required data-required="true"
+            style="flex:1;padding:0.65rem 0.9rem;border:1.5px solid
+            rgba(0,0,0,0.12);border-radius:6px;font-size:0.875rem;
+            font-family:var(--font-body);outline:none;
+            transition:border-color 200ms"
+            onfocus="this.style.borderColor='#E8344E'"
+            onblur="this.style.borderColor='rgba(0,0,0,0.12)'">
+          <button type="submit"
+            style="padding:0.65rem 1.1rem;background:#E8344E;
+            color:#fff;border:none;border-radius:6px;
+            font-family:var(--font-head);font-weight:800;
+            font-size:0.85rem;cursor:pointer;white-space:nowrap;
+            transition:background 200ms"
+            onmouseover="this.style.background='#c42840'"
+            onmouseout="this.style.background='#E8344E'">
+            Subscribe
+          </button>
+          <input type="text" name="email_address_check"
+            value="" class="input--hidden">
+          <input type="hidden" name="locale" value="en">
+        </form>
+        <p style="font-size:0.72rem;color:var(--ink-soft);
+          line-height:1.5;margin:0">
+          We use Brevo for email.
+          <a href="https://www.brevo.com/en/legal/privacypolicy/"
+            target="_blank"
+            style="color:#E8344E;text-decoration:none">
+            Privacy policy</a>.
+          Unsubscribe any time.
+        </p>
+      </div>
+
+      <div id="popup-success" style="display:none;
+        text-align:center;padding:1rem 0">
+        <p style="font-family:var(--font-head);font-weight:800;
+          color:#E8344E;font-size:1rem;margin:0 0 0.25rem">
+          You're in.</p>
+        <p style="font-size:0.85rem;color:var(--ink-mid);margin:0">
+          We'll be in touch.</p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
