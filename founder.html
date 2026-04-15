@@ -879,37 +879,9 @@
                             return Promise.reject(new Error('not signed in'));
                         }
                         payload.user_id = user.id;
-                        var email = (payload.email || user.email || '').trim();
-                        if (!email) {
-                            setFormMessage('You must be signed in.', true);
-                            formSubmitting = false;
-                            formSubmit.disabled = false;
-                            return Promise.reject(new Error('not signed in'));
-                        }
-                        return supabase.from('founder_startups')
-                            .select('id, session_date, source, airtable_id, submitted_by, submitted_by_email, submitted_by_firm')
-                            .eq('email', email)
-                            .maybeSingle()
-                            .then(function(existingRes) {
-                                if (existingRes.error) {
-                                    return existingRes;
-                                }
-                                var existing = existingRes.data;
-                                var updatePayload = Object.assign({}, payload);
-                                delete updatePayload.id;
-                                ['session_date', 'source', 'airtable_id', 'submitted_by', 'submitted_by_email', 'submitted_by_firm'].forEach(function(k) {
-                                    delete updatePayload[k];
-                                });
-                                if (!updatePayload.cohort_date) delete updatePayload.cohort_date;
-                                updatePayload.updated_at = new Date().toISOString();
-                                if (existing && existing.id) {
-                                    return supabase.from('founder_startups').update(updatePayload).eq('id', existing.id).select().single()
-                                        .then(function(up) { return up.data ? { data: up.data, id: up.data.id } : up; });
-                                }
-                                var insertPayload = Object.assign({}, payload, { source: 'direct' });
-                                return supabase.from('founder_startups').insert(insertPayload).select().single()
-                                    .then(function(ins) { return ins.data ? { data: ins.data, id: ins.data.id } : ins; });
-                            });
+                        var insertPayload = Object.assign({}, payload, { source: 'direct' });
+                        return supabase.from('founder_startups').insert(insertPayload).select().single()
+                            .then(function(ins) { return ins.data ? { data: ins.data, id: ins.data.id } : ins; });
                     })
                     .then(function(res) {
                         if (res && res.error) {
