@@ -523,18 +523,29 @@
     }
   }
 
-  function handlePopupSubmit(e, form) {
+  async function handlePopupSubmit(e, form) {
     e.preventDefault();
-    
-    var data = new FormData(form);
-    
-    fetch(form.action, {
-      method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' },
-      mode: 'no-cors'
-    }).then(function() {
-      // Show success state
+
+    var firstName = form.querySelector('[name="FIRSTNAME"]')?.value || '';
+    var email = form.querySelector('[name="EMAIL"]')?.value || '';
+
+    if (!email) return;
+
+    try {
+      const response = await fetch(
+        'https://asuophspmfqcnlzgqsfa.supabase.co/functions/v1/brevo-subscribe',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            firstName: firstName,
+            listId: 2
+          })
+        }
+      );
+
+      // Show success regardless — handle in Edge Function
       form.style.display = 'none';
       var successEl = document.getElementById(
         form.id === 'sib-form-home'
@@ -542,8 +553,7 @@
           : 'popup-success'
       );
       if (successEl) successEl.style.display = 'block';
-      
-      // Auto-close popup after 3 seconds
+
       setTimeout(function() {
         var popup = document.getElementById('newsletter-popup');
         if (popup) popup.style.bottom = '-400px';
@@ -554,18 +564,10 @@
           '1'
         );
       }, 3000);
-    }).catch(function() {
-      // On error still show success — Brevo no-cors
-      // always returns opaque response so we can't
-      // distinguish success from failure at the client
-      form.style.display = 'none';
-      var successEl = document.getElementById(
-        form.id === 'sib-form-home'
-          ? 'home-popup-success'
-          : 'popup-success'
-      );
-      if (successEl) successEl.style.display = 'block';
-    });
+
+    } catch(err) {
+      console.warn('Subscribe error:', err);
+    }
   }
 
   // Flywheel node interaction
