@@ -720,12 +720,50 @@ CREATE POLICY "Allow authenticated reads" ON accelerator_enquiries
     });
   }
 
-  // Also add Brevo script
-  var brevoScript = document.createElement('script');
-  brevoScript.defer = true;
-  brevoScript.src =
-    'https://sibforms.com/forms/end-form/build/main.js';
-  document.body.appendChild(brevoScript);
+  function handlePopupSubmit(e, form) {
+    e.preventDefault();
+    
+    var data = new FormData(form);
+    
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' },
+      mode: 'no-cors'
+    }).then(function() {
+      // Show success state
+      form.style.display = 'none';
+      var successEl = document.getElementById(
+        form.id === 'sib-form-home'
+          ? 'home-popup-success'
+          : 'popup-success'
+      );
+      if (successEl) successEl.style.display = 'block';
+      
+      // Auto-close popup after 3 seconds
+      setTimeout(function() {
+        var popup = document.getElementById('newsletter-popup');
+        if (popup) popup.style.bottom = '-400px';
+        sessionStorage.setItem(
+          form.id === 'sib-form-home'
+            ? 'vbf_home_popup'
+            : 'vbf_popup_dismissed',
+          '1'
+        );
+      }, 3000);
+    }).catch(function() {
+      // On error still show success — Brevo no-cors
+      // always returns opaque response so we can't
+      // distinguish success from failure at the client
+      form.style.display = 'none';
+      var successEl = document.getElementById(
+        form.id === 'sib-form-home'
+          ? 'home-popup-success'
+          : 'popup-success'
+      );
+      if (successEl) successEl.style.display = 'block';
+    });
+  }
 
 function handleContact(btn) {
   var name = (document.getElementById('accel-name').value || '').trim();
@@ -877,7 +915,7 @@ function handleContact(btn) {
 
       <!-- Brevo form — replace inner form block only, keep wrapper clean -->
       <div id="sib-container" style="text-align:left">
-        <form id="sib-form-popup" method="POST"
+        <form id="sib-form-popup" method="POST" onsubmit="handlePopupSubmit(event, this)"
           action="https://6dae7a0a.sibforms.com/serve/MUIFABlUSFolD7b5ymOdWTk-_R5-aRHnX_9_bDtFFMgT1SJrNOIpwzdcB-f2Way5DjPLcca8Wj6Zm7SLQRpXQIX_nkG99B6BYxdBsCsiuAebeGHIRRzmeWzXNYHp95LNHE2SWJswWAoFEoYPdZluu_JsRHoynpEcQmUiroPTFWi2swRmsA8yQEaMzHdvu4FCX-1wx-UC92RE9C2Ekw=="
           data-type="subscription"
           style="display:flex;gap:0.5rem;margin-bottom:0.75rem">
