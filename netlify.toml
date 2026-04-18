@@ -18,3 +18,22 @@
   to = "https://www.watchpivot.tv/"
   status = 301
   force = true
+
+# Unpublished pending counsel review — redirect old URLs to blog index
+[[redirects]]
+  from = "/blog/beyond-pattern-recognition-how-deep-ecosystem-relationships-surface-better-founders"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/beyond-pattern-recognition-how-deep-ecosystem-relationships-surface-better-founders/"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/beyond-pattern-recognition-how-deep-ecosystem-relationships-surface-better-founders.html"
+  to = "/blog"
+  status = 301
+  force = true
