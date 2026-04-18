@@ -28,6 +28,12 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const pathname = request.nextUrl.pathname
+
+  // Public routes (no auth required). /privacy must stay reachable while logged out.
+  if (pathname === "/privacy") {
+    return response
+  }
+
   const isProtectedRoute =
     pathname.startsWith("/dashboard") || pathname.startsWith("/admin")
   const isLoginPage = pathname === "/login"

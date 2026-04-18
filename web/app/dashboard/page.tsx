@@ -5,17 +5,23 @@ import { FounderbaseTable } from "@/components/founderbase-table"
 export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: rows, error } = await supabase
-    .from("founderbase")
-    .select("*")
+    .from("founder_startups_latest")
+    .select(
+      "id, company_name, founder_name, email, stage, industry, city, state_region, website, one_liner, current_ask, is_raising, deck_url, third_party_consent, created_at"
+    )
+    .eq("third_party_consent", true) // explicit gate — admin client bypasses RLS
     .order("created_at", { ascending: false })
 
   const displayColumns: string[] = []
-  const safeRows: { id: string; recordName: string | null; [key: string]: unknown }[] = []
+  const safeRows: { id: string; recordName: string | null; [key: string]: unknown }[] =
+    []
 
   if (rows && rows.length > 0) {
     const allKeys = Object.keys(rows[0] as object)
     displayColumns.push(
-      ...allKeys.filter((k) => k !== "email")
+      ...allKeys.filter(
+        (k) => k !== "email" && k !== "third_party_consent"
+      )
     )
     for (const row of rows as Record<string, unknown>[]) {
       const { email: _email, id, ...rest } = row

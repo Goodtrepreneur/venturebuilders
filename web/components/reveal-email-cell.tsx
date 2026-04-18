@@ -18,7 +18,12 @@ export function RevealEmailCell({ recordId, recordName }: RevealEmailCellProps) 
   async function handleReveal() {
     setLoading(true)
     try {
-      const { email: fetchedEmail } = await getEmailForRecord(recordId)
+      const { email: fetchedEmail, error } = await getEmailForRecord(recordId)
+      if (error || !fetchedEmail) {
+        setEmail(null)
+        setRevealed(true)
+        return
+      }
       setEmail(fetchedEmail)
       setRevealed(true)
       await logEmailReveal(recordId, recordName)

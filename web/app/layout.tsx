@@ -47,6 +47,14 @@ gtag('config', 'G-8R4HG16TTS');
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <footer className="border-t px-6 py-6 text-center">
+          <a
+            href="/privacy"
+            className="text-sm text-muted-foreground hover:underline"
+          >
+            Privacy Policy
+          </a>
+        </footer>
         <Toaster richColors position="top-center" closeButton />
       </body>
     </html>
