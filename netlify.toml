@@ -37,3 +37,58 @@
   to = "/blog"
   status = 301
   force = true
+
+# Legacy pages removed from repo — send old URLs to current destinations
+[[redirects]]
+  from = "/test"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/test/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/test.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accelerator"
+  to = "/foraccelerators"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accelerator/"
+  to = "/foraccelerators"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accelerator.html"
+  to = "/foraccelerators"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bulk-upload"
+  to = "/foraccelerators"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bulk-upload/"
+  to = "/foraccelerators"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bulk-upload.html"
+  to = "/foraccelerators"
+  status = 301
+  force = true
