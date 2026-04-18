@@ -22,15 +22,37 @@
 <body>
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="index.html"><img src="logo-dark.png" alt="Venture Builders Fund logo"></a>
+    <a class="nav-logo" href="/"><img src="logo-dark.png" alt="Venture Builders Fund logo"></a>
     <ul class="nav-links">
       <li><a href="/#thesis">Fund</a></li>
       <li><a href="/foraccelerators">Accelerator</a></li>
+      <li><a href="/forbuilders">Builders</a></li>
       <li><a href="/forfounders">Founders</a></li>
     </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <a href="https://www.watchpivot.tv/" target="_blank" rel="noopener noreferrer" class="nav-cta">Pivot</a>
   </div>
 </nav>
+  <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+    <div class="nav-drawer-inner">
+      <ul class="nav-drawer-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#thesis">Fund</a></li>
+        <li><a href="/foraccelerators">Accelerator</a></li>
+        <li><a href="/forbuilders">Builders</a></li>
+        <li><a href="/forfounders">Founders</a></li>
+      </ul>
+      <div class="nav-drawer-ctas">
+        <a href="https://www.watchpivot.tv/" target="_blank" rel="noopener noreferrer" class="nav-drawer-pivot">Pivot</a>
+        <a href="/founder" class="nav-drawer-join">Get Access</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-overlay" id="nav-overlay"></div>
 
 <main>
   <section style="background:#fff;padding:9rem 2rem 5rem;">
@@ -84,6 +106,38 @@
 </footer>
 
 <script defer>
+  (function() {
+    var btn = document.getElementById('nav-hamburger');
+    var drawer = document.getElementById('nav-drawer');
+    var overlay = document.getElementById('nav-overlay');
+    if (!btn || !drawer || !overlay) return;
+    function openMenu() {
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    btn.addEventListener('click', function() {
+      drawer.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    overlay.addEventListener('click', closeMenu);
+    drawer.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+  }());
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
