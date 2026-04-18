@@ -1,0 +1,20 @@
+# Venture Builders Fund — Netlify (static site root)
+# Pivot library lives at https://www.watchpivot.tv/
+
+[[redirects]]
+  from = "/pivot"
+  to = "https://www.watchpivot.tv/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pivot/"
+  to = "https://www.watchpivot.tv/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pivot.html"
+  to = "https://www.watchpivot.tv/"
+  status = 301
+  force = true
