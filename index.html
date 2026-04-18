@@ -45,7 +45,6 @@
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-free">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="vbf.css">
-  <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
   <style>.two-col{display:grid;gap:4rem}@media(min-width:768px){.two-col{grid-template-columns:1fr 1fr;align-items:center}}.hero-img::after{background:linear-gradient(to bottom,rgba(8,8,8,0.97) 0%,rgba(8,8,8,0.69) 45%,rgba(8,8,8,1) 100%)}</style>
 <script type="application/ld+json">
 {
@@ -61,7 +60,7 @@
         "url": "https://venturebuilders.fund/logo-dark.png"
       },
       "description": "An early-stage venture fund investing in exceptional founders emerging from vetted accelerators and venture builders across North America.",
-      "foundingDate": "2024",
+      "foundingDate": "2026",
       "founders": [
         { "@type": "Person", "name": "Jillian Friot" },
         { "@type": "Person", "name": "Steve Hayton" }
@@ -160,7 +159,7 @@
         <div class="pillar-card reveal">
           <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
           <h3>Community &amp; Content</h3>
-          <p>A growing network of founders, mentors, and ecosystem builders united by a shared mission to support the overlooked. Pivot, our founder story platform, is where investors and founders find each other through real stories.</p>
+          <p>A growing network of founders, mentors, and ecosystem builders united by a shared mission to support the overlooked. Pivot, our founder story platform, is where founder stories reach the people who care about them.</p>
           <a href="forfounders.html" class="pillar-link">Join the community <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
         <div class="pillar-card reveal">
@@ -368,6 +367,7 @@
         incredibly quick to respond and consistently makes thoughtful
         introductions that have opened meaningful doors for us."</p>
         <p class="quote-attr">Paige McPheely, Founder <span>Base</span></p>
+        <p style="font-size:0.68rem;line-height:1.5;color:rgba(255,255,255,0.42);margin:1rem 0 0;max-width:36rem;margin-left:auto;margin-right:auto;text-align:center;">Paige McPheely is not a client or investor of Venture Builders Fund. No compensation was provided for this statement. No material conflicts of interest.</p>
       </div>
 
       <!-- Slide 2 -->
@@ -377,6 +377,7 @@
         infectious energy that makes you feel like you're building
         something important together."</p>
         <p class="quote-attr">Melissa Wallace, Co-founder <span>Fierce Foundry</span></p>
+        <p style="font-size:0.68rem;line-height:1.5;color:rgba(255,255,255,0.42);margin:1rem 0 0;max-width:36rem;margin-left:auto;margin-right:auto;text-align:center;">Melissa Wallace is not a client or investor of Venture Builders Fund. No compensation was provided for this statement. No material conflicts of interest.</p>
       </div>
 
       <!-- Dots -->
@@ -494,82 +495,6 @@
     testimonialTimer = setInterval(nextSlide, 6000);
   }
 
-  // Homepage newsletter popup — trigger on flywheel section
-  var homePopupShown = false;
-  var homePopupDismissed = sessionStorage.getItem('vbf_home_popup');
-
-  function closeHomePopup() {
-    document.getElementById('newsletter-popup').style.bottom = '-400px';
-    sessionStorage.setItem('vbf_home_popup', '1');
-    homePopupDismissed = true;
-  }
-
-  if (!homePopupDismissed) {
-    var flywheelSection = document.querySelector('section.flywheel');
-
-    if (flywheelSection) {
-      var flywheelObs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting && !homePopupShown
-            && !homePopupDismissed) {
-            homePopupShown = true;
-            document.getElementById('newsletter-popup')
-              .style.bottom = '2rem';
-            flywheelObs.disconnect();
-          }
-        });
-      }, { threshold: 0.3 });
-      flywheelObs.observe(flywheelSection);
-    }
-  }
-
-  async function handlePopupSubmit(e, form) {
-    e.preventDefault();
-
-    var firstName = form.querySelector('[name="FIRSTNAME"]')?.value || '';
-    var email = form.querySelector('[name="EMAIL"]')?.value || '';
-
-    if (!email) return;
-
-    try {
-      const response = await fetch(
-        'https://asuophspmfqcnlzgqsfa.supabase.co/functions/v1/brevo-subscribe',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: email,
-            firstName: firstName,
-            listId: 2
-          })
-        }
-      );
-
-      // Show success regardless — handle in Edge Function
-      form.style.display = 'none';
-      var successEl = document.getElementById(
-        form.id === 'sib-form-home'
-          ? 'home-popup-success'
-          : 'popup-success'
-      );
-      if (successEl) successEl.style.display = 'block';
-
-      setTimeout(function() {
-        var popup = document.getElementById('newsletter-popup');
-        if (popup) popup.style.bottom = '-400px';
-        sessionStorage.setItem(
-          form.id === 'sib-form-home'
-            ? 'vbf_home_popup'
-            : 'vbf_popup_dismissed',
-          '1'
-        );
-      }, 3000);
-
-    } catch(err) {
-      console.warn('Subscribe error:', err);
-    }
-  }
-
   // Flywheel node interaction
   (function() {
     const nodeGroups = document.querySelectorAll('[data-node]');
@@ -647,91 +572,5 @@
     document.getElementById('cookie-banner').style.display = 'none';
   }
   </script>
-  <div id="newsletter-popup" style="position:fixed;bottom:-400px;
-    right:2rem;width:340px;background:#ffffff;border-radius:16px;
-    box-shadow:0 8px 48px rgba(0,0,0,0.18);z-index:9999;
-    overflow:hidden;transition:bottom 500ms cubic-bezier(0.25,0,0,1);
-    border:1.5px solid rgba(0,0,0,0.08);">
-
-    <div style="background:#0d0d0d;padding:1rem 1.25rem;display:flex;
-      align-items:center;justify-content:space-between;">
-      <p style="margin:0;font-size:0.72rem;font-weight:700;
-        letter-spacing:0.12em;text-transform:uppercase;
-        color:rgba(255,255,255,0.5);">Venture Builders</p>
-      <button onclick="closeHomePopup()"
-        style="background:transparent;border:none;
-        color:rgba(255,255,255,0.4);font-size:1.2rem;
-        cursor:pointer;line-height:1;padding:0;"
-        aria-label="Close">&times;</button>
-    </div>
-
-    <div style="height:3px;background:#E8344E;"></div>
-
-    <div style="padding:1.5rem 1.25rem;">
-      <h3 style="font-family:var(--font-head);font-size:1.15rem;
-        font-weight:800;color:var(--ink);margin:0 0 0.4rem;">
-        Stay in the loop</h3>
-      <p style="font-size:0.85rem;color:var(--ink-mid);
-        line-height:1.6;margin:0 0 1.25rem;">
-        Founder events, resources, and VBF updates —
-        straight to your inbox.</p>
-
-      <form id="sib-form-home" method="POST" onsubmit="handlePopupSubmit(event, this)"
-        action="https://6dae7a0a.sibforms.com/serve/MUIFAF1yh3BRt3pKPxYvjj0giaeYMi-B31cL4PTR43Fn056AsLqXCVho0uAvovfcLVfPV-GqMoDXlB_2odDppIKX40FoMaEmqib59SRwB63W9LGsy8kTnUVOC9Zra2aX_up3iY36wU0CUvuJwlkANQKLPEVkhCoHNmK40fQDaKYUsRoD45fl-JGAKLTDQDLi2xi0KMs_Qtprl7hDTw=="
-        data-type="subscription">
-
-        <input type="text" name="FIRSTNAME" placeholder="First name"
-          required data-required="true"
-          style="width:100%;padding:0.65rem 0.9rem;
-          border:1.5px solid rgba(0,0,0,0.12);border-radius:6px;
-          font-size:0.875rem;font-family:var(--font-body);
-          margin-bottom:0.5rem;box-sizing:border-box;outline:none;"
-          onfocus="this.style.borderColor='#E8344E'"
-          onblur="this.style.borderColor='rgba(0,0,0,0.12)'">
-
-        <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;">
-          <input type="text" name="EMAIL" placeholder="your@email.com"
-            required data-required="true"
-            style="flex:1;padding:0.65rem 0.9rem;
-            border:1.5px solid rgba(0,0,0,0.12);border-radius:6px;
-            font-size:0.875rem;font-family:var(--font-body);outline:none;"
-            onfocus="this.style.borderColor='#E8344E'"
-            onblur="this.style.borderColor='rgba(0,0,0,0.12)'">
-          <button type="submit"
-            style="padding:0.65rem 1.1rem;background:#E8344E;
-            color:#fff;border:none;border-radius:6px;
-            font-family:var(--font-head);font-weight:800;
-            font-size:0.85rem;cursor:pointer;white-space:nowrap;"
-            onmouseover="this.style.background='#c42840'"
-            onmouseout="this.style.background='#E8344E'">
-            Subscribe
-          </button>
-        </div>
-
-        <p style="font-size:0.72rem;color:var(--ink-soft);
-          line-height:1.5;margin:0;">
-          We use Brevo for email.
-          <a href="https://www.brevo.com/en/legal/privacypolicy/"
-            target="_blank"
-            style="color:#E8344E;text-decoration:none;">
-            Privacy policy</a>.
-          Unsubscribe any time.
-        </p>
-
-        <input type="text" name="email_address_check"
-          value="" class="input--hidden">
-        <input type="hidden" name="locale" value="en">
-      </form>
-
-      <div id="home-popup-success" style="display:none;
-        text-align:center;padding:1rem 0;">
-        <p style="font-family:var(--font-head);font-weight:800;
-          color:#E8344E;font-size:1rem;margin:0 0 0.25rem;">
-          You're in.</p>
-        <p style="font-size:0.85rem;color:var(--ink-mid);margin:0;">
-          We'll be in touch.</p>
-      </div>
-    </div>
-  </div>
 </body>
 </html>
