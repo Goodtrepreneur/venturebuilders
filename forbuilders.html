@@ -120,6 +120,17 @@
     }
     .send-band h2 { font-family: var(--font-head); font-size: clamp(1.35rem, 3vw, 1.75rem); font-weight: 800; margin-bottom: 0.75rem; }
     .send-band p { color: rgba(255,255,255,0.65); font-size: 0.95rem; line-height: 1.65; margin-bottom: 1.5rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .vb-call-cards {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 640px) {
+      .vb-call-cards {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 <script type="application/ld+json">
 {
@@ -250,8 +261,7 @@
       </p>
 
       <!-- What to expect cards -->
-      <div style="display:grid;gap:1rem;margin-bottom:3rem;
-        grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+      <div class="vb-call-cards">
 
         <div class="reveal" style="padding:1.5rem;border-radius:12px;
           border:1.5px solid rgba(0,0,0,0.08)">
@@ -282,7 +292,7 @@
           border:1.5px solid rgba(0,0,0,0.08)">
           <p style="font-family:var(--font-head);font-size:0.8rem;
             font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
-            color:var(--accent);margin-bottom:0.5rem">Investor Access</p>
+            color:var(--accent);margin-bottom:0.5rem">Investor Perspectives</p>
           <p style="font-size:0.9rem;color:var(--ink-mid);
             line-height:1.65;margin:0">
             Direct access to VBF and investor partners — firesides,
