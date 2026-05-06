@@ -256,9 +256,9 @@
                 <h2 class="text-lg font-bold text-accentCyan mb-4">Program (optional)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label for="program_name" class="block text-sm font-medium text-slate-300 mb-1">Venture Builder name</label>
+                        <label for="accelerator_name" class="block text-sm font-medium text-slate-300 mb-1">Venture Builder name</label>
                         <p class="text-slate-500 text-xs mb-2">(Accelerator / Studio / Innovation Hub name)</p>
-                        <input type="text" id="program_name" name="program_name" placeholder="e.g. Accelerator X"
+                        <input type="text" id="accelerator_name" name="accelerator_name" placeholder="e.g. Accelerator X"
                             class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                     </div>
                     <div>
@@ -808,7 +808,7 @@
             syncCurrentAskVisibility();
 
             function fillForm(row, coFounders) {
-                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','uncommitted_amount','round_close_date','investment_vehicle','mrr','city','state_region','country','program_name'];
+                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','uncommitted_amount','round_close_date','investment_vehicle','mrr','city','state_region','country','accelerator_name'];
                 names.forEach(function(name) {
                     var el = founderForm.elements[name];
                     if (el && row[name] != null) el.value = row[name] || '';
