@@ -506,7 +506,7 @@
             <div class="rounded-2xl border border-slate-700 bg-cardMain p-6 reveal">
                 <div style="margin-bottom: 16px;">
                     <div style="display:flex;align-items:flex-start;gap:10px;">
-                        <input type="checkbox" id="marketing_consent" name="marketing_consent" required
+                        <input type="checkbox" id="marketing_consent" name="marketing_consent"
                             class="mt-1 h-4 w-4 shrink-0 rounded border-slate-600 bg-slate-800 text-accentCyan focus:ring-accentCyan">
                         <label for="marketing_consent" style="line-height:1.5;font-size:0.875rem;" class="text-slate-200">I agree to be added to the Venture Builders Fund founder mailing list for founder news, VBF programming, and invitations to events and webinars.</label>
                     </div>
@@ -688,7 +688,6 @@
                 var payload = {};
                 fd.forEach(function(value, key) { payload[key] = value || null; });
                 delete payload.co_founder_names;
-                delete payload.marketing_consent;
                 delete payload.third_party_consent;
                 var websiteVal = (payload.website || '').trim();
                 if (websiteVal && !/^https?:\/\//i.test(websiteVal)) {
@@ -739,6 +738,7 @@
                 payload.founder_is_poc = !!(founderForm.elements['founder_is_poc'] && founderForm.elements['founder_is_poc'].checked);
                 payload.founder_is_lgbtq = !!(founderForm.elements['founder_is_lgbtq'] && founderForm.elements['founder_is_lgbtq'].checked);
                 payload.third_party_consent = !!(founderForm.elements['third_party_consent'] && founderForm.elements['third_party_consent'].checked);
+                payload.marketing_consent = !!(founderForm.elements['marketing_consent'] && founderForm.elements['marketing_consent'].checked);
                 payload.how_you_heard = null;
                 ['city', 'state_region', 'country'].forEach(function(k) {
                     if (payload[k] !== undefined && (payload[k] === '' || payload[k] == null)) payload[k] = null;
