@@ -360,6 +360,12 @@
                         <input type="number" id="current_ask" name="current_ask" min="0" placeholder="Amount in USD (e.g. 500000)"
                             class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
                     </div>
+                    <div id="valuation-cap-field-wrap" style="display:none">
+                        <label for="valuation_cap" class="block text-sm font-medium text-slate-300 mb-1">Valuation Cap</label>
+                        <input type="text" id="valuation_cap" name="valuation_cap" placeholder="e.g. $5M"
+                            class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 text-white placeholder-slate-500 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan">
+                        <p class="mt-1 text-xs text-slate-500">For SAFE or convertible note rounds</p>
+                    </div>
                     <div id="raising-extra-fields-wrap" class="grid grid-cols-1 md:grid-cols-2 gap-4" style="display:none">
                         <div>
                             <label for="uncommitted_amount" class="block text-sm font-medium text-slate-300 mb-1">Amount still uncommitted ($)</label>
@@ -732,6 +738,11 @@
                 }
                 var investmentVehicleEl = founderForm.elements['investment_vehicle'];
                 payload.investment_vehicle = investmentVehicleEl && investmentVehicleEl.value ? investmentVehicleEl.value : null;
+                var vcapEl = founderForm.elements['valuation_cap'];
+                if (vcapEl) {
+                    var vcapTrim = String(vcapEl.value || '').trim();
+                    payload.valuation_cap = vcapTrim === '' ? null : vcapTrim;
+                }
                 payload.is_post_product = !!(founderForm.elements['is_post_product'] && founderForm.elements['is_post_product'].checked);
                 payload.is_post_revenue = !!(founderForm.elements['is_post_revenue'] && founderForm.elements['is_post_revenue'].checked);
                 payload.founder_is_female = !!(founderForm.elements['founder_is_female'] && founderForm.elements['founder_is_female'].checked);
@@ -782,6 +793,7 @@
             function syncCurrentAskVisibility() {
                 var noteWrap = document.getElementById('fundraising-context-wrap');
                 var wrap = document.getElementById('current-ask-field-wrap');
+                var vcWrap = document.getElementById('valuation-cap-field-wrap');
                 var raiseWrap = document.getElementById('raising-extra-fields-wrap');
                 var askEl = founderForm.elements['current_ask'];
                 var isRaisingEl = founderForm.elements['is_raising'];
@@ -789,14 +801,17 @@
                 if (isRaisingEl.checked) {
                     if (noteWrap) noteWrap.style.display = '';
                     wrap.style.display = '';
+                    if (vcWrap) vcWrap.style.display = '';
                     if (raiseWrap) raiseWrap.style.display = '';
                     askEl.setAttribute('required', 'required');
                 } else {
                     if (noteWrap) noteWrap.style.display = 'none';
                     wrap.style.display = 'none';
+                    if (vcWrap) vcWrap.style.display = 'none';
                     if (raiseWrap) raiseWrap.style.display = 'none';
                     askEl.value = '';
                     askEl.removeAttribute('required');
+                    if (founderForm.elements['valuation_cap']) founderForm.elements['valuation_cap'].value = '';
                     if (founderForm.elements['uncommitted_amount']) founderForm.elements['uncommitted_amount'].value = '';
                     if (founderForm.elements['round_close_date']) founderForm.elements['round_close_date'].value = '';
                     if (founderForm.elements['investment_vehicle']) founderForm.elements['investment_vehicle'].value = '';
@@ -808,7 +823,7 @@
             syncCurrentAskVisibility();
 
             function fillForm(row, coFounders) {
-                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','uncommitted_amount','round_close_date','investment_vehicle','mrr','city','state_region','country','accelerator_name'];
+                var names = ['email','founder_name','phone','company_name','one_liner','website','stage','industry','description','target_market','business_model','traction','funding_to_date','current_ask','valuation_cap','uncommitted_amount','round_close_date','investment_vehicle','mrr','city','state_region','country','accelerator_name'];
                 names.forEach(function(name) {
                     var el = founderForm.elements[name];
                     if (el && row[name] != null) el.value = row[name] || '';
