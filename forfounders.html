@@ -128,17 +128,7 @@
     /* Sessions section */
     .sessions-grid {
       max-width: var(--max); margin: 0 auto;
-      display: grid; gap: 4rem;
     }
-    @media (min-width: 768px) { .sessions-grid { grid-template-columns: 2fr 3fr; align-items: start; } }
-    .calendar-wrap { border-radius: 12px; overflow: hidden; border: 1.5px solid rgba(0,0,0,0.08); }
-    .calendar-head {
-      background: var(--ink); color: var(--white); padding: 1.25rem 1.5rem;
-      display: flex; align-items: center; gap: 0.75rem;
-    }
-    .calendar-head svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; }
-    .calendar-head h4 { font-family: var(--font-head); font-size: 0.95rem; font-weight: 800; }
-    .calendar-head p { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 0.15rem; }
 
     /* Profile form */
     .profile-form-wrap {
@@ -344,7 +334,7 @@
     </div>
   </section>
 
-  <!-- SESSIONS + CALENDAR -->
+  <!-- SESSIONS -->
   <section class="sec" style="background:#fff;border-top:1px solid rgba(0,0,0,0.06)" id="sessions">
     <div class="sessions-grid" style="max-width:1200px;margin:0 auto">
       <div class="reveal">
@@ -361,23 +351,6 @@
         </ul>
         <div style="margin-top:2rem">
           <a href="/founder" class="btn-accent">Join to access sessions</a>
-        </div>
-      </div>
-      <div class="reveal">
-        <div class="calendar-wrap">
-          <div class="calendar-head">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            <div>
-              <h4>Sessions</h4>
-              <p>Open to all founders</p>
-            </div>
-          </div>
-          <iframe
-            src="https://luma.com/embed/calendar/cal-oQ8mbJbsazswrUr/events"
-            width="100%" height="480" frameborder="0"
-            style="display:block;border:none;"
-            allowfullscreen="" aria-hidden="false" tabindex="0"
-          ></iframe>
         </div>
       </div>
     </div>
