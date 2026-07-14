@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Venture Builders Fund — One-Pager Access</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root{
+    --coral:#e6304f;
+    --coral-dark:#c22843;
+    --navy:#171c37;
+    --navy-2:#1f2547;
+    --white:#ffffff;
+    --ink:#171c37;
+    --muted:#7d84a6;
+    --error:#c22843;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    background:var(--navy);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(230,48,79,0.18), transparent 45%),
+      radial-gradient(circle at 85% 80%, rgba(230,48,79,0.12), transparent 45%);
+  }
+
+  /* ---------- Gate screen ---------- */
+  #gate{
+    width:100%;
+    max-width:440px;
+    background:var(--white);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 30px 60px rgba(0,0,0,0.35);
+    animation:riseIn 500ms cubic-bezier(0.25,0,0,1);
+  }
+
+  @keyframes riseIn{
+    from{opacity:0;transform:translateY(16px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  #gate .brand{
+    background:var(--coral);
+    padding:36px 32px 30px;
+    text-align:center;
+    background-image:linear-gradient(135deg, var(--coral) 0%, var(--coral-dark) 100%);
+  }
+
+  #gate .brand .mark{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    color:var(--white);
+    font-weight:800;
+    font-size:1.5rem;
+    letter-spacing:-0.01em;
+  }
+
+  #gate .brand .mark svg{width:30px;height:30px;flex-shrink:0;}
+
+  #gate .brand .logo-img{
+    max-width:260px;
+    width:80%;
+    height:auto;
+    display:block;
+    margin:0 auto;
+  }
+
+  #gate .brand .sub{
+    color:rgba(255,255,255,0.85);
+    font-weight:700;
+    font-size:0.7rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    margin-top:4px;
+  }
+
+  #gate .body{
+    padding:32px;
+  }
+
+  #gate h1{
+    font-size:1.15rem;
+    color:var(--ink);
+    line-height:1.3;
+    margin-bottom:6px;
+  }
+
+  #gate p.desc{
+    color:var(--muted);
+    font-size:0.9rem;
+    line-height:1.5;
+    margin-bottom:24px;
+  }
+
+  label.field-label{
+    display:block;
+    font-size:0.78rem;
+    font-weight:700;
+    color:var(--ink);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    margin-bottom:8px;
+  }
+
+  #password{
+    width:100%;
+    padding:0.85rem 1rem;
+    border:1.5px solid #e2e4ee;
+    border-radius:10px;
+    font-size:1rem;
+    color:var(--ink);
+    background:#f8f9fc;
+    transition:border-color 180ms ease, background 180ms ease;
+  }
+
+  #password:focus{
+    outline:none;
+    border-color:var(--coral);
+    background:var(--white);
+  }
+
+  #password.shake{
+    animation:shake 400ms ease;
+    border-color:var(--error);
+  }
+
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-6px);}
+    40%{transform:translateX(6px);}
+    60%{transform:translateX(-4px);}
+    80%{transform:translateX(4px);}
+  }
+
+  .confirm-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin:20px 0 22px;
+  }
+
+  .confirm-row input[type="checkbox"]{
+    width:19px;
+    height:19px;
+    margin-top:2px;
+    accent-color:var(--coral);
+    flex-shrink:0;
+    cursor:pointer;
+  }
+
+  .confirm-row label{
+    font-size:0.86rem;
+    color:var(--ink);
+    line-height:1.45;
+    cursor:pointer;
+  }
+
+  #enter-btn{
+    width:100%;
+    padding:0.9rem 1rem;
+    border:none;
+    border-radius:10px;
+    background:var(--coral);
+    color:var(--white);
+    font-size:0.95rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:transform 200ms cubic-bezier(0.25,0,0,1), background 200ms ease, box-shadow 200ms ease;
+    box-shadow:0 8px 20px rgba(230,48,79,0.3);
+  }
+
+  #enter-btn:hover{
+    transform:translateY(-2px);
+    background:var(--coral-dark);
+  }
+
+  #enter-btn:disabled{
+    background:#d8dae6;
+    box-shadow:none;
+    cursor:not-allowed;
+    transform:none;
+  }
+
+  #error-msg{
+    color:var(--error);
+    font-size:0.82rem;
+    font-weight:600;
+    margin-top:12px;
+    min-height:1.1em;
+    text-align:center;
+  }
+
+  /* ---------- Content screen ---------- */
+  #content{
+    display:none;
+    width:100%;
+    max-width:900px;
+  }
+
+  #content.visible{
+    display:block;
+    animation:riseIn 450ms cubic-bezier(0.25,0,0,1);
+  }
+
+  #content .frame{
+    background:var(--white);
+    border-radius:16px;
+    padding:16px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.35);
+  }
+
+  #content img{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:8px;
+  }
+
+  #content .toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:6px 8px 16px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  #content .toolbar span{
+    color:var(--muted);
+    font-size:0.78rem;
+    letter-spacing:0.03em;
+  }
+
+  #content .toolbar a{
+    color:var(--coral);
+    font-size:0.82rem;
+    font-weight:700;
+    text-decoration:none;
+  }
+
+  #content .toolbar a:hover{
+    text-decoration:underline;
+  }
+
+  #content .fallback{
+    display:none;
+    padding:60px 32px;
+    text-align:center;
+    color:var(--muted);
+    font-size:0.9rem;
+    line-height:1.6;
+  }
+
+  @media (max-width:480px){
+    #gate .brand{padding:28px 24px 24px;}
+    #gate .body{padding:24px;}
+  }
+</style>
+</head>
+<body>
+
+  <div id="gate">
+    <div class="brand">
+      <img src="vbnobgbk.png" alt="Venture Builders Fund" class="logo-img" id="logo-img">
+      <div class="sub">Fund One-Pager</div>
+    </div>
+    <div class="body">
+      <h1>This page is restricted.</h1>
+      <p class="desc">Access is limited to people with an existing relationship to Venture Builders Fund. Enter the password you were given.</p>
+
+      <label class="field-label" for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter password" autocomplete="off" spellcheck="false">
+
+      <div class="confirm-row">
+        <input type="checkbox" id="confirm-check">
+        <label for="confirm-check">I confirm I know the Venture Builders Fund team and was given access to this page directly by them.</label>
+      </div>
+
+      <button id="enter-btn" disabled>View one-pager</button>
+      <div id="error-msg"></div>
+    </div>
+  </div>
+
+  <div id="content">
+    <div class="frame">
+      <div class="toolbar">
+        <span>Venture Builders Fund — One-Pager</span>
+        <a href="#" id="lock-again">Lock page</a>
+      </div>
+      <img alt="Venture Builders Fund one-pager" id="onepager-img">
+      <div class="fallback" id="fallback-msg">
+        Couldn't load the one-pager. The signed link may have expired — click "Lock page" and re-enter your password to get a fresh one.
+      </div>
+    </div>
+  </div>
+
+<script defer>
+  // Server-side check: this function only tells the browser whether the
+  // password was right and, if so, hands back a short-lived signed URL to
+  // the private image. The password list itself never ships to the client.
+  var GATE_ENDPOINT = 'https://asuophspmfqcnlzgqsfa.supabase.co/functions/v1/onepager-gate';
+
+  var gate = document.getElementById('gate');
+  var content = document.getElementById('content');
+  var passwordInput = document.getElementById('password');
+  var confirmCheck = document.getElementById('confirm-check');
+  var enterBtn = document.getElementById('enter-btn');
+  var errorMsg = document.getElementById('error-msg');
+  var img = document.getElementById('onepager-img');
+  var fallback = document.getElementById('fallback-msg');
+  var lockAgain = document.getElementById('lock-again');
+
+  function updateButtonState(){
+    var hasPassword = passwordInput.value.trim().length > 0;
+    enterBtn.disabled = !(hasPassword && confirmCheck.checked);
+  }
+
+  passwordInput.addEventListener('input', updateButtonState);
+  confirmCheck.addEventListener('change', updateButtonState);
+
+  function setLoading(isLoading){
+    enterBtn.disabled = isLoading || !(passwordInput.value.trim().length > 0 && confirmCheck.checked);
+    enterBtn.textContent = isLoading ? 'Checking…' : 'View one-pager';
+  }
+
+  function attemptEntry(){
+    if (enterBtn.disabled) return;
+
+    var entered = passwordInput.value.trim();
+    setLoading(true);
+    errorMsg.textContent = '';
+
+    fetch(GATE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: entered })
+    })
+      .then(function(res){
+        return res.json().then(function(data){ return { ok: res.ok, data: data }; });
+      })
+      .then(function(result){
+        setLoading(false);
+        if (result.ok && result.data && result.data.url){
+          img.src = result.data.url;
+          gate.style.display = 'none';
+          content.classList.add('visible');
+        } else {
+          showError('That password isn\'t recognized. Double-check with the person who sent you here.');
+        }
+      })
+      .catch(function(){
+        setLoading(false);
+        showError('Couldn\'t reach the server. Check your connection and try again.');
+      });
+  }
+
+  function showError(message){
+    errorMsg.textContent = message;
+    passwordInput.classList.remove('shake');
+    void passwordInput.offsetWidth;
+    passwordInput.classList.add('shake');
+    passwordInput.select();
+  }
+
+  enterBtn.addEventListener('click', attemptEntry);
+
+  passwordInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter') attemptEntry();
+  });
+
+  img.addEventListener('error', function(){
+    img.style.display = 'none';
+    fallback.style.display = 'block';
+  });
+
+  var logoImg = document.getElementById('logo-img');
+  logoImg.addEventListener('error', function(){
+    logoImg.outerHTML = '<div style="color:#fff;font-weight:800;font-size:1.4rem;letter-spacing:-0.01em;">Venture Builders <span style="opacity:0.7;font-weight:700;">FUND</span></div>';
+  });
+
+  lockAgain.addEventListener('click', function(e){
+    e.preventDefault();
+    content.classList.remove('visible');
+    gate.style.display = 'block';
+    passwordInput.value = '';
+    confirmCheck.checked = false;
+    img.removeAttribute('src');
+    setLoading(false);
+    updateButtonState();
+  });
+</script>
+
+</body>
+</html>
