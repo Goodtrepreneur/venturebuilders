@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Venture Builders Fund — One-Pager Access</title>
+<title>Venture Builders Fund — Private Access</title>
 <meta name="robots" content="noindex, nofollow">
 <style>
   :root{
@@ -262,9 +262,70 @@
     line-height:1.6;
   }
 
+  /* ---------- Menu ---------- */
+  #menu{
+    display:grid;
+    gap:12px;
+    padding:8px;
+  }
+
+  .menu-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    width:100%;
+    text-align:left;
+    background:#f8f9fc;
+    border:1.5px solid #e2e4ee;
+    border-radius:12px;
+    padding:20px 22px;
+    cursor:pointer;
+    transition:border-color 180ms ease, transform 180ms cubic-bezier(0.25,0,0,1), background 180ms ease;
+    font-family:inherit;
+  }
+
+  .menu-item:hover{
+    border-color:var(--coral);
+    background:var(--white);
+    transform:translateY(-2px);
+  }
+
+  .menu-item .menu-text{display:flex; flex-direction:column; gap:4px;}
+
+  .menu-item .menu-title{
+    font-size:1rem;
+    font-weight:700;
+    color:var(--ink);
+  }
+
+  .menu-item .menu-desc{
+    font-size:0.82rem;
+    color:var(--muted);
+  }
+
+  .menu-item .menu-arrow{
+    color:var(--coral);
+    font-size:1.2rem;
+    font-weight:700;
+    flex-shrink:0;
+  }
+
+  #back-to-menu{
+    display:none;
+    margin:0 8px 12px;
+    color:var(--coral);
+    font-size:0.82rem;
+    font-weight:700;
+    text-decoration:none;
+  }
+
+  #back-to-menu:hover{text-decoration:underline;}
+
   @media (max-width:480px){
     #gate .brand{padding:28px 24px 24px;}
     #gate .body{padding:24px;}
+    .menu-item{padding:16px 18px;}
   }
 </style>
 </head>
@@ -273,7 +334,7 @@
   <div id="gate">
     <div class="brand">
       <img src="vbnobgwt.png" alt="Venture Builders Fund" class="logo-img" id="logo-img">
-      <div class="sub">Fund One-Pager</div>
+      <div class="sub">Private Access</div>
     </div>
     <div class="body">
       <h1>This page is restricted.</h1>
@@ -287,7 +348,7 @@
         <label for="confirm-check">I confirm I know the Venture Builders Fund team and was given access to this page directly by them.</label>
       </div>
 
-      <button id="enter-btn" disabled>View one-pager</button>
+      <button id="enter-btn" disabled>View content</button>
       <div id="error-msg"></div>
     </div>
   </div>
@@ -295,10 +356,37 @@
   <div id="content">
     <div class="frame">
       <div class="toolbar">
-        <span>Venture Builders Fund — One-Pager</span>
+        <span id="toolbar-label">Venture Builders Fund — Private Access</span>
         <a href="#" id="lock-again">Lock page</a>
       </div>
-      <img alt="Venture Builders Fund one-pager" id="onepager-img">
+
+      <a href="#" id="back-to-menu">&larr; Back to all items</a>
+
+      <div id="menu">
+        <button class="menu-item" data-target="onepager" type="button">
+          <span class="menu-text">
+            <span class="menu-title">Fund One-Pager</span>
+            <span class="menu-desc">The core VBF one-pager</span>
+          </span>
+          <span class="menu-arrow">&rarr;</span>
+        </button>
+        <button class="menu-item" data-target="alphalab" type="button">
+          <span class="menu-text">
+            <span class="menu-title">AlphaLab — Community Deep Dive</span>
+            <span class="menu-desc">Pittsburgh, PA. Opens in a new tab.</span>
+          </span>
+          <span class="menu-arrow">&rarr;</span>
+        </button>
+        <button class="menu-item" data-target="blueStartups" type="button">
+          <span class="menu-text">
+            <span class="menu-title">Blue Startups — Community Deep Dive</span>
+            <span class="menu-desc">Honolulu, HI. Opens in a new tab.</span>
+          </span>
+          <span class="menu-arrow">&rarr;</span>
+        </button>
+      </div>
+
+      <img alt="Venture Builders Fund one-pager" id="onepager-img" style="display:none;">
       <div class="fallback" id="fallback-msg">
         Couldn't load the one-pager. The signed link may have expired — click "Lock page" and re-enter your password to get a fresh one.
       </div>
@@ -308,7 +396,8 @@
 <script defer>
   // Server-side check: this function only tells the browser whether the
   // password was right and, if so, hands back a short-lived signed URL to
-  // the private image. The password list itself never ships to the client.
+  // the private one-pager image, plus the two community deep-dive
+  // documents. The password list itself never ships to the client.
   var GATE_ENDPOINT = 'https://asuophspmfqcnlzgqsfa.supabase.co/functions/v1/onepager-gate';
 
   var gate = document.getElementById('gate');
@@ -320,6 +409,14 @@
   var img = document.getElementById('onepager-img');
   var fallback = document.getElementById('fallback-msg');
   var lockAgain = document.getElementById('lock-again');
+  var menu = document.getElementById('menu');
+  var backToMenu = document.getElementById('back-to-menu');
+  var toolbarLabel = document.getElementById('toolbar-label');
+  var menuItems = document.querySelectorAll('.menu-item');
+
+  var onepagerUrl = null;
+  var caseStudies = null; // { alphalab: html, blueStartups: html }
+  var caseStudyUrls = {}; // cached blob URLs so repeat clicks don't re-open new blobs
 
   function updateButtonState(){
     var hasPassword = passwordInput.value.trim().length > 0;
@@ -331,7 +428,7 @@
 
   function setLoading(isLoading){
     enterBtn.disabled = isLoading || !(passwordInput.value.trim().length > 0 && confirmCheck.checked);
-    enterBtn.textContent = isLoading ? 'Checking…' : 'View one-pager';
+    enterBtn.textContent = isLoading ? 'Checking…' : 'View content';
   }
 
   function attemptEntry(){
@@ -352,9 +449,11 @@
       .then(function(result){
         setLoading(false);
         if (result.ok && result.data && result.data.url){
-          img.src = result.data.url;
+          onepagerUrl = result.data.url;
+          caseStudies = result.data.caseStudies || null;
           gate.style.display = 'none';
           content.classList.add('visible');
+          showMenu();
         } else {
           showError('That password isn\'t recognized. Double-check with the person who sent you here.');
         }
@@ -372,6 +471,48 @@
     passwordInput.classList.add('shake');
     passwordInput.select();
   }
+
+  function showMenu(){
+    menu.style.display = 'grid';
+    backToMenu.style.display = 'none';
+    img.style.display = 'none';
+    fallback.style.display = 'none';
+    toolbarLabel.textContent = 'Venture Builders Fund — Private Access';
+  }
+
+  function showOnepager(){
+    menu.style.display = 'none';
+    backToMenu.style.display = 'inline-block';
+    fallback.style.display = 'none';
+    img.style.display = 'block';
+    img.src = onepagerUrl;
+    toolbarLabel.textContent = 'Venture Builders Fund — One-Pager';
+  }
+
+  function openCaseStudy(key, label){
+    if (!caseStudies || !caseStudies[key]) return;
+    if (!caseStudyUrls[key]){
+      var blob = new Blob([caseStudies[key]], { type: 'text/html' });
+      caseStudyUrls[key] = URL.createObjectURL(blob);
+    }
+    window.open(caseStudyUrls[key], '_blank');
+  }
+
+  menuItems.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var target = btn.getAttribute('data-target');
+      if (target === 'onepager'){
+        showOnepager();
+      } else {
+        openCaseStudy(target, btn.querySelector('.menu-title').textContent);
+      }
+    });
+  });
+
+  backToMenu.addEventListener('click', function(e){
+    e.preventDefault();
+    showMenu();
+  });
 
   enterBtn.addEventListener('click', attemptEntry);
 
@@ -396,6 +537,9 @@
     passwordInput.value = '';
     confirmCheck.checked = false;
     img.removeAttribute('src');
+    onepagerUrl = null;
+    caseStudies = null;
+    caseStudyUrls = {};
     setLoading(false);
     updateButtonState();
   });
