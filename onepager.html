@@ -208,6 +208,10 @@
     max-width:900px;
   }
 
+  #content.showing-case-study{
+    max-width:1200px;
+  }
+
   #content.visible{
     display:block;
     animation:riseIn 450ms cubic-bezier(0.25,0,0,1);
@@ -260,6 +264,21 @@
     color:var(--muted);
     font-size:0.9rem;
     line-height:1.6;
+  }
+
+  #case-study-wrap{
+    display:none;
+    width:100%;
+  }
+
+  #case-study-iframe{
+    width:100%;
+    height:80vh;
+    min-height:520px;
+    border:0;
+    border-radius:8px;
+    display:block;
+    background:var(--white);
   }
 
   /* ---------- Menu ---------- */
@@ -373,20 +392,23 @@
         <button class="menu-item" data-target="alphalab" type="button">
           <span class="menu-text">
             <span class="menu-title">AlphaLab — Community Deep Dive</span>
-            <span class="menu-desc">Pittsburgh, PA. Opens in a new tab.</span>
+            <span class="menu-desc">Pittsburgh, PA</span>
           </span>
           <span class="menu-arrow">&rarr;</span>
         </button>
         <button class="menu-item" data-target="blueStartups" type="button">
           <span class="menu-text">
             <span class="menu-title">Blue Startups — Community Deep Dive</span>
-            <span class="menu-desc">Honolulu, HI. Opens in a new tab.</span>
+            <span class="menu-desc">Honolulu, HI</span>
           </span>
           <span class="menu-arrow">&rarr;</span>
         </button>
       </div>
 
       <img alt="Venture Builders Fund one-pager" id="onepager-img" style="display:none;">
+      <div id="case-study-wrap">
+        <iframe id="case-study-iframe" title="Community deep dive"></iframe>
+      </div>
       <div class="fallback" id="fallback-msg">
         Couldn't load the one-pager. The signed link may have expired — click "Lock page" and re-enter your password to get a fresh one.
       </div>
@@ -413,10 +435,15 @@
   var backToMenu = document.getElementById('back-to-menu');
   var toolbarLabel = document.getElementById('toolbar-label');
   var menuItems = document.querySelectorAll('.menu-item');
+  var caseStudyWrap = document.getElementById('case-study-wrap');
+  var caseStudyIframe = document.getElementById('case-study-iframe');
 
   var onepagerUrl = null;
   var caseStudies = null; // { alphalab: html, blueStartups: html }
-  var caseStudyUrls = {}; // cached blob URLs so repeat clicks don't re-open new blobs
+  var caseStudyLabels = {
+    alphalab: 'AlphaLab — Community Deep Dive',
+    blueStartups: 'Blue Startups — Community Deep Dive'
+  };
 
   function updateButtonState(){
     var hasPassword = passwordInput.value.trim().length > 0;
@@ -476,6 +503,9 @@
     menu.style.display = 'grid';
     backToMenu.style.display = 'none';
     img.style.display = 'none';
+    caseStudyWrap.style.display = 'none';
+    caseStudyIframe.removeAttribute('srcdoc');
+    content.classList.remove('showing-case-study');
     fallback.style.display = 'none';
     toolbarLabel.textContent = 'Venture Builders Fund — Private Access';
   }
@@ -483,19 +513,26 @@
   function showOnepager(){
     menu.style.display = 'none';
     backToMenu.style.display = 'inline-block';
+    caseStudyWrap.style.display = 'none';
+    caseStudyIframe.removeAttribute('srcdoc');
+    content.classList.remove('showing-case-study');
     fallback.style.display = 'none';
     img.style.display = 'block';
     img.src = onepagerUrl;
     toolbarLabel.textContent = 'Venture Builders Fund — One-Pager';
   }
 
-  function openCaseStudy(key, label){
+  function showCaseStudy(key){
     if (!caseStudies || !caseStudies[key]) return;
-    if (!caseStudyUrls[key]){
-      var blob = new Blob([caseStudies[key]], { type: 'text/html' });
-      caseStudyUrls[key] = URL.createObjectURL(blob);
-    }
-    window.open(caseStudyUrls[key], '_blank');
+    menu.style.display = 'none';
+    backToMenu.style.display = 'inline-block';
+    img.style.display = 'none';
+    fallback.style.display = 'none';
+    content.classList.add('showing-case-study');
+    caseStudyWrap.style.display = 'block';
+    caseStudyIframe.srcdoc = caseStudies[key];
+    toolbarLabel.textContent = 'Venture Builders Fund — ' + (caseStudyLabels[key] || 'Deep Dive');
+    caseStudyWrap.scrollIntoView({ block: 'nearest' });
   }
 
   menuItems.forEach(function(btn){
@@ -504,7 +541,7 @@
       if (target === 'onepager'){
         showOnepager();
       } else {
-        openCaseStudy(target, btn.querySelector('.menu-title').textContent);
+        showCaseStudy(target);
       }
     });
   });
@@ -512,6 +549,16 @@
   backToMenu.addEventListener('click', function(e){
     e.preventDefault();
     showMenu();
+  });
+
+  // Lets the case-study pages cross-link to each other (e.g. the footer
+  // "AlphaLab Deep Dive" link on the Blue Startups page) without leaving
+  // this window — the embedded page posts a message up to us instead of
+  // following its href, which wouldn't resolve inside an iframe.
+  window.addEventListener('message', function(e){
+    if (e.data && e.data.vbfCaseStudy && caseStudies && caseStudies[e.data.vbfCaseStudy]){
+      showCaseStudy(e.data.vbfCaseStudy);
+    }
   });
 
   enterBtn.addEventListener('click', attemptEntry);
@@ -537,9 +584,11 @@
     passwordInput.value = '';
     confirmCheck.checked = false;
     img.removeAttribute('src');
+    caseStudyIframe.removeAttribute('srcdoc');
+    caseStudyWrap.style.display = 'none';
+    content.classList.remove('showing-case-study');
     onepagerUrl = null;
     caseStudies = null;
-    caseStudyUrls = {};
     setLoading(false);
     updateButtonState();
   });
