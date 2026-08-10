@@ -47,12 +47,45 @@
   <link rel="stylesheet" href="vbf.css">
   <style>
     /* PAGE-SPECIFIC: Retreat */
+    .page-hero {
+      background: var(--dark);
+      padding: 10rem 2rem 7rem;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: 0; right: -200px;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle at 70% 40%, rgba(var(--accent-rgb), 0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
     .page-hero.retreat-hero::after {
       content: 'RETREAT';
       position: absolute; font-family: var(--font-head);
       font-size: clamp(120px, 22vw, 280px); font-weight: 800;
       color: rgba(255,255,255,0.025);
       bottom: -20px; left: 2rem; line-height: 1; pointer-events: none;
+    }
+    .page-hero-inner { max-width: var(--max); margin: 0 auto; position: relative; z-index: 1; }
+    .hero-kicker { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.75rem; }
+    .hero-kicker-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .hero-kicker span { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+    .page-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800; line-height: 1.05; color: var(--white);
+      max-width: 900px; margin-bottom: 1.5rem;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--accent); }
+    .page-hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      color: rgba(255,255,255,0.65); max-width: 600px; line-height: 1.75; margin-bottom: 2.5rem;
+    }
+    .hero-pills { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .hero-pill {
+      padding: 0.4rem 1rem; border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.15); font-size: 0.8rem;
+      color: rgba(255,255,255,0.65); font-weight: 500;
     }
     .stops-grid { display: grid; gap: 1.5rem; }
     @media (min-width: 900px) { .stops-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
