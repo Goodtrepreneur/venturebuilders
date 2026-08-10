@@ -98,8 +98,8 @@
     }
     .stop-card:hover { border-color: rgba(var(--accent-rgb),0.28); box-shadow: 0 16px 48px rgba(var(--accent-rgb),0.08); transform: translateY(-3px); }
     .stop-num { font-family: var(--font-head); font-size: 2.2rem; font-weight: 800; color: var(--accent); opacity: 0.55; line-height: 1; }
-    .stop-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
-    .stop-logo { height: 52px; width: auto; max-width: 150px; object-fit: contain; border-radius: 8px; flex-shrink: 0; }
+    .stop-logo-wrap { display: flex; justify-content: center; align-items: center; background: #f7f7f7; border-radius: 14px; padding: 1.5rem; }
+    .stop-logo { height: 210px; width: auto; max-width: 100%; object-fit: contain; border-radius: 8px; }
     .stop-card h3 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; color: var(--ink); }
     .stop-meta { display: flex; gap: 0.6rem; flex-wrap: wrap; }
     .stop-pill {
@@ -238,10 +238,8 @@
       </div>
       <div class="stops-grid">
         <div class="stop-card reveal">
-          <div class="stop-head">
-            <span class="stop-num">01</span>
-            <img class="stop-logo" src="images/futura-logo.png" alt="Futura Innovation Conference logo">
-          </div>
+          <div class="stop-logo-wrap"><img class="stop-logo" src="images/futura-logo.png" alt="Futura Innovation Conference logo"></div>
+          <span class="stop-num">01</span>
           <h3>Futura Innovation Conference</h3>
           <div class="stop-meta">
             <span class="stop-pill">Limerick, Ireland</span>
@@ -253,10 +251,8 @@
           </div>
         </div>
         <div class="stop-card reveal">
-          <div class="stop-head">
-            <span class="stop-num">02</span>
-            <img class="stop-logo" src="images/ces-unveiled-logo.jpeg" alt="CES Unveiled Milan 2026 logo">
-          </div>
+          <div class="stop-logo-wrap"><img class="stop-logo" src="images/ces-unveiled-logo.jpeg" alt="CES Unveiled Milan 2026 logo"></div>
+          <span class="stop-num">02</span>
           <h3>CES Unveiled by CTA</h3>
           <div class="stop-meta">
             <span class="stop-pill">Milan, Italy</span>
