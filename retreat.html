@@ -291,7 +291,7 @@
             </div>
           </div>
 
-          <button class="form-submit" id="rsvp-submit" onclick="handleRsvp(this)">Submit RSVP</button>
+          <button type="button" class="form-submit" id="rsvp-submit" onclick="handleRsvp(this)">Submit RSVP</button>
           <p id="rsvp-message"></p>
         </form>
       </div>
@@ -435,66 +435,104 @@
   }
 
   function handleRsvp(btn) {
-    var name = (document.getElementById('rsvp-name').value || '').trim();
-    var email = (document.getElementById('rsvp-email').value || '').trim();
-    var org = (document.getElementById('rsvp-org').value || '').trim();
-    var joiningFutura = document.getElementById('rsvp-futura').checked;
-    var joiningCes = document.getElementById('rsvp-ces').checked;
+    try {
+      var nameEl = document.getElementById('rsvp-name');
+      var emailEl = document.getElementById('rsvp-email');
+      var orgEl = document.getElementById('rsvp-org');
+      var futuraEl = document.getElementById('rsvp-futura');
+      var cesEl = document.getElementById('rsvp-ces');
+      if (!nameEl || !emailEl || !orgEl || !futuraEl || !cesEl) {
+        console.error('RSVP form: one or more fields missing from the page');
+        setRsvpMessage('Something went wrong loading the form. Please email hello@venturebuilders.fund.', true);
+        return;
+      }
 
-    if (!name || !email) {
-      setRsvpMessage('Please fill in your name and email.', true);
-      return;
-    }
-    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!emailOk) {
-      setRsvpMessage('Please enter a valid email address.', true);
-      return;
-    }
-    if (!joiningFutura && !joiningCes) {
-      setRsvpMessage('Please select at least one event you\'re joining.', true);
-      return;
-    }
+      var name = (nameEl.value || '').trim();
+      var email = (emailEl.value || '').trim();
+      var org = (orgEl.value || '').trim();
+      var joiningFutura = futuraEl.checked;
+      var joiningCes = cesEl.checked;
 
-    btn.textContent = 'Submitting...';
-    btn.disabled = true;
-    setRsvpMessage('', false);
+      if (!name || !email) {
+        setRsvpMessage('Please fill in your name and email.', true);
+        return;
+      }
+      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!emailOk) {
+        setRsvpMessage('Please enter a valid email address.', true);
+        return;
+      }
+      if (!joiningFutura && !joiningCes) {
+        setRsvpMessage('Please select at least one event you\'re joining.', true);
+        return;
+      }
 
-    var client = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+      if (!window.supabase || !window.SUPABASE_URL || !window.SUPABASE_ANON_KEY) {
+        console.error('RSVP form: Supabase client library or config did not load');
+        setRsvpMessage('Something went wrong loading the form. Please refresh and try again, or email hello@venturebuilders.fund.', true);
+        return;
+      }
 
-    client
-      .from('retreat_rsvps')
-      .insert([{
-        full_name: name,
-        email: email,
-        organization: org || null,
-        joining_futura: joiningFutura,
-        joining_ces: joiningCes
-      }])
-      .then(function(res) {
-        btn.disabled = false;
-        if (res.error) {
-          console.error('Supabase error:', res.error);
-          btn.textContent = 'Submit RSVP';
-          setRsvpMessage('Something went wrong. Please email hello@venturebuilders.fund.', true);
-          return;
-        }
-        btn.textContent = 'You\'re on the list';
-        setRsvpMessage('Thanks, ' + name.split(' ')[0] + '. See below for next steps.', false);
+      btn.textContent = 'Submitting...';
+      btn.disabled = true;
+      setRsvpMessage('', false);
 
-        var firstName = name.split(' ')[0];
-        document.getElementById('confirm-name-suffix').textContent = ', ' + firstName;
-        document.getElementById('confirm-futura').style.display = joiningFutura ? 'block' : 'none';
-        document.getElementById('confirm-ces').style.display = joiningCes ? 'block' : 'none';
-        var panel = document.getElementById('confirm-panel');
-        panel.classList.add('visible');
-        panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      })
+      var client = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+
+      client
+        .from('retreat_rsvps')
+        .insert([{
+          full_name: name,
+          email: email,
+          organization: org || null,
+          joining_futura: joiningFutura,
+          joining_ces: joiningCes
+        }])
+        .then(function(res) {
+          btn.disabled = false;
+          if (res.error) {
+            console.error('Supabase error:', res.error);
+            btn.textContent = 'Submit RSVP';
+            setRsvpMessage('Something went wrong. Please email hello@venturebuilders.fund.', true);
+            return;
+          }
+          btn.textContent = 'You\'re on the list';
+          setRsvpMessage('Thanks, ' + name.split(' ')[0] + '. See below for next steps.', false);
+
+          fetch('https://asuophspmfqcnlzgqsfa.supabase.co/functions/v1/notify-retreat-rsvp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              full_name: name,
+              email: email,
+              organization: org || null,
+              joining_futura: joiningFutura,
+              joining_ces: joiningCes
+            })
+          }).catch(function(notifyErr) {
+            console.warn('RSVP notify failed (submission still saved):', notifyErr);
+          });
+
+          var firstName = name.split(' ')[0];
+          document.getElementById('confirm-name-suffix').textContent = ', ' + firstName;
+          document.getElementById('confirm-futura').style.display = joiningFutura ? 'block' : 'none';
+          document.getElementById('confirm-ces').style.display = joiningCes ? 'block' : 'none';
+          var panel = document.getElementById('confirm-panel');
+          panel.classList.add('visible');
+          panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        })
       .catch(function(err) {
         console.error('Form error:', err);
         btn.disabled = false;
         btn.textContent = 'Submit RSVP';
         setRsvpMessage('Something went wrong. Please email hello@venturebuilders.fund.', true);
       });
+    } catch (outerErr) {
+      console.error('RSVP form unexpected error:', outerErr);
+      btn.disabled = false;
+      btn.textContent = 'Submit RSVP';
+      setRsvpMessage('Something went wrong. Please email hello@venturebuilders.fund.', true);
+    }
   }
 </script>
 
