@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /founder
 Disallow: /founder.html
+Disallow: /h-farm
+Disallow: /h-farm.html
 
 Sitemap: https://venturebuilders.fund/sitemap.xml

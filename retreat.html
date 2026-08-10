@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) — loaded after cookie consent via loadGA() -->
+  <script>
+    function loadGA() {
+      if (window.__vbf_ga_loaded) return;
+      window.__vbf_ga_loaded = true;
+      var gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-8R4HG16TTS';
+      document.head.appendChild(gaScript);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-8R4HG16TTS');
+    }
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- SEO -->
+  <meta name="description" content="Venture Builders Retreat, October 2026: a week across Ireland and Italy for the people building the next generation of venture studios, accelerators, and innovation hubs. Futura Innovation Conference in Limerick, then CES Unveiled in Milan.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://venturebuilders.fund/retreat">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Venture Builders Fund">
+  <meta property="og:title" content="Venture Builders Retreat, October 2026: Ireland and Italy">
+  <meta property="og:description" content="A week across two countries for the people building the next generation of venture studios, accelerators, and innovation hubs. Futura Innovation Conference in Limerick, then CES Unveiled in Milan.">
+  <meta property="og:url" content="https://venturebuilders.fund/retreat">
+  <meta property="og:image" content="https://venturebuilders.fund/logo-dark.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@venturebuilders">
+  <meta name="twitter:title" content="Venture Builders Retreat, October 2026: Ireland and Italy">
+  <meta name="twitter:description" content="A week across two countries for the people building the next generation of venture studios, accelerators, and innovation hubs.">
+  <meta name="twitter:image" content="https://venturebuilders.fund/og-image.png">
+  <title>Venture Builders Retreat, October 2026: Ireland and Italy</title>
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-free">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vbf.css">
+  <style>
+    /* PAGE-SPECIFIC: Retreat */
+    .page-hero.retreat-hero::after {
+      content: 'RETREAT';
+      position: absolute; font-family: var(--font-head);
+      font-size: clamp(120px, 22vw, 280px); font-weight: 800;
+      color: rgba(255,255,255,0.025);
+      bottom: -20px; left: 2rem; line-height: 1; pointer-events: none;
+    }
+    .stops-grid { display: grid; gap: 1.5rem; }
+    @media (min-width: 900px) { .stops-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+    .stop-card {
+      border: 1.5px solid rgba(0,0,0,0.08); border-radius: 18px; padding: 2.25rem;
+      background: #fff; transition: all 250ms; display: flex; flex-direction: column; gap: 1.1rem;
+    }
+    .stop-card:hover { border-color: rgba(var(--accent-rgb),0.28); box-shadow: 0 16px 48px rgba(var(--accent-rgb),0.08); transform: translateY(-3px); }
+    .stop-num { font-family: var(--font-head); font-size: 2.2rem; font-weight: 800; color: var(--accent); opacity: 0.55; line-height: 1; }
+    .stop-card h3 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; color: var(--ink); }
+    .stop-meta { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .stop-pill {
+      padding: 0.35rem 0.85rem; border-radius: 100px; font-size: 0.78rem; font-weight: 600;
+      background: rgba(var(--accent-rgb),0.08); color: var(--accent-dark);
+    }
+    .stop-card p { font-size: 0.925rem; color: var(--ink-mid); line-height: 1.75; }
+    .stop-highlight {
+      border-radius: 12px; padding: 1.25rem 1.4rem; background: rgba(var(--accent-rgb),0.04);
+      border: 1px solid rgba(var(--accent-rgb),0.14);
+    }
+    .stop-highlight p { margin: 0; font-size: 0.875rem; }
+    .stop-highlight strong { color: var(--ink); }
+
+    /* RSVP */
+    .rsvp-panel { background: var(--dark); border-radius: 18px; padding: 2.75rem; max-width: 640px; margin: 0 auto; }
+    .rsvp-panel h3 { font-family: var(--font-head); font-size: 1.6rem; font-weight: 800; color: var(--white); margin-bottom: 0.6rem; }
+    .rsvp-panel > p { color: rgba(255,255,255,0.6); line-height: 1.75; margin-bottom: 2rem; font-size: 0.95rem; }
+    .rsvp-panel .form-group input { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); color: var(--white); }
+    .rsvp-panel .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+    .rsvp-panel .form-group input:focus { border-color: var(--accent); }
+    .rsvp-panel .form-group label { color: rgba(255,255,255,0.75); }
+    .check-group { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .check-option {
+      display: flex; align-items: flex-start; gap: 0.85rem; padding: 1rem 1.15rem;
+      border: 1.5px solid rgba(255,255,255,0.14); border-radius: 12px; cursor: pointer; transition: all 200ms;
+    }
+    .check-option:hover { border-color: rgba(var(--accent-rgb),0.5); }
+    .check-option input { margin-top: 0.2rem; width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0; }
+    .check-option span { font-size: 0.9rem; color: rgba(255,255,255,0.85); line-height: 1.5; }
+    .check-option span small { display: block; color: rgba(255,255,255,0.45); font-size: 0.78rem; margin-top: 0.15rem; }
+    #rsvp-message { font-size: 0.85rem; margin-top: 1rem; min-height: 1.2em; }
+    .confirm-panel {
+      display: none; max-width: 640px; margin: 2rem auto 0; background: #fff;
+      border: 1.5px solid rgba(var(--accent-rgb),0.18); border-radius: 18px; padding: 2.25rem;
+    }
+    .confirm-panel.visible { display: block; }
+    .confirm-panel h4 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; color: var(--ink); margin-bottom: 0.4rem; }
+    .confirm-block { padding: 1.25rem 0; border-top: 1px solid rgba(0,0,0,0.08); }
+    .confirm-block:first-of-type { border-top: none; padding-top: 0; }
+    .confirm-block p { font-size: 0.9rem; color: var(--ink-mid); line-height: 1.7; margin: 0.25rem 0; }
+    .confirm-tag { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .confirm-code { display: inline-block; background: rgba(var(--accent-rgb),0.08); color: var(--accent-dark); font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.85rem; }
+
+    /* LOGISTICS */
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 100px;
+    }
+    .status-badge.confirmed { background: rgba(26,122,74,0.1); color: #1a7a4a; }
+    .status-badge.tbd { background: rgba(0,0,0,0.06); color: var(--ink-soft); }
+    .status-badge.tentative { background: rgba(var(--accent-rgb),0.1); color: var(--accent-dark); }
+    .logi-grid { display: grid; gap: 1.25rem; }
+    @media (min-width: 768px) { .logi-grid { grid-template-columns: repeat(3, 1fr); } }
+    .logi-card { border: 1.5px solid rgba(0,0,0,0.08); border-radius: 14px; padding: 1.75rem; background: #fff; }
+    .logi-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .logi-card h4 { font-family: var(--font-head); font-size: 1rem; font-weight: 800; color: var(--ink); }
+    .logi-card p { font-size: 0.85rem; color: var(--ink-mid); line-height: 1.68; margin: 0.35rem 0; }
+    .logi-card .logi-loc { font-size: 0.78rem; color: var(--ink-soft); font-weight: 600; }
+    .flight-card {
+      border-radius: 14px; padding: 2rem; background: var(--dark); margin-top: 1.5rem;
+      display: grid; gap: 1.5rem;
+    }
+    @media (min-width: 768px) { .flight-card { grid-template-columns: 1fr 1fr; } }
+    .flight-card h4 { font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--white); margin-bottom: 0.5rem; }
+    .flight-card p { font-size: 0.875rem; color: rgba(255,255,255,0.6); line-height: 1.7; }
+    .note-box {
+      margin-top: 3rem; border: 1.5px dashed rgba(var(--accent-rgb),0.3); border-radius: 12px;
+      padding: 1.25rem 1.5rem; background: rgba(var(--accent-rgb),0.03);
+    }
+    .note-box p { font-size: 0.85rem; color: var(--ink-mid); line-height: 1.7; margin: 0; }
+  </style>
+  <script src="/js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="logo-dark.png" alt="Venture Builders Fund logo"></a>
+    <ul class="nav-links">
+      <li><a href="index.html#thesis">Fund</a></li>
+      <li><a href="foraccelerators.html">Accelerator</a></li>
+      <li><a href="forbuilders.html">Builders</a></li>
+      <li><a href="forfounders.html">Founders</a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <a href="#rsvp" class="nav-cta">RSVP</a>
+  </div>
+</nav>
+  <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+    <div class="nav-drawer-inner">
+      <ul class="nav-drawer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#stops">The Stops</a></li>
+        <li><a href="#rsvp">RSVP</a></li>
+        <li><a href="#logistics">Logistics</a></li>
+      </ul>
+      <div class="nav-drawer-ctas">
+        <a href="#rsvp" class="nav-drawer-join">RSVP Now</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-overlay" id="nav-overlay"></div>
+
+<main>
+
+  <!-- HERO -->
+  <section class="page-hero retreat-hero">
+    <div class="page-hero-inner">
+      <div class="hero-kicker"><span class="hero-kicker-dot"></span><span>Venture Builders Retreat &middot; October 2026</span></div>
+      <h1>Ireland and <em>Italy</em></h1>
+      <p class="page-hero-sub" style="margin-bottom:1.25rem">A week built for the people building the next generation of venture studios, accelerators, and innovation hubs. It starts in Limerick at Futura Innovation Conference, then moves to Milan for CES Unveiled.</p>
+      <p class="page-hero-sub">This is an invitation to build relationships, not just attend sessions. Along the way, there's time and space for the conversations that don't happen in a session room.</p>
+      <div class="hero-pills">
+        <div class="hero-pill">Limerick, Ireland &middot; Oct 19&ndash;21</div>
+        <div class="hero-pill">Milan, Italy &middot; Oct 21</div>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="#rsvp" class="btn-primary">Let Us Know You're Coming</a>
+        <a href="#stops" class="btn-ghost">See the Stops</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE STOPS -->
+  <section class="sec" style="background:#fff" id="stops">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal">
+        <p class="sec-tag">The stops</p>
+        <h2 class="sec-h">Two countries, one week</h2>
+      </div>
+      <div class="stops-grid">
+        <div class="stop-card reveal">
+          <span class="stop-num">01</span>
+          <h3>Futura Innovation Conference</h3>
+          <div class="stop-meta">
+            <span class="stop-pill">Limerick, Ireland</span>
+            <span class="stop-pill">October 19&ndash;21</span>
+          </div>
+          <p>A citywide innovation gathering bringing together founders, investors, researchers, and builders across Ireland, Europe, and beyond. Venture Builders Retreat guests join as part of the broader Futura community for the full three days.</p>
+          <div class="stop-highlight">
+            <p><strong>Our home base:</strong> throughout Futura, we'll have a spot at a Limerick pub, in collaboration with Funded House. Less programming, more of the people you'll want to know. Open to Venture Builders Retreat guests anytime during the conference.</p>
+          </div>
+        </div>
+        <div class="stop-card reveal">
+          <span class="stop-num">02</span>
+          <h3>CES Unveiled by CTA</h3>
+          <div class="stop-meta">
+            <span class="stop-pill">Milan, Italy</span>
+            <span class="stop-pill">October 21</span>
+          </div>
+          <p>A single-day showcase of what's next in technology and venture, hosted by CTA at Allianz MiCo. Venture Builders Retreat guests get access and a VIP tour of select startups with Brian Comiskey, CTA's futurist.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="sec" style="background:rgba(232,52,78,0.04)" id="rsvp">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal">
+        <p class="sec-tag">RSVP</p>
+        <h2 class="sec-h">Let us know you're coming</h2>
+        <p class="sec-sub">Tell us which parts of the retreat you're joining. Once you submit, we'll point you to registration for each event, including the discount codes to use at checkout.</p>
+      </div>
+
+      <div class="rsvp-panel reveal">
+        <h3>Your details</h3>
+        <p>Takes about a minute. This isn't your ticket, it's how we plan headcounts.</p>
+        <form id="rsvp-form" onsubmit="return false;">
+          <div class="form-group"><label>Name *</label><input type="text" id="rsvp-name" name="full_name" placeholder="Jane Smith" required></div>
+          <div class="form-group"><label>Email *</label><input type="email" id="rsvp-email" name="email" placeholder="jane@company.com" required></div>
+          <div class="form-group"><label>Company or organization</label><input type="text" id="rsvp-org" name="organization" placeholder="Your company or organization"></div>
+
+          <div class="form-group" style="margin-bottom:0.75rem">
+            <label style="display:block;margin-bottom:0.6rem">Which parts are you joining? *</label>
+            <div class="check-group">
+              <label class="check-option">
+                <input type="checkbox" id="rsvp-futura" name="joining_futura">
+                <span>Futura Innovation Conference<small>October 19&ndash;21, Limerick</small></span>
+              </label>
+              <label class="check-option">
+                <input type="checkbox" id="rsvp-ces" name="joining_ces">
+                <span>CES Unveiled by CTA<small>October 21, Milan</small></span>
+              </label>
+            </div>
+          </div>
+
+          <button class="form-submit" id="rsvp-submit" onclick="handleRsvp(this)">Submit RSVP</button>
+          <p id="rsvp-message"></p>
+        </form>
+      </div>
+
+      <div class="confirm-panel reveal" id="confirm-panel">
+        <p class="sec-tag" style="text-align:left">Thanks<span id="confirm-name-suffix"></span>. Here's what to do next.</p>
+
+        <div class="confirm-block" id="confirm-futura" style="display:none">
+          <p class="confirm-tag">Futura Innovation Conference</p>
+          <p><strong>Registration:</strong> link coming soon. We'll email it directly to you.</p>
+          <p><strong>Discount code:</strong> <span class="confirm-code">Venture Builders</span></p>
+          <p><strong>Rate:</strong> &euro;199</p>
+        </div>
+
+        <div class="confirm-block" id="confirm-ces" style="display:none">
+          <p class="confirm-tag">CES Unveiled by CTA</p>
+          <p>Registration details coming soon. We'll follow up directly once they're confirmed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGISTICS -->
+  <section class="sec" style="background:#fff" id="logistics">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal">
+        <p class="sec-tag">Logistics</p>
+        <h2 class="sec-h">Getting there and where we're staying</h2>
+        <p class="sec-sub">Futura runs across Limerick city centre, with venues within walking distance of each other. CES Unveiled is a single day in Milan at Allianz MiCo. If you're joining both, here's how the group is planning the leg between them, and where we're staying.</p>
+      </div>
+
+      <div class="logi-grid reveal">
+        <div class="logi-card">
+          <div class="logi-card-head">
+            <div><h4>Limerick</h4><p class="logi-loc">The Savoy Hotel</p></div>
+            <span class="status-badge confirmed">Confirmed</span>
+          </div>
+          <p>Some Futura events take place at the Savoy itself, and it's walkable to all other Futura venues.</p>
+        </div>
+        <div class="logi-card">
+          <div class="logi-card-head">
+            <div><h4>Dublin Airport</h4><p class="logi-loc">One night, for the early Milan departure</p></div>
+            <span class="status-badge tbd">TBD</span>
+          </div>
+          <p>Still to be booked. Candidates under consideration: Clayton, Crowne Plaza, or Radisson Blu, all near the airport.</p>
+        </div>
+        <div class="logi-card">
+          <div class="logi-card-head">
+            <div><h4>Milan</h4><p class="logi-loc">Marriott (tentative)</p></div>
+            <span class="status-badge tentative">Tentative</span>
+          </div>
+          <p>Currently planning to stay here, though this may change based on prenegotiated group hotel discounts we're working on. Treat as tentative until confirmed.</p>
+        </div>
+      </div>
+
+      <div class="flight-card reveal">
+        <div>
+          <h4>Limerick to Milan</h4>
+          <p>The group is planning to fly Aer Lingus EI432, departing Dublin early morning and landing at Milan Linate. Linate is the closest airport to Allianz MiCo, about 15 to 20 minutes away, which matters more than an earlier departure time from a farther airport. This is the only daily direct-adjacent option on this route, so we'd recommend booking it with a flexible fare, and booking early.</p>
+        </div>
+        <div>
+          <h4>Getting around</h4>
+          <p><strong>Limerick to Dublin Airport:</strong> about 2 hours by car. A private car or shuttle is the recommended option given the timing, especially for anyone traveling straight from Futura's final evening.</p>
+          <p><strong>Milan Linate to Allianz MiCo:</strong> about 15 to 25 minutes by taxi or rideshare. No train needed for this leg given the short distance.</p>
+        </div>
+      </div>
+
+      <div class="note-box reveal">
+        <p>Hotel names above are being finalized. The Milan property and the Dublin airport hotel pick will be confirmed and added here with booking links shortly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="sec final-cta">
+    <h2>See you in Limerick and Milan</h2>
+    <p>Questions in the meantime? Reach out and we'll help however we can.</p>
+    <div class="cta-row">
+      <a href="#rsvp" class="btn-white">RSVP Now</a>
+      <a href="mailto:hello@venturebuilders.fund" class="btn-outline-white">Get In Touch</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div><img src="logo-white.png" alt="Venture Builders Fund" style="margin-bottom:0.6rem;mix-blend-mode: screen;"><p class="footer-legal">Securities offered through Venture Builders Fund LP. This website does not constitute an offer to sell or a solicitation of an offer to buy any securities.</p></div>
+    <ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="forfounders.html">Founders</a></li><li><a href="/privacy">Privacy</a></li><li><a href="mailto:hello@venturebuilders.fund">Contact</a></li></ul>
+    <p class="footer-copy">&copy; 2026 Venture Builders Fund. All rights reserved.</p>
+  </div>
+</footer>
+
+<script defer>
+  // Mobile nav
+  (function() {
+    var btn = document.getElementById('nav-hamburger');
+    var drawer = document.getElementById('nav-drawer');
+    var overlay = document.getElementById('nav-overlay');
+    if (!btn || !drawer || !overlay) return;
+
+    function openMenu() {
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    btn.addEventListener('click', function() {
+      drawer.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    overlay.addEventListener('click', closeMenu);
+    drawer.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+  }());
+
+  // Reveal on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  function setRsvpMessage(text, isError) {
+    var msg = document.getElementById('rsvp-message');
+    msg.textContent = text;
+    msg.style.color = isError ? '#c42840' : '#1a7a4a';
+  }
+
+  function handleRsvp(btn) {
+    var name = (document.getElementById('rsvp-name').value || '').trim();
+    var email = (document.getElementById('rsvp-email').value || '').trim();
+    var org = (document.getElementById('rsvp-org').value || '').trim();
+    var joiningFutura = document.getElementById('rsvp-futura').checked;
+    var joiningCes = document.getElementById('rsvp-ces').checked;
+
+    if (!name || !email) {
+      setRsvpMessage('Please fill in your name and email.', true);
+      return;
+    }
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailOk) {
+      setRsvpMessage('Please enter a valid email address.', true);
+      return;
+    }
+    if (!joiningFutura && !joiningCes) {
+      setRsvpMessage('Please select at least one event you\'re joining.', true);
+      return;
+    }
+
+    btn.textContent = 'Submitting...';
+    btn.disabled = true;
+    setRsvpMessage('', false);
+
+    var client = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+
+    client
+      .from('retreat_rsvps')
+      .insert([{
+        full_name: name,
+        email: email,
+        organization: org || null,
+        joining_futura: joiningFutura,
+        joining_ces: joiningCes
+      }])
+      .then(function(res) {
+        btn.disabled = false;
+        if (res.error) {
+          console.error('Supabase error:', res.error);
+          btn.textContent = 'Submit RSVP';
+          setRsvpMessage('Something went wrong. Please email hello@venturebuilders.fund.', true);
+          return;
+        }
+        btn.textContent = 'You\'re on the list';
+        setRsvpMessage('Thanks, ' + name.split(' ')[0] + '. See below for next steps.', false);
+
+        var firstName = name.split(' ')[0];
+        document.getElementById('confirm-name-suffix').textContent = ', ' + firstName;
+        document.getElementById('confirm-futura').style.display = joiningFutura ? 'block' : 'none';
+        document.getElementById('confirm-ces').style.display = joiningCes ? 'block' : 'none';
+        var panel = document.getElementById('confirm-panel');
+        panel.classList.add('visible');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      })
+      .catch(function(err) {
+        console.error('Form error:', err);
+        btn.disabled = false;
+        btn.textContent = 'Submit RSVP';
+        setRsvpMessage('Something went wrong. Please email hello@venturebuilders.fund.', true);
+      });
+  }
+</script>
+
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;
+  background:#0d0d0d;color:rgba(255,255,255,0.8);padding:1rem 2rem;
+  font-size:0.85rem;z-index:9999;align-items:center;
+  justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  border-top:1px solid rgba(255,255,255,0.1)">
+  <p style="margin:0;line-height:1.6">
+    We use cookies to understand how visitors use our site.
+    <a href="/privacy" style="color:#E8344E;text-decoration:none">Privacy Policy</a>
+  </p>
+  <div style="display:flex;gap:0.75rem;flex-shrink:0">
+    <button onclick="declineCookies()"
+      style="padding:0.45rem 1rem;background:transparent;color:rgba(255,255,255,0.5);
+      border:1px solid rgba(255,255,255,0.2);border-radius:6px;cursor:pointer;font-size:0.82rem">
+      Decline
+    </button>
+    <button onclick="acceptCookies()"
+      style="padding:0.45rem 1rem;background:#E8344E;color:#fff;
+      border:none;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:600">
+      Accept
+    </button>
+  </div>
+</div>
+<script>
+(function() {
+  var consent = localStorage.getItem('vbf_cookie_consent');
+  if (consent === 'accepted') { loadGA(); }
+  else if (consent === null) {
+    document.getElementById('cookie-banner').style.display = 'flex';
+  }
+})();
+
+function acceptCookies() {
+  localStorage.setItem('vbf_cookie_consent', 'accepted');
+  document.getElementById('cookie-banner').style.display = 'none';
+  loadGA();
+}
+
+function declineCookies() {
+  localStorage.setItem('vbf_cookie_consent', 'declined');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+</script>
+</body>
+</html>
