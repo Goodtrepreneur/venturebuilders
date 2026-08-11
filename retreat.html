@@ -313,6 +313,10 @@
                 <input type="checkbox" id="rsvp-ces" name="joining_ces">
                 <span>CES Unveiled by CTA<small>October 21&ndash;22, Milan</small></span>
               </label>
+              <label class="check-option">
+                <input type="checkbox" id="rsvp-hfarm" name="joining_hfarm">
+                <span>H-Farm<small>October 22&ndash;24, Venice</small></span>
+              </label>
             </div>
           </div>
 
@@ -335,6 +339,12 @@
           <p class="confirm-tag">CES Unveiled by CTA</p>
           <p><strong>Registration:</strong> <a href="https://web.cvent.com/event/53980c22-3804-4359-b237-f4345fbcc18c/regPage:cd063e29-a376-4d73-9714-28090193ff64?RefId=VB&amp;rp=9a96fe67-bba2-49f4-9417-44b1ef38381f" target="_blank" rel="noopener noreferrer">Register here</a></p>
         </div>
+
+        <div class="confirm-block" id="confirm-hfarm" style="display:none">
+          <p class="confirm-tag">H-Farm</p>
+          <p>This stop is being planned for a small group, so there's no self-serve registration &mdash; we'll follow up with you directly with details. In the meantime, join the WhatsApp group below to connect with everyone else heading to Venice.</p>
+        </div>
+
         <div class="confirm-block">
           <p class="confirm-tag">Stay in the loop</p>
           <p>Join the WhatsApp group for the trip, ask questions, and get to know who else is coming: <a href="https://chat.whatsapp.com/CAQLVVqdtSq5lWJn9m6GMQ" target="_blank" rel="noopener noreferrer">Join the group</a></p>
@@ -482,7 +492,8 @@
       var orgEl = document.getElementById('rsvp-org');
       var futuraEl = document.getElementById('rsvp-futura');
       var cesEl = document.getElementById('rsvp-ces');
-      if (!nameEl || !emailEl || !orgEl || !futuraEl || !cesEl) {
+      var hfarmEl = document.getElementById('rsvp-hfarm');
+      if (!nameEl || !emailEl || !orgEl || !futuraEl || !cesEl || !hfarmEl) {
         console.error('RSVP form: one or more fields missing from the page');
         setRsvpMessage('Something went wrong loading the form. Please email hello@venturebuilders.fund.', true);
         return;
@@ -493,6 +504,7 @@
       var org = (orgEl.value || '').trim();
       var joiningFutura = futuraEl.checked;
       var joiningCes = cesEl.checked;
+      var joiningHfarm = hfarmEl.checked;
 
       if (!name || !email) {
         setRsvpMessage('Please fill in your name and email.', true);
@@ -503,7 +515,7 @@
         setRsvpMessage('Please enter a valid email address.', true);
         return;
       }
-      if (!joiningFutura && !joiningCes) {
+      if (!joiningFutura && !joiningCes && !joiningHfarm) {
         setRsvpMessage('Please select at least one event you\'re joining.', true);
         return;
       }
@@ -527,7 +539,8 @@
           email: email,
           organization: org || null,
           joining_futura: joiningFutura,
-          joining_ces: joiningCes
+          joining_ces: joiningCes,
+          joining_hfarm: joiningHfarm
         }])
         .then(function(res) {
           btn.disabled = false;
@@ -548,7 +561,8 @@
               email: email,
               organization: org || null,
               joining_futura: joiningFutura,
-              joining_ces: joiningCes
+              joining_ces: joiningCes,
+              joining_hfarm: joiningHfarm
             })
           }).catch(function(notifyErr) {
             console.warn('RSVP notify failed (submission still saved):', notifyErr);
@@ -558,6 +572,7 @@
           document.getElementById('confirm-name-suffix').textContent = ', ' + firstName;
           document.getElementById('confirm-futura').style.display = joiningFutura ? 'block' : 'none';
           document.getElementById('confirm-ces').style.display = joiningCes ? 'block' : 'none';
+          document.getElementById('confirm-hfarm').style.display = joiningHfarm ? 'block' : 'none';
           var panel = document.getElementById('confirm-panel');
           panel.classList.add('visible');
           panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
