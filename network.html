@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) — loaded after cookie consent via loadGA() -->
+  <script>
+    function loadGA() {
+      if (window.__vbf_ga_loaded) return;
+      window.__vbf_ga_loaded = true;
+      var gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-8R4HG16TTS';
+      document.head.appendChild(gaScript);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-8R4HG16TTS');
+    }
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- SEO -->
+  <meta name="description" content="Explore Venture Builders Fund's network of accelerator and venture-builder partners across the United States — including flagship deep dives on AlphaLab (Pittsburgh) and Blue Startups (Honolulu), with stats and founder stories.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://venturebuilders.fund/network">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Venture Builders Fund">
+  <meta property="og:title" content="Our Orbit — The VBF Accelerator Network | Venture Builders Fund">
+  <meta property="og:description" content="A national network of vetted accelerators and venture builders. Click a node to see partnership stats, portfolio highlights, and founder stories — starting with AlphaLab and Blue Startups.">
+  <meta property="og:url" content="https://venturebuilders.fund/network">
+  <meta property="og:image" content="https://venturebuilders.fund/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@venturebuilders">
+  <meta name="twitter:title" content="Our Orbit — The VBF Accelerator Network | Venture Builders Fund">
+  <meta name="twitter:description" content="A national network of vetted accelerators and venture builders. Click a node to see partnership stats, portfolio highlights, and founder stories.">
+  <meta name="twitter:image" content="https://venturebuilders.fund/og-image.png">
+  <title>Our Orbit — The VBF Accelerator Network | Venture Builders Fund</title>
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-free">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vbf.css">
+  <style>
+    /* PAGE-SPECIFIC */
+    .page-hero {
+      background: var(--dark);
+      padding: 10rem 2rem 6rem;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: 0; right: -200px;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle at 70% 40%, rgba(var(--accent-rgb), 0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .page-hero::after {
+      content: 'ORBIT';
+      position: absolute; font-family: var(--font-head);
+      font-size: clamp(120px, 22vw, 280px); font-weight: 800;
+      color: rgba(255,255,255,0.025);
+      bottom: -20px; left: 2rem; line-height: 1; pointer-events: none;
+    }
+    .page-hero-inner { max-width: var(--max); margin: 0 auto; position: relative; z-index: 1; }
+    .hero-kicker { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.75rem; }
+    .hero-kicker-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .hero-kicker span { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+    .page-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800; line-height: 1.05; color: var(--white);
+      max-width: 900px; margin-bottom: 1.5rem;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--accent); }
+    .page-hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      color: rgba(255,255,255,0.65); max-width: 620px; line-height: 1.75; margin-bottom: 2.5rem;
+    }
+    .hero-pills { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .hero-pill {
+      padding: 0.5rem 1.1rem; border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.15); font-size: 0.82rem;
+      color: rgba(255,255,255,0.75); font-weight: 600;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .hero-pill strong { color: var(--white); font-family: var(--font-head); font-weight: 800; }
+
+    /* MAP SECTION */
+    .orbit-sec {
+      background: var(--dark); position: relative; overflow: hidden; padding: 6rem 2rem 7rem;
+    }
+    .orbit-sec .sec-header .sec-h { color: var(--white); }
+    .orbit-sec .sec-header .sec-sub { color: rgba(255,255,255,0.55); }
+    .orbit-grid { display: grid; gap: 2rem; max-width: var(--max); margin: 0 auto; align-items: start; }
+    @media (min-width: 1024px) { .orbit-grid { grid-template-columns: 1.5fr 1fr; } }
+
+    .map-frame {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: 1.25rem;
+      position: relative;
+    }
+    .map-legend {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      padding: 0 0.5rem 1.25rem;
+      font-size: 0.78rem; color: rgba(255,255,255,0.55);
+    }
+    .map-legend span { display: inline-flex; align-items: center; gap: 0.5rem; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .legend-dot.featured { background: var(--accent); box-shadow: 0 0 0 3px rgba(var(--accent-rgb),0.25); }
+    .legend-dot.standard { background: rgba(255,255,255,0.45); }
+
+    #orbit-map { width: 100%; height: auto; display: block; }
+    .orbit-node { cursor: pointer; }
+    .orbit-node .node-dot { transition: r 200ms ease, fill 200ms ease; }
+    .orbit-node .node-label {
+      font-family: var(--font-body); font-size: 10.5px; font-weight: 600;
+      fill: rgba(255,255,255,0.55); pointer-events: none; transition: fill 200ms ease;
+    }
+    .orbit-node.is-active .node-dot { fill: var(--accent) !important; }
+    .orbit-node.is-active .node-label { fill: #ffffff; }
+    .orbit-node:hover .node-label { fill: #ffffff; }
+    .orbit-node:focus { outline: none; }
+    .orbit-node:focus .node-dot { stroke: rgba(255,255,255,0.6); stroke-width: 2; }
+
+    .node-pulse { animation: nodePulse 2.6s ease-out infinite; transform-origin: center; }
+    @keyframes nodePulse {
+      0% { r: 7; opacity: 0.55; }
+      80% { r: 18; opacity: 0; }
+      100% { r: 18; opacity: 0; }
+    }
+
+    .hi-inset { fill: none; stroke: rgba(255,255,255,0.15); stroke-dasharray: 3 3; }
+    .hi-inset-label { font-family: var(--font-body); font-size: 9px; font-weight: 700; fill: rgba(255,255,255,0.3); letter-spacing: 0.05em; }
+
+    .hub-mark { fill: rgba(var(--accent-rgb), 0.9); }
+    .hub-line { stroke: rgba(255,255,255,0.08); stroke-width: 1; }
+    .hub-line.is-active { stroke: rgba(var(--accent-rgb), 0.45); }
+
+    /* DETAIL PANEL */
+    .detail-panel {
+      background: var(--white); border-radius: 18px; padding: 2.25rem;
+      position: sticky; top: 90px;
+      max-height: 80vh; overflow-y: auto;
+    }
+    .detail-tag {
+      display: inline-block; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.3rem 0.7rem; border-radius: 100px; margin-bottom: 1rem;
+    }
+    .detail-tag.featured { background: rgba(var(--accent-rgb), 0.1); color: var(--accent); }
+    .detail-tag.standard { background: rgba(0,0,0,0.06); color: var(--ink-mid); }
+    .detail-panel h3 { font-family: var(--font-head); font-size: 1.6rem; font-weight: 800; color: var(--ink); margin-bottom: 0.25rem; }
+    .detail-loc { font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.4rem; }
+    .detail-blurb { font-size: 0.925rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1.5rem; }
+    .detail-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1.5rem; }
+    .detail-stats .stat-card { padding: 1.1rem; }
+    .detail-stats .stat-num { font-size: 1.5rem; margin-bottom: 0.2rem; }
+    .detail-stats .stat-lbl { font-size: 0.76rem; }
+    .detail-portfolio { margin-bottom: 1.5rem; }
+    .detail-portfolio-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.6rem; }
+    .portfolio-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .portfolio-chip { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 100px; background: rgba(var(--accent-rgb),0.06); color: var(--ink); font-weight: 500; border: 1px solid rgba(var(--accent-rgb),0.12); }
+    .detail-media {
+      border: 1.5px dashed rgba(0,0,0,0.12); border-radius: 12px;
+      padding: 1.5rem; text-align: center; background: #f8f9fc;
+    }
+    .detail-media-icon {
+      width: 40px; height: 40px; border-radius: 50%; background: rgba(var(--accent-rgb),0.1);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem;
+    }
+    .detail-media-icon svg { width: 18px; height: 18px; color: var(--accent); }
+    .detail-media p { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.55; margin: 0; }
+    .detail-empty { text-align: center; padding: 2rem 0.5rem; }
+    .detail-empty h3 { margin-bottom: 0.5rem; }
+    .detail-empty p { color: var(--ink-mid); font-size: 0.9rem; line-height: 1.7; }
+
+    /* NETWORK STRIP */
+    .network-strip-sec { padding: 5rem 2rem; background: #f8f9fc; }
+    .strip-grid { display: grid; gap: 0.75rem; margin-top: 3rem; }
+    @media (min-width: 640px) { .strip-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .strip-grid { grid-template-columns: repeat(3, 1fr); } }
+    .strip-item {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 1.1rem 1.25rem; background: var(--white); border: 1.5px solid rgba(0,0,0,0.07);
+      border-radius: 10px; cursor: pointer; transition: all 200ms ease;
+    }
+    .strip-item:hover, .strip-item.is-active { border-color: rgba(var(--accent-rgb),0.3); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
+    .strip-item-name { font-weight: 700; font-size: 0.88rem; color: var(--ink); }
+    .strip-item-loc { font-size: 0.76rem; color: var(--ink-soft); margin-top: 0.15rem; }
+    .strip-item-arrow { color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Our Orbit — The VBF Accelerator Network",
+  "description": "Venture Builders Fund's network of accelerator and venture-builder partners across the United States, featuring deep dives on AlphaLab and Blue Startups.",
+  "url": "https://venturebuilders.fund/network",
+  "isPartOf": { "@type": "WebSite", "url": "https://venturebuilders.fund" }
+}
+</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="logo-dark.png" alt="Venture Builders Fund logo"></a>
+    <ul class="nav-links">
+      <li><a href="index.html#thesis">Fund</a></li>
+      <li><a href="foraccelerators.html">Accelerator</a></li>
+      <li><a href="forbuilders.html">Builders</a></li>
+      <li><a href="forfounders.html">Founders</a></li>
+      <li><a href="network.html" class="active">Network</a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <a href="https://www.watchpivot.tv/" target="_blank" rel="noopener noreferrer" class="nav-cta">Pivot</a>
+  </div>
+</nav>
+  <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+    <div class="nav-drawer-inner">
+      <ul class="nav-drawer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#thesis">Fund</a></li>
+        <li><a href="foraccelerators.html">Accelerator</a></li>
+        <li><a href="forbuilders.html">Builders</a></li>
+        <li><a href="forfounders.html">Founders</a></li>
+        <li><a href="network.html">Network</a></li>
+      </ul>
+      <div class="nav-drawer-ctas">
+        <a href="https://www.watchpivot.tv/" target="_blank" rel="noopener noreferrer" class="nav-drawer-pivot">Pivot</a>
+        <a href="founder.html" class="nav-drawer-join">Get Access</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-overlay" id="nav-overlay"></div>
+
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="hero-kicker"><span class="hero-kicker-dot"></span><span>Our Network</span></div>
+      <h1>Every great founder orbits <em>somewhere.</em></h1>
+      <p class="page-hero-sub">Venture Builders Fund's edge is the relationships — a growing network of vetted accelerators and venture builders across the country. Explore the map below, click a node, and meet the ecosystems fueling our deal flow.</p>
+      <div class="hero-pills">
+        <span class="hero-pill"><strong>22</strong> accelerator partners</span>
+        <span class="hero-pill"><strong>16</strong> states + D.C.</span>
+        <span class="hero-pill"><strong>2</strong> flagship deep dives</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="orbit-sec">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="sec-header reveal">
+        <p class="sec-tag">The orbit map</p>
+        <h2 class="sec-h">Click a node to explore the network</h2>
+        <p class="sec-sub">Coral nodes are flagship partners with full deep dives — stats, portfolio highlights, and founder stories. Every other node is a vetted partner in our growing national network.</p>
+      </div>
+
+      <div class="orbit-grid">
+        <div class="map-frame reveal">
+          <div class="map-legend">
+            <span><span class="legend-dot featured"></span> Flagship deep dive</span>
+            <span><span class="legend-dot standard"></span> Network partner</span>
+          </div>
+          <svg id="orbit-map" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of the United States showing Venture Builders Fund's accelerator network">
+            <text x="450" y="330" text-anchor="middle" font-family="Gilroy, 'Plus Jakarta Sans', sans-serif" font-size="220" font-weight="800" fill="rgba(255,255,255,0.025)">USA</text>
+            <rect class="hi-inset" x="18" y="440" width="150" height="96" rx="8"></rect>
+            <text class="hi-inset-label" x="30" y="458">HAWAII</text>
+            <g id="hub-lines"></g>
+            <g id="hub-mark"></g>
+            <g id="nodes"></g>
+          </svg>
+        </div>
+
+        <div class="detail-panel reveal" id="detail-panel">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="network-strip-sec">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="sec-header reveal">
+        <p class="sec-tag">Full roster</p>
+        <h2 class="sec-h">All 22 partners in the network</h2>
+        <p class="sec-sub">The same list as the map above, if a list is easier to scan. Click any partner to jump to their detail.</p>
+      </div>
+      <div class="strip-grid reveal" id="network-strip"></div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <h2>Building an ecosystem <span style="color:var(--accent)">worth orbiting?</span></h2>
+    <p>If you run an accelerator, venture studio, or founder community and think there's a fit with VBF, we'd love to talk.</p>
+    <div class="cta-row">
+      <a href="foraccelerators.html" class="btn-accent">Accelerator-as-a-Service</a>
+      <a href="mailto:hello@venturebuilders.fund" class="btn-ghost">Get in touch</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div><img src="logo-white.png" alt="Venture Builders Fund" style="margin-bottom:0.6rem;mix-blend-mode: screen;"><p class="footer-legal">Securities offered through Venture Builders Fund LP. This website does not constitute an offer to sell or a solicitation of an offer to buy any securities.</p></div>
+    <ul class="footer-links"><li><a href="forbuilders.html">Builders</a></li><li><a href="forfounders.html">Founders</a></li><li><a href="foraccelerators.html">Accelerator</a></li><li><a href="network.html">Network</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/blog">Blog</a></li><li><a href="mailto:hello@venturebuilders.fund">Contact</a></li></ul>
+    <p class="footer-copy">&copy; 2026 Venture Builders Fund. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   NETWORK DATA
+   Edit this array to update the map. To add a testimonial or founder video
+   to any partner, just fill in the `quote` / `video` fields — the detail
+   panel will render them automatically once present.
+   Coordinates are on a 900x560 viewBox approximating the continental U.S.
+   (Hawaii is placed in the dashed inset box, not to true position.)
+   ========================================================================= */
+var ORBIT_DATA = [
+  {
+    id: 'alphalab',
+    name: 'AlphaLab',
+    city: 'Pittsburgh', state: 'PA',
+    x: 723, y: 226,
+    featured: true,
+    blurb: "One of the nation's first ten startup accelerators and a founding charter member of the Global Accelerator Network. Run by Innovation Works since 2008, AlphaLab runs a 20-week program across four tracks — Software, Hardware (AlphaLab Gear), Life Sciences (AlphaLab Health), and Robotics (Robotics Factory).",
+    stats: [
+      { num: '2008', lbl: 'Year founded' },
+      { num: '250+', lbl: 'Startups supported' },
+      { num: '$1.3B+', lbl: 'Follow-on funding raised by alumni' },
+      { num: '66', lbl: 'AlphaLab-network founders in our Founderbase' }
+    ],
+    portfolioLabel: 'A few AlphaLab-network companies in VBF\'s Founderbase',
+    portfolio: ['Astria Biosciences', 'Humotech', 'D.Sole', 'Bindr', 'Wood Wide AI', 'Precision Neuroscopics'],
+    quote: null,   // { text, author, role }
+    video: null    // video URL
+  },
+  {
+    id: 'blue-startups',
+    name: 'Blue Startups',
+    city: 'Honolulu', state: 'HI',
+    x: 90, y: 488,
+    isInset: true,
+    featured: true,
+    blurb: "Founded in 2012 by Henk Rogers, Maya Rogers, and Chenoa Farnsworth as a public–private partnership with the State of Hawaiʻi, the Hawaiʻi Technology Development Corporation, and the Tetris Company. Blue Startups runs a 12-week cohort for up to ten companies at a time and helped build Honolulu's “Startup Paradise” ecosystem.",
+    stats: [
+      { num: '2012', lbl: 'Year founded' },
+      { num: '12 wks', lbl: 'Cohort program length' },
+      { num: '$250K', lbl: 'Up to, invested per company' },
+      { num: '250+', lbl: 'Mentors across Asia & the U.S.' }
+    ],
+    portfolioLabel: 'Founded by',
+    portfolio: ['Henk Rogers', 'Maya Rogers', 'Chenoa Farnsworth'],
+    quote: null,
+    video: null
+  },
+  { id: 'revtech', name: 'RevTech Labs', city: 'Charlotte', state: 'NC', x: 710, y: 338 },
+  { id: 'gener8tor', name: 'gener8tor', city: 'Madison', state: 'WI', x: 580, y: 169 },
+  { id: 'fuel', name: 'Fuel Accelerator', city: 'Bentonville', state: 'AR', x: 507, y: 314 },
+  { id: 'cafe', name: 'Center for Advancing Financial Equity', city: 'Newark', state: 'NJ', x: 811, y: 219 },
+  { id: 'alabama-edge', name: 'Alabama Entrepreneurship Institute & The EDGE', city: 'Tuscaloosa', state: 'AL', x: 608, y: 382 },
+  { id: '2gether', name: '2gether International', city: 'Washington', state: 'DC', x: 768, y: 259 },
+  { id: 'newlab', name: 'NewLab', city: 'Detroit', state: 'MI', x: 677, y: 185 },
+  { id: 'massrobotics', name: 'MassRobotics', city: 'Boston', state: 'MA', x: 859, y: 184 },
+  { id: 'idea-village', name: 'The Idea Village', city: 'New Orleans', state: 'LA', x: 570, y: 453 },
+  { id: 'purdue', name: 'Purdue Innovates', city: 'Indianapolis', state: 'IN', x: 629, y: 240 },
+  { id: 'lighthouse', name: 'Lighthouse Network', city: 'Richmond', state: 'VA', x: 762, y: 288 },
+  { id: 'philly-corridor', name: 'Greater Philadelphia Innovation Corridor', city: 'Philadelphia', state: 'PA', x: 796, y: 236,
+    blurb: 'A cluster of three VBF network partners in the Philadelphia region: nth Solutions & nth Innovation Center (Coatesville), Lehigh University (Bethlehem), and EMG (Greater Philadelphia).' },
+  { id: 'laci', name: 'Los Angeles Cleantech Incubator', city: 'Los Angeles', state: 'CA', x: 143, y: 364 },
+  { id: 'calasian', name: 'CalAsian', city: 'Sacramento', state: 'CA', x: 93, y: 266 },
+  { id: 'glee-labs', name: 'Glee Labs', city: 'Evergreen', state: 'CO', x: 339, y: 243 },
+  { id: 'acceleratepv', name: 'AcceleratePV', city: 'Ponte Vedra Beach', state: 'FL', x: 702, y: 447 },
+  { id: 'tampa-wave', name: 'Tampa Bay Wave', city: 'Tampa Bay', state: 'FL', x: 685, y: 496 },
+  { id: 'start-co', name: 'Start Co.', city: 'Memphis', state: 'TN', x: 570, y: 340 }
+];
+
+var HUB = { x: 560, y: 300 };
+
+(function() {
+  var svgNodes = document.getElementById('nodes');
+  var svgHubLines = document.getElementById('hub-lines');
+  var svgHub = document.getElementById('hub-mark');
+  var detailPanel = document.getElementById('detail-panel');
+  var stripEl = document.getElementById('network-strip');
+  var ns = 'http://www.w3.org/2000/svg';
+
+  function el(tag, attrs) {
+    var e = document.createElementNS(ns, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  // Hub mark (VBF center) — small diagonal slash motif
+  var hubG = el('g', { transform: 'translate(' + HUB.x + ',' + HUB.y + ')' });
+  hubG.appendChild(el('circle', { r: 4, class: 'hub-mark' }));
+  hubG.appendChild(el('path', { d: 'M -9 6 L 9 -6', stroke: 'rgba(232,52,78,0.9)', 'stroke-width': 2, 'stroke-linecap': 'round' }));
+  svgHub.appendChild(hubG);
+
+  // Build nodes + hub lines
+  ORBIT_DATA.forEach(function(d) {
+    var line = el('line', {
+      x1: HUB.x, y1: HUB.y, x2: d.x, y2: d.y,
+      class: 'hub-line', 'data-id': d.id
+    });
+    svgHubLines.appendChild(line);
+
+    var g = el('g', { class: 'orbit-node', 'data-id': d.id, tabindex: '0', role: 'button', 'aria-label': d.name });
+    g.setAttribute('transform', 'translate(' + d.x + ',' + d.y + ')');
+
+    if (d.featured) {
+      var pulse = el('circle', { class: 'node-pulse', r: 7, fill: 'none', stroke: '#E8344E', 'stroke-width': 1.5 });
+      g.appendChild(pulse);
+    }
+    var dot = el('circle', { class: 'node-dot', r: d.featured ? 7 : 5, fill: d.featured ? '#E8344E' : 'rgba(255,255,255,0.45)' });
+    g.appendChild(dot);
+
+    var label = el('text', { class: 'node-label', x: 0, y: d.isInset ? 22 : -12, 'text-anchor': 'middle' });
+    label.textContent = d.featured ? (d.name + ' — ' + d.city) : d.name;
+    g.appendChild(label);
+
+    g.addEventListener('click', function() { selectNode(d.id); });
+    g.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectNode(d.id); } });
+
+    svgNodes.appendChild(g);
+  });
+
+  // Build list strip
+  ORBIT_DATA.forEach(function(d) {
+    var item = document.createElement('div');
+    item.className = 'strip-item';
+    item.setAttribute('data-id', d.id);
+    item.innerHTML = '<div><div class="strip-item-name">' + d.name + (d.featured ? ' ★' : '') + '</div><div class="strip-item-loc">' + d.city + ', ' + d.state + '</div></div><span class="strip-item-arrow">→</span>';
+    item.addEventListener('click', function() {
+      selectNode(d.id);
+      document.getElementById('detail-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    stripEl.appendChild(item);
+  });
+
+  function mediaBlock() {
+    return '<div class="detail-media">' +
+      '<div class="detail-media-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>' +
+      '<p>Founder testimonials and video coming soon.</p>' +
+      '</div>';
+  }
+
+  function renderDetail(d) {
+    var html = '';
+    html += '<span class="detail-tag ' + (d.featured ? 'featured' : 'standard') + '">' + (d.featured ? 'Flagship deep dive' : 'Network partner') + '</span>';
+    html += '<h3>' + d.name + '</h3>';
+    html += '<p class="detail-loc">' + d.city + ', ' + d.state + '</p>';
+    html += '<p class="detail-blurb">' + (d.blurb || ('Accelerator & venture-builder partner in Venture Builders Fund’s national network. Full case study coming soon.')) + '</p>';
+
+    if (d.stats && d.stats.length) {
+      html += '<div class="detail-stats">';
+      d.stats.forEach(function(s) {
+        html += '<div class="stat-card"><div class="stat-num">' + s.num + '</div><div class="stat-lbl">' + s.lbl + '</div></div>';
+      });
+      html += '</div>';
+    }
+
+    if (d.portfolio && d.portfolio.length) {
+      html += '<div class="detail-portfolio"><div class="detail-portfolio-label">' + (d.portfolioLabel || 'Notable') + '</div><div class="portfolio-chips">';
+      d.portfolio.forEach(function(p) { html += '<span class="portfolio-chip">' + p + '</span>'; });
+      html += '</div></div>';
+    }
+
+    if (d.quote) {
+      html += '<div style="border-left:3px solid var(--accent);padding-left:1rem;margin-bottom:1.5rem;">' +
+        '<p style="font-style:italic;color:var(--ink-mid);font-size:0.9rem;line-height:1.7;margin-bottom:0.5rem;">“' + d.quote.text + '”</p>' +
+        '<p style="font-size:0.8rem;font-weight:700;color:var(--ink);">' + d.quote.author + '<span style="display:block;font-weight:400;color:var(--ink-soft);">' + d.quote.role + '</span></p>' +
+        '</div>';
+    } else {
+      html += mediaBlock();
+    }
+
+    detailPanel.innerHTML = html;
+  }
+
+  function selectNode(id) {
+    var d = null;
+    for (var i = 0; i < ORBIT_DATA.length; i++) { if (ORBIT_DATA[i].id === id) { d = ORBIT_DATA[i]; break; } }
+    if (!d) return;
+
+    document.querySelectorAll('.orbit-node').forEach(function(n) { n.classList.toggle('is-active', n.getAttribute('data-id') === id); });
+    document.querySelectorAll('.hub-line').forEach(function(l) { l.classList.toggle('is-active', l.getAttribute('data-id') === id); });
+    document.querySelectorAll('.strip-item').forEach(function(s) { s.classList.toggle('is-active', s.getAttribute('data-id') === id); });
+
+    renderDetail(d);
+  }
+
+  // Default state: AlphaLab
+  selectNode('alphalab');
+}());
+</script>
+
+<script defer>
+  // Mobile nav
+  (function() {
+    var btn = document.getElementById('nav-hamburger');
+    var drawer = document.getElementById('nav-drawer');
+    var overlay = document.getElementById('nav-overlay');
+    if (!btn || !drawer || !overlay) return;
+
+    function openMenu() {
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    btn.addEventListener('click', function() {
+      drawer.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    overlay.addEventListener('click', closeMenu);
+    drawer.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+  }());
+
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e, i) { if (e.isIntersecting) { setTimeout(function() { e.target.classList.add('visible'); }, i * 80); obs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+</script>
+
+  <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;
+    background:#0d0d0d;color:rgba(255,255,255,0.8);padding:1rem 2rem;
+    font-size:0.85rem;z-index:9999;align-items:center;
+    justify-content:space-between;gap:1rem;flex-wrap:wrap;
+    border-top:1px solid rgba(255,255,255,0.1)">
+    <p style="margin:0;line-height:1.6">
+      We use cookies to understand how visitors use our site.
+      <a href="/privacy" style="color:#E8344E;text-decoration:none">Privacy Policy</a>
+    </p>
+    <div style="display:flex;gap:0.75rem;flex-shrink:0">
+      <button onclick="declineCookies()"
+        style="padding:0.45rem 1rem;background:transparent;color:rgba(255,255,255,0.5);
+        border:1px solid rgba(255,255,255,0.2);border-radius:6px;cursor:pointer;font-size:0.82rem">
+        Decline
+      </button>
+      <button onclick="acceptCookies()"
+        style="padding:0.45rem 1rem;background:#E8344E;color:#fff;
+        border:none;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:600">
+        Accept
+      </button>
+    </div>
+  </div>
+  <script>
+  (function() {
+    var consent = localStorage.getItem('vbf_cookie_consent');
+    if (consent === 'accepted') { loadGA(); }
+    else if (consent === null) {
+      document.getElementById('cookie-banner').style.display = 'flex';
+    }
+  })();
+
+  function acceptCookies() {
+    localStorage.setItem('vbf_cookie_consent', 'accepted');
+    document.getElementById('cookie-banner').style.display = 'none';
+    loadGA();
+  }
+
+  function declineCookies() {
+    localStorage.setItem('vbf_cookie_consent', 'declined');
+    document.getElementById('cookie-banner').style.display = 'none';
+  }
+  </script>
+</body>
+</html>
