@@ -91,7 +91,8 @@
       color: rgba(255,255,255,0.65); font-weight: 500;
     }
     .stops-grid { display: grid; gap: 1.5rem; }
-    @media (min-width: 900px) { .stops-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+    @media (min-width: 700px) { .stops-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+    @media (min-width: 1100px) { .stops-grid { grid-template-columns: 1fr 1fr 1fr; } }
     .stop-card {
       border: 1.5px solid rgba(0,0,0,0.08); border-radius: 18px; padding: 2.25rem;
       background: #fff; transition: all 250ms; display: flex; flex-direction: column; gap: 1.1rem;
@@ -166,6 +167,9 @@
     @media (min-width: 768px) { .flight-card { grid-template-columns: 1fr 1fr; } }
     .flight-card h4 { font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--white); margin-bottom: 0.5rem; }
     .flight-card p { font-size: 0.875rem; color: rgba(255,255,255,0.6); line-height: 1.7; }
+    .flight-reasons { list-style: none; margin: 0.9rem 0 0; display: flex; flex-direction: column; gap: 0.5rem; }
+    .flight-reasons li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+    .flight-reasons li::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 0.5rem; flex-shrink: 0; }
     .note-box {
       margin-top: 3rem; border: 1.5px dashed rgba(var(--accent-rgb),0.3); border-radius: 12px;
       padding: 1.25rem 1.5rem; background: rgba(var(--accent-rgb),0.03);
@@ -260,6 +264,16 @@
           </div>
           <p>A single-day showcase of what's next in technology and venture, hosted by CTA at Allianz MiCo. Venture Builders Retreat guests get access and a VIP tour of select startups with Brian Comiskey, CTA's futurist.</p>
         </div>
+        <div class="stop-card reveal">
+          <div class="stop-logo-wrap"><img class="stop-logo" src="images/hfarm-venice.jpg" alt="H-Farm campus, Venice"></div>
+          <span class="stop-num">03</span>
+          <h3>H-Farm</h3>
+          <div class="stop-meta">
+            <span class="stop-pill">Venice and Treviso, Italy</span>
+            <span class="stop-pill">October 22&ndash;24</span>
+          </div>
+          <p>A visit to H-Farm, one of Europe's leading venture builders, set on a campus in the Venice countryside. This stop is being planned for a small group, with details to follow directly to anyone joining.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -314,6 +328,10 @@
           <p class="confirm-tag">CES Unveiled by CTA</p>
           <p><strong>Registration:</strong> <a href="https://web.cvent.com/event/53980c22-3804-4359-b237-f4345fbcc18c/regPage:cd063e29-a376-4d73-9714-28090193ff64?RefId=VB&amp;rp=9a96fe67-bba2-49f4-9417-44b1ef38381f" target="_blank" rel="noopener noreferrer">Register here</a></p>
         </div>
+        <div class="confirm-block">
+          <p class="confirm-tag">Stay in the loop</p>
+          <p>Join the WhatsApp group for the trip, ask questions, and get to know who else is coming: <a href="https://chat.whatsapp.com/CAQLVVqdtSq5lWJn9m6GMQ" target="_blank" rel="noopener noreferrer">Join the group</a></p>
+        </div>
       </div>
     </div>
   </section>
@@ -359,7 +377,14 @@
       <div class="flight-card reveal">
         <div>
           <h4>Limerick to Milan</h4>
-          <p>The group is booked on Aer Lingus EI 0432, Dublin to Milan Linate, departing Wed 21 Oct 2026 at 07:00 and landing 10:40 local time. Linate is the closest airport to Allianz MiCo, about 15 to 20 minutes away, which matters more than an earlier departure time from a farther airport. This is the only daily direct-adjacent option on this route, so we'd recommend booking it with a flexible fare, and booking early.</p>
+          <p>The group is booked on Aer Lingus EI 0432, Dublin to Milan Linate, departing Wed 21 Oct 2026 at 07:00 and landing 10:40 local time. We looked at every option for this leg to maximize time at each stop, and landed on this one for a few reasons:</p>
+          <ul class="flight-reasons">
+            <li>Most reliable option on this route: a 98% on-time rate, versus frequent delays on the Ryanair alternative.</li>
+            <li>Linate is 15 minutes from the CES venue. Every other Milan airport is 45 to 60 minutes away.</li>
+            <li>It lets us spend all day on the 20th at Futura, then the evening in Dublin, before an early departure the next morning, the most time and sleep the schedule allows.</li>
+            <li>Still cost effective at around $60 for the flight.</li>
+          </ul>
+          <p style="margin-top:0.9rem">We'd recommend booking it with a flexible fare, and booking early.</p>
         </div>
         <div>
           <h4>Getting around</h4>
