@@ -90,9 +90,13 @@
       border: 1px solid rgba(255,255,255,0.15); font-size: 0.8rem;
       color: rgba(255,255,255,0.65); font-weight: 500;
     }
-    .stops-grid { display: grid; gap: 1.5rem; }
+    .stops-grid { display: grid; gap: 1.5rem; margin-top: 1.5rem; }
     @media (min-width: 700px) { .stops-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
-    @media (min-width: 1100px) { .stops-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .stop-card.stop-card-featured { display: grid; gap: 1.25rem; }
+    @media (min-width: 760px) {
+      .stop-card.stop-card-featured { grid-template-columns: 260px 1fr; align-items: start; gap: 2rem; }
+    }
+    .stop-featured-body { display: flex; flex-direction: column; gap: 1.1rem; }
     .stop-card {
       border: 1.5px solid rgba(0,0,0,0.08); border-radius: 18px; padding: 2.25rem;
       background: #fff; transition: all 250ms; display: flex; flex-direction: column; gap: 1.1rem;
@@ -220,11 +224,12 @@
     <div class="page-hero-inner">
       <div class="hero-kicker"><span class="hero-kicker-dot"></span><span>Venture Builders Retreat &middot; October 2026</span></div>
       <h1>Ireland and <em>Italy</em></h1>
-      <p class="page-hero-sub" style="margin-bottom:1.25rem">A week built for the people building the next generation of accelerators, venture studios, and innovation hubs, starting in Limerick at Futura Innovation Conference and moving on to Milan for CES Unveiled.</p>
+      <p class="page-hero-sub" style="margin-bottom:1.25rem">A week built for the people building the next generation of accelerators, venture studios, and innovation hubs, starting in Limerick at Futura Innovation Conference, moving on to Milan for CES Unveiled, and finishing with a visit to H-Farm in Venice.</p>
       <p class="page-hero-sub">This is an invitation to build relationships, not just fill an agenda. Along the way, there's time and space for the conversations that matter most.</p>
       <div class="hero-pills">
         <div class="hero-pill">Limerick, Ireland &middot; Oct 18&ndash;20</div>
         <div class="hero-pill">Milan, Italy &middot; Oct 21&ndash;22</div>
+        <div class="hero-pill">Venice, Italy &middot; Oct 22&ndash;24</div>
       </div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap">
         <a href="#rsvp" class="btn-primary">Let Us Know You're Coming</a>
@@ -240,9 +245,9 @@
         <p class="sec-tag">The stops</p>
         <h2 class="sec-h">Two countries, one week</h2>
       </div>
-      <div class="stops-grid">
-        <div class="stop-card reveal">
-          <div class="stop-logo-wrap"><img class="stop-logo" src="images/futura-logo.png" alt="Futura Innovation Conference logo"></div>
+      <div class="stop-card stop-card-featured reveal">
+        <div class="stop-logo-wrap"><img class="stop-logo" src="images/futura-logo.png" alt="Futura Innovation Conference logo"></div>
+        <div class="stop-featured-body">
           <span class="stop-num">01</span>
           <h3>Futura Innovation Conference</h3>
           <div class="stop-meta">
@@ -254,6 +259,8 @@
             <p><strong>There's a pub in Limerick with our name on it!</strong> In collaboration with Funded House, Venture Builders Retreat guests will have a home base while at Futura. Less programming, more of the people you'll want to know. Open to you throughout the conference.</p>
           </div>
         </div>
+      </div>
+      <div class="stops-grid">
         <div class="stop-card reveal">
           <div class="stop-logo-wrap"><img class="stop-logo" src="images/ces-unveiled-logo.jpeg" alt="CES Unveiled Milan 2026 logo"></div>
           <span class="stop-num">02</span>
