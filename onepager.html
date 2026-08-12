@@ -32,7 +32,6 @@
       radial-gradient(circle at 85% 80%, rgba(230,48,79,0.12), transparent 45%);
   }
 
-  /* ---------- Gate screen ---------- */
   #gate{
     width:100%;
     max-width:440px;
@@ -201,142 +200,6 @@
     text-align:center;
   }
 
-  /* ---------- Content screen ---------- */
-  #content{
-    display:none;
-    width:100%;
-    max-width:1200px;
-  }
-
-  #content.visible{
-    display:block;
-    animation:riseIn 450ms cubic-bezier(0.25,0,0,1);
-  }
-
-  #content .frame{
-    background:var(--white);
-    border-radius:16px;
-    padding:16px;
-    box-shadow:0 30px 60px rgba(0,0,0,0.35);
-  }
-
-  #content .toolbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:6px 8px 16px;
-    flex-wrap:wrap;
-    gap:10px;
-  }
-
-  #content .toolbar span{
-    color:var(--muted);
-    font-size:0.78rem;
-    letter-spacing:0.03em;
-  }
-
-  #content .toolbar a{
-    color:var(--coral);
-    font-size:0.82rem;
-    font-weight:700;
-    text-decoration:none;
-  }
-
-  #content .toolbar a:hover{
-    text-decoration:underline;
-  }
-
-  #case-study-wrap{
-    width:100%;
-  }
-
-  #case-study-iframe{
-    width:100%;
-    height:85vh;
-    min-height:560px;
-    border:0;
-    border-radius:8px;
-    display:block;
-    background:var(--white);
-  }
-
-  /* ---------- One-pager lightbox ---------- */
-  #onepager-lightbox{
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:100;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
-  }
-
-  #onepager-lightbox.open{
-    display:flex;
-  }
-
-  .lightbox-backdrop{
-    position:absolute;
-    inset:0;
-    background:rgba(10,12,26,0.78);
-    animation:fadeIn 200ms ease;
-  }
-
-  @keyframes fadeIn{
-    from{opacity:0;}
-    to{opacity:1;}
-  }
-
-  .lightbox-content{
-    position:relative;
-    width:100%;
-    max-width:820px;
-    max-height:90vh;
-    overflow:auto;
-    background:var(--white);
-    border-radius:14px;
-    padding:20px;
-    box-shadow:0 30px 70px rgba(0,0,0,0.5);
-    animation:riseIn 300ms cubic-bezier(0.25,0,0,1);
-  }
-
-  #lightbox-close{
-    position:absolute;
-    top:14px;
-    right:14px;
-    width:34px;
-    height:34px;
-    border-radius:50%;
-    border:none;
-    background:var(--navy);
-    color:var(--white);
-    font-size:1.2rem;
-    line-height:1;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:2;
-  }
-
-  #lightbox-close:hover{background:var(--coral);}
-
-  #lightbox-img{
-    width:100%;
-    height:auto;
-    display:block;
-    border-radius:8px;
-  }
-
-  .lightbox-fallback{
-    display:none;
-    padding:60px 24px;
-    text-align:center;
-    color:var(--muted);
-    font-size:0.9rem;
-    line-height:1.6;
-  }
-
   @media (max-width:480px){
     #gate .brand{padding:28px 24px 24px;}
     #gate .body{padding:24px;}
@@ -367,54 +230,18 @@
     </div>
   </div>
 
-  <div id="content">
-    <div class="frame">
-      <div class="toolbar">
-        <span id="toolbar-label">Venture Builders Fund — Our Orbit</span>
-        <a href="#" id="lock-again">Lock page</a>
-      </div>
-
-      <div id="case-study-wrap">
-        <iframe id="case-study-iframe" title="Our Orbit — The VBF Network"></iframe>
-      </div>
-    </div>
-  </div>
-
-  <div id="onepager-lightbox">
-    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
-    <div class="lightbox-content">
-      <button id="lightbox-close" aria-label="Close">&times;</button>
-      <img id="lightbox-img" alt="Venture Builders Fund one-pager">
-      <div class="lightbox-fallback" id="lightbox-fallback">
-        Couldn't load the one-pager. The signed link may have expired — close this, click "Lock page," and re-enter your password to get a fresh one.
-      </div>
-    </div>
-  </div>
-
 <script defer>
   // Server-side check: this function only tells the browser whether the
   // password was right and, if so, hands back a short-lived signed URL to
-  // the private one-pager image, plus the Our Orbit network map (which now
-  // contains the AlphaLab and Blue Startups deep dives inline).
+  // the private one-pager image, plus the Our Orbit network page (which
+  // contains the AlphaLab and Blue Startups deep dives inline). On success
+  // we take over the whole document with that page — no iframe, no card.
   var GATE_ENDPOINT = 'https://asuophspmfqcnlzgqsfa.supabase.co/functions/v1/onepager-gate';
 
-  var gate = document.getElementById('gate');
-  var content = document.getElementById('content');
   var passwordInput = document.getElementById('password');
   var confirmCheck = document.getElementById('confirm-check');
   var enterBtn = document.getElementById('enter-btn');
   var errorMsg = document.getElementById('error-msg');
-  var lockAgain = document.getElementById('lock-again');
-  var caseStudyIframe = document.getElementById('case-study-iframe');
-
-  var lightbox = document.getElementById('onepager-lightbox');
-  var lightboxBackdrop = document.getElementById('lightbox-backdrop');
-  var lightboxClose = document.getElementById('lightbox-close');
-  var lightboxImg = document.getElementById('lightbox-img');
-  var lightboxFallback = document.getElementById('lightbox-fallback');
-
-  var onepagerUrl = null;
-  var caseStudies = null; // { alphalab: html, blueStartups: html, network: html }
 
   function updateButtonState(){
     var hasPassword = passwordInput.value.trim().length > 0;
@@ -445,14 +272,13 @@
         return res.json().then(function(data){ return { ok: res.ok, data: data }; });
       })
       .then(function(result){
-        setLoading(false);
-        if (result.ok && result.data && result.data.url){
-          onepagerUrl = result.data.url;
-          caseStudies = result.data.caseStudies || null;
-          gate.style.display = 'none';
-          content.classList.add('visible');
-          showNetwork();
+        if (result.ok && result.data && result.data.url && result.data.caseStudies && result.data.caseStudies.network){
+          var networkHtml = result.data.caseStudies.network.split('__ONEPAGER_URL__').join(result.data.url);
+          document.open();
+          document.write(networkHtml);
+          document.close();
         } else {
+          setLoading(false);
           showError('That password isn\'t recognized. Double-check with the person who sent you here.');
         }
       })
@@ -470,43 +296,6 @@
     passwordInput.select();
   }
 
-  function showNetwork(){
-    if (!caseStudies || !caseStudies.network) return;
-    caseStudyIframe.srcdoc = caseStudies.network;
-  }
-
-  function openLightbox(){
-    if (!onepagerUrl) return;
-    lightboxImg.style.display = 'block';
-    lightboxFallback.style.display = 'none';
-    lightboxImg.src = onepagerUrl;
-    lightbox.classList.add('open');
-  }
-
-  function closeLightbox(){
-    lightbox.classList.remove('open');
-  }
-
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightboxBackdrop.addEventListener('click', closeLightbox);
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
-  });
-
-  lightboxImg.addEventListener('error', function(){
-    lightboxImg.style.display = 'none';
-    lightboxFallback.style.display = 'block';
-  });
-
-  // The embedded network map posts this message when someone clicks the
-  // "View the Fund One-Pager" banner, so it opens right here in a lightbox
-  // instead of navigating anywhere.
-  window.addEventListener('message', function(e){
-    if (e.data && e.data.vbfOpenOnePager){
-      openLightbox();
-    }
-  });
-
   enterBtn.addEventListener('click', attemptEntry);
 
   passwordInput.addEventListener('keydown', function(e){
@@ -516,20 +305,6 @@
   var logoImg = document.getElementById('logo-img');
   logoImg.addEventListener('error', function(){
     logoImg.outerHTML = '<div style="color:#fff;font-weight:800;font-size:1.4rem;letter-spacing:-0.01em;">Venture Builders <span style="opacity:0.7;font-weight:700;">FUND</span></div>';
-  });
-
-  lockAgain.addEventListener('click', function(e){
-    e.preventDefault();
-    content.classList.remove('visible');
-    gate.style.display = 'block';
-    passwordInput.value = '';
-    confirmCheck.checked = false;
-    caseStudyIframe.removeAttribute('srcdoc');
-    closeLightbox();
-    onepagerUrl = null;
-    caseStudies = null;
-    setLoading(false);
-    updateButtonState();
   });
 </script>
 
