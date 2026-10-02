@@ -20,7 +20,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- SEO -->
-  <meta name="description" content="Venture Builders Retreat, October 2026: a week across Ireland and Italy for the people building the next generation of venture studios, accelerators, and innovation hubs. Futura Innovation Conference in Limerick, then CES Unveiled in Milan.">
+  <meta name="description" content="Venture Builders Retreat, October 2026: a week across Ireland and Italy for the people building the next generation of venture studios, accelerators, and innovation hubs. Futura Innovation Conference in Limerick, CES Unveiled in Milan, then H-Farm in Venice.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://venturebuilders.fund/retreat">
 
@@ -28,7 +28,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Venture Builders Fund">
   <meta property="og:title" content="Venture Builders Retreat, October 2026: Ireland and Italy">
-  <meta property="og:description" content="A week across two countries for the people building the next generation of venture studios, accelerators, and innovation hubs. Futura Innovation Conference in Limerick, then CES Unveiled in Milan.">
+  <meta property="og:description" content="A week across two countries for the people building the next generation of venture studios, accelerators, and innovation hubs. Futura Innovation Conference in Limerick, CES Unveiled in Milan, then H-Farm in Venice.">
   <meta property="og:url" content="https://venturebuilders.fund/retreat">
   <meta property="og:image" content="https://venturebuilders.fund/logo-dark.png">
   <meta property="og:image:width" content="1200">
@@ -179,6 +179,10 @@
       padding: 1.25rem 1.5rem; background: rgba(var(--accent-rgb),0.03);
     }
     .note-box p { font-size: 0.85rem; color: var(--ink-mid); line-height: 1.7; margin: 0; }
+    @media (min-width: 768px) { .logi-grid.logi-grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1100px) { .logi-grid.logi-grid-4 { grid-template-columns: repeat(4, 1fr); } }
+    #logistics a { color: var(--accent); }
+    #logistics .flight-card a { color: var(--white); text-decoration: underline; }
   </style>
   <script src="/js/supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -223,12 +227,12 @@
     <div class="page-hero-inner">
       <div class="hero-kicker"><span class="hero-kicker-dot"></span><span>Venture Builders Retreat &middot; October 2026</span></div>
       <h1>Ireland and <em>Italy</em></h1>
-      <p class="page-hero-sub" style="margin-bottom:1.25rem">A week built for the people building the next generation of accelerators, venture studios, and innovation hubs, starting in Limerick at Futura Innovation Conference, moving on to Milan for CES Unveiled, and finishing with a visit to H-Farm in Venice.</p>
+      <p class="page-hero-sub" style="margin-bottom:1.25rem">A week built for the people building the next generation of accelerators, venture studios, and innovation hubs, starting in Limerick at Futura Innovation Conference, moving on to Milan for CES Unveiled, and finishing at H-Farm in Venice, with a Saturday visit to the Biennale.</p>
       <p class="page-hero-sub">This is an invitation to build relationships, not just fill an agenda. Along the way, there's time and space for the conversations that matter most.</p>
       <div class="hero-pills">
         <div class="hero-pill">Limerick, Ireland &middot; Oct 19&ndash;20</div>
         <div class="hero-pill">Milan, Italy &middot; Oct 21&ndash;22</div>
-        <div class="hero-pill">Venice, Italy &middot; Oct 23</div>
+        <div class="hero-pill">Venice, Italy &middot; Oct 23&ndash;24</div>
       </div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap">
         <a href="#rsvp" class="btn-primary">Let Us Know You're Coming</a>
@@ -266,9 +270,10 @@
           <h3>CES Unveiled by CTA</h3>
           <div class="stop-meta">
             <span class="stop-pill">Milan, Italy</span>
-            <span class="stop-pill">October 21&ndash;22</span>
+            <span class="stop-pill">October 21</span>
           </div>
-          <p>A single-day showcase of what's next in technology and venture, hosted by CTA at Allianz MiCo. Venture Builders Retreat guests get access and a VIP tour of select startups with Brian Comiskey, CTA's futurist.</p>
+          <p>A single-day showcase of what's next in technology and venture, hosted by CTA at Allianz MiCo on Wednesday, October 21, from noon to 7 PM, with a cocktail reception from 5 to 7 PM. Venture Builders Retreat guests get access and a VIP tour of select startups with Brian Comiskey, CTA's futurist.</p>
+          <p style="margin-top:0.6rem"><strong>Thursday, October 22, 6:00 PM:</strong> cocktails at Le Village by CA, the Cr&eacute;dit Agricole startup accelerator at Corso di Porta Romana 61, Milan, hosted by Business France.</p>
         </div>
         <div class="stop-card reveal">
           <div class="stop-logo-wrap"><img class="stop-logo" src="images/hfarm-venice.jpg" alt="H-Farm campus, Venice"></div>
@@ -276,9 +281,9 @@
           <h3>H-Farm</h3>
           <div class="stop-meta">
             <span class="stop-pill">Venice and Treviso, Italy</span>
-            <span class="stop-pill">October 23</span>
+            <span class="stop-pill">October 23&ndash;24</span>
           </div>
-          <p>A visit to H-Farm, one of Europe's leading venture builders, set on a campus in the Venice countryside. This stop is being planned for a small group, with details to follow directly to anyone joining.</p>
+          <p>A visit to H-Farm, one of Europe's leading venture builders, set on a campus in the Venice countryside. On Friday, October 23, we arrive by train for lunch with the entrepreneurship fellows, a campus tour, and a fireside conversation about US startups and investing led by Tim O'Connell, followed by drinks with the group and the H-Farm team. On Saturday, October 24, an optional visit to the Venice Biennale. This stop is being planned for a small group, with details to follow directly to anyone joining.</p>
         </div>
       </div>
     </div>
@@ -314,7 +319,7 @@
               </label>
               <label class="check-option">
                 <input type="checkbox" id="rsvp-hfarm" name="joining_hfarm">
-                <span>H-Farm<small>October 23, Venice</small></span>
+                <span>H-Farm<small>October 23&ndash;24, Venice</small></span>
               </label>
             </div>
           </div>
@@ -358,7 +363,7 @@
       <div class="sec-header center reveal">
         <p class="sec-tag">Logistics</p>
         <h2 class="sec-h">Getting there and where we're staying</h2>
-        <p class="sec-sub">Futura runs across Limerick city centre, with venues within walking distance of each other. CES Unveiled is a single day in Milan at Allianz MiCo. If you're joining both, here's how the group is planning the leg between them, and where we're staying.</p>
+        <p class="sec-sub">Futura runs across Limerick city centre, with venues within walking distance of each other. CES Unveiled is a single day in Milan at Allianz MiCo. Below are the recommended logistics for each leg, from Limerick to Milan to H-Farm in Venice. Please book your own travel and accommodation and do what works best for your schedule. <a href="https://maps.app.goo.gl/qtA2Yi7zHYBoUScY6" target="_blank" rel="noopener noreferrer">See the key locations on Google Maps.</a></p>
       </div>
 
       <div class="logi-grid reveal">
@@ -377,41 +382,71 @@
         <div class="logi-card">
           <div class="logi-card-head">
             <div><h4>Dublin</h4><p class="logi-loc">One night, Oct 20, for the early Oct 21 flight</p></div>
-            <span class="status-badge tbd">TBD</span>
+            <span class="status-badge confirmed">Recommended</span>
           </div>
-          <p>The group hotel is being finalized; registered guests get the booking link and any group rate directly.</p>
+          <p>Clayton Hotel Dublin Airport Central, about a 10 minute walk to the terminals. <a href="https://www.claytonhotels.com/dublin-airport-central/" target="_blank" rel="noopener noreferrer">Hotel information and booking</a></p>
         </div>
         <div class="logi-card">
           <div class="logi-card-head">
-            <div><h4>Milan</h4></div>
-            <span class="status-badge tentative">Tentative</span>
+            <div><h4>Milan</h4><p class="logi-loc">Oct 21&ndash;22 nights, checkout Fri Oct 23</p></div>
+            <span class="status-badge confirmed">Recommended</span>
           </div>
-          <p>The Milan hotel is being finalized with a negotiated group rate. Registered guests get the booking link and rate code directly.</p>
+          <p>Milan Marriott Hotel. You're welcome to stay wherever works best for you. <a href="https://www.marriott.com/en-us/hotels/milit-milan-marriott-hotel/rooms/" target="_blank" rel="noopener noreferrer">Hotel information and booking</a></p>
         </div>
       </div>
 
       <div class="flight-card reveal">
         <div>
-          <h4>Limerick to Milan</h4>
-          <p>The group is booked on Aer Lingus EI 0432, Dublin to Milan Linate, departing Wed 21 Oct 2026 at 07:00 and landing 10:40 local time.</p>
-          <p style="margin-top:0.9rem">We recommend booking it with a flexible fare, and booking early. Registered guests get the full flight reasoning and booking notes in their itinerary.</p>
+          <h4>Dublin to Milan</h4>
+          <p>Wednesday, October 21: Aer Lingus EI432, Dublin to Milan Linate, departing 7:00 AM and landing 10:40 AM local time. <a href="https://www.aerlingus.com/en-ie/flights-from-dublin-to-milan" target="_blank" rel="noopener noreferrer">Aer Lingus booking</a></p>
+          <p style="margin-top:0.9rem">We recommend booking with a flexible fare, and booking early. We plan to go directly from Linate to CES Unveiled and aim to arrive just before noon.</p>
         </div>
         <div>
           <h4>Getting around</h4>
-          <p><strong>Limerick to Dublin Airport:</strong> about 2 hours by car. A private car or shuttle is the recommended option given the timing, especially for anyone traveling straight from Futura's final evening.</p>
-          <p><strong>Milan Linate to Allianz MiCo:</strong> about 15 to 25 minutes by taxi or rideshare. No train needed for this leg given the short distance.</p>
+          <p><strong>Limerick to Dublin Airport, Tuesday, October 20:</strong> Citylink bus route 712 leaves Arthur's Quay in Limerick at 5:30 PM and arrives at Dublin Airport at 8:00 PM, EUR 28 per person. <a href="https://www.citylink.ie/timetables/712/" target="_blank" rel="noopener noreferrer">Timetable and booking</a></p>
+          <p><strong>Milan Linate to Allianz MiCo:</strong> about 30 minutes by taxi or rideshare. No train needed for this leg given the short distance.</p>
+        </div>
+      </div>
+
+      <div class="logi-grid logi-grid-4 reveal" style="margin-top:1.5rem">
+        <div class="logi-card">
+          <div class="logi-card-head">
+            <div><h4>Milan to H-Farm</h4><p class="logi-loc">Fri Oct 23 &middot; Train</p></div>
+            <span class="status-badge confirmed">Recommended</span>
+          </div>
+          <p>Italo 8977 departs Milano Centrale at 9:35 AM and arrives at Venezia Mestre at 11:52 AM. The H-Farm team will arrange pickup at Venezia Mestre and transfer to campus. Please book your own ticket as soon as possible, as it books up fast. <a href="https://www.italotreno.com/en" target="_blank" rel="noopener noreferrer">Italo booking</a></p>
+        </div>
+        <div class="logi-card">
+          <div class="logi-card-head">
+            <div><h4>Villa Annia at H-Farm</h4><p class="logi-loc">Nights of Oct 23 and 24</p></div>
+            <span class="status-badge confirmed">Rooms reserved</span>
+          </div>
+          <p>We have rooms reserved at Villa Annia, on the H-Farm campus, at about $100 a night. Some of us stay Friday and Saturday nights, others Friday only. Let us know which nights you want and we will pass them to the H-Farm team. <a href="https://booking.inreception.com/farmhouse" target="_blank" rel="noopener noreferrer">Property information</a></p>
+        </div>
+        <div class="logi-card">
+          <div class="logi-card-head">
+            <div><h4>Venice Biennale</h4><p class="logi-loc">Sat Oct 24</p></div>
+            <span class="status-badge tbd">Being arranged</span>
+          </div>
+          <p>We plan to visit the <a href="https://www.labiennale.org/en" target="_blank" rel="noopener noreferrer">Biennale</a> with Tim from H-Farm and a guide he recommends. Timing, guide cost and transport are being arranged, at around $100. Let us know if you would like to join.</p>
+        </div>
+        <div class="logi-card">
+          <div class="logi-card-head">
+            <div><h4>Departure</h4><p class="logi-loc">Sun Oct 25</p></div>
+          </div>
+          <p>Depart, or take your own adventure.</p>
         </div>
       </div>
 
       <div class="note-box reveal">
-        <p>The Milan property and the Dublin hotel pick are still being finalized and will be confirmed and added here with booking links shortly.</p>
+        <p>Questions about any leg? Reach out at <a href="mailto:hello@venturebuilders.fund">hello@venturebuilders.fund</a>.</p>
       </div>
     </div>
   </section>
 
   <!-- FINAL CTA -->
   <section class="sec final-cta">
-    <h2>See you in Limerick and Milan</h2>
+    <h2>See you in Limerick, Milan and Venice</h2>
     <p>Questions in the meantime? Reach out and we'll help however we can.</p>
     <div class="cta-row">
       <a href="#rsvp" class="btn-white">RSVP Now</a>
