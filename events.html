@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js), loaded after cookie consent via loadGA() -->
+  <script>
+    function loadGA() {
+      if (window.__vbf_ga_loaded) return;
+      window.__vbf_ga_loaded = true;
+      var gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-8R4HG16TTS';
+      document.head.appendChild(gaScript);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-8R4HG16TTS');
+    }
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Venture Builders Fund hosts intimate, high-touch dinners that bring founders, accelerator leaders and investors together. Sponsor a single dinner or partner on a series, with no red tape.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://venturebuilders.fund/events">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Venture Builders Fund">
+  <meta property="og:title" content="Events and Sponsorship | Venture Builders Fund">
+  <meta property="og:description" content="Intimate founder and investor dinners, curated by people who have spent years building accelerator and venture studio communities. Sponsors get the room, not just a logo.">
+  <meta property="og:url" content="https://venturebuilders.fund/events">
+  <meta property="og:image" content="https://venturebuilders.fund/images/events/vbf-dinner-patio.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Events and Sponsorship | Venture Builders Fund">
+  <meta name="twitter:description" content="Intimate founder and investor dinners. Sponsor a single dinner or partner on a series, with no red tape.">
+  <meta name="twitter:image" content="https://venturebuilders.fund/images/events/vbf-dinner-patio.jpg">
+  <title>Events and Sponsorship | Venture Builders Fund</title>
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-free">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vbf.css">
+  <style>
+    .two-col{display:grid;gap:4rem}
+    @media(min-width:900px){.two-col{grid-template-columns:1fr 1fr;align-items:center}}
+    .hero-img::after{background:linear-gradient(to bottom,rgba(8,8,8,0.92) 0%,rgba(8,8,8,0.6) 45%,rgba(8,8,8,1) 100%)}
+    .ev-hero .hero-content{min-height:auto;padding:9rem 2rem 5rem}
+    .ev-hero{min-height:auto;max-height:none}
+    /* proof strip */
+    .proof{background:#0d0d0d;color:#fff;padding:0 2rem 4.5rem}
+    .proof-grid{max-width:var(--max);margin:0 auto;display:grid;gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;grid-template-columns:1fr 1fr}
+    @media(min-width:900px){.proof-grid{grid-template-columns:repeat(4,1fr)}}
+    .proof-item{background:#0d0d0d;padding:1.75rem 1.5rem}
+    .proof-num{font-family:var(--font-head);font-weight:800;font-size:clamp(2rem,4vw,2.8rem);line-height:1;color:#fff}
+    .proof-num span{color:var(--accent)}
+    .proof-lbl{margin-top:0.6rem;font-size:0.9rem;line-height:1.5;color:rgba(255,255,255,0.62)}
+    /* photo mosaic */
+    .mosaic{display:grid;gap:0.75rem;grid-template-columns:1fr 1fr}
+    .mosaic img{width:100%;height:100%;object-fit:cover;border-radius:12px;display:block}
+    .mosaic .tall{grid-row:span 2}
+    .mosaic .wide{grid-column:span 2}
+    .photo-cap{font-size:0.78rem;color:var(--ink-soft);margin-top:0.75rem}
+    /* video */
+    .video-sec{background:#0d0d0d;color:#fff}
+    .video-wrap{max-width:980px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 30px 80px rgba(0,0,0,0.5);background:#000}
+    .video-wrap video{width:100%;display:block;aspect-ratio:16/9;background:#000}
+    .video-note{max-width:980px;margin:1rem auto 0;font-size:0.72rem;line-height:1.55;color:rgba(255,255,255,0.42);text-align:center}
+    /* feature cards */
+    .feat-grid{display:grid;gap:1.25rem}
+    @media(min-width:700px){.feat-grid{grid-template-columns:1fr 1fr}}
+    @media(min-width:1050px){.feat-grid{grid-template-columns:repeat(3,1fr)}}
+    .feat{border:1.5px solid rgba(0,0,0,0.08);border-radius:14px;padding:1.75rem;background:#fff;transition:all 250ms cubic-bezier(0.25,0,0,1)}
+    .feat:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,0.07);border-color:rgba(232,52,78,0.22)}
+    .feat-num{font-family:var(--font-head);font-weight:800;font-size:0.8rem;letter-spacing:0.12em;color:var(--accent);margin-bottom:0.9rem}
+    .feat h3{font-family:var(--font-head);font-size:1.15rem;font-weight:800;line-height:1.25;margin-bottom:0.6rem}
+    .feat p{font-size:0.93rem;color:var(--ink-mid);line-height:1.7}
+    /* detail strip */
+    .detail-grid{display:grid;gap:1rem}
+    @media(min-width:800px){.detail-grid{grid-template-columns:1.35fr 0.65fr 1fr}}
+    .detail-card{position:relative;border-radius:14px;overflow:hidden;min-height:320px;background:#111}
+    .detail-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .detail-card .lbl{position:absolute;left:0;right:0;bottom:0;padding:2.5rem 1.25rem 1.1rem;background:linear-gradient(to top,rgba(0,0,0,0.82),rgba(0,0,0,0));color:#fff;font-size:0.9rem;line-height:1.45}
+    .detail-card .lbl strong{display:block;font-family:var(--font-head);font-size:1rem;margin-bottom:0.15rem}
+    /* newsletter example */
+    .nl-frame{max-width:440px;margin:0 auto;border-radius:16px;background:#f2f2f3;padding:14px;box-shadow:0 24px 60px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.06)}
+    .nl-bar{display:flex;gap:6px;padding:2px 4px 12px}
+    .nl-bar i{width:10px;height:10px;border-radius:50%;background:#d4d4d8;display:block}
+    .nl-meta{font-size:0.75rem;color:var(--ink-soft);padding:0 4px 10px;line-height:1.45}
+    .nl-meta strong{color:var(--ink)}
+    .nl-shot{height:520px;overflow:hidden;border-radius:10px;position:relative;background:#fff}
+    .nl-shot img{width:100%;display:block}
+    .nl-shot::after{content:'';position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(to top,#f2f2f3,rgba(242,242,243,0))}
+    .timeline{list-style:none;margin-top:1.5rem;border-left:2px solid rgba(232,52,78,0.25);padding-left:1.5rem}
+    .timeline li{position:relative;margin-bottom:1.35rem}
+    .timeline li::before{content:'';position:absolute;left:calc(-1.5rem - 7px);top:0.45rem;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(232,52,78,0.15)}
+    .timeline .when{font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent)}
+    .timeline .what{font-family:var(--font-head);font-weight:800;font-size:1.02rem;margin:0.15rem 0 0.2rem}
+    .timeline p{font-size:0.92rem;color:var(--ink-mid);line-height:1.65}
+    /* ways in */
+    .ways{display:grid;gap:1.25rem}
+    @media(min-width:900px){.ways{grid-template-columns:repeat(3,1fr)}}
+    .way{border-radius:16px;padding:2rem;border:1.5px solid rgba(0,0,0,0.08);background:#fff;display:flex;flex-direction:column}
+    .way.feature{background:#0d0d0d;color:#fff;border-color:#0d0d0d;position:relative;overflow:hidden}
+    .way.feature::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent)}
+    .way .tagline{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem}
+    .way h3{font-family:var(--font-head);font-weight:800;font-size:1.4rem;line-height:1.2;margin-bottom:0.75rem}
+    .way p{font-size:0.95rem;line-height:1.7;color:var(--ink-mid)}
+    .way.feature p{color:rgba(255,255,255,0.72)}
+    .way ul{list-style:none;margin-top:1.1rem;display:grid;gap:0.5rem}
+    .way li{font-size:0.9rem;line-height:1.5;padding-left:1.4rem;position:relative;color:var(--ink-mid)}
+    .way.feature li{color:rgba(255,255,255,0.8)}
+    .way li::before{content:'';position:absolute;left:0;top:0.5rem;width:8px;height:8px;border-radius:2px;background:var(--accent)}
+    .no-tape{margin-top:2rem;padding:1.25rem 1.5rem;border-radius:12px;background:rgba(232,52,78,0.06);border:1.5px solid rgba(232,52,78,0.15);font-size:0.95rem;line-height:1.65;color:var(--ink)}
+    /* cities */
+    .city-grid{display:grid;gap:0.75rem;grid-template-columns:1fr 1fr}
+    @media(min-width:800px){.city-grid{grid-template-columns:repeat(3,1fr)}}
+    .city{border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;padding:1.1rem 1.25rem;background:rgba(255,255,255,0.03)}
+    .city .c{font-family:var(--font-head);font-weight:800;font-size:1.15rem;color:#fff}
+    .city .r{font-size:0.82rem;color:rgba(255,255,255,0.5);margin-top:0.15rem}
+    .city .st{display:inline-block;margin-top:0.7rem;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent)}
+    .past-row{margin-top:1.5rem;font-size:0.9rem;color:rgba(255,255,255,0.55)}
+    .past-row strong{color:#fff;font-weight:600}
+    /* team */
+    .bio-grid{display:grid;gap:1.25rem}
+    @media(min-width:800px){.bio-grid{grid-template-columns:1fr 1fr}}
+    .bio{display:flex;gap:1.25rem;align-items:flex-start;padding:1.5rem;border:1.5px solid rgba(0,0,0,0.08);border-radius:14px;background:#fff}
+    .bio img{width:88px;height:88px;border-radius:50%;object-fit:cover;object-position:top center;flex-shrink:0;border:2.5px solid rgba(232,52,78,0.25)}
+    .bio .n{font-family:var(--font-head);font-weight:800;font-size:1.1rem}
+    .bio .t{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin:0.1rem 0 0.6rem}
+    .bio p{font-size:0.92rem;line-height:1.68;color:var(--ink-mid)}
+    /* sponsors */
+    .logo-wall{display:grid;gap:1rem;grid-template-columns:1fr;max-width:980px;margin:0 auto}
+    @media(min-width:700px){.logo-wall{grid-template-columns:repeat(3,1fr)}}
+    .logo-tile{height:150px;border-radius:14px;border:1.5px solid rgba(0,0,0,0.08);background:#fff;display:flex;align-items:center;justify-content:center;padding:1.5rem;transition:all 250ms cubic-bezier(0.25,0,0,1);text-decoration:none}
+    .logo-tile:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,0.08)}
+    .logo-tile img{max-height:96px;max-width:100%;width:auto;display:block}
+    .logo-tile.dark{background:#0d0d0d;border-color:#0d0d0d}
+    .logo-tile.dark svg{width:78%;height:auto;display:block}
+    /* form */
+    .form-card{background:#fff;border-radius:16px;padding:2rem;box-shadow:0 24px 60px rgba(0,0,0,0.25)}
+    @media(min-width:640px){.form-card{padding:2.5rem}}
+    .form-card h3{font-family:var(--font-head);font-weight:800;font-size:1.35rem;margin-bottom:0.35rem;color:var(--ink)}
+    .form-card .sub{font-size:0.9rem;color:var(--ink-soft);margin-bottom:1.5rem}
+    .hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+    .captcha-row{display:flex;gap:0.75rem;align-items:flex-end}
+    .captcha-row .form-group{flex:1;margin-bottom:0}
+    .captcha-q{font-size:0.95rem;font-weight:600;color:var(--ink);padding:0.75rem 1rem;background:#f5f5f6;border-radius:var(--radius);white-space:nowrap}
+    .form-status{margin-top:1rem;font-size:0.9rem;line-height:1.5;display:none;padding:0.85rem 1rem;border-radius:var(--radius)}
+    .form-status.ok{display:block;background:rgba(26,122,74,0.08);color:#1a7a4a}
+    .form-status.err{display:block;background:rgba(196,40,64,0.08);color:#c42840}
+    .contact-sec{background:#0d0d0d;color:#fff;position:relative;overflow:hidden}
+    .contact-sec .sec-h{color:#fff}
+    .contact-copy p{color:rgba(255,255,255,0.7);line-height:1.8;font-size:1.02rem;margin-bottom:1rem}
+    .contact-people{margin-top:1.5rem;display:grid;gap:0.6rem;font-size:0.92rem;color:rgba(255,255,255,0.75)}
+    .contact-people span{color:#fff;font-weight:600}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="logo-dark.png" alt="Venture Builders Fund logo"></a>
+    <ul class="nav-links">
+      <li><a href="index.html#thesis">Fund</a></li>
+      <li><a href="forbuilders.html">Builders</a></li>
+      <li><a href="forfounders.html">Founders</a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <a href="#contact" class="nav-cta">Become a Sponsor</a>
+  </div>
+</nav>
+  <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+    <div class="nav-drawer-inner">
+      <ul class="nav-drawer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#thesis">Fund</a></li>
+        <li><a href="forbuilders.html">Builders</a></li>
+        <li><a href="forfounders.html">Founders</a></li>
+      </ul>
+      <div class="nav-drawer-ctas">
+        <a href="https://www.watchpivot.tv/" target="_blank" rel="noopener noreferrer" class="nav-drawer-pivot">Pivot</a>
+        <a class='nav-drawer-join' href='#contact'>Become a Sponsor</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-overlay" id="nav-overlay"></div>
+<main>
+
+  <!-- HERO -->
+  <section class="hero ev-hero" aria-label="Venture Builders events and sponsorship">
+    <div class="hero-img"><img src="images/events/vbf-dinner-patio.jpg" alt="Guests on the patio at the Venture Builders dinner in Denver at golden hour"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span class="eyebrow-dot"></span><span class="eyebrow-text">Events and sponsorship</span></div>
+      <h1>The rooms founders <span class="accent">talk about after.</span></h1>
+      <p class="hero-sub">Intimate founder and investor dinners, hosted by a team that has spent 15+ years building accelerator and venture studio communities. Our sponsors don't just get a logo on a table. They get the room.</p>
+      <div class="hero-actions">
+        <a class='btn-primary' href='#contact'>Sponsor a dinner</a>
+        <a class='btn-ghost' href='#denver'>See Denver</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF -->
+  <section class="proof" aria-label="Denver dinner in numbers">
+    <div class="proof-grid">
+      <div class="proof-item"><div class="proof-num">26<span>/</span>20</div><div class="proof-lbl">Guests at a 20-seat dinner in Denver. We added seats and still had a waitlist.</div></div>
+      <div class="proof-item"><div class="proof-num">4</div><div class="proof-lbl">Tables, with every seat planned by hand and rotated between courses.</div></div>
+      <div class="proof-item"><div class="proof-num">100<span>%</span></div><div class="proof-lbl">Of the guest list, with contact details, in our sponsors' hands before the night.</div></div>
+      <div class="proof-item"><div class="proof-num">2</div><div class="proof-lbl">Branded emails per event, one before and one after, both featuring our sponsors.</div></div>
+    </div>
+  </section>
+
+  <!-- DENVER -->
+  <section class="sec" id="denver" style="background:#fff">
+    <div style="max-width:1200px;margin:0 auto" class="two-col">
+      <div class="reveal">
+        <p class="sec-tag">Denver, October 1, 2026</p>
+        <h2 class="sec-h" style="margin-bottom:1rem">Twenty seats. Twenty-six guests. A waitlist.</h2>
+        <p style="color:var(--ink-mid);font-size:1.05rem;line-height:1.8;margin-bottom:1rem">We opened our Denver dinner at Coohills with drinks on the patio at golden hour, then moved inside to four tables. Founders came out of the Colorado School of Mines and local accelerators, alongside exited founders, operators and investors.</p>
+        <p style="color:var(--ink-mid);font-size:1.05rem;line-height:1.8;margin-bottom:1rem">Our sponsors, Wells Fargo and FinStrat Management, were part of the evening, not just on the menu. Each was seated with the guests most relevant to them, had a moment to speak over dinner, and left with the full guest list and a set of introductions to follow up on.</p>
+        <p style="color:var(--ink-mid);font-size:1.05rem;line-height:1.8">People stayed long after dessert. One guest told us she'd planned to drop in for an hour and was still there four hours later.</p>
+      </div>
+      <div class="reveal">
+        <div class="mosaic">
+          <img class="wide" src="images/events/vbf-dinner-trio.jpg" alt="Three guests smiling at the Denver dinner" style="aspect-ratio:3/2">
+          <img src="images/events/vbf-dinner-steve-guest.jpg" alt="Steve Hayton with a guest" style="aspect-ratio:1/1">
+          <img src="images/events/vbf-dinner-founders-trio.jpg" alt="Three guests with drinks at the dinner" style="aspect-ratio:1/1">
+          <img src="images/events/vbf-dinner-guests-1.jpg" alt="Two guests smiling with drinks" style="aspect-ratio:4/5;object-position:center 20%">
+          <img src="images/events/vbf-dinner-guests-2.jpg" alt="Two guests smiling on the patio" style="aspect-ratio:4/5;object-position:center 20%">
+        </div>
+        <p class="photo-cap">Photos from our Denver dinner, captured by our event photographer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="sec video-sec" aria-label="What guests said">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal"><p class="sec-tag">In their words</p><h2 class="sec-h" style="color:#fff">What the room said</h2><p class="sec-sub" style="color:rgba(255,255,255,0.55);margin:1rem auto 0">We film every event. Here's what guests told us on the night in Denver.</p></div>
+      <div class="video-wrap reveal">
+        <video controls playsinline preload="metadata" poster="images/events/vbf-dinner-reel-poster.jpg">
+          <source src="video/vbf-dinner-reel.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="video-note">Comments recorded from guests at our October 1, 2026 dinner in Denver and shown without names.</p>
+    </div>
+  </section>
+
+  <!-- WHAT SPONSORS GET -->
+  <section class="sec" style="background:#fff">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal"><p class="sec-tag">High touch, by design</p><h2 class="sec-h">More than a logo on a table</h2><p class="sec-sub" style="margin:1rem auto 0">Most event sponsorships buy you a banner and a hope. Ours are built so that every sponsor leaves with real relationships.</p></div>
+      <div class="feat-grid">
+        <div class="feat reveal"><div class="feat-num">01</div><h3>Every seat is intentional</h3><p>We don't do open seating. We plan every table by hand, seed conversations before the first course, and rotate seats between courses so the networking stays fresh all night. The room is electric because it's designed to be.</p></div>
+        <div class="feat reveal"><div class="feat-num">02</div><h3>The guest list, before the night</h3><p>Sponsors get the full guest list with contact details ahead of the event, so you arrive knowing who you want to meet and why. We'll also seat you next to them.</p></div>
+        <div class="feat reveal"><div class="feat-num">03</div><h3>Featured before and after</h3><p>Our pre-event email introduces you to every guest. Our post-event recap thanks you by name, alongside the photos, quotes and every guest's LinkedIn. Your brand travels well beyond the room.</p></div>
+        <div class="feat reveal"><div class="feat-num">04</div><h3>Your brand on the night</h3><p>Your logo on the printed menus and our custom notebooks at every place setting, plus a moment to speak to the room over dinner. Understated, never salesy.</p></div>
+        <div class="feat reveal"><div class="feat-num">05</div><h3>Photo and video, included</h3><p>We hire a professional photographer and videographer for every event. You get the photos, guest testimonials and highlight edits to use in your own channels.</p></div>
+        <div class="feat reveal"><div class="feat-num">06</div><h3>Access to our deal flow</h3><p>The founders in our rooms come from the accelerators and venture studios we have worked alongside for years. Sponsors meet them early, well before the rest of the market does.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section class="sec" style="background:rgba(232, 52, 78, 0.04);padding-top:4.5rem;padding-bottom:4.5rem">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header reveal"><p class="sec-tag">The details</p><h2 class="sec-h">We sweat the small things so you don't have to</h2></div>
+      <div class="detail-grid">
+        <div class="detail-card reveal"><img src="images/events/vbf-dinner-notebooks.jpg" alt="Place settings with custom Venture Builders notebooks"><div class="lbl"><strong>Custom notebooks</strong>Branded notebooks and menus at every place setting.</div></div>
+        <div class="detail-card reveal"><img src="images/events/vbf-dinner-menu.jpg" alt="Printed dinner menu thanking the sponsors" style="object-position:center 60%"><div class="lbl"><strong>Printed menus</strong>Every menu thanks our sponsors by name.</div></div>
+        <div class="detail-card reveal"><img src="images/events/vbf-dinner-sponsor-remarks.jpg" alt="A sponsor speaking to the room during dinner"><div class="lbl"><strong>A moment to speak</strong>Sponsors share a few words with the room over dinner.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="sec" style="background:#fff">
+    <div style="max-width:1200px;margin:0 auto" class="two-col">
+      <div class="reveal">
+        <p class="sec-tag">Before and after</p>
+        <h2 class="sec-h" style="margin-bottom:1rem">Your sponsorship doesn't end when the plates are cleared</h2>
+        <p style="color:var(--ink-mid);font-size:1.05rem;line-height:1.8">Every event is bookended with communication that keeps our sponsors front and center.</p>
+        <ul class="timeline">
+          <li><div class="when">Ahead of the event</div><div class="what">Guest list and contact details</div><p>You get the full list of who's coming, with contact details, so you can plan who to meet.</p></li>
+          <li><div class="when">Before the night</div><div class="what">Pre-event email</div><p>Every guest gets a note introducing the evening and our sponsors.</p></li>
+          <li><div class="when">On the night</div><div class="what">Seated, introduced, filmed</div><p>Intentional seating, seeded conversations, your brand on the table, and a photographer and videographer in the room.</p></li>
+          <li><div class="when">The day after</div><div class="what">Post-event recap</div><p>A branded recap thanking our sponsors, with photos, guest quotes and every guest's LinkedIn. Here's the one we sent after Denver.</p></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="nl-frame">
+          <div class="nl-bar"><i></i><i></i><i></i></div>
+          <div class="nl-meta"><strong>Venture Builders Fund</strong><br>Thank you, Denver. Photos and quotes from our founders and investors dinner</div>
+          <div class="nl-shot"><img src="images/events/vbf-newsletter-example.jpg" alt="The post-event recap email sent to Denver dinner guests"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAYS IN -->
+  <section class="sec" style="background:#fff;border-top:1px solid rgba(0,0,0,0.07)" id="ways">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal"><p class="sec-tag">Ways to get involved</p><h2 class="sec-h">Simple to start. Easy to grow.</h2><p class="sec-sub" style="margin:1rem auto 0">Big organizations tell us the hardest part of sponsoring events is the process. So we've removed it.</p></div>
+      <div class="ways">
+        <div class="way feature reveal">
+          <p class="tagline">The simplest way in</p>
+          <h3>Sponsor a single dinner</h3>
+          <p>Pick a city and a date. One conversation, one invoice or a card payment, and you're in. No procurement marathon, no 30-page agreement.</p>
+          <ul><li>Seated with your target guests</li><li>Guest list and contact details in advance</li><li>Featured in the pre and post-event emails</li><li>Photos and video from the night</li></ul>
+        </div>
+        <div class="way reveal">
+          <p class="tagline">For a season</p>
+          <h3>Series partner</h3>
+          <p>Back a run of dinners across several cities and become the name our community associates with the series.</p>
+          <ul><li>Presenting placement at every dinner</li><li>First choice of cities and dates</li><li>Ongoing introductions from our network</li></ul>
+        </div>
+        <div class="way reveal">
+          <p class="tagline">Built around you</p>
+          <h3>Custom and co-hosted</h3>
+          <p>A private dinner for your clients, a founder roundtable, an investor evening or a leg of an international trip. We design it with you.</p>
+          <ul><li>Your guest goals, our curation</li><li>Formal agreements available if you need them</li><li>Full production, photo and video</li></ul>
+        </div>
+      </div>
+      <div class="no-tape reveal"><strong>No red tape.</strong> You don't need a long contract or a committee sign-off to get involved. Start with a single dinner and a card, and we'll set up something more formal whenever you're ready.</div>
+    </div>
+  </section>
+
+  <!-- CITIES -->
+  <section class="sec" style="background:#0d0d0d" aria-label="Upcoming cities">
+    <div style="max-width:1200px;margin:0 auto" class="two-col">
+      <div class="reveal">
+        <p class="sec-tag">Where we're going next</p>
+        <h2 class="sec-h" style="color:#fff;margin-bottom:1rem">Opportunities in the works</h2>
+        <p style="color:rgba(255,255,255,0.65);font-size:1.05rem;line-height:1.8">We go where great founders are being built, including the ecosystems most investors overlook. These dinners are in planning now, and sponsors can help shape them.</p>
+        <p class="past-row">Past dinners: <strong>New York</strong> and <strong>Denver</strong></p>
+      </div>
+      <div class="city-grid reveal">
+        <div class="city"><div class="c">Cheyenne</div><div class="r">Wyoming</div><span class="st">In planning</span></div>
+        <div class="city"><div class="c">Whitefish</div><div class="r">Montana</div><span class="st">In planning</span></div>
+        <div class="city"><div class="c">Chicago</div><div class="r">Illinois</div><span class="st">In planning</span></div>
+        <div class="city"><div class="c">San Francisco</div><div class="r">California</div><span class="st">In planning</span></div>
+        <div class="city"><div class="c">Milan</div><div class="r">Italy</div><span class="st">In planning</span></div>
+        <div class="city"><div class="c">Venice</div><div class="r">Italy</div><span class="st">In planning</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="sec" style="background:#fff">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal"><p class="sec-tag">Who's hosting</p><h2 class="sec-h">Community builders first</h2><p class="sec-sub" style="margin:1rem auto 0">We have spent 15+ years combined building and running accelerator and venture studio communities. Bringing the right people into a room is what we do.</p></div>
+      <div class="bio-grid">
+        <div class="bio reveal">
+          <img src="images/team/team-steve.png" alt="Steve Hayton">
+          <div><p class="n">Steve Hayton</p><p class="t">General Partner</p><p>Steve designed and delivered a first-of-its-kind curriculum training ecosystem leaders around the world to build accelerators and venture studios. He brings an investigative journalist's eye for people and a host's instinct for who should be sitting next to whom.</p></div>
+        </div>
+        <div class="bio reveal">
+          <img src="images/team/team-jillian.png" alt="Jillian Friot">
+          <div><p class="n">Jillian Friot</p><p class="t">General Partner</p><p>Jillian spent the past decade fostering a global community of startup support organizations and built the SOLIDWORKS for Startups program, which served 30,000+ hardware startups. She knows the accelerators, studios and founders our dinners are built around.</p></div>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:0.72rem;color:var(--ink-soft);margin-top:1rem">Experience described was gained through related programs before Venture Builders Fund.</p>
+    </div>
+  </section>
+
+  <!-- SPONSORS -->
+  <section class="sec" style="background:rgba(232, 52, 78, 0.04);padding-top:4.5rem;padding-bottom:4.5rem">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal"><p class="sec-tag">Our sponsors</p><h2 class="sec-h">In good company</h2></div>
+      <div class="logo-wall">
+        <a class="logo-tile reveal" href="https://www.wellsfargo.com/" target="_blank" rel="noopener" aria-label="Wells Fargo"><img src="images/events/sponsor-wells-fargo.png" alt="Wells Fargo"></a>
+        <a class="logo-tile reveal" href="https://finstratmgmt.com/" target="_blank" rel="noopener" aria-label="FinStrat Management"><img src="images/events/sponsor-finstrat.png" alt="FinStrat Management"></a>
+        <a class="logo-tile dark reveal" href="https://www.dealmaker.tech/" target="_blank" rel="noopener" aria-label="DealMaker"><svg role="img" aria-label="DealMaker" viewBox="0 0 1345 237" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_8230_71)">
+<path d="M869.37 158.33V235.07H848.21V159.61C848.21 133.81 836.86 120.39 816.99 120.39C795.06 120.39 781.64 136.9 781.64 163.73V235.06H760.48V159.6C760.48 133.8 748.87 120.38 728.75 120.38C707.08 120.38 693.92 138.44 693.92 164.76V235.06H672.76V102.6H691.08L693.92 120.66C700.88 111.12 711.98 101.05 732.36 101.05C750.68 101.05 766.42 109.31 773.9 126.08C781.9 111.89 796.09 101.05 819.57 101.05C846.92 101.05 869.36 116.79 869.36 158.33H869.37Z" fill="white"/>
+<path d="M182.43 54.41L121.51 0V105.71L60.78 51.18V181.13L121.76 235.56V180.53L182.43 235.07V54.41Z" fill="white"/>
+<path d="M323.75 54.0098H344.94V234.87H326.59L323.75 213.68C314.96 225.82 300.75 236.42 278.53 236.42C242.1 236.42 215.23 211.87 215.23 168.99C215.23 128.68 242.1 101.55 278.53 101.55C300.75 101.55 315.74 110.6 323.75 123.26V54.0098ZM324 169.5C324 140.56 306.43 120.41 280.6 120.41C254.77 120.41 236.93 140.31 236.93 168.99C236.93 197.67 254.5 217.56 280.6 217.56C306.7 217.56 324 197.66 324 169.5Z" fill="white"/>
+<path d="M357.99 168.99C357.99 128.94 383.31 101.55 420.51 101.55C457.71 101.55 482 125.06 483.04 164.08C483.04 166.92 482.78 170.02 482.52 173.12H380.2V174.93C380.98 199.99 396.74 217.56 421.8 217.56C440.41 217.56 454.87 207.74 459.27 190.69H480.72C475.55 217.05 453.85 236.42 423.36 236.42C383.83 236.42 357.99 209.29 357.99 168.99ZM460.3 155.55C458.23 132.81 442.73 120.15 420.77 120.15C401.39 120.15 383.56 134.1 381.5 155.55H460.31H460.3Z" fill="white"/>
+<path d="M998.02 149.09C998.02 118.34 978.64 101.55 945.06 101.55C913.28 101.55 892.35 116.8 889.25 142.63H910.44C913.02 129.19 925.43 120.41 944.03 120.41C964.7 120.41 976.84 130.75 976.84 147.8V156.84H938.09C903.47 156.84 885.12 171.57 885.12 197.92C885.12 221.95 904.76 236.42 933.69 236.42C955.89 236.42 968.97 226.81 977.27 215.29L980.01 234.57L998.1 234.67L998.03 149.09H998.02ZM976.84 181.13C976.84 203.09 961.6 218.34 935.24 218.34C917.67 218.34 906.56 209.55 906.56 196.64C906.56 181.65 917.15 174.67 936.01 174.67H976.83V181.13H976.84Z" fill="white"/>
+<path d="M607.67 149.09C607.67 118.34 588.29 101.55 554.71 101.55C522.93 101.55 502 116.8 498.9 142.63H520.09C522.67 129.19 535.08 120.41 553.68 120.41C574.35 120.41 586.49 130.75 586.49 147.8V156.84H547.74C513.12 156.84 494.77 171.57 494.77 197.92C494.77 221.95 514.41 236.42 543.34 236.42C565.54 236.42 578.62 226.81 586.92 215.29L589.66 234.57L607.75 234.67L607.68 149.09H607.67ZM586.48 181.13C586.48 203.09 571.24 218.34 544.88 218.34C527.31 218.34 516.2 209.55 516.2 196.64C516.2 181.65 526.79 174.67 545.65 174.67H586.47V181.13H586.48Z" fill="white"/>
+<path d="M650.83 54.0098H629.64V234.87H650.83V54.0098Z" fill="white"/>
+<path d="M1019.85 54.0098H1041.04V173.12L1107.18 103.1H1133.28L1081.86 157.62L1136.89 234.88H1111.31L1067.65 172.87L1041.04 200.26V234.88H1019.85V54.0098Z" fill="white"/>
+<path d="M1131.83 168.99C1131.83 128.94 1157.15 101.55 1194.35 101.55C1231.55 101.55 1255.84 125.06 1256.88 164.08C1256.88 166.92 1256.62 170.02 1256.36 173.12H1154.04V174.93C1154.82 199.99 1170.58 217.56 1195.64 217.56C1214.25 217.56 1228.71 207.74 1233.11 190.69H1254.56C1249.39 217.05 1227.69 236.42 1197.2 236.42C1157.67 236.42 1131.83 209.29 1131.83 168.99ZM1234.15 155.55C1232.08 132.81 1216.58 120.15 1194.62 120.15C1175.24 120.15 1157.41 134.1 1155.35 155.55H1234.16H1234.15Z" fill="white"/>
+<path d="M1344.03 103.1V123.77H1333.43C1305.78 123.77 1298.29 146.77 1298.29 167.69V234.87H1277.1V103.1H1295.44L1298.29 123C1304.49 112.92 1314.57 103.1 1338.08 103.1H1344.03Z" fill="white"/>
+<path d="M60.78 235.01L0 180.8V126.88L60.78 181.12V235.01Z" fill="#8EE8DF"/>
+</g>
+<defs>
+<clipPath id="clip0_8230_71">
+<rect width="1344.03" height="236.42" fill="white"/>
+</clipPath>
+</defs>
+</svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="sec contact-sec" id="contact">
+    <div style="max-width:1200px;margin:0 auto" class="two-col">
+      <div class="contact-copy reveal">
+        <p class="sec-tag">Let's talk</p>
+        <h2 class="sec-h" style="margin-bottom:1.25rem">Put your brand in the room</h2>
+        <p>Tell us a little about your team and what you'd like to get out of it. Whether it's one dinner or a whole season, we'll come back to you quickly with options.</p>
+        <div class="contact-people">
+          <div>Your message goes straight to <span>Steve</span>, <span>Jillian</span> and <span>Sarah</span>.</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <form class="form-card" id="sponsor-form" novalidate>
+          <h3>Sponsor enquiry</h3>
+          <p class="sub">All fields marked * are required.</p>
+          <div class="form-row-2">
+            <div class="form-group"><label for="sf-name">Your name *</label><input type="text" id="sf-name" name="contact_name" autocomplete="name" required></div>
+            <div class="form-group"><label for="sf-email">Email *</label><input type="email" id="sf-email" name="email" autocomplete="email" required></div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group"><label for="sf-org">Organization *</label><input type="text" id="sf-org" name="organization" autocomplete="organization" required></div>
+            <div class="form-group"><label for="sf-title">Title</label><input type="text" id="sf-title" name="job_title" autocomplete="organization-title"></div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group"><label for="sf-interest">I'm interested in</label>
+              <select id="sf-interest" name="interest">
+                <option>Sponsoring a single dinner</option>
+                <option>A series partnership</option>
+                <option>A custom or co-hosted event</option>
+                <option>Not sure yet</option>
+              </select></div>
+            <div class="form-group"><label for="sf-city">City or region</label><input type="text" id="sf-city" name="city" placeholder="e.g. Chicago, Milan, anywhere"></div>
+          </div>
+          <div class="form-group"><label for="sf-message">Message *</label><textarea id="sf-message" name="message" placeholder="Who would you most like to meet, and what would make it worthwhile for your team?" required></textarea></div>
+          <div class="hp" aria-hidden="true"><label for="sf-website">Website</label><input type="text" id="sf-website" name="website" tabindex="-1" autocomplete="off"></div>
+          <div class="captcha-row">
+            <div class="captcha-q" id="sf-captcha-q">Loading check...</div>
+            <div class="form-group"><label for="sf-captcha">Quick check: your answer *</label><input type="text" id="sf-captcha" inputmode="numeric" autocomplete="off" required></div>
+          </div>
+          <button type="submit" class="form-submit" id="sf-submit">Send message</button>
+          <div class="form-status" id="sf-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div><img src="logo-white.png" alt="Venture Builders Fund" style="margin-bottom:0.6rem;mix-blend-mode: screen;"><p class="footer-legal">Securities offered through Venture Builders Fund LP. This website does not constitute an offer to sell or a solicitation of an offer to buy any securities.</p></div>
+    <ul class="footer-links"><li><a href='/forbuilders'>Builders</a></li><li><a href='/forfounders'>Founders</a></li><li><a href='/foraccelerators'>Accelerator</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/blog">Blog</a></li><li><a href="mailto:hello@venturebuilders.fund">Contact</a></li></ul>
+    <p class="footer-copy">&copy; 2026 Venture Builders Fund. All rights reserved.</p>
+  </div>
+</footer>
+<script defer>
+  // Mobile nav
+  (function() {
+    var btn = document.getElementById('nav-hamburger');
+    var drawer = document.getElementById('nav-drawer');
+    var overlay = document.getElementById('nav-overlay');
+    if (!btn || !drawer || !overlay) return;
+    function openMenu() { drawer.classList.add('open'); overlay.classList.add('open'); btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function closeMenu() { drawer.classList.remove('open'); overlay.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    btn.addEventListener('click', function() { drawer.classList.contains('open') ? closeMenu() : openMenu(); });
+    overlay.addEventListener('click', closeMenu);
+    drawer.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMenu); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
+  }());
+
+  // Reveal on scroll
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e, i) {
+      if (e.isIntersecting) { setTimeout(function(){ e.target.classList.add('visible'); }, i * 80); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+
+  // Sponsor enquiry form
+  (function() {
+    var ENDPOINT = 'https://asuophspmfqcnlzgqsfa.supabase.co/functions/v1/sponsor-enquiry';
+    var form = document.getElementById('sponsor-form');
+    var q = document.getElementById('sf-captcha-q');
+    var ans = document.getElementById('sf-captcha');
+    var btn = document.getElementById('sf-submit');
+    var status = document.getElementById('sf-status');
+    var token = null;
+
+    function show(msg, ok) { status.textContent = msg; status.className = 'form-status ' + (ok ? 'ok' : 'err'); }
+    function loadChallenge() {
+      q.textContent = 'Loading check...'; token = null; ans.value = '';
+      fetch(ENDPOINT).then(function(r){ return r.json(); }).then(function(d) {
+        token = d.token; q.textContent = d.question;
+      }).catch(function() { q.textContent = 'Check unavailable'; });
+    }
+    loadChallenge();
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var v = function(id){ return document.getElementById(id).value.trim(); };
+      if (!v('sf-name') || !v('sf-email') || !v('sf-org') || !v('sf-message')) { show('Please fill in your name, email, organization and message.', false); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v('sf-email'))) { show('Please check your email address.', false); return; }
+      if (!v('sf-captcha')) { show('Please answer the quick check.', false); return; }
+      btn.disabled = true; btn.textContent = 'Sending...'; status.className = 'form-status';
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contact_name: v('sf-name'), email: v('sf-email'), organization: v('sf-org'),
+          job_title: v('sf-title'), interest: v('sf-interest'), city: v('sf-city'),
+          message: v('sf-message'), website: document.getElementById('sf-website').value,
+          captcha_answer: v('sf-captcha'), captcha_token: token, source_page: 'events'
+        })
+      }).then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+      .then(function(res) {
+        if (res.ok && res.d.ok) {
+          form.reset(); show("Thanks. Your message is with Steve, Jillian and Sarah, and we'll be in touch soon.", true);
+          btn.textContent = 'Message sent'; loadChallenge();
+          if (window.gtag) gtag('event', 'sponsor_enquiry');
+        } else {
+          show((res.d && res.d.error) || 'Something went wrong. Please email hello@venturebuilders.fund.', false);
+          btn.disabled = false; btn.textContent = 'Send message';
+          if (res.d && res.d.retry_captcha) loadChallenge();
+        }
+      }).catch(function() {
+        show('Something went wrong. Please email hello@venturebuilders.fund.', false);
+        btn.disabled = false; btn.textContent = 'Send message';
+      });
+    });
+  }());
+</script>
+  <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;
+    background:#0d0d0d;color:rgba(255,255,255,0.8);padding:1rem 2rem;
+    font-size:0.85rem;z-index:9999;align-items:center;
+    justify-content:space-between;gap:1rem;flex-wrap:wrap;
+    border-top:1px solid rgba(255,255,255,0.1)">
+    <p style="margin:0;line-height:1.6">
+      We use cookies to understand how visitors use our site.
+      <a href="/privacy" style="color:#E8344E;text-decoration:none">Privacy Policy</a>
+    </p>
+    <div style="display:flex;gap:0.75rem;flex-shrink:0">
+      <button onclick="declineCookies()" style="padding:0.45rem 1rem;background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:6px;cursor:pointer;font-size:0.82rem">Decline</button>
+      <button onclick="acceptCookies()" style="padding:0.45rem 1rem;background:#E8344E;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:600">Accept</button>
+    </div>
+  </div>
+  <script>
+  (function() {
+    var consent = null;
+    try { consent = localStorage.getItem('vbf_cookie_consent'); } catch (e) {}
+    if (consent === 'accepted') { loadGA(); }
+    else if (consent === null) { document.getElementById('cookie-banner').style.display = 'flex'; }
+  })();
+  function acceptCookies() { try { localStorage.setItem('vbf_cookie_consent', 'accepted'); } catch (e) {} document.getElementById('cookie-banner').style.display = 'none'; loadGA(); }
+  function declineCookies() { try { localStorage.setItem('vbf_cookie_consent', 'declined'); } catch (e) {} document.getElementById('cookie-banner').style.display = 'none'; }
+  </script>
+</body>
+</html>
