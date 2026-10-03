@@ -50,6 +50,20 @@
     .proof-item{background:#0d0d0d;padding:1.75rem 1.5rem}
     .proof-num{font-family:var(--font-head);font-weight:800;font-size:clamp(2rem,4vw,2.8rem);line-height:1;color:#fff}
     .proof-num span{color:var(--accent)}
+    .proof-num.proof-word{font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.1}
+    .seats{margin-top:2rem;padding:1.5rem;border-radius:14px;border:1.5px solid rgba(0,0,0,0.08);background:#fafafa}
+    .seats-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.1rem}
+    .seats-big{font-family:var(--font-head);font-weight:800;font-size:3.2rem;line-height:1;color:var(--accent)}
+    .seats-txt{font-size:0.95rem;line-height:1.5;color:var(--ink-mid)}
+    .seats-txt strong{color:var(--ink)}
+    .seat-row{display:grid;grid-template-columns:repeat(10,18px);gap:8px}
+    .seat-row i,.seat-legend i{display:inline-block;width:18px;height:18px;border-radius:50%}
+    .s-plan{background:#cfcfd4}
+    .s-add{background:var(--accent)}
+    .s-wait{border:2px dashed var(--accent);background:transparent}
+    .seat-legend{display:flex;flex-wrap:wrap;gap:0.5rem 1.25rem;margin-top:1rem;font-size:0.82rem;color:var(--ink-mid)}
+    .seat-legend span{display:inline-flex;align-items:center;gap:0.45rem}
+    .seat-legend i{width:12px;height:12px}
     .proof-lbl{margin-top:0.6rem;font-size:0.9rem;line-height:1.5;color:rgba(255,255,255,0.62)}
     /* photo mosaic */
     .mosaic{display:grid;gap:0.75rem;grid-template-columns:1fr 1fr}
@@ -69,7 +83,7 @@
     .feat{border:1.5px solid rgba(0,0,0,0.08);border-radius:14px;padding:1.75rem;background:#fff;transition:all 250ms cubic-bezier(0.25,0,0,1)}
     .feat:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,0.07);border-color:rgba(232,52,78,0.22)}
     .feat-num{font-family:var(--font-head);font-weight:800;font-size:0.8rem;letter-spacing:0.12em;color:var(--accent);margin-bottom:0.9rem}
-    .feat h3{font-family:var(--font-head);font-size:1.15rem;font-weight:800;line-height:1.25;margin-bottom:0.6rem}
+    .feat h3{font-family:var(--font-head);font-size:1.15rem;font-weight:800;line-height:1.25;margin-bottom:0.6rem;color:var(--accent)}
     .feat p{font-size:0.93rem;color:var(--ink-mid);line-height:1.7}
     /* detail strip */
     .detail-grid{display:grid;gap:1rem}
@@ -195,16 +209,16 @@
       <p class="hero-sub">Intimate founder and investor dinners, hosted by a team that has spent 15+ years building accelerator and venture studio communities. Our sponsors don't just get a logo on a table. They get the room.</p>
       <div class="hero-actions">
         <a class='btn-primary' href='#contact'>Sponsor a dinner</a>
-        <a class='btn-ghost' href='#denver'>See Denver</a>
+        <a class='btn-ghost' href='#denver'>See a recent dinner</a>
       </div>
     </div>
   </section>
 
   <!-- PROOF -->
-  <section class="proof" aria-label="Denver dinner in numbers">
+  <section class="proof" aria-label="What every sponsor gets">
     <div class="proof-grid">
-      <div class="proof-item"><div class="proof-num">26<span>/</span>20</div><div class="proof-lbl">Guests at a 20-seat dinner in Denver. We added seats and still had a waitlist.</div></div>
-      <div class="proof-item"><div class="proof-num">4</div><div class="proof-lbl">Tables, with every seat planned by hand and rotated between courses.</div></div>
+      <div class="proof-item"><div class="proof-num proof-word">Every <span>seat</span></div><div class="proof-lbl">Planned by hand, with seats rotated between courses to keep conversation fresh.</div></div>
+      <div class="proof-item"><div class="proof-num proof-word">Photo <span>+</span> video</div><div class="proof-lbl">A professional photographer and videographer at every event, with the assets shared.</div></div>
       <div class="proof-item"><div class="proof-num">100<span>%</span></div><div class="proof-lbl">Of the guest list, with contact details, in our sponsors' hands before the night.</div></div>
       <div class="proof-item"><div class="proof-num">2</div><div class="proof-lbl">Branded emails per event, one before and one after, both featuring our sponsors.</div></div>
     </div>
@@ -214,11 +228,16 @@
   <section class="sec" id="denver" style="background:#fff">
     <div style="max-width:1200px;margin:0 auto" class="two-col">
       <div class="reveal">
-        <p class="sec-tag">Denver, October 1, 2026</p>
+        <p class="sec-tag">Our latest dinner &middot; Denver, October 1, 2026</p>
         <h2 class="sec-h" style="margin-bottom:1rem">Twenty seats. Twenty-six guests. A waitlist.</h2>
         <p style="color:var(--ink-mid);font-size:1.05rem;line-height:1.8;margin-bottom:1rem">We opened our Denver dinner at Coohills with drinks on the patio at golden hour, then moved inside to four tables. Founders came out of the Colorado School of Mines and local accelerators, alongside exited founders, operators and investors.</p>
         <p style="color:var(--ink-mid);font-size:1.05rem;line-height:1.8;margin-bottom:1rem">Our sponsors, Wells Fargo and FinStrat Management, were part of the evening, not just on the menu. Each was seated with the guests most relevant to them, had a moment to speak over dinner, and left with the full guest list and a set of introductions to follow up on.</p>
         <p style="color:var(--ink-mid);font-size:1.05rem;line-height:1.8">People stayed long after dessert. One guest told us she'd planned to drop in for an hour and was still there four hours later.</p>
+        <div class="seats" role="img" aria-label="26 guests at a dinner planned for 20 seats, with a waitlist">
+          <div class="seats-head"><div class="seats-big">26</div><div class="seats-txt"><strong>guests</strong> at a dinner planned for <strong>20 seats</strong>, and we still had a waitlist</div></div>
+          <div class="seat-row"><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-plan"></i><i class="s-add"></i><i class="s-add"></i><i class="s-add"></i><i class="s-add"></i><i class="s-add"></i><i class="s-add"></i><i class="s-wait"></i><i class="s-wait"></i><i class="s-wait"></i></div>
+          <div class="seat-legend"><span><i class="s-plan"></i>20 planned seats</span><span><i class="s-add"></i>6 seats we added</span><span><i class="s-wait"></i>Waitlist</span></div>
+        </div>
       </div>
       <div class="reveal">
         <div class="mosaic">
@@ -236,7 +255,7 @@
   <!-- VIDEO -->
   <section class="sec video-sec" aria-label="What guests said">
     <div style="max-width:1200px;margin:0 auto">
-      <div class="sec-header center reveal"><p class="sec-tag">In their words</p><h2 class="sec-h" style="color:#fff">What the room said</h2><p class="sec-sub" style="color:rgba(255,255,255,0.55);margin:1rem auto 0">We film every event. Here's what guests told us on the night in Denver.</p></div>
+      <div class="sec-header center reveal"><p class="sec-tag">In their words</p><h2 class="sec-h" style="color:#fff">What the room said</h2><p class="sec-sub" style="color:rgba(255,255,255,0.55);margin:1rem auto 0">We film every event. Here's what guests told us at a recent dinner.</p></div>
       <div class="video-wrap reveal">
         <video controls playsinline preload="metadata" poster="images/events/vbf-dinner-reel-poster.jpg">
           <source src="video/vbf-dinner-reel.mp4" type="video/mp4">
@@ -249,14 +268,14 @@
   <!-- WHAT SPONSORS GET -->
   <section class="sec" style="background:#fff">
     <div style="max-width:1200px;margin:0 auto">
-      <div class="sec-header center reveal"><p class="sec-tag">High touch, by design</p><h2 class="sec-h">More than a logo on a table</h2><p class="sec-sub" style="margin:1rem auto 0">Most event sponsorships buy you a banner and a hope. Ours are built so that every sponsor leaves with real relationships.</p></div>
+      <div class="sec-header center reveal"><h2 class="sec-h">More than a logo on a table</h2><p class="sec-sub" style="margin:1rem auto 0">Most event sponsorships buy you a banner and a hope. Ours are built so that every sponsor leaves with real relationships.</p></div>
       <div class="feat-grid">
-        <div class="feat reveal"><div class="feat-num">01</div><h3>Every seat is intentional</h3><p>We don't do open seating. We plan every table by hand, seed conversations before the first course, and rotate seats between courses so the networking stays fresh all night. The room is electric because it's designed to be.</p></div>
-        <div class="feat reveal"><div class="feat-num">02</div><h3>The guest list, before the night</h3><p>Sponsors get the full guest list with contact details ahead of the event, so you arrive knowing who you want to meet and why. We'll also seat you next to them.</p></div>
-        <div class="feat reveal"><div class="feat-num">03</div><h3>Featured before and after</h3><p>Our pre-event email introduces you to every guest. Our post-event recap thanks you by name, alongside the photos, quotes and every guest's LinkedIn. Your brand travels well beyond the room.</p></div>
-        <div class="feat reveal"><div class="feat-num">04</div><h3>Your brand on the night</h3><p>Your logo on the printed menus and our custom notebooks at every place setting, plus a moment to speak to the room over dinner. Understated, never salesy.</p></div>
-        <div class="feat reveal"><div class="feat-num">05</div><h3>Photo and video, included</h3><p>We hire a professional photographer and videographer for every event. You get the photos, guest testimonials and highlight edits to use in your own channels.</p></div>
-        <div class="feat reveal"><div class="feat-num">06</div><h3>Access to our deal flow</h3><p>The founders in our rooms come from the accelerators and venture studios we have worked alongside for years. Sponsors meet them early, well before the rest of the market does.</p></div>
+        <div class="feat reveal"><h3>Every seat is intentional</h3><p>We don't do open seating. We plan every table by hand, seed conversations before the first course, and rotate seats between courses so the networking stays fresh all night. The room is electric because it's designed to be.</p></div>
+        <div class="feat reveal"><h3>The guest list, before the night</h3><p>Sponsors get the full guest list with contact details ahead of the event, so you arrive knowing who you want to meet and why. We'll also seat you next to them.</p></div>
+        <div class="feat reveal"><h3>Featured before and after</h3><p>Our pre-event email introduces you to every guest. Our post-event recap thanks you by name, alongside the photos, quotes and every guest's LinkedIn. Your brand travels well beyond the room.</p></div>
+        <div class="feat reveal"><h3>Your brand on the night</h3><p>Your logo on the printed menus and our custom notebooks at every place setting, plus a moment to speak to the room over dinner. Understated, never salesy.</p></div>
+        <div class="feat reveal"><h3>Photo and video, included</h3><p>We hire a professional photographer and videographer for every event. You get the photos, guest testimonials and highlight edits to use in your own channels.</p></div>
+        <div class="feat reveal"><h3>Access to our deal flow</h3><p>The founders in our rooms come from the accelerators and venture studios we have worked alongside for years. Sponsors meet them early, well before the rest of the market does.</p></div>
       </div>
     </div>
   </section>
@@ -401,9 +420,6 @@
         <p class="sec-tag">Let's talk</p>
         <h2 class="sec-h" style="margin-bottom:1.25rem">Put your brand in the room</h2>
         <p>Tell us a little about your team and what you'd like to get out of it. Whether it's one dinner or a whole season, we'll come back to you quickly with options.</p>
-        <div class="contact-people">
-          <div>Your message goes straight to <span>Steve</span>, <span>Jillian</span> and <span>Sarah</span>.</div>
-        </div>
       </div>
       <div class="reveal">
         <form class="form-card" id="sponsor-form" novalidate>
@@ -508,7 +524,7 @@
       }).then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
       .then(function(res) {
         if (res.ok && res.d.ok) {
-          form.reset(); show("Thanks. Your message is with Steve, Jillian and Sarah, and we'll be in touch soon.", true);
+          form.reset(); show("Thanks for reaching out. We'll be in touch soon.", true);
           btn.textContent = 'Message sent'; loadChallenge();
           if (window.gtag) gtag('event', 'sponsor_enquiry');
         } else {
