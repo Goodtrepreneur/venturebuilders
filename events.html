@@ -134,6 +134,7 @@
     /* team */
     .bio-grid{display:grid;gap:1.25rem}
     @media(min-width:800px){.bio-grid{grid-template-columns:1fr 1fr}}
+    @media(min-width:1050px){.bio-grid{grid-template-columns:repeat(3,1fr)}.bio{flex-direction:column}}
     .bio{display:flex;gap:1.25rem;align-items:flex-start;padding:1.5rem;border:1.5px solid rgba(0,0,0,0.08);border-radius:14px;background:#fff}
     .bio img{width:88px;height:88px;border-radius:50%;object-fit:cover;object-position:top center;flex-shrink:0;border:2.5px solid rgba(232,52,78,0.25)}
     .bio .n{font-family:var(--font-head);font-weight:800;font-size:1.1rem}
@@ -376,6 +377,10 @@
         <div class="bio reveal">
           <img src="images/team/team-jillian.png" alt="Jillian Friot">
           <div><p class="n">Jillian Friot</p><p class="t">General Partner</p><p>Jillian spent the past decade fostering a global community of startup support organizations and built the SOLIDWORKS for Startups program, which served 30,000+ hardware startups. She knows the accelerators, studios and founders our dinners are built around.</p></div>
+        </div>
+        <div class="bio reveal">
+          <img src="images/team/team-paul.png" alt="Paul Kim">
+          <div><p class="n">Paul Kim</p><p class="t">General Partner</p><p>Paul brings 25 years of institutional investing experience, from equity research at Bank of America and PaineWebber to portfolio management at SAC Capital (now Point72) and Omega Advisors, and helped launch Sursum Capital, a long/short global equity fund he grew past $800M. A CFA charterholder who has taught entrepreneurship at CCNY, he brings the investor side of the table into the room.</p></div>
         </div>
       </div>
       <p style="text-align:center;font-size:0.72rem;color:var(--ink-soft);margin-top:1rem">Experience described was gained through related programs before Venture Builders Fund.</p>
