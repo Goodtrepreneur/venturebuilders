@@ -19,7 +19,7 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Venture Builders Fund hosts intimate, high-touch dinners that bring founders, accelerator leaders and investors together. Sponsor a single dinner or partner on a series, with no red tape.">
+  <meta name="description" content="Intimate, high-touch dinners bringing founders, accelerator leaders and investors together. Sponsor one Venture Builders dinner or a series, no red tape.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://venturebuilders.fund/events">
   <meta property="og:type" content="website">
@@ -28,10 +28,61 @@
   <meta property="og:description" content="Intimate founder and investor dinners, curated by people who have spent years building accelerator and venture studio communities. Sponsors get the room, not just a logo.">
   <meta property="og:url" content="https://venturebuilders.fund/events">
   <meta property="og:image" content="https://venturebuilders.fund/images/events/vbf-dinner-patio.jpg">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="1067">
+  <meta property="og:image:alt" content="Guests on the patio at a Venture Builders dinner in Denver">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Events and Sponsorship | Venture Builders Fund">
   <meta name="twitter:description" content="Intimate founder and investor dinners. Sponsor a single dinner or partner on a series, with no red tape.">
   <meta name="twitter:image" content="https://venturebuilders.fund/images/events/vbf-dinner-patio.jpg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://venturebuilders.fund/#org",
+      "name": "Venture Builders Fund",
+      "url": "https://venturebuilders.fund/",
+      "logo": "https://venturebuilders.fund/logo-dark.png",
+      "email": "hello@venturebuilders.fund"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://venturebuilders.fund/events",
+      "url": "https://venturebuilders.fund/events",
+      "name": "Events and Sponsorship | Venture Builders Fund",
+      "description": "Intimate, high-touch dinners bringing founders, accelerator leaders and investors together. Sponsor one Venture Builders dinner or a series, no red tape.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Venture Builders Fund",
+        "url": "https://venturebuilders.fund/"
+      },
+      "about": {
+        "@id": "https://venturebuilders.fund/#org"
+      },
+      "primaryImageOfPage": "https://venturebuilders.fund/images/events/vbf-dinner-patio.jpg",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://venturebuilders.fund/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Events",
+            "item": "https://venturebuilders.fund/events"
+          }
+        ]
+      }
+    }
+  ]
+}
+  </script>
   <title>Events and Sponsorship | Venture Builders Fund</title>
   <link rel="icon" href="favicon.png">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-free">
@@ -175,6 +226,7 @@
       <li><a href="index.html#thesis">Fund</a></li>
       <li><a href="forbuilders.html">Builders</a></li>
       <li><a href="forfounders.html">Founders</a></li>
+      <li><a href="/events" class="active">Events</a></li>
     </ul>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span>
@@ -191,6 +243,7 @@
         <li><a href="index.html#thesis">Fund</a></li>
         <li><a href="forbuilders.html">Builders</a></li>
         <li><a href="forfounders.html">Founders</a></li>
+        <li><a href="/events" class="active">Events</a></li>
       </ul>
       <div class="nav-drawer-ctas">
         <a href="https://www.watchpivot.tv/" target="_blank" rel="noopener noreferrer" class="nav-drawer-pivot">Pivot</a>
@@ -203,7 +256,7 @@
 
   <!-- HERO -->
   <section class="hero ev-hero" aria-label="Venture Builders events and sponsorship">
-    <div class="hero-img"><img src="images/events/vbf-dinner-patio.jpg" alt="Guests on the patio at the Venture Builders dinner in Denver at golden hour"></div>
+    <div class="hero-img"><img src="images/events/vbf-dinner-patio.jpg" fetchpriority="high" alt="Guests on the patio at the Venture Builders dinner in Denver at golden hour"></div>
     <div class="hero-content">
       <div class="hero-eyebrow"><span class="eyebrow-dot"></span><span class="eyebrow-text">Events and sponsorship</span></div>
       <h1>The rooms founders <span class="accent">talk about after.</span></h1>
@@ -242,11 +295,11 @@
       </div>
       <div class="reveal">
         <div class="mosaic">
-          <img class="wide" src="images/events/vbf-dinner-trio.jpg" alt="Three guests smiling at the Denver dinner" style="aspect-ratio:3/2">
-          <img src="images/events/vbf-dinner-steve-guest.jpg" alt="Steve Hayton with a guest" style="aspect-ratio:1/1">
-          <img src="images/events/vbf-dinner-founders-trio.jpg" alt="Three guests with drinks at the dinner" style="aspect-ratio:1/1">
-          <img src="images/events/vbf-dinner-guests-1.jpg" alt="Two guests smiling with drinks" style="aspect-ratio:4/5;object-position:center 20%">
-          <img src="images/events/vbf-dinner-guests-2.jpg" alt="Two guests smiling on the patio" style="aspect-ratio:4/5;object-position:center 20%">
+          <img loading="lazy" decoding="async" class="wide" src="images/events/vbf-dinner-trio.jpg" alt="Three guests smiling at the Denver dinner" style="aspect-ratio:3/2">
+          <img loading="lazy" decoding="async" src="images/events/vbf-dinner-steve-guest.jpg" alt="Steve Hayton with a guest" style="aspect-ratio:1/1">
+          <img loading="lazy" decoding="async" src="images/events/vbf-dinner-founders-trio.jpg" alt="Three guests with drinks at the dinner" style="aspect-ratio:1/1">
+          <img loading="lazy" decoding="async" src="images/events/vbf-dinner-guests-1.jpg" alt="Two guests smiling with drinks" style="aspect-ratio:4/5;object-position:center 20%">
+          <img loading="lazy" decoding="async" src="images/events/vbf-dinner-guests-2.jpg" alt="Two guests smiling on the patio" style="aspect-ratio:4/5;object-position:center 20%">
         </div>
         <p class="photo-cap">Photos from our Denver dinner, captured by our event photographer.</p>
       </div>
@@ -286,9 +339,9 @@
     <div style="max-width:1200px;margin:0 auto">
       <div class="sec-header reveal"><p class="sec-tag">The details</p><h2 class="sec-h">We sweat the small things so you don't have to</h2></div>
       <div class="detail-grid">
-        <div class="detail-card reveal"><img src="images/events/vbf-dinner-notebooks.jpg" alt="Place settings with custom Venture Builders notebooks"><div class="lbl"><strong>Custom notebooks</strong>Branded notebooks and menus at every place setting.</div></div>
-        <div class="detail-card reveal"><img src="images/events/vbf-dinner-menu.jpg" alt="Printed dinner menu thanking the sponsors" style="object-position:center 60%"><div class="lbl"><strong>Printed menus</strong>Every menu thanks our sponsors by name.</div></div>
-        <div class="detail-card reveal"><img src="images/events/vbf-dinner-sponsor-remarks.jpg" alt="A sponsor speaking to the room during dinner"><div class="lbl"><strong>A moment to speak</strong>Sponsors share a few words with the room over dinner.</div></div>
+        <div class="detail-card reveal"><img loading="lazy" decoding="async" src="images/events/vbf-dinner-notebooks.jpg" alt="Place settings with custom Venture Builders notebooks"><div class="lbl"><strong>Custom notebooks</strong>Branded notebooks and menus at every place setting.</div></div>
+        <div class="detail-card reveal"><img loading="lazy" decoding="async" src="images/events/vbf-dinner-menu.jpg" alt="Printed dinner menu thanking the sponsors" style="object-position:center 60%"><div class="lbl"><strong>Printed menus</strong>Every menu thanks our sponsors by name.</div></div>
+        <div class="detail-card reveal"><img loading="lazy" decoding="async" src="images/events/vbf-dinner-sponsor-remarks.jpg" alt="A sponsor speaking to the room during dinner"><div class="lbl"><strong>A moment to speak</strong>Sponsors share a few words with the room over dinner.</div></div>
       </div>
     </div>
   </section>
@@ -311,7 +364,7 @@
         <div class="nl-frame">
           <div class="nl-bar"><i></i><i></i><i></i></div>
           <div class="nl-meta"><strong>Venture Builders Fund</strong><br>Thank you, Denver. Photos and quotes from our founders and investors dinner</div>
-          <div class="nl-shot"><img src="images/events/vbf-newsletter-example.jpg" alt="The post-event recap email sent to Denver dinner guests"></div>
+          <div class="nl-shot"><img loading="lazy" decoding="async" src="images/events/vbf-newsletter-example.jpg" alt="The post-event recap email sent to Denver dinner guests"></div>
         </div>
       </div>
     </div>
@@ -371,15 +424,15 @@
       <div class="sec-header center reveal"><p class="sec-tag">Who's hosting</p><h2 class="sec-h">Community builders first</h2><p class="sec-sub" style="margin:1rem auto 0">We have spent 15+ years combined building and running accelerator and venture studio communities. Bringing the right people into a room is what we do.</p></div>
       <div class="bio-grid">
         <div class="bio reveal">
-          <img src="images/team/team-steve.png" alt="Steve Hayton">
+          <img loading="lazy" decoding="async" src="images/team/team-steve.png" alt="Steve Hayton">
           <div><p class="n">Steve Hayton</p><p class="t">General Partner</p><p>Steve designed and delivered a first-of-its-kind curriculum training ecosystem leaders around the world to build accelerators and venture studios. He brings an investigative journalist's eye for people and a host's instinct for who should be sitting next to whom.</p></div>
         </div>
         <div class="bio reveal">
-          <img src="images/team/team-jillian.png" alt="Jillian Friot">
+          <img loading="lazy" decoding="async" src="images/team/team-jillian.png" alt="Jillian Friot">
           <div><p class="n">Jillian Friot</p><p class="t">General Partner</p><p>Jillian spent the past decade fostering a global community of startup support organizations and built the SOLIDWORKS for Startups program, which served 30,000+ hardware startups. She knows the accelerators, studios and founders our dinners are built around.</p></div>
         </div>
         <div class="bio reveal">
-          <img src="images/team/team-paul.png" alt="Paul Kim">
+          <img loading="lazy" decoding="async" src="images/team/team-paul.png" alt="Paul Kim">
           <div><p class="n">Paul Kim</p><p class="t">General Partner</p><p>Paul brings 25 years of institutional investing experience, from equity research at Bank of America and PaineWebber to portfolio management at SAC Capital (now Point72) and Omega Advisors, and helped launch Sursum Capital, a long/short global equity fund he grew past $800M. A CFA charterholder who has taught entrepreneurship at CCNY, he brings the investor side of the table into the room.</p></div>
         </div>
       </div>
@@ -392,8 +445,8 @@
     <div style="max-width:1200px;margin:0 auto">
       <div class="sec-header center reveal"><p class="sec-tag">Our sponsors</p><h2 class="sec-h">In good company</h2></div>
       <div class="logo-wall">
-        <a class="logo-tile reveal" href="https://www.wellsfargo.com/" target="_blank" rel="noopener" aria-label="Wells Fargo"><img src="images/events/sponsor-wells-fargo.png" alt="Wells Fargo"></a>
-        <a class="logo-tile reveal" href="https://finstratmgmt.com/" target="_blank" rel="noopener" aria-label="FinStrat Management"><img src="images/events/sponsor-finstrat.png" alt="FinStrat Management"></a>
+        <a class="logo-tile reveal" href="https://www.wellsfargo.com/" target="_blank" rel="noopener" aria-label="Wells Fargo"><img loading="lazy" decoding="async" src="images/events/sponsor-wells-fargo.png" alt="Wells Fargo"></a>
+        <a class="logo-tile reveal" href="https://finstratmgmt.com/" target="_blank" rel="noopener" aria-label="FinStrat Management"><img loading="lazy" decoding="async" src="images/events/sponsor-finstrat.png" alt="FinStrat Management"></a>
         <a class="logo-tile dark reveal" href="https://www.dealmaker.tech/" target="_blank" rel="noopener" aria-label="DealMaker"><svg role="img" aria-label="DealMaker" viewBox="0 0 1345 237" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_8230_71)">
 <path d="M869.37 158.33V235.07H848.21V159.61C848.21 133.81 836.86 120.39 816.99 120.39C795.06 120.39 781.64 136.9 781.64 163.73V235.06H760.48V159.6C760.48 133.8 748.87 120.38 728.75 120.38C707.08 120.38 693.92 138.44 693.92 164.76V235.06H672.76V102.6H691.08L693.92 120.66C700.88 111.12 711.98 101.05 732.36 101.05C750.68 101.05 766.42 109.31 773.9 126.08C781.9 111.89 796.09 101.05 819.57 101.05C846.92 101.05 869.36 116.79 869.36 158.33H869.37Z" fill="white"/>
@@ -463,8 +516,8 @@
 </main>
 <footer>
   <div class="footer-inner">
-    <div><img src="logo-white.png" alt="Venture Builders Fund" style="margin-bottom:0.6rem;mix-blend-mode: screen;"><p class="footer-legal">Securities offered through Venture Builders Fund LP. This website does not constitute an offer to sell or a solicitation of an offer to buy any securities.</p></div>
-    <ul class="footer-links"><li><a href='/forbuilders'>Builders</a></li><li><a href='/forfounders'>Founders</a></li><li><a href='/foraccelerators'>Accelerator</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/blog">Blog</a></li><li><a href="mailto:hello@venturebuilders.fund">Contact</a></li></ul>
+    <div><img loading="lazy" decoding="async" src="logo-white.png" alt="Venture Builders Fund" style="margin-bottom:0.6rem;mix-blend-mode: screen;"><p class="footer-legal">Securities offered through Venture Builders Fund LP. This website does not constitute an offer to sell or a solicitation of an offer to buy any securities.</p></div>
+    <ul class="footer-links"><li><a href='/forbuilders'>Builders</a></li><li><a href='/forfounders'>Founders</a></li><li><a href='/foraccelerators'>Accelerator</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/events">Events</a></li><li><a href="/blog">Blog</a></li><li><a href="mailto:hello@venturebuilders.fund">Contact</a></li></ul>
     <p class="footer-copy">&copy; 2026 Venture Builders Fund. All rights reserved.</p>
   </div>
 </footer>
