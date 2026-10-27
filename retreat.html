@@ -122,11 +122,10 @@
 
 
     /* RECAP */
-    .recap-gallery { display: grid; gap: 1.25rem; margin-top: 1rem; }
-    @media (min-width: 900px) { .recap-gallery { grid-template-columns: 2fr 1fr 1fr; } }
+    .recap-gallery { display: grid; gap: 1.5rem; margin-top: 1rem; }
+    @media (min-width: 700px) { .recap-gallery { grid-template-columns: 1fr 1fr; } }
     .recap-shot { margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
-    .recap-shot img { width: 100%; height: auto; display: block; border-radius: 16px; background: #eee; }
-    @media (min-width: 900px) { .recap-shot img { height: 440px; object-fit: cover; } }
+    .recap-shot img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; border-radius: 16px; background: #eee; }
     .recap-shot figcaption { font-size: 0.875rem; color: var(--ink-mid); line-height: 1.65; }
     .recap-shot figcaption strong { color: var(--ink); display: block; font-family: var(--font-head); font-size: 0.95rem; margin-bottom: 0.15rem; }
     .recap-points { display: grid; gap: 1.25rem; margin-top: 2.5rem; }
@@ -204,16 +203,20 @@
       </div>
       <div class="recap-gallery reveal">
         <figure class="recap-shot">
+          <img loading="lazy" decoding="async" src="images/retreat/retreat-ces-unveiled-group.jpg" alt="The Venture Builders Retreat group in front of the CES Unveiled Milan 2026 backdrop">
+          <figcaption><strong>CES Unveiled Milan</strong>The retreat group at CES Unveiled, hosted by CTA at Allianz MiCo.</figcaption>
+        </figure>
+        <figure class="recap-shot">
+          <img loading="lazy" decoding="async" src="images/retreat/retreat-ces-unveiled-stage.jpg" alt="Jillian Friot on stage at CES Unveiled Milan 2026">
+          <figcaption><strong>On stage</strong>Our General Partner Jillian Friot on stage at the close of CES Unveiled Milan.</figcaption>
+        </figure>
+        <figure class="recap-shot">
+          <img loading="lazy" decoding="async" src="images/retreat/retreat-ces-unveiled-partners.jpg" alt="CES Unveiled Milan 2026 partner slide showing the Venture Builders logo">
+          <figcaption><strong>In good company</strong>Venture Builders was thanked among the event partners and sponsors of CES Unveiled Milan 2026.</figcaption>
+        </figure>
+        <figure class="recap-shot">
           <img loading="lazy" decoding="async" src="images/retreat/retreat-group-dinner.jpg" alt="The Venture Builders Retreat group together at dinner">
           <figcaption><strong>The group</strong>Builders from accelerators, venture studios and innovation hubs, together for the week.</figcaption>
-        </figure>
-        <figure class="recap-shot">
-          <img loading="lazy" decoding="async" src="images/retreat/retreat-ces-unveiled-stage.jpg" alt="Brian Comiskey of CTA on stage at CES Unveiled Milan 2026" style="object-position:center 40%">
-          <figcaption><strong>CES Unveiled Milan</strong>Brian Comiskey, CTA's VP of Innovation and Trends, on stage at Allianz MiCo.</figcaption>
-        </figure>
-        <figure class="recap-shot">
-          <img loading="lazy" decoding="async" src="images/retreat/retreat-ces-unveiled-partners.jpg" alt="CES Unveiled Milan 2026 thank you slide listing Venture Builders among the event partners and sponsors" style="object-position:center 70%">
-          <figcaption><strong>In good company</strong>Venture Builders was thanked among the event partners and sponsors of CES Unveiled Milan 2026.</figcaption>
         </figure>
       </div>
       <div class="recap-points">
