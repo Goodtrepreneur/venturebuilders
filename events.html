@@ -175,7 +175,7 @@
     .no-tape{margin-top:2rem;padding:1.25rem 1.5rem;border-radius:12px;background:rgba(232,52,78,0.06);border:1.5px solid rgba(232,52,78,0.15);font-size:0.95rem;line-height:1.65;color:var(--ink)}
     /* cities */
     .city-grid{display:grid;gap:0.75rem;grid-template-columns:1fr 1fr}
-    @media(min-width:800px){.city-grid{grid-template-columns:repeat(3,1fr)}}
+    @media(min-width:800px){.city-grid{grid-template-columns:repeat(2,1fr)}}
     .city{border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;padding:1.1rem 1.25rem;background:rgba(255,255,255,0.03)}
     .city .c{font-family:var(--font-head);font-weight:800;font-size:1.15rem;color:#fff}
     .city .r{font-size:0.82rem;color:rgba(255,255,255,0.5);margin-top:0.15rem}
@@ -191,9 +191,10 @@
     .bio .n{font-family:var(--font-head);font-weight:800;font-size:1.1rem}
     .bio .t{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin:0.1rem 0 0.6rem}
     .bio p{font-size:0.92rem;line-height:1.68;color:var(--ink-mid)}
-    /* sponsors */
-    .logo-wall{display:grid;gap:1rem;grid-template-columns:1fr;max-width:980px;margin:0 auto}
-    @media(min-width:700px){.logo-wall{grid-template-columns:repeat(3,1fr)}}
+    /* partners */
+    .logo-wall{display:grid;gap:1rem;grid-template-columns:1fr;max-width:1100px;margin:0 auto}
+    @media(min-width:600px){.logo-wall{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1000px){.logo-wall{grid-template-columns:repeat(4,1fr)}}
     .logo-tile{height:150px;border-radius:14px;border:1.5px solid rgba(0,0,0,0.08);background:#fff;display:flex;align-items:center;justify-content:center;padding:1.5rem;transition:all 250ms cubic-bezier(0.25,0,0,1);text-decoration:none}
     .logo-tile:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,0.08)}
     .logo-tile img{max-height:96px;max-width:100%;width:auto;display:block}
@@ -319,6 +320,22 @@
     </div>
   </section>
 
+  <!-- RETREAT -->
+  <section class="sec" id="retreat" style="background:#0d0d0d">
+    <div style="max-width:1200px;margin:0 auto" class="two-col">
+      <div class="reveal">
+        <img loading="lazy" decoding="async" src="images/retreat/retreat-group-dinner.jpg" alt="The Venture Builders Retreat group together at dinner" style="width:100%;height:auto;border-radius:16px;display:block">
+      </div>
+      <div class="reveal">
+        <p class="sec-tag">Venture Builders Retreat &middot; October 2026</p>
+        <h2 class="sec-h" style="color:#fff;margin-bottom:1rem">We take the room on the road</h2>
+        <p style="color:rgba(255,255,255,0.65);font-size:1.05rem;line-height:1.8;margin-bottom:1rem">In October we brought a group of accelerator and venture studio builders across Ireland and Italy: Futura Innovation Conference in Limerick, CES Unveiled in Milan with our partners at CTA, and H-Farm in the Venice countryside.</p>
+        <p style="color:rgba(255,255,255,0.65);font-size:1.05rem;line-height:1.8;margin-bottom:1.75rem">Partners who join our retreats get the same thing they get at our dinners: real time with the people building the world's startup ecosystems, not just a logo on a lanyard.</p>
+        <a class="btn-primary" href="/retreat">See the retreat</a>
+      </div>
+    </div>
+  </section>
+
   <!-- WHAT SPONSORS GET -->
   <section class="sec" style="background:#fff">
     <div style="max-width:1200px;margin:0 auto">
@@ -405,15 +422,13 @@
         <p class="sec-tag">Where we're going next</p>
         <h2 class="sec-h" style="color:#fff;margin-bottom:1rem">Opportunities in the works</h2>
         <p style="color:rgba(255,255,255,0.65);font-size:1.05rem;line-height:1.8">We go where great founders are being built, including the ecosystems most investors overlook. These dinners are in planning now, and sponsors can help shape them.</p>
-        <p class="past-row">Past dinners: <strong>New York</strong> and <strong>Denver</strong></p>
+        <p class="past-row">Past events: <strong>New York</strong>, <strong>Denver</strong>, and the <a href="/retreat" style="color:#fff;font-weight:600">Venture Builders Retreat</a> in <strong>Limerick, Milan and Venice</strong></p>
       </div>
       <div class="city-grid reveal">
         <div class="city"><div class="c">Cheyenne</div><div class="r">Wyoming</div><span class="st">In planning</span></div>
         <div class="city"><div class="c">Whitefish</div><div class="r">Montana</div><span class="st">In planning</span></div>
         <div class="city"><div class="c">Chicago</div><div class="r">Illinois</div><span class="st">In planning</span></div>
         <div class="city"><div class="c">San Francisco</div><div class="r">California</div><span class="st">In planning</span></div>
-        <div class="city"><div class="c">Milan</div><div class="r">Italy</div><span class="st">In planning</span></div>
-        <div class="city"><div class="c">Venice</div><div class="r">Italy</div><span class="st">In planning</span></div>
       </div>
     </div>
   </section>
@@ -440,13 +455,14 @@
     </div>
   </section>
 
-  <!-- SPONSORS -->
+  <!-- PARTNERS -->
   <section class="sec" style="background:rgba(232, 52, 78, 0.04);padding-top:4.5rem;padding-bottom:4.5rem">
     <div style="max-width:1200px;margin:0 auto">
-      <div class="sec-header center reveal"><p class="sec-tag">Our sponsors</p><h2 class="sec-h">In good company</h2></div>
+      <div class="sec-header center reveal"><p class="sec-tag">Our partners</p><h2 class="sec-h">In good company</h2></div>
       <div class="logo-wall">
         <a class="logo-tile reveal" href="https://www.wellsfargo.com/" target="_blank" rel="noopener" aria-label="Wells Fargo"><img loading="lazy" decoding="async" src="images/events/sponsor-wells-fargo.png" alt="Wells Fargo"></a>
         <a class="logo-tile reveal" href="https://finstratmgmt.com/" target="_blank" rel="noopener" aria-label="FinStrat Management"><img loading="lazy" decoding="async" src="images/events/sponsor-finstrat.png" alt="FinStrat Management"></a>
+        <a class="logo-tile reveal" href="https://www.cta.tech/" target="_blank" rel="noopener" aria-label="Consumer Technology Association, producer of CES"><img loading="lazy" decoding="async" src="images/events/partner-cta.png" alt="Consumer Technology Association (CTA), producer of CES"></a>
         <a class="logo-tile dark reveal" href="https://www.dealmaker.tech/" target="_blank" rel="noopener" aria-label="DealMaker"><svg role="img" aria-label="DealMaker" viewBox="0 0 1345 237" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_8230_71)">
 <path d="M869.37 158.33V235.07H848.21V159.61C848.21 133.81 836.86 120.39 816.99 120.39C795.06 120.39 781.64 136.9 781.64 163.73V235.06H760.48V159.6C760.48 133.8 748.87 120.38 728.75 120.38C707.08 120.38 693.92 138.44 693.92 164.76V235.06H672.76V102.6H691.08L693.92 120.66C700.88 111.12 711.98 101.05 732.36 101.05C750.68 101.05 766.42 109.31 773.9 126.08C781.9 111.89 796.09 101.05 819.57 101.05C846.92 101.05 869.36 116.79 869.36 158.33H869.37Z" fill="white"/>
