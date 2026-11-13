@@ -217,6 +217,18 @@
     .contact-copy p{color:rgba(255,255,255,0.7);line-height:1.8;font-size:1.02rem;margin-bottom:1rem}
     .contact-people{margin-top:1.5rem;display:grid;gap:0.6rem;font-size:0.92rem;color:rgba(255,255,255,0.75)}
     .contact-people span{color:#fff;font-weight:600}
+    .pp-list{list-style:none;margin:1.5rem 0 0;padding:0;display:grid;gap:.75rem}
+    .pp-list li{display:flex;gap:.7rem;color:rgba(255,255,255,0.7);font-size:.98rem;line-height:1.55}
+    .pp-list li::before{content:"";flex:none;width:8px;height:8px;margin-top:.55rem;border-radius:50%;background:var(--accent)}
+    .pp-list strong{color:#fff}
+    .pp-who{display:grid;gap:1.25rem;grid-template-columns:1fr;margin-top:3.5rem}
+    @media(min-width:700px){.pp-who{grid-template-columns:1fr 1fr}}
+    @media(min-width:1050px){.pp-who{grid-template-columns:repeat(4,1fr)}}
+    .pp-who div{border-top:2px solid var(--accent);padding-top:.9rem}
+    .pp-who strong{display:block;font-family:var(--font-head);font-size:1rem;color:#fff;margin-bottom:.35rem}
+    .pp-who p{margin:0;font-size:.92rem;line-height:1.55;color:rgba(255,255,255,0.6)}
+    .pp-cta{text-align:center;margin-top:3rem}
+    .pp-cta>p:not(.past-row){margin:.9rem 0 0;font-size:.92rem;color:rgba(255,255,255,0.55)}
   </style>
 </head>
 <body>
@@ -264,7 +276,7 @@
       <p class="hero-sub">Intimate founder and investor dinners, hosted by a team that has spent 15+ years building accelerator and venture studio communities. Our sponsors don't just get a logo on a table. They get the room.</p>
       <div class="hero-actions">
         <a class='btn-primary' href='#contact'>Sponsor a dinner</a>
-        <a class='btn-ghost' href='#denver'>See a recent dinner</a>
+        <a class='btn-ghost' href='/calendar'>See the 2027 calendar</a>
       </div>
     </div>
   </section>
@@ -400,9 +412,10 @@
         </div>
         <div class="way reveal">
           <p class="tagline">For a season</p>
-          <h3>Series partner</h3>
-          <p>Back a run of dinners across several cities and become the name our community associates with the series.</p>
-          <ul><li>Presenting placement at every dinner</li><li>First choice of cities and dates</li><li>Ongoing introductions from our network</li></ul>
+          <h3>Venture Passport</h3>
+          <p>Back a run of dinners across several cities, join our curated rooms at events like CES and SXSW, and become the name our community associates with the series.</p>
+          <ul><li>Presenting placement at every dinner</li><li>First choice of cities and dates</li><li>Places at our private convenings</li><li>Ongoing introductions from our network</li></ul>
+          <p style="margin-top:1rem"><a href="#calendar" style="color:var(--accent);font-weight:700;text-decoration:none">See where we'll be in 2027 &rarr;</a></p>
         </div>
         <div class="way reveal">
           <p class="tagline">Built around you</p>
@@ -415,20 +428,38 @@
     </div>
   </section>
 
-  <!-- CITIES -->
-  <section class="sec" style="background:#0d0d0d" aria-label="Upcoming cities">
-    <div style="max-width:1200px;margin:0 auto" class="two-col">
-      <div class="reveal">
-        <p class="sec-tag">Where we're going next</p>
-        <h2 class="sec-h" style="color:#fff;margin-bottom:1rem">Opportunities in the works</h2>
-        <p style="color:rgba(255,255,255,0.65);font-size:1.05rem;line-height:1.8">We go where great founders are being built, including the ecosystems most investors overlook. These dinners are in planning now, and sponsors can help shape them.</p>
-        <p class="past-row">Past events: <strong>New York</strong>, <strong>Denver</strong>, and the <a href="/retreat" style="color:#fff;font-weight:600">Venture Builders Retreat</a> in <strong>Limerick, Milan and Venice</strong></p>
+  <!-- 2027 + VENTURE PASSPORT -->
+  <section class="sec" style="background:#0d0d0d" id="calendar" aria-label="2027 calendar and the Venture Passport">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="two-col">
+        <div class="reveal">
+          <p class="sec-tag">Where we're going next</p>
+          <h2 class="sec-h" style="color:#fff;margin-bottom:1rem">Where we'll be in 2027</h2>
+          <p style="color:rgba(255,255,255,0.65);font-size:1.05rem;line-height:1.8">The best companies are found before the market finds them, often in the ecosystems most investors overlook. In 2027 we're taking small, curated groups into the year's leading innovation events, with Venture Builders dinners and lunches in 15 cities around them. A room, not booth traffic. Every one is open to sponsors.</p>
+          <ul class="pp-list">
+            <li><span><strong>Private convenings.</strong> Curated rooms at leading innovation events.</span></li>
+            <li><span><strong>Research.</strong> Briefings on the companies, sectors and ecosystems we track.</span></li>
+            <li><span><strong>Introductions.</strong> Founders, investors and corporate leaders, introduced with context.</span></li>
+            <li><span><strong>Closed rooms.</strong> Conversations limited to a small, selected group.</span></li>
+          </ul>
+        </div>
+        <div class="city-grid reveal">
+          <div class="city"><div class="c">Las Vegas</div><div class="r">CES</div><span class="st">January</span></div>
+          <div class="city"><div class="c">Austin</div><div class="r">SXSW</div><span class="st">March</span></div>
+          <div class="city"><div class="c">Lafayette</div><div class="r">Innovate South</div><span class="st">April</span></div>
+          <div class="city"><div class="c">Honolulu</div><div class="r">Blue Startups Demo Day</div><span class="st">September</span></div>
+        </div>
       </div>
-      <div class="city-grid reveal">
-        <div class="city"><div class="c">Cheyenne</div><div class="r">Wyoming</div><span class="st">In planning</span></div>
-        <div class="city"><div class="c">Whitefish</div><div class="r">Montana</div><span class="st">In planning</span></div>
-        <div class="city"><div class="c">Chicago</div><div class="r">Illinois</div><span class="st">In planning</span></div>
-        <div class="city"><div class="c">San Francisco</div><div class="r">California</div><span class="st">In planning</span></div>
+      <div class="pp-who reveal">
+        <div><strong>Corporations</strong><p>Innovation and startup strategy, plus access to founders and capital.</p></div>
+        <div><strong>Venture capital firms</strong><p>Vetted companies from accelerators and venture builders, plus co-investors and LPs.</p></div>
+        <div><strong>Limited partners</strong><p>Insight into emerging managers, sectors and ecosystems, in rooms most allocators never reach.</p></div>
+        <div><strong>Founders</strong><p>Introductions to investors and strategic partners who can move the company forward.</p></div>
+      </div>
+      <div class="pp-cta reveal">
+        <a class="btn-primary" href="/calendar">See the 2027 calendar</a>
+        <p>Places are limited. See where we'll be and tell us which rooms you want to be in.</p>
+        <p class="past-row" style="justify-content:center">Past events: <strong>New York</strong>, <strong>Denver</strong>, and the <a href="/retreat" style="color:#fff;font-weight:600">Venture Builders Retreat</a> in <strong>Limerick, Milan and Venice</strong></p>
       </div>
     </div>
   </section>

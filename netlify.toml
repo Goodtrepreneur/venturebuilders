@@ -92,3 +92,9 @@
   to = "/foraccelerators"
   status = 301
   force = true
+
+# 2027 calendar PDF: only handed out after the email form on /calendar
+[[headers]]
+  for = "/assets/calendar/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
