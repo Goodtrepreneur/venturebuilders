@@ -217,6 +217,21 @@
     .contact-copy p{color:rgba(255,255,255,0.7);line-height:1.8;font-size:1.02rem;margin-bottom:1rem}
     .contact-people{margin-top:1.5rem;display:grid;gap:0.6rem;font-size:0.92rem;color:rgba(255,255,255,0.75)}
     .contact-people span{color:#fff;font-weight:600}
+    .pp-grid{display:grid;gap:1rem;grid-template-columns:1fr;margin-top:2.5rem}
+    @media(min-width:700px){.pp-grid{grid-template-columns:1fr 1fr}}
+    @media(min-width:1050px){.pp-grid{grid-template-columns:repeat(4,1fr)}}
+    .pp-card{border:1.5px solid rgba(var(--accent-rgb),0.18);border-radius:12px;padding:1.5rem;background:rgba(var(--accent-rgb),0.03)}
+    .pp-card h3{font-family:var(--font-head);font-weight:800;font-size:1.1rem;margin:0 0 .5rem;color:var(--ink)}
+    .pp-card p{margin:0;font-size:.95rem;line-height:1.6;color:var(--ink-mid)}
+    .pp-events{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin:1.5rem 0 0}
+    .pp-events span{font-size:.82rem;font-weight:700;letter-spacing:.04em;padding:.4rem .85rem;border-radius:999px;border:1.5px solid rgba(0,0,0,0.12);color:var(--ink)}
+    .pp-who{display:grid;gap:1rem;grid-template-columns:1fr;margin-top:2.5rem}
+    @media(min-width:900px){.pp-who{grid-template-columns:repeat(4,1fr)}}
+    .pp-who div{border-top:2px solid var(--accent);padding-top:.9rem}
+    .pp-who strong{display:block;font-family:var(--font-head);font-size:1rem;color:var(--ink);margin-bottom:.35rem}
+    .pp-who p{margin:0;font-size:.92rem;line-height:1.55;color:var(--ink-mid)}
+    .pp-cta{text-align:center;margin-top:2.75rem}
+    .pp-cta p{margin:.9rem 0 0;font-size:.9rem;color:var(--ink-soft)}
   </style>
 </head>
 <body>
@@ -412,6 +427,34 @@
         </div>
       </div>
       <div class="no-tape reveal"><strong>No red tape.</strong> You don't need a long contract or a committee sign-off to get involved. Start with a single dinner and a card, and we'll set up something more formal whenever you're ready.</div>
+    </div>
+  </section>
+
+  <!-- VENTURE PASSPORT -->
+  <section class="sec" style="background:#fff;border-top:1px solid rgba(0,0,0,0.07)" id="passport">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header center reveal">
+        <p class="sec-tag">The Venture Passport</p>
+        <h2 class="sec-h">Access a conference badge can't buy</h2>
+        <p class="sec-sub" style="margin:1rem auto 0">The best companies are found before the market finds them. Passport holders join small, curated groups at private convenings around the world, so the conversations are substantive, not booth traffic.</p>
+      </div>
+      <div class="pp-events reveal"><span>CES</span><span>CES Unveiled World Tour</span><span>SXSW</span><span>VivaTech</span><span>Slush</span><span>Private dinners worldwide</span></div>
+      <div class="pp-grid">
+        <div class="pp-card reveal"><h3>Private convenings</h3><p>Invitations to curated rooms at the world's leading innovation events.</p></div>
+        <div class="pp-card reveal"><h3>Research</h3><p>Briefings on the companies, sectors and ecosystems we track.</p></div>
+        <div class="pp-card reveal"><h3>Introductions</h3><p>Founders, investors and corporate leaders, introduced with context.</p></div>
+        <div class="pp-card reveal"><h3>Closed rooms</h3><p>Conversations limited to a small, selected group.</p></div>
+      </div>
+      <div class="pp-who reveal">
+        <div><strong>Corporations</strong><p>Innovation and startup strategy, plus access to founders and capital.</p></div>
+        <div><strong>Venture capital firms</strong><p>Vetted companies from accelerators and venture builders, plus co-investors and LPs.</p></div>
+        <div><strong>Limited partners</strong><p>Insight into emerging managers, sectors and ecosystems, in rooms most allocators never reach.</p></div>
+        <div><strong>Founders</strong><p>Introductions to investors and strategic partners who can move the company forward.</p></div>
+      </div>
+      <div class="pp-cta reveal">
+        <a class="btn-primary" href="/calendar">See the 2027 calendar</a>
+        <p>Passport access is limited. Start with the calendar and tell us where you want to be in the room.</p>
+      </div>
     </div>
   </section>
 
