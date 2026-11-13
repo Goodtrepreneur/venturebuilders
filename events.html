@@ -217,21 +217,18 @@
     .contact-copy p{color:rgba(255,255,255,0.7);line-height:1.8;font-size:1.02rem;margin-bottom:1rem}
     .contact-people{margin-top:1.5rem;display:grid;gap:0.6rem;font-size:0.92rem;color:rgba(255,255,255,0.75)}
     .contact-people span{color:#fff;font-weight:600}
-    .pp-grid{display:grid;gap:1rem;grid-template-columns:1fr;margin-top:2.5rem}
-    @media(min-width:700px){.pp-grid{grid-template-columns:1fr 1fr}}
-    @media(min-width:1050px){.pp-grid{grid-template-columns:repeat(4,1fr)}}
-    .pp-card{border:1.5px solid rgba(var(--accent-rgb),0.18);border-radius:12px;padding:1.5rem;background:rgba(var(--accent-rgb),0.03)}
-    .pp-card h3{font-family:var(--font-head);font-weight:800;font-size:1.1rem;margin:0 0 .5rem;color:var(--ink)}
-    .pp-card p{margin:0;font-size:.95rem;line-height:1.6;color:var(--ink-mid)}
-    .pp-events{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin:1.5rem 0 0}
-    .pp-events span{font-size:.82rem;font-weight:700;letter-spacing:.04em;padding:.4rem .85rem;border-radius:999px;border:1.5px solid rgba(0,0,0,0.12);color:var(--ink)}
-    .pp-who{display:grid;gap:1rem;grid-template-columns:1fr;margin-top:2.5rem}
-    @media(min-width:900px){.pp-who{grid-template-columns:repeat(4,1fr)}}
+    .pp-list{list-style:none;margin:1.5rem 0 0;padding:0;display:grid;gap:.75rem}
+    .pp-list li{display:flex;gap:.7rem;color:rgba(255,255,255,0.7);font-size:.98rem;line-height:1.55}
+    .pp-list li::before{content:"";flex:none;width:8px;height:8px;margin-top:.55rem;border-radius:50%;background:var(--accent)}
+    .pp-list strong{color:#fff}
+    .pp-who{display:grid;gap:1.25rem;grid-template-columns:1fr;margin-top:3.5rem}
+    @media(min-width:700px){.pp-who{grid-template-columns:1fr 1fr}}
+    @media(min-width:1050px){.pp-who{grid-template-columns:repeat(4,1fr)}}
     .pp-who div{border-top:2px solid var(--accent);padding-top:.9rem}
-    .pp-who strong{display:block;font-family:var(--font-head);font-size:1rem;color:var(--ink);margin-bottom:.35rem}
-    .pp-who p{margin:0;font-size:.92rem;line-height:1.55;color:var(--ink-mid)}
-    .pp-cta{text-align:center;margin-top:2.75rem}
-    .pp-cta p{margin:.9rem 0 0;font-size:.9rem;color:var(--ink-soft)}
+    .pp-who strong{display:block;font-family:var(--font-head);font-size:1rem;color:#fff;margin-bottom:.35rem}
+    .pp-who p{margin:0;font-size:.92rem;line-height:1.55;color:rgba(255,255,255,0.6)}
+    .pp-cta{text-align:center;margin-top:3rem}
+    .pp-cta>p:not(.past-row){margin:.9rem 0 0;font-size:.92rem;color:rgba(255,255,255,0.55)}
   </style>
 </head>
 <body>
@@ -430,20 +427,27 @@
     </div>
   </section>
 
-  <!-- VENTURE PASSPORT -->
-  <section class="sec" style="background:#fff;border-top:1px solid rgba(0,0,0,0.07)" id="passport">
+  <!-- 2027 + VENTURE PASSPORT -->
+  <section class="sec" style="background:#0d0d0d" id="calendar" aria-label="2027 calendar and the Venture Passport">
     <div style="max-width:1200px;margin:0 auto">
-      <div class="sec-header center reveal">
-        <p class="sec-tag">The Venture Passport</p>
-        <h2 class="sec-h">Access a conference badge can't buy</h2>
-        <p class="sec-sub" style="margin:1rem auto 0">The best companies are found before the market finds them. Passport holders join small, curated groups at private convenings around the world, so the conversations are substantive, not booth traffic.</p>
-      </div>
-      <div class="pp-events reveal"><span>CES</span><span>CES Unveiled World Tour</span><span>SXSW</span><span>VivaTech</span><span>Slush</span><span>Private dinners worldwide</span></div>
-      <div class="pp-grid">
-        <div class="pp-card reveal"><h3>Private convenings</h3><p>Invitations to curated rooms at the world's leading innovation events.</p></div>
-        <div class="pp-card reveal"><h3>Research</h3><p>Briefings on the companies, sectors and ecosystems we track.</p></div>
-        <div class="pp-card reveal"><h3>Introductions</h3><p>Founders, investors and corporate leaders, introduced with context.</p></div>
-        <div class="pp-card reveal"><h3>Closed rooms</h3><p>Conversations limited to a small, selected group.</p></div>
+      <div class="two-col">
+        <div class="reveal">
+          <p class="sec-tag">Where we're going next</p>
+          <h2 class="sec-h" style="color:#fff;margin-bottom:1rem">Where we'll be in 2027</h2>
+          <p style="color:rgba(255,255,255,0.65);font-size:1.05rem;line-height:1.8">The best companies are found before the market finds them, often in the ecosystems most investors overlook. In 2027 we're taking small, curated groups into the year's leading innovation events, with Venture Builders dinners and lunches in 15 cities around them. A room, not booth traffic. Every one is open to sponsors.</p>
+          <ul class="pp-list">
+            <li><span><strong>Private convenings.</strong> Curated rooms at leading innovation events.</span></li>
+            <li><span><strong>Research.</strong> Briefings on the companies, sectors and ecosystems we track.</span></li>
+            <li><span><strong>Introductions.</strong> Founders, investors and corporate leaders, introduced with context.</span></li>
+            <li><span><strong>Closed rooms.</strong> Conversations limited to a small, selected group.</span></li>
+          </ul>
+        </div>
+        <div class="city-grid reveal">
+          <div class="city"><div class="c">Las Vegas</div><div class="r">CES</div><span class="st">January</span></div>
+          <div class="city"><div class="c">Austin</div><div class="r">SXSW</div><span class="st">March</span></div>
+          <div class="city"><div class="c">Lafayette</div><div class="r">Innovate South</div><span class="st">April</span></div>
+          <div class="city"><div class="c">Honolulu</div><div class="r">Blue Startups Demo Day</div><span class="st">September</span></div>
+        </div>
       </div>
       <div class="pp-who reveal">
         <div><strong>Corporations</strong><p>Innovation and startup strategy, plus access to founders and capital.</p></div>
@@ -453,26 +457,8 @@
       </div>
       <div class="pp-cta reveal">
         <a class="btn-primary" href="/calendar">See the 2027 calendar</a>
-        <p>Passport access is limited. Start with the calendar and tell us where you want to be in the room.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CITIES -->
-  <section class="sec" style="background:#0d0d0d" aria-label="2027 calendar" id="calendar">
-    <div style="max-width:1200px;margin:0 auto" class="two-col">
-      <div class="reveal">
-        <p class="sec-tag">Where we're going next</p>
-        <h2 class="sec-h" style="color:#fff;margin-bottom:1rem">Where we'll be in 2027</h2>
-        <p style="color:rgba(255,255,255,0.65);font-size:1.05rem;line-height:1.8">We go where great founders are being built, including the ecosystems most investors overlook. Our 2027 calendar pairs the year's best ecosystem events, from CES and SXSW to Slush, with Venture Builders dinners and lunches in 15 cities. Every one is open to sponsors.</p>
-        <div style="margin:1.75rem 0 0"><a class="btn-primary" href="/calendar">See the 2027 calendar</a></div>
-        <p class="past-row">Past events: <strong>New York</strong>, <strong>Denver</strong>, and the <a href="/retreat" style="color:#fff;font-weight:600">Venture Builders Retreat</a> in <strong>Limerick, Milan and Venice</strong></p>
-      </div>
-      <div class="city-grid reveal">
-        <div class="city"><div class="c">Las Vegas</div><div class="r">CES</div><span class="st">January</span></div>
-        <div class="city"><div class="c">Austin</div><div class="r">SXSW</div><span class="st">March</span></div>
-        <div class="city"><div class="c">New York</div><div class="r">Retreat</div><span class="st">October</span></div>
-        <div class="city"><div class="c">Charlotte</div><div class="r">Venture135</div><span class="st">November</span></div>
+        <p>Places are limited. See where we'll be and tell us which rooms you want to be in.</p>
+        <p class="past-row" style="justify-content:center">Past events: <strong>New York</strong>, <strong>Denver</strong>, and the <a href="/retreat" style="color:#fff;font-weight:600">Venture Builders Retreat</a> in <strong>Limerick, Milan and Venice</strong></p>
       </div>
     </div>
   </section>
