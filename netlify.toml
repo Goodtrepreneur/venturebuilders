@@ -38,6 +38,31 @@
   status = 301
   force = true
 
+# Accelerator page not public yet. Remove these four rules to launch it.
+[[redirects]]
+  from = "/foraccelerators"
+  to = "/"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/foraccelerators/"
+  to = "/"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/foraccelerators.html"
+  to = "/"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/foraccelerators/*"
+  to = "/"
+  status = 302
+  force = true
+
 # Legacy pages removed from repo — send old URLs to current destinations
 [[redirects]]
   from = "/test"
@@ -59,37 +84,37 @@
 
 [[redirects]]
   from = "/accelerator"
-  to = "/foraccelerators"
+  to = "/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/accelerator/"
-  to = "/foraccelerators"
+  to = "/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/accelerator.html"
-  to = "/foraccelerators"
+  to = "/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/bulk-upload"
-  to = "/foraccelerators"
+  to = "/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/bulk-upload/"
-  to = "/foraccelerators"
+  to = "/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/bulk-upload.html"
-  to = "/foraccelerators"
+  to = "/"
   status = 301
   force = true
 
