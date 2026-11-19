@@ -225,6 +225,7 @@
   
     .evp-hero{background:#0d0d0d;color:#fff;padding:9rem 2rem 4.5rem;position:relative;overflow:hidden}
     .evp-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(60% 80% at 85% 10%,rgba(232,52,78,0.22),transparent 60%)}
+    @media(max-width:959px){.evp-hero::before{background:rgba(13,13,13,0.6)}}
     .evp-hero .in{position:relative;max-width:var(--max);margin:0 auto;display:grid;gap:3rem}
     @media(min-width:960px){.evp-hero .in{grid-template-columns:1.25fr 0.75fr;align-items:end}}
     .evp-crumb{font-size:0.8rem;color:rgba(255,255,255,0.5);margin-bottom:1.25rem}
@@ -259,6 +260,11 @@
     .evp-logo .ds{font-size:0.9rem;line-height:1.55;color:var(--ink-mid)}
     .evp-recap{border:2px dashed rgba(0,0,0,0.12);border-radius:16px;padding:2.5rem 2rem;text-align:center;color:var(--ink-mid)}
     .evp-recap strong{display:block;font-family:var(--font-head);font-size:1.15rem;color:var(--ink);margin-bottom:0.4rem}
+    .evp-gal{display:grid;gap:1rem;margin-top:2rem}
+    @media(min-width:860px){.evp-gal{grid-template-columns:1.6fr 1fr;grid-template-rows:1fr 1fr}.evp-gal figure:first-child{grid-row:span 2}}
+    .evp-gal figure{margin:0;position:relative;border-radius:16px;overflow:hidden;background:#111;min-height:220px}
+    .evp-gal img{width:100%;height:100%;object-fit:cover;display:block}
+    .evp-gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:2.2rem 1.1rem 0.9rem;background:linear-gradient(to top,rgba(0,0,0,0.75),transparent);color:#fff;font-size:0.88rem;line-height:1.5}
     .evp-note{font-size:0.82rem;color:var(--ink-soft);margin-top:1.25rem;line-height:1.6}
   </style>
 </head>
