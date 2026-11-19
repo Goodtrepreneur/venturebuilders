@@ -88,7 +88,7 @@ def page(e):
   </section>
 ''' if e["logos"] else "")
     body_note = f'<p class="evp-note">{e["body_note"]}</p>' if e.get("body_note") else ""
-    hero_style = (f' style="background:linear-gradient(90deg,rgba(13,13,13,0.92) 0%,rgba(13,13,13,0.55) 45%,rgba(13,13,13,0.1) 100%),linear-gradient(to bottom,rgba(13,13,13,0) 60%,#0d0d0d 100%),url({e["hero_img"]}) center 40%/cover no-repeat"' if e.get("hero_img") else "")
+    hero_style = (f' style="background:linear-gradient(90deg,rgba(13,13,13,0.92) 0%,rgba(13,13,13,0.55) 45%,rgba(13,13,13,0.1) 100%),linear-gradient(to bottom,rgba(13,13,13,0) 60%,#0d0d0d 100%),url({e["hero_img"]}) right center/cover no-repeat"' if e.get("hero_img") else "")
     nav = fix_links(NAV).replace('href="/events" class="active"', 'href="/events" class="active"')
     return f"""<!DOCTYPE html>
 <html lang="en">
