@@ -20,6 +20,7 @@ def fix_links(s):
 EXTRA = """
     .evp-hero{background:#0d0d0d;color:#fff;padding:9rem 2rem 4.5rem;position:relative;overflow:hidden}
     .evp-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(60% 80% at 85% 10%,rgba(232,52,78,0.22),transparent 60%)}
+    @media(max-width:959px){.evp-hero::before{background:rgba(13,13,13,0.6)}}
     .evp-hero .in{position:relative;max-width:var(--max);margin:0 auto;display:grid;gap:3rem}
     @media(min-width:960px){.evp-hero .in{grid-template-columns:1.25fr 0.75fr;align-items:end}}
     .evp-crumb{font-size:0.8rem;color:rgba(255,255,255,0.5);margin-bottom:1.25rem}
@@ -54,6 +55,11 @@ EXTRA = """
     .evp-logo .ds{font-size:0.9rem;line-height:1.55;color:var(--ink-mid)}
     .evp-recap{border:2px dashed rgba(0,0,0,0.12);border-radius:16px;padding:2.5rem 2rem;text-align:center;color:var(--ink-mid)}
     .evp-recap strong{display:block;font-family:var(--font-head);font-size:1.15rem;color:var(--ink);margin-bottom:0.4rem}
+    .evp-gal{display:grid;gap:1rem;margin-top:2rem}
+    @media(min-width:860px){.evp-gal{grid-template-columns:1.6fr 1fr;grid-template-rows:1fr 1fr}.evp-gal figure:first-child{grid-row:span 2}}
+    .evp-gal figure{margin:0;position:relative;border-radius:16px;overflow:hidden;background:#111;min-height:220px}
+    .evp-gal img{width:100%;height:100%;object-fit:cover;display:block}
+    .evp-gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:2.2rem 1.1rem 0.9rem;background:linear-gradient(to top,rgba(0,0,0,0.75),transparent);color:#fff;font-size:0.88rem;line-height:1.5}
     .evp-note{font-size:0.82rem;color:var(--ink-soft);margin-top:1.25rem;line-height:1.6}
 """
 
@@ -87,8 +93,17 @@ def page(e):
     </div>
   </section>
 ''' if e["logos"] else "")
+    g = e.get("gallery")
+    gal_sec = (f'''  <section class="sec" style="background:#fafafa">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="sec-header reveal"><p class="sec-tag">{g['tag']}</p><h2 class="sec-h">{g['h']}</h2><p class="sec-sub" style="max-width:680px">{g['p']}</p></div>
+      <div class="evp-gal reveal">{"".join(f'<figure><img loading="lazy" decoding="async" src="{i}" alt="{html.escape(a)}"><figcaption>{c}</figcaption></figure>' for i, a, c in g["items"])}</div>
+      {f'<p class="evp-note reveal"><a href="{g["link"][1]}" style="color:var(--accent);font-weight:600;text-decoration:none">{g["link"][0]} &rarr;</a></p>' if g.get("link") else ""}
+    </div>
+  </section>
+''' if g else "")
     body_note = f'<p class="evp-note">{e["body_note"]}</p>' if e.get("body_note") else ""
-    hero_style = (f' style="background:linear-gradient(90deg,rgba(13,13,13,0.92) 0%,rgba(13,13,13,0.55) 45%,rgba(13,13,13,0.1) 100%),linear-gradient(to bottom,rgba(13,13,13,0) 60%,#0d0d0d 100%),url({e["hero_img"]}) right center/cover no-repeat"' if e.get("hero_img") else "")
+    hero_style = (f' style="background:linear-gradient(90deg,rgba(13,13,13,0.92) 0%,rgba(13,13,13,0.55) 45%,rgba(13,13,13,0.1) 100%),linear-gradient(to bottom,rgba(13,13,13,0) 60%,#0d0d0d 100%),url({e["hero_img"]}) {e.get("hero_pos","right center")}/cover no-repeat"' if e.get("hero_img") else "")
     nav = fix_links(NAV).replace('href="/events" class="active"', 'href="/events" class="active"')
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -148,7 +163,7 @@ def page(e):
     </div>
   </section>
 
-{logos_sec}
+{gal_sec}{logos_sec}
   <section class="sec" style="background:#fff">
     <div style="max-width:1200px;margin:0 auto">
       <div class="evp-recap reveal"><strong>{e['recap_h']}</strong>{e['recap_p']}</div>
@@ -228,6 +243,40 @@ EVENTS = [
       "organizer": {"@type": "Organization", "name": "Venture Builders Fund", "url": "https://venturebuilders.fund/"},
       "sponsor": {"@type": "Organization", "name": "Wells Fargo", "url": "https://www.wellsfargo.com/"},
       "isAccessibleForFree": True}},
+ {"slug": "ces-2027", "crumb": "CES, January 2027", "status": "Sponsor opportunity",
+  "hero_img": "/images/events/ces-milan-group-hero.jpg", "hero_pos": "center 30%",
+  "title": "Venture Builders dinner at CES 2027, Las Vegas, January 2027",
+  "desc": "Venture Builders Fund is planning a private dinner in Las Vegas during CES 2027, January 6 to 9, for accelerator and venture studio leaders, founders, corporate innovation teams and investors. The dinner is open to a sponsor.",
+  "h1": 'A Venture Builders dinner at <span class="accent">CES 2027</span>',
+  "sub": "We're starting 2027 in Las Vegas at CES, following on from CES Unveiled Milan with our partners at CTA in October. While we're there, we're planning a private dinner for the accelerator leaders, founders, corporate innovation teams and investors in town for the week, and we're looking for a sponsor to host the room with us.",
+  "actions": [("btn-primary", "Sponsor the CES dinner", "/events#contact"), ("btn-ghost", "See the 2027 calendar", "/calendar")],
+  "details": [("When", "During CES<span>January 6 to 9, 2027, date to be confirmed</span>"),
+              ("Where", "Las Vegas, Nevada<span>Venue to be confirmed</span>"),
+              ("Format", "A private, seated dinner<span>By invitation, around 20 seats</span>"),
+              ("Hosts", "Steve Hayton and Jillian Friot<span>General Partners, Venture Builders Fund</span>")],
+  "body_tag": "The dinner", "body_h": "The startup side of CES, around one table",
+  "body": ["CES brings the whole technology industry to Las Vegas for a week, and the startup world comes with it: accelerators, venture studios, corporate innovation teams and the investors who back them. It's a lot of people and very little time to actually talk.",
+           "Our dinner is the opposite of the show floor. Seats are planned by hand, conversations are seeded, and our sponsor is part of the evening, not just a logo on the menu. The sponsor receives the guest list ahead of the night and introductions to follow up on."],
+  "who": [("Accelerator and venture studio leaders", "The builders whose programs produce the companies we back."),
+          ("Founders", "Early-stage founders exhibiting or launching at CES."),
+          ("Corporate innovation teams", "Startup program and corporate venture leads looking for what's next."),
+          ("Our sponsor", "One company hosting the room with us and meeting every guest.")],
+  "gallery": {"tag": "Where we left off", "h": "CES Unveiled Milan, October 2026",
+              "p": "In October we brought the Venture Builders Retreat group to CES Unveiled in Milan, hosted by CTA, and were thanked among the event's partners. CES in Las Vegas is the next chapter.",
+              "items": [("/images/retreat/retreat-ces-unveiled-group.jpg", "The Venture Builders Retreat group at CES Unveiled Milan 2026", "The retreat group at CES Unveiled Milan."),
+                        ("/images/retreat/retreat-ces-unveiled-stage.jpg", "Jillian Friot on stage at CES Unveiled Milan 2026", "Our General Partner Jillian Friot on stage at the close of the day."),
+                        ("/images/retreat/retreat-ces-unveiled-partners.jpg", "CES Unveiled Milan 2026 partner slide showing the Venture Builders logo", "Venture Builders among the event's partners.")],
+              "link": ("See the full retreat recap", "/retreat")},
+  "logos_tag": "Host and partner", "logos_h": "Who we're working with",
+  "logos": [dict(VBF_LOGO, role="Host"),
+            {"img": "/images/events/partner-cta.png", "name": "Consumer Technology Association", "role": "Partner", "url": "https://www.cta.tech/",
+             "desc": "The producer of CES, and our partner at CES Unveiled Milan in October 2026."}],
+  "logos_note": "This dinner is hosted by Venture Builders Fund. It is not an official CES event.",
+  "recap_h": "Photos from CES will be shared here",
+  "recap_p": "After the show, this page becomes a recap of the dinner, with photos and highlights.",
+  "cta_h": "Host the CES dinner with us",
+  "cta_p": "Put your company in front of accelerator leaders, founders and investors during the busiest week in tech. One sponsor, one room, no red tape.",
+  "og": "/images/events/og/ces-2027.png", "og_bg": "/images/events/ces-milan-group-hero.jpg", "og_lines": ("A Venture Builders dinner at CES 2027", "Las Vegas, NV  ·  January 2027", "Sponsor opportunity")},
  {"slug": "whitefish-2027", "crumb": "Whitefish, February 2027", "status": "Sponsor opportunity",
   "title": "Venture Builders dinner at the Whitefish Security Summit, February 2027",
   "desc": "Venture Builders Fund is planning a private dinner in Whitefish, Montana during the Whitefish Security Summit, February 24 to 26, 2027, for defense founders, investors and government innovation funders. The dinner is open to a sponsor.",
