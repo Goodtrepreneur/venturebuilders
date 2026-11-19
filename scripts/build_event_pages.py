@@ -29,7 +29,7 @@ EXTRA = """
     .evp-hero h1 .accent{color:var(--accent)}
     .evp-sub{font-size:1.08rem;line-height:1.75;color:rgba(255,255,255,0.72);max-width:640px}
     .evp-actions{display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:2rem}
-    .evp-card{background:#161616;border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:1.6rem}
+    .evp-card{background:rgba(18,18,18,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:1.6rem}
     .evp-card dl{display:grid;gap:1.1rem;margin:0}
     .evp-card dt{font-size:0.68rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:0.2rem}
     .evp-card dd{margin:0;font-size:0.98rem;line-height:1.5;color:#fff}
@@ -88,6 +88,7 @@ def page(e):
   </section>
 ''' if e["logos"] else "")
     body_note = f'<p class="evp-note">{e["body_note"]}</p>' if e.get("body_note") else ""
+    hero_style = (f' style="background:linear-gradient(90deg,rgba(13,13,13,0.92) 0%,rgba(13,13,13,0.55) 45%,rgba(13,13,13,0.1) 100%),linear-gradient(to bottom,rgba(13,13,13,0) 60%,#0d0d0d 100%),url({e["hero_img"]}) center 40%/cover no-repeat"' if e.get("hero_img") else "")
     nav = fix_links(NAV).replace('href="/events" class="active"', 'href="/events" class="active"')
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -122,7 +123,7 @@ def page(e):
 <body>
 {nav}
 <main>
-  <section class="evp-hero" aria-label="{html.escape(e['crumb'])}">
+  <section class="evp-hero"{hero_style} aria-label="{html.escape(e['crumb'])}">
     <div class="in">
       <div>
         <div class="evp-crumb"><a href="/">Home</a> / <a href="/events">Events</a> / {e['crumb']}</div>
@@ -189,67 +190,68 @@ VBF_LOGO = {"img": "/logo-dark.png", "name": "Venture Builders Fund", "url": "ht
 
 EVENTS = [
  {"slug": "cheyenne-2027", "crumb": "Cheyenne, January 2027", "status": "Invitation only",
+  "hero_img": "/images/events/cheyenne-metropolitan.jpg",
   "title": "Venture Builders | gBETA Wyoming luncheon, Cheyenne, January 27, 2027",
-  "desc": "A private, seated lunch in Cheyenne, Wyoming for founders, accelerator leaders and investors, hosted by Venture Builders Fund and gBETA Wyoming, with lunch sponsored by Wells Fargo.",
+  "desc": "A private, seated lunch in Cheyenne, Wyoming for founders, accelerator leaders and investors, hosted by Venture Builders Fund with accelerator partner gBETA Wyoming and lunch sponsored by Wells Fargo.",
   "h1": 'Venture Builders <span class="accent">|</span> gBETA Wyoming luncheon',
-  "sub": "Venture Builders Fund and gener8tor's gBETA Wyoming are bringing founders, accelerator and ecosystem leaders and active investors together for a private lunch in downtown Cheyenne. No script and no pitches, just good conversation around one table.",
-  "actions": [("btn-primary", "Invited? Confirm your seat", "https://luma.com/8gj3ncg2"), ("btn-ghost", "Sponsor this lunch", "/events#contact")],
+  "sub": "Venture Builders Fund is hosting a private lunch in downtown Cheyenne with our accelerator partner, gener8tor's gBETA Wyoming, bringing founders, accelerator and ecosystem leaders and active investors around one table. No script and no pitches, just good conversation.",
+  "actions": [("btn-primary", "Sponsor this lunch", "/events#contact"), ("btn-ghost", "See the 2027 calendar", "/calendar")],
   "details": [("When", "Wednesday, January 27, 2027<span>11:30 AM to 1:00 PM MST</span>"),
               ("Where", "The Metropolitan Downtown<span>1701 Carey Ave, Cheyenne, WY 82001</span>"),
-              ("Format", "Reception, then a seated lunch<span>18 seats, by invitation</span>"),
-              ("Hosts", "Baylie Evans, gBETA Wyoming<span>Steve Hayton, Venture Builders Fund</span>")],
+              ("Format", "Reception, then a seated lunch<span>18 seats, by invitation only</span>"),
+              ("Host", "Steve Hayton<span>General Partner, Venture Builders Fund</span>"),
+              ("Accelerator partner", "Baylie Evans<span>Managing Director, gBETA Wyoming</span>")],
   "body_tag": "The afternoon", "body_h": "One table, the right people",
   "body": ["We start with a short reception at The Metropolitan, then sit down together for lunch. Every seat is planned by hand, and over coffee we move seats so everyone leaves having met someone new.",
-           "The room is kept small on purpose, so founders get real time with the investors and partners who can help them grow."],
+           "The room is kept small on purpose, so founders get real time with the investors and partners who can help them grow. Seats are by invitation only."],
   "who": [("Founders", "From the current gBETA Wyoming cohort, plus program alumni."),
           ("Ecosystem leaders", "The gBETA Wyoming team and the accelerator and ecosystem builders around it."),
           ("Corporate partners", "A small number of partners who back Wyoming's founders."),
           ("Investors", "The Venture Builders Fund team and active investors.")],
-  "logos_tag": "Hosts and sponsor", "logos_h": "Who's making it happen",
+  "logos_tag": "Host, partner and sponsor", "logos_h": "Who's making it happen",
   "logos": [dict(VBF_LOGO, role="Host"),
-            {"img": "/images/events/logos/gbeta.png", "name": "gBETA Wyoming", "role": "Host partner", "url": "https://www.gener8tor.com/gbeta",
+            {"img": "/images/events/logos/gbeta.png", "name": "gBETA Wyoming", "role": "Accelerator partner", "url": "https://www.gener8tor.com/gbeta",
              "desc": "gener8tor's free, no-equity accelerator for early-stage companies with local roots."},
             {"img": "/images/events/sponsor-wells-fargo.png", "name": "Wells Fargo", "role": "Lunch sponsor", "url": "https://www.wellsfargo.com/",
              "desc": "Our lunch sponsor for the afternoon."}],
-  "logos_note": "Phone numbers collected when guests register are only used to confirm seats and are never shared with partners.",
   "recap_h": "Photos from the lunch will be shared here",
   "recap_p": "After January 27, this page becomes a recap of the afternoon, with photos and highlights.",
   "cta_h": "Want your company at the table?",
   "cta_p": "Every Venture Builders lunch and dinner is open to sponsors. Put your team in a room of founders, accelerator leaders and investors, with no red tape.",
-  "og": "/images/events/og/cheyenne-2027.png", "og_lines": ("Venture Builders | gBETA Wyoming luncheon", "Cheyenne, WY  ·  January 27, 2027", "Lunch sponsored by Wells Fargo"),
+  "og": "/images/events/og/cheyenne-2027.png", "og_bg": "/images/events/cheyenne-metropolitan.jpg", "og_lines": ("Venture Builders | gBETA Wyoming luncheon", "Cheyenne, WY  ·  January 27, 2027", "Hosted by Venture Builders Fund  ·  Lunch sponsored by Wells Fargo"),
   "schema_event": {"@type": "Event", "name": "Venture Builders | gBETA Wyoming luncheon",
       "startDate": "2027-01-27T11:30:00-07:00", "endDate": "2027-01-27T13:00:00-07:00",
       "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "description": "A private, seated lunch for founders, accelerator leaders and investors, by invitation.",
+      "description": "A private, seated lunch for founders, accelerator leaders and investors, by invitation only, hosted by Venture Builders Fund with accelerator partner gBETA Wyoming.",
       "image": "https://venturebuilders.fund/images/events/og/cheyenne-2027.png",
       "location": {"@type": "Place", "name": "The Metropolitan Downtown", "address": {"@type": "PostalAddress", "streetAddress": "1701 Carey Ave", "addressLocality": "Cheyenne", "addressRegion": "WY", "postalCode": "82001", "addressCountry": "US"}},
-      "organizer": [{"@type": "Organization", "name": "Venture Builders Fund", "url": "https://venturebuilders.fund/"}, {"@type": "Organization", "name": "gBETA Wyoming", "url": "https://www.gener8tor.com/gbeta"}],
+      "organizer": {"@type": "Organization", "name": "Venture Builders Fund", "url": "https://venturebuilders.fund/"},
       "sponsor": {"@type": "Organization", "name": "Wells Fargo", "url": "https://www.wellsfargo.com/"},
       "isAccessibleForFree": True}},
- {"slug": "whitefish-2027", "crumb": "Whitefish, February 2027", "status": "We'll be there",
-  "title": "Venture Builders at the Whitefish Security Summit, February 24 to 26, 2027",
-  "desc": "Venture Builders Fund will be at the Whitefish Security Summit in Whitefish, Montana, February 24 to 26, 2027. Meet us if you're building, funding or buying defense and dual-use technology.",
-  "h1": 'Venture Builders at the <span class="accent">Whitefish Security Summit</span>',
-  "sub": "We'll be in Whitefish, Montana for the second annual Whitefish Security Summit, where the 2027 focus is autonomous warfare meeting artificial intelligence. If you're building, funding or buying defense and dual-use technology, we'd like to meet you there.",
-  "actions": [("btn-primary", "Book time with us in Whitefish", "https://calendar.app.google/MeVkrWi7E9EmvCJc7"), ("btn-ghost", "About the summit", "https://whitefishsecuritysummit.com")],
-  "details": [("When", "February 24 to 26, 2027"),
-              ("Where", "Whitefish, Montana<span>Flathead Valley</span>"),
-              ("Summit focus", "Autonomous warfare meets artificial intelligence"),
-              ("Who's going", "The Venture Builders Fund team")],
-  "body_tag": "Why we're going", "logos_tag": "", "logos_h": "", "body_h": "Defense founders need investors and buyers in the same room",
-  "body": ["Founders building for national security face a hard path: long sales cycles, a small set of buyers and investors who don't always know the space. The Whitefish Security Summit brings practitioners, technologists and funders together for three days, and we're going to meet the founders in the middle of it.",
-           "We're also looking at hosting a small gathering for defense founders and investors around the summit. If you'd like to be part of it, as a guest or a sponsor, get in touch."],
+ {"slug": "whitefish-2027", "crumb": "Whitefish, February 2027", "status": "Sponsor opportunity",
+  "title": "Venture Builders dinner at the Whitefish Security Summit, February 2027",
+  "desc": "Venture Builders Fund is planning a private dinner in Whitefish, Montana during the Whitefish Security Summit, February 24 to 26, 2027, for defense founders, investors and government innovation funders. The dinner is open to a sponsor.",
+  "h1": 'A Venture Builders dinner at the <span class="accent">Whitefish Security Summit</span>',
+  "sub": "We'll be in Whitefish, Montana for the second annual Whitefish Security Summit, where the 2027 focus is autonomous warfare meeting artificial intelligence. While we're there, we're planning a private dinner for defense founders, investors and government innovation funders, and we're looking for a sponsor to host the room with us.",
+  "actions": [("btn-primary", "Sponsor the Whitefish dinner", "/events#contact"), ("btn-ghost", "About the summit", "https://whitefishsecuritysummit.com")],
+  "details": [("When", "During the summit<span>February 24 to 26, 2027</span>"),
+              ("Where", "Whitefish, Montana<span>Venue to be confirmed</span>"),
+              ("Format", "A private, seated dinner<span>By invitation, around 20 seats</span>"),
+              ("Summit focus", "Autonomous warfare meets artificial intelligence")],
+  "body_tag": "The dinner", "body_h": "Defense founders, investors and buyers at one table",
+  "body": ["Founders building for national security face a hard path: long sales cycles, a small set of buyers and investors who don't always know the space. The Whitefish Security Summit brings practitioners, technologists and funders together for three days, and our dinner puts the right people from that week around one table.",
+           "As with every Venture Builders dinner, seats are planned by hand, conversations are seeded, and our sponsor is part of the evening, not just a logo on the menu. The sponsor receives the guest list ahead of the night and introductions to follow up on."],
   "who": [("Defense and dual-use founders", "Especially those coming out of accelerators and looking for their first large customer."),
           ("Government innovation funders", "Programs that invest in and buy from early-stage defense companies, in the US and allied countries."),
           ("Investors", "Funds and angels active in national security and dual-use technology."),
-          ("Accelerator and ecosystem leaders", "Programs supporting defense founders who want to compare notes.")],
+          ("Our sponsor", "One company hosting the room with us and meeting every guest.")],
   "logos": [],
-  "body_note": "The Whitefish Security Summit is run in partnership with the Lobo Institute. Venture Builders Fund is attending and is not an organizer of the summit.",
-  "recap_h": "Notes and photos from Whitefish will be shared here",
-  "recap_p": "After the summit, this page becomes a recap of who we met and what we heard.",
-  "cta_h": "Sponsor a defense founders gathering in Whitefish",
-  "cta_p": "Put your company in front of defense founders, investors and government funders while they're all in one place.",
-  "og": "/images/events/og/whitefish-2027.png", "og_lines": ("Venture Builders at the Whitefish Security Summit", "Whitefish, MT  ·  February 24 to 26, 2027", "Meet us in Whitefish")},
+  "body_note": "The Whitefish Security Summit is run in partnership with the Lobo Institute. Venture Builders Fund is attending the summit and hosting this dinner independently; we are not an organizer of the summit.",
+  "recap_h": "Photos from Whitefish will be shared here",
+  "recap_p": "After the summit, this page becomes a recap of the dinner, with photos and highlights.",
+  "cta_h": "Host the Whitefish dinner with us",
+  "cta_p": "Put your company in front of defense founders, investors and government funders while they're all in one place. One sponsor, one room, no red tape.",
+  "og": "/images/events/og/whitefish-2027.png", "og_lines": ("A Venture Builders dinner at the Whitefish Security Summit", "Whitefish, MT  ·  February 2027", "Sponsor opportunity")},
 ]
 
 if __name__ == "__main__":
